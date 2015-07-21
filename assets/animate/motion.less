@@ -1,0 +1,24 @@
+.motion-common() {
+  animation-duration: .24s;
+  animation-fill-mode: both;
+  display: block !important;
+}
+
+.make-motion(@className, @keyframeName) {
+  .@{className}-enter {
+    .motion-common();
+    animation-play-state: paused;
+  }
+  .@{className}-leave {
+    .motion-common();
+    animation-play-state: paused;
+  }
+  .@{className}-enter.@{className}-enter-active {
+    animation-name: ~"@{keyframeName}In";
+    animation-play-state: running;
+  }
+  .@{className}-leave.@{className}-leave-active {
+    animation-name: ~"@{keyframeName}Out";
+    animation-play-state: running;
+  }
+}
