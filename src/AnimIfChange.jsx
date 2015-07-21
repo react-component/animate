@@ -3,7 +3,6 @@
 import React, {Component} from 'react';
 import anim from 'css-animation';
 const {findDOMNode, cloneElement, createElement} = React;
-const ref = '__el';
 
 function isEmpty(obj) {
   return obj === null || obj === undefined;
@@ -11,8 +10,8 @@ function isEmpty(obj) {
 
 export default class AnimIfChange extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super(...arguments);
     this.state = {
       children: this.props.children
     };
@@ -28,12 +27,15 @@ export default class AnimIfChange extends Component {
   }
 
   getChildrenToRender(component) {
-    return this.state.children && cloneElement(React.Children.only(component), {ref: ref});
+    return this.state.children && cloneElement(React.Children.only(component));
   }
 
   render() {
-    const child = this.getChildrenToRender(this.state.children);
-    return this.renderContainer(child);
+    const children = this.getChildrenToRender(this.state.children);
+    if(this.props.container) {
+      return this.renderContainer(children);
+    }
+    return children;
   }
 
   componentDidMount() {
@@ -62,14 +64,14 @@ export default class AnimIfChange extends Component {
 
   componentDidUpdate(prevProps) {
     const props = this.props;
-    const domNode = findDOMNode(this.refs[ref]);
+    const domNode = findDOMNode(this);
     if (!domNode) {
       return;
     }
     // render at first time
     if (isEmpty(prevProps)) {
-      if (props.defaultTransitionEnter) {
-        this.anim(domNode, props.transitionName, true);
+      if (props.defaultTransitionEnter !== props.transitionEnter) {
+        this.anim(domNode, props.transitionName, props.transitionEnter);
       }
     } else if (prevProps.transitionEnter !== props.transitionEnter) {
       if (props.transitionEnter) {
@@ -85,12 +87,12 @@ AnimIfChange.propTypes = {
   transitionEnter: React.PropTypes.bool.isRequired,
   defaultTransitionEnter: React.PropTypes.bool,
   transitionName: React.PropTypes.string,
-  remove: React.PropTypes.bool
+  remove: React.PropTypes.bool,
+  container: React.PropTypes.string
 };
 
 AnimIfChange.defaultProps = {
   transitionEnter: false,
   defaultTransitionEnter: false,
-  remove: false,
-  container: 'span'
+  remove: false
 };
