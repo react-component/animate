@@ -32,7 +32,7 @@ export default class AnimIfChange extends Component {
 
   render() {
     const children = this.getChildrenToRender(this.state.children);
-    if(this.props.container) {
+    if (this.props.container) {
       return this.renderContainer(children);
     }
     return children;
