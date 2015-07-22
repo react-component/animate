@@ -8,6 +8,14 @@ import React, {Component} from 'react';
 let transitionEnter = true;
 let remove = false;
 
+const styles = {
+  rect: {
+    marginTop: '20px',
+    width: '200px',
+    height: '200px',
+    backgroundColor: 'red'
+  }
+}
 
 class Demo extends Component {
 
@@ -35,8 +43,7 @@ class Demo extends Component {
           defaultTransitionEnter={true}
           remove={this.state.remove}
           transitionName="fade">
-
-            <div>xxxxxxxxx</div>
+            <div style={styles.rect}></div>
         </AnimIfChange>
       </div>
     );
