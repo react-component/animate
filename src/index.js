@@ -1,2 +1,2 @@
 // export this package's api
-module.exports = require('./AnimIfChange');
+module.exports = require('./CssTransition');
