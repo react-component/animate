@@ -1,8 +1,8 @@
 // use jsx to render html, do not modify simple.html
 'use strict';
 
-require('rc-anim-if-change/assets/index.css');
-import AnimIfChange from 'rc-anim-if-change';
+require('rc-css-transition/assets/index.css');
+import CssTransition from 'rc-css-transition';
 import React, {Component} from 'react';
 
 let transitionEnter = true;
@@ -38,13 +38,13 @@ class Demo extends Component {
     return (
       <div>
         <button onClick={this.toggleAnimate}>toggle</button>
-        <AnimIfChange 
+        <CssTransition 
           transitionEnter={this.state.transitionEnter} 
           defaultTransitionEnter={true}
           remove={this.state.remove}
           transitionName="fade">
             <div style={styles.rect}></div>
-        </AnimIfChange>
+        </CssTransition>
       </div>
     );
   }

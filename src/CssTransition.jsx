@@ -8,7 +8,7 @@ function isEmpty(obj) {
   return obj === null || obj === undefined;
 }
 
-export default class AnimIfChange extends Component {
+export default class CssTransition extends Component {
 
   constructor() {
     super(...arguments);
@@ -83,7 +83,7 @@ export default class AnimIfChange extends Component {
   }
 }
 
-AnimIfChange.propTypes = {
+CssTransition.propTypes = {
   transitionEnter: React.PropTypes.bool.isRequired,
   defaultTransitionEnter: React.PropTypes.bool,
   transitionName: React.PropTypes.string,
@@ -91,7 +91,7 @@ AnimIfChange.propTypes = {
   container: React.PropTypes.string
 };
 
-AnimIfChange.defaultProps = {
+CssTransition.defaultProps = {
   transitionEnter: false,
   defaultTransitionEnter: false,
   remove: false

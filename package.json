@@ -1,21 +1,21 @@
 {
-  "name": "rc-anim-if-change",
+  "name": "rc-css-transition",
   "version": "1.0.0",
-  "description": "anim-if-change ui component for react",
+  "description": "css-transition ui component for react",
   "keywords": [
     "react",
     "react-component",
     "react-anim-if-change",
     "anim-if-change"
   ],
-  "homepage": "http://github.com/react-component/anim-if-change",
+  "homepage": "https://github.com/react-component/css-transition",
   "author": "",
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/anim-if-change.git"
+    "url": "git@github.com:react-component/css-transition.git"
   },
   "bugs": {
-    "url": "http://github.com/react-component/anim-if-change/issues"
+    "url": "http://github.com/react-component/css-transition/issues"
   },
   "licenses": "MIT",
   "main": "./lib/index",

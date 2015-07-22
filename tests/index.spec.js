@@ -4,7 +4,7 @@
 'use strict';
 
 var expect = require('expect.js');
-var AnimIfChange = require('../index');
+var CssTransition = require('../index');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 
@@ -18,14 +18,14 @@ var createParentComponent = function(options) {
     }, 
     render() {
       return (
-        <AnimIfChange 
+        <CssTransition 
           ref="anim"
           transitionEnter={this.state.transitionEnter} 
           defaultTransitionEnter={true}
           container={options.container}
           remove={this.state.remove}>
             <div>child element</div>
-        </AnimIfChange>
+        </CssTransition>
       );
     }
   });
