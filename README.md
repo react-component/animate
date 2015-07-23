@@ -1,7 +1,7 @@
-# rc-anim-if-change
+# rc-animate
 ---
 
-React AnimIfChange Component
+animate react element easily
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -9,60 +9,41 @@ React AnimIfChange Component
 [![gemnasium deps][gemnasium-image]][gemnasium-url]
 [![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
-[![Sauce Test Status](https://saucelabs.com/buildstatus/rc-anim-if-change)](https://saucelabs.com/u/rc-anim-if-change)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/animate)](https://saucelabs.com/u/animate)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/rc-anim-if-change.svg)](https://saucelabs.com/u/rc-anim-if-change)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/animate.svg)](https://saucelabs.com/u/animate)
 
-[npm-image]: http://img.shields.io/npm/v/rc-anim-if-change.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/rc-anim-if-change
-[travis-image]: https://img.shields.io/travis/react-component/anim-if-change.svg?style=flat-square
-[travis-url]: https://travis-ci.org/react-component/anim-if-change
-[coveralls-image]: https://img.shields.io/coveralls/react-component/anim-if-change.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/anim-if-change?branch=master
-[gemnasium-image]: http://img.shields.io/gemnasium/react-component/anim-if-change.svg?style=flat-square
-[gemnasium-url]: https://gemnasium.com/react-component/anim-if-change
+[npm-image]: http://img.shields.io/npm/v/rc-animate.svg?style=flat-square
+[npm-url]: http://npmjs.org/package/rc-animate
+[travis-image]: https://img.shields.io/travis/react-component/animate.svg?style=flat-square
+[travis-url]: https://travis-ci.org/react-component/animate
+[coveralls-image]: https://img.shields.io/coveralls/react-component/animate.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/react-component/animate?branch=master
+[gemnasium-image]: http://img.shields.io/gemnasium/react-component/animate.svg?style=flat-square
+[gemnasium-url]: https://gemnasium.com/react-component/animate
 [node-image]: https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square
 [node-url]: http://nodejs.org/download/
-[download-image]: https://img.shields.io/npm/dm/rc-anim-if-change.svg?style=flat-square
-[download-url]: https://npmjs.org/package/rc-anim-if-change
+[download-image]: https://img.shields.io/npm/dm/rc-animate.svg?style=flat-square
+[download-url]: https://npmjs.org/package/rc-animate
 
 ## Screenshots
 
-<img src="" width="288"/>
-
-
-## Development
-
-```
-npm install
-npm start
-```
-
-## Example
-
-http://localhost:8000/examples/
-
-online example: http://react-component.github.io/anim-if-change/examples/
-
+![](http://gtms02.alicdn.com/tps/i2/TB1l3yrHXXXXXXWXpXXM9PE9pXX-446-343.png)
 
 ## Feature
 
 * support ie8,ie8+,chrome,firefox,safari
 
-### Keyboard
-
-
-
 ## install
 
-[![rc-anim-if-change](https://nodei.co/npm/rc-anim-if-change.png)](https://npmjs.org/package/rc-anim-if-change)
+[![rc-animate](https://nodei.co/npm/rc-animate.png)](https://npmjs.org/package/rc-animate)
 
 ## Usage
 
 ```js
-var AnimIfChange = require('rc-anim-if-change');
+var Animate = require('rc-animate');
 var React = require('react');
-React.render(<AnimIfChange><div>anim</div></AnimIfChange>, container);
+React.render(<Animate><p key="1">1</p><p key="2">2</p></Animate>, container);
 ```
 
 ## API
@@ -80,26 +61,86 @@ React.render(<AnimIfChange><div>anim</div></AnimIfChange>, container);
     </thead>
     <tbody>
         <tr>
-          <td>changeProp</td>
-          <td>String</td>
-          <td></td>
-          <td>prop name which is used to cause anim when it changed</td>
+          <td>component</td>
+          <td>React.Element/String</td>
+          <td>'span'</td>
+          <td>wrap dom node or component for children. set to '' if you do not wrap for only one child</td>
         </tr>
         <tr>
-          <td>remove</td>
-          <td>boolean</td>
+          <td>showProp</td>
+          <td>String</td>
           <td></td>
-          <td>whether remove if anim is completed</td>
+          <td>using prop for show and hide. [demo](http://react-component.github.io/animate/examples/hide-todo.html) </td>
+        </tr>
+        <tr>
+          <td>exclusive</td>
+          <td>Boolean</td>
+          <td></td>
+          <td>whether allow only one set of animations(enter and leave) at the same time. </td>
         </tr>
         <tr>
           <td>transitionName</td>
           <td>String</td>
           <td></td>
-          <td>anim transitionName.</td>
+          <td>transitionName, need to specify corresponding css</td>
+        </tr>
+        <tr>
+          <td>transitionEnter</td>
+          <td>Boolean</td>
+          <td>true</td>
+          <td>whether support transition enter anim</td>
+        </tr>
+       <tr>
+         <td>transitionLeave</td>
+         <td>Boolean</td>
+         <td>true</td>
+         <td>whether support transition leave anim</td>
+       </tr>
+        <tr>
+          <td>animation</td>
+          <td>Object</td>
+          <td>{}</td>
+          <td>
+            to animate with js.  for examples:
+          ```js
+            {
+              enter: function(node, done){
+                node.style.display='none';
+                $(node).slideUp(done);
+                return {
+                  stop:function(){
+                    $(node).stop(true);
+                  }
+                };
+              },
+              leave: function(node, done){
+                node.style.display='';
+                $(node).slideDown(done);
+                return {
+                  stop:function(){
+                    $(node).stop(true);
+                  }
+                };              
+              }
+            }
+          ```
+          </td>
         </tr>
     </tbody>
 </table>
 
+## Development
+
+```
+npm install
+npm start
+```
+
+## Example
+
+http://localhost:8000/examples/index.md
+
+online example: http://react-component.github.io/animate/examples/
 
 ## Test Case
 
@@ -111,4 +152,4 @@ http://localhost:8000/node_modules/rc-server/node_modules/node-jscover/lib/front
 
 ## License
 
-rc-anim-if-change is released under the MIT license.
+rc-animate is released under the MIT license.

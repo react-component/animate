@@ -5,11 +5,7 @@ import './assets/index.css';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
 
-let transitionEnter = true;
-let remove = false;
-
 class Demo extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -31,6 +27,7 @@ class Demo extends Component {
         <Animate
           component=""
           showProp='data-show'
+          animateMount={true}
           transitionName="fade">
           <div data-show={this.state.enter} key="1" style={{
           display:this.state.enter?'block':'none',

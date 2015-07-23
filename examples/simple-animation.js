@@ -4,25 +4,43 @@
 import './assets/index.css';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
+import $ from 'jquery';
 
 let transitionEnter = true;
 let remove = false;
 
-class Demo extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
+var Demo = React.createClass({
+  getInitialState() {
+    return {
       enter: true
     };
-    this.toggleAnimate = this.toggleAnimate.bind(this);
-  }
+  },
 
   toggleAnimate() {
     this.setState({
       enter: !this.state.enter
     });
-  }
+  },
+
+  animateEnter(node, done){
+    $(node).css('display', 'none');
+    $(node).slideDown(1000, done);
+    return {
+      stop: function () {
+        $(node).stop(true, true);
+      }
+    };
+  },
+
+  animateLeave(node, done){
+    $(node).css('display', '');
+    $(node).slideUp(1000, done);
+    return {
+      stop: function () {
+        $(node).stop(true, true);
+      }
+    };
+  },
 
   render() {
     return (
@@ -31,9 +49,11 @@ class Demo extends Component {
         <Animate
           component=""
           showProp='data-show'
-          transitionName="fade">
+          animation={{
+            enter:this.animateEnter,
+            leave:this.animateLeave
+          }}>
           <div data-show={this.state.enter} key="1" style={{
-          display:this.state.enter?'block':'none',
           marginTop: '20px',
           width: '200px',
           height: '200px',
@@ -43,6 +63,6 @@ class Demo extends Component {
       </div>
     );
   }
-}
+});
 
 React.render(<Demo />, document.getElementById('__react-content'));
