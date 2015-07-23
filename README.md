@@ -23,10 +23,6 @@ animate react element easily
 [download-image]: https://img.shields.io/npm/dm/rc-animate.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-animate
 
-## Screenshots
-
-![](http://gtms02.alicdn.com/tps/i2/TB1l3yrHXXXXXXWXpXXM9PE9pXX-446-343.png)
-
 ## Feature
 
 * support ie8,ie8+,chrome,firefox,safari
