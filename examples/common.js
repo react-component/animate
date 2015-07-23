@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		7:0
+/******/ 		8:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"alert","1":"hide-todo","2":"simple","3":"simple-animateMount","4":"simple-animation","5":"todo","6":"todo-animation"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"alert","1":"hide-todo","2":"simple","3":"simple-animateMount","4":"simple-animation","5":"simple-remove","6":"todo","7":"todo-animation"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -399,6 +399,7 @@
 	    transitionName: _react2['default'].PropTypes.string,
 	    transitionEnter: _react2['default'].PropTypes.bool,
 	    transitionLeave: _react2['default'].PropTypes.bool,
+	    onEnd: _react2['default'].PropTypes.func,
 	    showProp: _react2['default'].PropTypes.bool,
 	    animateMount: _react2['default'].PropTypes.bool
 	  },
@@ -410,7 +411,8 @@
 	      transitionEnter: true,
 	      transitionLeave: true,
 	      enter: true,
-	      animateMount: false
+	      animateMount: false,
+	      onEnd: function onEnd() {}
 	    };
 	  },
 	
@@ -510,9 +512,12 @@
 	      // exclusive will not need this
 	      this.performLeave(key);
 	    } else {
-	      this.setState({
-	        children: currentChildren
-	      });
+	      this.props.onEnd(key, true);
+	      if (this.isMounted()) {
+	        this.setState({
+	          children: currentChildren
+	        });
+	      }
 	    }
 	  },
 	
@@ -537,9 +542,12 @@
 	    if (this.isValidChildByKey(currentChildren, key)) {
 	      this.performEnter(key);
 	    } else {
-	      this.setState({
-	        children: currentChildren
-	      });
+	      this.props.onEnd(key, false);
+	      if (this.isMounted()) {
+	        this.setState({
+	          children: currentChildren
+	        });
+	      }
 	    }
 	  },
 	
