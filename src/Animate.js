@@ -17,6 +17,7 @@ var Animate = React.createClass({
     transitionName: React.PropTypes.string,
     transitionEnter: React.PropTypes.bool,
     transitionLeave: React.PropTypes.bool,
+    onEnd: React.PropTypes.func,
     showProp: React.PropTypes.bool,
     animateMount: React.PropTypes.bool
   },
@@ -28,7 +29,9 @@ var Animate = React.createClass({
       transitionEnter: true,
       transitionLeave: true,
       enter: true,
-      animateMount: false
+      animateMount: false,
+      onEnd: function () {
+      }
     };
   },
 
@@ -133,9 +136,12 @@ var Animate = React.createClass({
       // exclusive will not need this
       this.performLeave(key);
     } else {
-      this.setState({
-        children: currentChildren
-      });
+      this.props.onEnd(key, true);
+      if (this.isMounted()) {
+        this.setState({
+          children: currentChildren
+        });
+      }
     }
   },
 
@@ -160,9 +166,12 @@ var Animate = React.createClass({
     if (this.isValidChildByKey(currentChildren, key)) {
       this.performEnter(key);
     } else {
-      this.setState({
-        children: currentChildren
-      });
+      this.props.onEnd(key, false);
+      if (this.isMounted()) {
+        this.setState({
+          children: currentChildren
+        });
+      }
     }
   },
 

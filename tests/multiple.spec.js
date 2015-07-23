@@ -76,7 +76,12 @@ describe('Animate', function () {
   });
 
   afterEach(function () {
-    React.unmountComponentAtNode(container);
+    try {
+      React.unmountComponentAtNode(container);
+    } catch (e) {
+      console.log(e);
+      container.innerHTML = '';
+    }
   });
 
   it('create works', function () {

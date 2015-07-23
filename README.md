@@ -9,9 +9,6 @@ animate react element easily
 [![gemnasium deps][gemnasium-image]][gemnasium-url]
 [![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
-[![Sauce Test Status](https://saucelabs.com/buildstatus/animate)](https://saucelabs.com/u/animate)
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/animate.svg)](https://saucelabs.com/u/animate)
 
 [npm-image]: http://img.shields.io/npm/v/rc-animate.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-animate
@@ -95,6 +92,12 @@ React.render(<Animate><p key="1">1</p><p key="2">2</p></Animate>, container);
          <td>Boolean</td>
          <td>true</td>
          <td>whether support transition leave anim</td>
+       </tr>
+       <tr>
+         <td>onEnd</td>
+         <td>function(key:String, enter:Boolean)</td>
+         <td>true</td>
+         <td>animation end callback</td>
        </tr>
         <tr>
           <td>animation</td>

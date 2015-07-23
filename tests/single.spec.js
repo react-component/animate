@@ -29,4 +29,7 @@ var createClass = function (options) {
   });
 };
 
-require('./single-common.spec')(createClass,'transition');
+var CssAnimation = require('css-animation');
+if (CssAnimation.isCssAnimationSupported) {
+  require('./single-common.spec')(createClass, 'transition');
+}
