@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>rc-animate-alert</title>
+  <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" type="text/css" rel="stylesheet"/>
+  <style>
+      .hljs {
+          display: block;
+          overflow-x: auto;
+          padding: 0.5em;
+          color: #333;
+          background: #f8f8f8;
+          -webkit-text-size-adjust: none;
+      }
+
+      .hljs-comment,
+      .diff .hljs-header,
+      .hljs-javadoc {
+          color: #998;
+          font-style: italic;
+      }
+
+      .hljs-keyword,
+      .css .rule .hljs-keyword,
+      .hljs-winutils,
+      .nginx .hljs-title,
+      .hljs-subst,
+      .hljs-request,
+      .hljs-status {
+          color: #333;
+          font-weight: bold;
+      }
+
+      .hljs-number,
+      .hljs-hexcolor,
+      .ruby .hljs-constant {
+          color: #008080;
+      }
+
+      .hljs-string,
+      .hljs-tag .hljs-value,
+      .hljs-phpdoc,
+      .hljs-dartdoc,
+      .tex .hljs-formula {
+          color: #d14;
+      }
+
+      .hljs-title,
+      .hljs-id,
+      .scss .hljs-preprocessor {
+          color: #900;
+          font-weight: bold;
+      }
+
+      .hljs-list .hljs-keyword,
+      .hljs-subst {
+          font-weight: normal;
+      }
+
+      .hljs-class .hljs-title,
+      .hljs-type,
+      .vhdl .hljs-literal,
+      .tex .hljs-command {
+          color: #458;
+          font-weight: bold;
+      }
+
+      .hljs-tag,
+      .hljs-tag .hljs-title,
+      .hljs-rules .hljs-property,
+      .django .hljs-tag .hljs-keyword {
+          color: #000080;
+          font-weight: normal;
+      }
+
+      .hljs-attribute,
+      .hljs-variable,
+      .lisp .hljs-body {
+          color: #008080;
+      }
+
+      .hljs-regexp {
+          color: #009926;
+      }
+
+      .hljs-symbol,
+      .ruby .hljs-symbol .hljs-string,
+      .lisp .hljs-keyword,
+      .clojure .hljs-keyword,
+      .scheme .hljs-keyword,
+      .tex .hljs-special,
+      .hljs-prompt {
+          color: #990073;
+      }
+
+      .hljs-built_in {
+          color: #0086b3;
+      }
+
+      .hljs-preprocessor,
+      .hljs-pragma,
+      .hljs-pi,
+      .hljs-doctype,
+      .hljs-shebang,
+      .hljs-cdata {
+          color: #999;
+          font-weight: bold;
+      }
+
+      .hljs-deletion {
+          background: #fdd;
+      }
+
+      .hljs-addition {
+          background: #dfd;
+      }
+
+      .diff .hljs-change {
+          background: #0086b3;
+      }
+
+      .hljs-chunk {
+          color: #aaa;
+      }
+      .highlight {
+          background-color: transparent;
+          padding-top: 1px;
+          position: relative;
+      }
+
+      .highlight pre {
+          font-family: Consolas, "Liberation Mono", Courier, monospace;
+          margin: 6px 0;
+          border: 1px solid #eee;
+          padding: 6px 10px;
+          overflow: auto;
+          border-radius: 2px;
+          background-color: #f8f8f9;
+          line-height: 19px;
+          font-size: 13px;
+          white-space: pre;
+      }
+
+      .highlight pre code {
+          color: #5D6A6A;
+          background-color: transparent;
+          margin: auto;
+          padding: 0;
+      }
+  </style>
+  <!--[if lt IE 9]>
+  <script>
+  // Console-polyfill. MIT license.
+  // https://github.com/paulmillr/console-polyfill
+  // Make it safe to do console.log() always.
+  (function(global) {
+    'use strict';
+    global.console = global.console || {};
+    var con = global.console;
+    var prop, method;
+    var empty = {};
+    var dummy = function() {};
+    var properties = 'memory'.split(',');
+    var methods = ('assert,clear,count,debug,dir,dirxml,error,exception,group,' +
+       'groupCollapsed,groupEnd,info,log,markTimeline,profile,profiles,profileEnd,' +
+       'show,table,time,timeEnd,timeline,timelineEnd,timeStamp,trace,warn').split(',');
+    while (prop = properties.pop()) con[prop] = con[prop] || empty;
+    while (method = methods.pop()) con[method] = con[method] || dummy;
+  })(typeof window === 'undefined' ? this : window);
+  // Using `this` for web workers while maintaining compatibility with browser
+  // targeted script loaders such as Browserify or Webpack where the only way to
+  // get to the global object is via `window`.
+  </script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-shim.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
+  <![endif]-->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+</head>
+<body>
+<h1>rc-animate@1.0.0</h1>
+<div id="__react-content"></div>
+<script src="common.js?nowrap"></script>
+<script src="alert.js?nowrap"></script>
+<div class="highlight">
+<pre>
+<span class="hljs-string">'use strict'</span>;
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.css'</span>;
+<span class="hljs-keyword">import</span> React from <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> Animate from <span class="hljs-string">'rc-animate'</span>;
+<span class="hljs-keyword">var</span> seed = <span class="hljs-number">0</span>;
+
+<span class="hljs-keyword">var</span> Alert = React.createClass({
+  protoTypes: {
+    time: React.PropTypes.number,
+    type: React.PropTypes.number,
+    str: React.PropTypes.string,
+    onEnd: React.PropTypes.func
+  },
+
+  getDefaultProps: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> {
+      onEnd: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+      },
+      time: <span class="hljs-number">2000</span>,
+      type: <span class="hljs-string">'success'</span>
+    }
+  },
+
+  componentDidMount: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> props = <span class="hljs-keyword">this</span>.props;
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+      props.onEnd();
+    }, props.time);
+  },
+
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> props = <span class="hljs-keyword">this</span>.props;
+    <span class="hljs-keyword">return</span> &lt;div style={{
+    background: <span class="hljs-string">'yellow'</span>,
+  width: <span class="hljs-number">600</span>,
+  padding: <span class="hljs-number">20</span>,
+  marginLeft: <span class="hljs-string">'auto'</span>,
+  marginRight: <span class="hljs-string">'auto'</span>
+    }}&gt;{props.str}&lt;/div&gt;;
+  }
+});
+
+
+<span class="hljs-keyword">var</span> AlertGroup = React.createClass({
+  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> {
+      alerts: []
+    }
+  },
+  addAlert: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> </span>{
+    <span class="hljs-keyword">this</span>.setState({
+      alerts: <span class="hljs-keyword">this</span>.state.alerts.concat(a)
+    });
+  },
+  onEnd: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
+    <span class="hljs-keyword">var</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
+    <span class="hljs-keyword">var</span> ret = [];
+    <span class="hljs-keyword">var</span> target;
+    alerts.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> </span>{
+      <span class="hljs-keyword">if</span> (a.key === key) {
+        target = a;
+      } <span class="hljs-keyword">else</span> {
+        ret.push(a);
+      }
+    });
+    <span class="hljs-keyword">if</span> (target) {
+      <span class="hljs-keyword">this</span>.setState({
+        alerts: ret
+      }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">if</span> (target.<span class="hljs-keyword">callback</span>) {
+          target.<span class="hljs-keyword">callback</span>();
+        }
+      })
+    }
+  },
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">var</span> children = alerts.map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> </span>{
+      <span class="hljs-keyword">if</span> (!a.key) {
+        seed++;
+        a.key = seed + <span class="hljs-string">''</span>;
+      }
+      <span class="hljs-keyword">return</span> &lt;Alert {...a} onEnd={self.onEnd.bind(self, a.key)}/&gt;
+    });
+    <span class="hljs-keyword">return</span> &lt;div style={{
+    position: <span class="hljs-string">'fixed'</span>,
+  width: <span class="hljs-string">'100%'</span>,
+  top: <span class="hljs-number">50</span>,
+  zIndex: <span class="hljs-number">9999</span>
+    }}&gt;
+      &lt;Animate transitionName=<span class="hljs-string">"fade"</span>&gt;{children}&lt;/Animate&gt;
+    &lt;/div&gt;;
+  }
+});
+
+<span class="hljs-keyword">var</span> alertGroup;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alert</span><span class="hljs-params">(str, time, type, callback)</span> </span>{
+  <span class="hljs-keyword">if</span> (!alertGroup) {
+    <span class="hljs-keyword">var</span> div = document.createElement(<span class="hljs-string">'div'</span>);
+    document.body.appendChild(div);
+    alertGroup = React.render(&lt;AlertGroup/&gt;, div);
+  }
+  alertGroup.addAlert({
+    str: str,
+    time: time,
+    type: type,
+    <span class="hljs-keyword">callback</span>: <span class="hljs-keyword">callback</span>
+  });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onClick</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+    (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i)</span> </span>{
+      setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        alert(i);
+      }, <span class="hljs-number">1000</span> * i);
+    })(i);
+  }
+}
+
+React.render(&lt;div&gt;
+    &lt;h2&gt;notification&lt;/h2&gt;
+    &lt;button onClick={onClick}&gt;show notification&lt;/button&gt;
+  &lt;/div&gt;,
+  document.getElementById(<span class="hljs-string">'__react-content'</span>));
+
+</pre>
+</div>
+</body>
+</html>
