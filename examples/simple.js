@@ -74,7 +74,7 @@ webpackJsonp([2],{
 	            component: "",
 	            showProp: 'data-show',
 	            transitionName: "fade" },
-	          _react2['default'].createElement('div', { 'data-show': this.state.enter, key: "1", style: {
+	          _react2['default'].createElement('div', { 'data-show': this.state.enter, style: {
 	              display: this.state.enter ? 'block' : 'none',
 	              marginTop: '20px',
 	              width: '200px',

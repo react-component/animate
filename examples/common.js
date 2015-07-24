@@ -390,6 +390,20 @@
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
 	
+	var defaultKey = 'rc_animate_' + Date.now();
+	
+	function getChildrenFromProps(props) {
+	  var children = props.children;
+	  if (_react2['default'].isValidElement(children)) {
+	    if (!children.key) {
+	      return _react2['default'].cloneElement(children, {
+	        key: defaultKey
+	      });
+	    }
+	  }
+	  return children;
+	}
+	
 	var Animate = _react2['default'].createClass({
 	  displayName: 'Animate',
 	
@@ -421,20 +435,20 @@
 	    this.keysToEnter = [];
 	    this.keysToLeave = [];
 	    return {
-	      children: (0, _ChildrenUtils.toArrayChildren)(this.props.children)
+	      children: (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props))
 	    };
 	  },
 	
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    var _this = this;
 	
-	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(nextProps.children);
+	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
 	    var props = this.props;
 	    var showProp = props.showProp;
 	    var exclusive = props.exclusive;
 	    // last props children if exclusive
 	    // exclusive needs immediate response
-	    var currentChildren = exclusive ? (0, _ChildrenUtils.toArrayChildren)(props.children) : this.state.children;
+	    var currentChildren = exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
 	    var newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
 	
 	    if (showProp) {
@@ -507,7 +521,7 @@
 	
 	  _handleDoneEntering: function _handleDoneEntering(key) {
 	    delete this.currentlyAnimatingKeys[key];
-	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(this.props.children);
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props));
 	    if (!this.isValidChildByKey(currentChildren, key)) {
 	      // exclusive will not need this
 	      this.performLeave(key);
@@ -537,7 +551,7 @@
 	
 	  _handleDoneLeaving: function _handleDoneLeaving(key) {
 	    delete this.currentlyAnimatingKeys[key];
-	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(this.props.children);
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props));
 	    // in case state change is too fast
 	    if (this.isValidChildByKey(currentChildren, key)) {
 	      this.performEnter(key);
@@ -579,6 +593,9 @@
 	  render: function render() {
 	    var props = this.props;
 	    var children = this.state.children.map(function (child) {
+	      if (!child.key) {
+	        throw new Error('must set key for <rc-animate> children');
+	      }
 	      return _react2['default'].createElement(
 	        _AnimateChild2['default'],
 	        {
