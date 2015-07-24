@@ -32,7 +32,7 @@ class Demo extends Component {
           component=""
           showProp='data-show'
           transitionName="fade">
-          <div data-show={this.state.enter} key="1" style={{
+          <div data-show={this.state.enter} style={{
           display:this.state.enter?'block':'none',
           marginTop: '20px',
           width: '200px',

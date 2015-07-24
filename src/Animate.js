@@ -9,6 +9,19 @@ import ChildrenUtils, {
   inChildren
 } from './ChildrenUtils';
 import AnimateChild from './AnimateChild';
+var defaultKey = 'rc_animate_' + Date.now();
+
+function getChildrenFromProps(props) {
+  var children = props.children;
+  if (React.isValidElement(children)) {
+    if (!children.key) {
+      return React.cloneElement(children, {
+        key: defaultKey
+      });
+    }
+  }
+  return children;
+}
 
 var Animate = React.createClass({
   protoTypes: {
@@ -40,18 +53,18 @@ var Animate = React.createClass({
     this.keysToEnter = [];
     this.keysToLeave = [];
     return {
-      children: toArrayChildren(this.props.children)
+      children: toArrayChildren(getChildrenFromProps(this.props))
     };
   },
 
   componentWillReceiveProps(nextProps) {
-    var nextChildren = toArrayChildren(nextProps.children);
+    var nextChildren = toArrayChildren(getChildrenFromProps(nextProps));
     var props = this.props;
     var showProp = props.showProp;
     var exclusive = props.exclusive;
     // last props children if exclusive
     // exclusive needs immediate response
-    var currentChildren = exclusive ? toArrayChildren(props.children) : this.state.children;
+    var currentChildren = exclusive ? toArrayChildren(getChildrenFromProps(props)) : this.state.children;
     var newChildren = ChildrenUtils.mergeChildren(
       currentChildren,
       nextChildren
@@ -131,7 +144,7 @@ var Animate = React.createClass({
 
   _handleDoneEntering(key) {
     delete this.currentlyAnimatingKeys[key];
-    var currentChildren = toArrayChildren(this.props.children);
+    var currentChildren = toArrayChildren(getChildrenFromProps(this.props));
     if (!this.isValidChildByKey(currentChildren, key)) {
       // exclusive will not need this
       this.performLeave(key);
@@ -161,7 +174,7 @@ var Animate = React.createClass({
 
   _handleDoneLeaving(key) {
     delete this.currentlyAnimatingKeys[key];
-    var currentChildren = toArrayChildren(this.props.children);
+    var currentChildren = toArrayChildren(getChildrenFromProps(this.props));
     // in case state change is too fast
     if (this.isValidChildByKey(currentChildren, key)) {
       this.performEnter(key);
@@ -203,6 +216,9 @@ var Animate = React.createClass({
   render() {
     var props = this.props;
     var children = this.state.children.map((child) => {
+      if (!child.key) {
+        throw new Error('must set key for <rc-animate> children');
+      }
       return <AnimateChild
         key={child.key}
         ref={child.key}
