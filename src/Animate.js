@@ -6,6 +6,7 @@ import ChildrenUtils, {
   isShownInChildrenByKey,
   inChildrenByKey,
   isShownInChildren,
+  isSameChildren,
   inChildren
 } from './ChildrenUtils';
 import AnimateChild from './AnimateChild';
@@ -22,6 +23,7 @@ function getChildrenFromProps(props) {
   }
   return children;
 }
+
 
 var Animate = React.createClass({
   protoTypes: {
@@ -150,7 +152,7 @@ var Animate = React.createClass({
       this.performLeave(key);
     } else {
       this.props.onEnd(key, true);
-      if (this.isMounted()) {
+      if (this.isMounted() && !isSameChildren(this.state.children, currentChildren)) {
         this.setState({
           children: currentChildren
         });
@@ -180,7 +182,7 @@ var Animate = React.createClass({
       this.performEnter(key);
     } else {
       this.props.onEnd(key, false);
-      if (this.isMounted()) {
+      if (this.isMounted() && !isSameChildren(this.state.children, currentChildren)) {
         this.setState({
           children: currentChildren
         });

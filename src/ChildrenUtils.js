@@ -61,6 +61,18 @@ export default {
     return found;
   },
 
+  isSameChildren(c1, c2) {
+    var same = c1.length === c2.length;
+    if (same) {
+      c1.forEach(function (c, i) {
+        if (c !== c2[i]) {
+          same = false;
+        }
+      });
+    }
+    return same;
+  },
+
   mergeChildren(prev, next) {
     var ret = [];
 
