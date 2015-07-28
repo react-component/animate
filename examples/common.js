@@ -527,7 +527,7 @@
 	      this.performLeave(key);
 	    } else {
 	      this.props.onEnd(key, true);
-	      if (this.isMounted()) {
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
 	        this.setState({
 	          children: currentChildren
 	        });
@@ -557,7 +557,7 @@
 	      this.performEnter(key);
 	    } else {
 	      this.props.onEnd(key, false);
-	      if (this.isMounted()) {
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
 	        this.setState({
 	          children: currentChildren
 	        });
@@ -699,6 +699,18 @@
 	    return found;
 	  },
 	
+	  isSameChildren: function isSameChildren(c1, c2) {
+	    var same = c1.length === c2.length;
+	    if (same) {
+	      c1.forEach(function (c, i) {
+	        if (c !== c2[i]) {
+	          same = false;
+	        }
+	      });
+	    }
+	    return same;
+	  },
+	
 	  mergeChildren: function mergeChildren(prev, next) {
 	    var ret = [];
 	
@@ -751,6 +763,11 @@
 	
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 	
+	var transitionMap = {
+	  enter: 'transitionEnter',
+	  leave: 'transitionLeave'
+	};
+	
 	var AnimateChild = _react2['default'].createClass({
 	  displayName: 'AnimateChild',
 	
@@ -765,7 +782,7 @@
 	      _this.stopper = null;
 	      finishCallback();
 	    };
-	    if ((_cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props.transitionEnter) {
+	    if ((_cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
 	      this.stopper = (0, _cssAnimation2['default'])(node, transitionName + '-' + animationType, end);
 	    } else {
 	      this.stopper = props.animation[animationType](node, end);
@@ -859,7 +876,7 @@
 	  }, 0);
 	
 	  return {
-	    stop:function(){
+	    stop: function stop() {
 	      if (node.rcEndListener) {
 	        node.rcEndListener();
 	      }
@@ -905,17 +922,17 @@
 	cssAnimation.setTransition = function (node, property, v) {
 	  property = property || '';
 	  ['Webkit', 'Moz', 'O',
-	    // ms is special .... !
-	    'ms'].forEach(function (prefix) {
-	      node.style[prefix + 'Transition' + property] = v;
-	    });
+	  // ms is special .... !
+	  'ms'].forEach(function (prefix) {
+	    node.style[prefix + 'Transition' + property] = v;
+	  });
 	};
 	
 	cssAnimation.addClass = Css.addClass;
 	cssAnimation.removeClass = Css.removeClass;
 	cssAnimation.isCssAnimationSupported = Event.endEvents.length !== 0;
+	
 	module.exports = cssAnimation;
-
 
 /***/ },
 /* 13 */
