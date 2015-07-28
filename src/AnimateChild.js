@@ -3,6 +3,10 @@
 import React from 'react';
 import CssAnimate, {isCssAnimationSupported} from 'css-animation';
 
+var transitionMap = {
+  enter: 'transitionEnter',
+  leave: 'transitionLeave'
+};
 
 var AnimateChild = React.createClass({
   transition(animationType, finishCallback) {
@@ -14,7 +18,7 @@ var AnimateChild = React.createClass({
       this.stopper = null;
       finishCallback();
     };
-    if ((isCssAnimationSupported || !props.animation[animationType]) && transitionName && props.transitionEnter) {
+    if ((isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
       this.stopper = CssAnimate(node, transitionName + '-' + animationType, end);
     } else {
       this.stopper = props.animation[animationType](node, end);
