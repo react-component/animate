@@ -1,9 +1,9 @@
-webpackJsonp([8],{
+webpackJsonp([9],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(24);
+	module.exports = __webpack_require__(25);
 
 
 /***/ },
@@ -10366,7 +10366,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 24:
+/***/ 25:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10375,120 +10375,58 @@ webpackJsonp([8],{
 	
 	__webpack_require__(2);
 	
-	var _react = __webpack_require__(6);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
 	var _rcAnimate = __webpack_require__(7);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
 	
 	var _jquery = __webpack_require__(16);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var Todo = _react2['default'].createClass({
-	  displayName: 'Todo',
+	var transitionEnter = true;
+	var remove = false;
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      end: function end() {}
-	    };
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    console.log('componentWillUnmount');
-	    console.log(this.props.children);
-	    this.props.end();
-	  },
-	  render: function render() {
-	    var props = this.props;
-	    return _react2['default'].createElement(
-	      'div',
-	      { onClick: this.props.onClick, style: {
-	          width: 100,
-	          border: '1px solid red',
-	          padding: 10,
-	          margin: 10
-	        } },
-	      props.children
-	    );
-	  }
-	});
-	var TodoList = _react2['default'].createClass({
-	  displayName: 'TodoList',
+	var Demo = _react2['default'].createClass({
+	  displayName: 'Demo',
 	
 	  getInitialState: function getInitialState() {
 	    return {
-	      items: ['hello', 'world', 'click', 'me']
+	      enter: true
 	    };
 	  },
-	  animateEnter: function animateEnter(node, done) {
-	    (0, _jquery2['default'])(node).css('display', 'none');
-	    (0, _jquery2['default'])(node).slideDown(1000, done);
-	    return {
-	      stop: function stop() {
-	        (0, _jquery2['default'])(node).stop(true, true);
-	      }
-	    };
+	
+	  toggleAnimate: function toggleAnimate() {
+	    this.setState({
+	      enter: !this.state.enter
+	    });
 	  },
-	  animateLeave: function animateLeave(node, done) {
-	    (0, _jquery2['default'])(node).css('display', '');
-	    (0, _jquery2['default'])(node).slideUp(1000, done);
-	    return {
-	      stop: function stop() {
-	        (0, _jquery2['default'])(node).stop(true, true);
-	      }
-	    };
-	  },
-	  handleAdd: function handleAdd() {
-	    var newItems = this.state.items.concat([prompt('Enter some text')]);
-	    this.setState({ items: newItems });
-	  },
-	  handleRemove: function handleRemove(i) {
-	    var newItems = this.state.items;
-	    newItems.splice(i, 1);
-	    this.setState({ items: newItems });
-	  },
+	
 	  render: function render() {
-	    var items = this.state.items.map((function (item, i) {
-	      return _react2['default'].createElement(
-	        Todo,
-	        { key: item, onClick: this.handleRemove.bind(this, i) },
-	        item
-	      );
-	    }).bind(this));
+	
+	    var text = this.state.enter ? "ON" : "OFF";
 	    return _react2['default'].createElement(
 	      'div',
 	      null,
 	      _react2['default'].createElement(
-	        'button',
-	        { onClick: this.handleAdd },
-	        'Add Item'
-	      ),
-	      _react2['default'].createElement(
 	        _rcAnimate2['default'],
-	        { animation: {
-	            enter: this.animateEnter,
-	            leave: this.animateLeave
-	          } },
-	        items
+	        { transitionLeave: false, transitionName: "fade" },
+	        _react2['default'].createElement(
+	          'button',
+	          { key: text, onClick: this.toggleAnimate },
+	          text
+	        )
 	      )
 	    );
 	  }
 	});
 	
-	_react2['default'].render(_react2['default'].createElement(
-	  'div',
-	  null,
-	  _react2['default'].createElement(
-	    'h2',
-	    null,
-	    'Todo'
-	  ),
-	  _react2['default'].createElement(TodoList, null)
-	), document.getElementById('__react-content'));
+	_react2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }
 
 });
-//# sourceMappingURL=todo-animation.js.map
+//# sourceMappingURL=transitionLeave.js.map

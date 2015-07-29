@@ -239,98 +239,45 @@
         </div>
         <div class="example" id="__react-content"></div>
         <script src="common.js?nowrap"></script>
-        <script src="todo-animation.js?nowrap"></script>
+        <script src="exclusive.js?nowrap"></script>
         <div class="highlight"><pre><code><span class="hljs-pi">'use strict'</span>;
 
 <span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.css'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
+<span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> $ from <span class="hljs-string">'jquery'</span>;
 
-<span class="hljs-keyword">var</span> Todo = React.createClass({
-  getDefaultProps: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+<span class="hljs-keyword">let</span> transitionEnter = <span class="hljs-literal">true</span>;
+<span class="hljs-keyword">let</span> remove = <span class="hljs-literal">false</span>;
+
+<span class="hljs-keyword">var</span> Demo = React.createClass({
+  getInitialState() {
     <span class="hljs-keyword">return</span> {
-      end: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      }
-    }
-  },
-  componentWillUnmount: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'componentWillUnmount'</span>);
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.props.children);
-    <span class="hljs-keyword">this</span>.props.end();
-  },
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> props = <span class="hljs-keyword">this</span>.props;
-    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.props.onClick}</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span>
-                <span class="hljs-attribute">width:100</span>,
-                <span class="hljs-attribute">border:</span>'<span class="hljs-attribute">1px</span> <span class="hljs-attribute">solid</span> <span class="hljs-attribute">red</span>',
-                <span class="hljs-attribute">padding:10</span>,
-                <span class="hljs-attribute">margin:10</span>
-    }}&gt;</span>
-      {props.children}
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>;</span>
-  }
-});
-<span class="hljs-keyword">var</span> TodoList = React.createClass({
-  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">return</span> {
-      items: [<span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>, <span class="hljs-string">'click'</span>, <span class="hljs-string">'me'</span>]
+      enter: <span class="hljs-literal">true</span>
     };
   },
-  animateEnter(node, done){
-    $(node).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">'none'</span>);
-    $(node).slideDown(<span class="hljs-number">1000</span>,done);
-    <span class="hljs-keyword">return</span> {
-      stop:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-        $(node).stop(<span class="hljs-literal">true</span>,<span class="hljs-literal">true</span>);
-      }
-    };
+
+  toggleAnimate() {
+    <span class="hljs-keyword">this</span>.setState({
+      enter: !<span class="hljs-keyword">this</span>.state.enter
+    });
   },
-  animateLeave(node, done){
-    $(node).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>);
-    $(node).slideUp(<span class="hljs-number">1000</span>,done);
-    <span class="hljs-keyword">return</span> {
-      stop:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-        $(node).stop(<span class="hljs-literal">true</span>,<span class="hljs-literal">true</span>);
-      }
-    };
-  },
-  handleAdd: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> newItems =
-      <span class="hljs-keyword">this</span>.state.items.concat([prompt(<span class="hljs-string">'Enter some text'</span>)]);
-    <span class="hljs-keyword">this</span>.setState({items: newItems});
-  },
-  handleRemove: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">i</span>) </span>{
-    <span class="hljs-keyword">var</span> newItems = <span class="hljs-keyword">this</span>.state.items;
-    newItems.splice(i, <span class="hljs-number">1</span>);
-    <span class="hljs-keyword">this</span>.setState({items: newItems});
-  },
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> items = <span class="hljs-keyword">this</span>.state.items.map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">item, i</span>) </span>{
-      <span class="hljs-keyword">return</span> (
-        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Todo</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{item}</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleRemove.bind(this,</span> <span class="hljs-attribute">i</span>)}&gt;</span>
-          {item}
-        <span class="hljs-tag">&lt;/<span class="hljs-title">Todo</span>&gt;</span>
-      )</span>;
-    }.bind(<span class="hljs-keyword">this</span>));
+
+
+  render() {
+
+    <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">this</span>.state.enter ? <span class="hljs-string">"ON"</span> : <span class="hljs-string">"OFF"</span>;
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleAdd}</span>&gt;</span>Add Item<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">animation</span>=<span class="hljs-value">{{</span>
-          <span class="hljs-attribute">enter:</span> <span class="hljs-attribute">this.animateEnter</span>,
-          <span class="hljs-attribute">leave:</span> <span class="hljs-attribute">this.animateLeave</span>
-        }}&gt;</span>
-          {items}
+        <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">exclusive</span>=<span class="hljs-value">{true}</span> <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{text}</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.toggleAnimate}</span>&gt;</span>{text}<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
   }
 });
 
-React.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Todo<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">TodoList</span> /&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>, document.getElementById('__react-content'));
+React.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
     </div>
     <a href="https://github.com/react-component/animate"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>

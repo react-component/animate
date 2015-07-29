@@ -1,107 +1,14 @@
-webpackJsonp([4],{
+webpackJsonp([5],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(19);
+	module.exports = __webpack_require__(21);
 
 
 /***/ },
 
-/***/ 19:
-/***/ function(module, exports, __webpack_require__) {
-
-	// use jsx to render html, do not modify simple.html
-	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	__webpack_require__(2);
-	
-	var _rcAnimate = __webpack_require__(7);
-	
-	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
-	
-	var _react = __webpack_require__(6);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _jquery = __webpack_require__(20);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
-	var transitionEnter = true;
-	var remove = false;
-	
-	var Demo = _react2['default'].createClass({
-	  displayName: 'Demo',
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      enter: true
-	    };
-	  },
-	
-	  toggleAnimate: function toggleAnimate() {
-	    this.setState({
-	      enter: !this.state.enter
-	    });
-	  },
-	
-	  animateEnter: function animateEnter(node, done) {
-	    (0, _jquery2['default'])(node).css('display', 'none');
-	    (0, _jquery2['default'])(node).slideDown(1000, done);
-	    return {
-	      stop: function stop() {
-	        (0, _jquery2['default'])(node).stop(true, true);
-	      }
-	    };
-	  },
-	
-	  animateLeave: function animateLeave(node, done) {
-	    (0, _jquery2['default'])(node).css('display', '');
-	    (0, _jquery2['default'])(node).slideUp(1000, done);
-	    return {
-	      stop: function stop() {
-	        (0, _jquery2['default'])(node).stop(true, true);
-	      }
-	    };
-	  },
-	
-	  render: function render() {
-	    return _react2['default'].createElement(
-	      'div',
-	      null,
-	      _react2['default'].createElement(
-	        'button',
-	        { onClick: this.toggleAnimate },
-	        'toggle'
-	      ),
-	      _react2['default'].createElement(
-	        _rcAnimate2['default'],
-	        {
-	          component: "",
-	          showProp: 'data-show',
-	          animation: {
-	            enter: this.animateEnter,
-	            leave: this.animateLeave
-	          } },
-	        _react2['default'].createElement('div', { 'data-show': this.state.enter, key: "1", style: {
-	            marginTop: '20px',
-	            width: '200px',
-	            height: '200px',
-	            backgroundColor: 'red'
-	          } })
-	      )
-	    );
-	  }
-	});
-	
-	_react2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
-
-/***/ },
-
-/***/ 20:
+/***/ 16:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10456,6 +10363,99 @@ webpackJsonp([4],{
 	
 	}));
 
+
+/***/ },
+
+/***/ 21:
+/***/ function(module, exports, __webpack_require__) {
+
+	// use jsx to render html, do not modify simple.html
+	'use strict';
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	__webpack_require__(2);
+	
+	var _rcAnimate = __webpack_require__(7);
+	
+	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _jquery = __webpack_require__(16);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	var transitionEnter = true;
+	var remove = false;
+	
+	var Demo = _react2['default'].createClass({
+	  displayName: 'Demo',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      enter: true
+	    };
+	  },
+	
+	  toggleAnimate: function toggleAnimate() {
+	    this.setState({
+	      enter: !this.state.enter
+	    });
+	  },
+	
+	  animateEnter: function animateEnter(node, done) {
+	    (0, _jquery2['default'])(node).css('display', 'none');
+	    (0, _jquery2['default'])(node).slideDown(1000, done);
+	    return {
+	      stop: function stop() {
+	        (0, _jquery2['default'])(node).stop(true, true);
+	      }
+	    };
+	  },
+	
+	  animateLeave: function animateLeave(node, done) {
+	    (0, _jquery2['default'])(node).css('display', '');
+	    (0, _jquery2['default'])(node).slideUp(1000, done);
+	    return {
+	      stop: function stop() {
+	        (0, _jquery2['default'])(node).stop(true, true);
+	      }
+	    };
+	  },
+	
+	  render: function render() {
+	    return _react2['default'].createElement(
+	      'div',
+	      null,
+	      _react2['default'].createElement(
+	        'button',
+	        { onClick: this.toggleAnimate },
+	        'toggle'
+	      ),
+	      _react2['default'].createElement(
+	        _rcAnimate2['default'],
+	        {
+	          component: "",
+	          showProp: 'data-show',
+	          animation: {
+	            enter: this.animateEnter,
+	            leave: this.animateLeave
+	          } },
+	        _react2['default'].createElement('div', { 'data-show': this.state.enter, key: "1", style: {
+	            marginTop: '20px',
+	            width: '200px',
+	            height: '200px',
+	            backgroundColor: 'red'
+	          } })
+	      )
+	    );
+	  }
+	});
+	
+	_react2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }
 

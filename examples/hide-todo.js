@@ -1,14 +1,14 @@
-webpackJsonp([1],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(15);
+	module.exports = __webpack_require__(17);
 
 
 /***/ },
 
-/***/ 15:
+/***/ 17:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25,7 +25,7 @@ webpackJsonp([1],{
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _objectAssign = __webpack_require__(16);
+	var _objectAssign = __webpack_require__(18);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -116,7 +116,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 16:
+/***/ 18:
 /***/ function(module, exports) {
 
 	'use strict';

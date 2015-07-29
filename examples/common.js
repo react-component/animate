@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		8:0
+/******/ 		10:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"alert","1":"hide-todo","2":"simple","3":"simple-animateMount","4":"simple-animation","5":"simple-remove","6":"todo","7":"todo-animation"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"alert","1":"exclusive","2":"hide-todo","3":"simple","4":"simple-animateMount","5":"simple-animation","6":"simple-remove","7":"todo","8":"todo-animation","9":"transitionLeave"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -449,9 +449,9 @@
 	    // last props children if exclusive
 	    // exclusive needs immediate response
 	    var currentChildren = exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
-	    var newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
+	    var newChildren = exclusive ? nextChildren : _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
 	
-	    if (showProp) {
+	    if (showProp && !exclusive) {
 	      newChildren = newChildren.map(function (c) {
 	        if (!c.props[showProp] && (0, _ChildrenUtils.isShownInChildren)(currentChildren, c, showProp)) {
 	          c = _react2['default'].cloneElement(c, _defineProperty({}, showProp, true));
@@ -462,6 +462,9 @@
 	
 	    // exclusive needs immediate response
 	    if (exclusive) {
+	      currentChildren.forEach(function (c) {
+	        _this.stop(c.key);
+	      });
 	      // make middle state children invalid
 	      // restore to last props children
 	      newChildren.forEach(function (c) {
@@ -515,8 +518,11 @@
 	  },
 	
 	  performEnter: function performEnter(key) {
-	    this.currentlyAnimatingKeys[key] = true;
-	    this.refs[key].componentWillEnter(this._handleDoneEntering.bind(this, key));
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillEnter(this._handleDoneEntering.bind(this, key));
+	    }
 	  },
 	
 	  _handleDoneEntering: function _handleDoneEntering(key) {
@@ -536,8 +542,11 @@
 	  },
 	
 	  performLeave: function performLeave(key) {
-	    this.currentlyAnimatingKeys[key] = true;
-	    this.refs[key].componentWillLeave(this._handleDoneLeaving.bind(this, key));
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillLeave(this._handleDoneLeaving.bind(this, key));
+	    }
 	  },
 	
 	  isValidChildByKey: function isValidChildByKey(currentChildren, key) {
