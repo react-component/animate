@@ -239,7 +239,7 @@
         </div>
         <div class="example" id="__react-content"></div>
         <script src="common.js?nowrap"></script>
-        <script src="simple.js?nowrap"></script>
+        <script src="simple-exclusive.js?nowrap"></script>
         <div class="highlight"><pre><code><span class="hljs-comment">// use jsx to render html, do not modify simple.html</span>
 <span class="hljs-symbol">'use</span> strict';
 
@@ -272,6 +272,7 @@ let remove = <span class="hljs-literal">false</span>;
         &lt;button onClick={<span class="hljs-keyword">this</span>.toggleAnimate}&gt;toggle&lt;/button&gt;
         &lt;<span class="hljs-type">Animate</span>
           component=<span class="hljs-string">""</span>
+          exclusive={<span class="hljs-literal">true</span>}
           showProp=<span class="hljs-symbol">'data</span>-show'
           transitionName=<span class="hljs-string">"fade"</span>&gt;
           &lt;div data-show={<span class="hljs-keyword">this</span>.state.enter} style={{
