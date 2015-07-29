@@ -36,7 +36,7 @@ animate react element easily
 ```js
 var Animate = require('rc-animate');
 var React = require('react');
-React.render(<Animate><p key="1">1</p><p key="2">2</p></Animate>, container);
+React.render(<Animate animation={{}}><p key="1">1</p><p key="2">2</p></Animate>, container);
 ```
 
 ## API
@@ -100,33 +100,40 @@ React.render(<Animate><p key="1">1</p><p key="2">2</p></Animate>, container);
           <td>Object</td>
           <td>{}</td>
           <td>
-            to animate with js.  for examples:
-          ```js
-            {
-              enter: function(node, done){
-                node.style.display='none';
-                $(node).slideUp(done);
-                return {
-                  stop:function(){
-                    $(node).stop(true);
-                  }
-                };
-              },
-              leave: function(node, done){
-                node.style.display='';
-                $(node).slideDown(done);
-                return {
-                  stop:function(){
-                    $(node).stop(true);
-                  }
-                };              
-              }
-            }
-          ```
+            to animate with js. see animation format below.
           </td>
         </tr>
     </tbody>
 </table>
+
+### animation format
+
+with enter and leave as keys. for example:
+
+```js
+  {
+    enter: function(node, done){
+      node.style.display='none';
+      $(node).slideUp(done);
+      return {
+        stop:function(){
+          // jq will call done on finish
+          $(node).stop(true);
+        }
+      };
+    },
+    leave: function(node, done){
+      node.style.display='';
+      $(node).slideDown(done);
+      return {
+        stop:function(){
+          // jq will call done on finish
+          $(node).stop(true);
+        }
+      };              
+    }
+  }
+```
 
 ## Development
 
