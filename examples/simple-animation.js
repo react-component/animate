@@ -4,7 +4,7 @@
 import './assets/index.css';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
-import $ from 'jquery';
+import velocity from 'velocity-animate';
 
 let transitionEnter = true;
 let remove = false;
@@ -12,7 +12,8 @@ let remove = false;
 var Demo = React.createClass({
   getInitialState() {
     return {
-      enter: true
+      enter: true,
+      exclusive:false
     };
   },
 
@@ -23,38 +24,73 @@ var Demo = React.createClass({
   },
 
   animateEnter(node, done){
-    $(node).css('display', 'none');
-    $(node).slideDown(1000, done);
+    var ok = false;
+
+    function complete() {
+      if (!ok) {
+        ok = 1;
+        done();
+      }
+    }
+
+    velocity(node, 'slideDown', {
+      duration: 1000,
+      complete: complete
+    });
     return {
       stop: function () {
-        $(node).stop(true, true);
+        velocity(node, 'finish');
+        // velocity complete is async
+        complete();
       }
     };
   },
 
   animateLeave(node, done){
-    $(node).css('display', '');
-    $(node).slideUp(1000, done);
+    var ok = false;
+
+    function complete() {
+      if (!ok) {
+        ok = 1;
+        done();
+      }
+    }
+
+    velocity(node, 'slideUp', {
+      duration: 1000,
+      complete: complete
+    });
     return {
       stop: function () {
-        $(node).stop(true, true);
+        velocity(node, 'finish');
+        // velocity complete is async
+        complete();
       }
     };
+  },
+
+  toggle(field){
+    this.setState({
+      [field]:!this.state[field]
+    });
   },
 
   render() {
     return (
       <div>
-        <button onClick={this.toggleAnimate}>toggle</button>
+        <label><input type='checkbox' onChange={this.toggle.bind(this,'enter')} checked={this.state.enter}/> show</label>
+        &nbsp;
+        <label><input type='checkbox' onChange={this.toggle.bind(this,'exclusive')} checked={this.state.exclusive}/> exclusive</label>
+        <br/><br/>
         <Animate
           component=""
+          exclusive={this.state.exclusive}
           showProp='data-show'
           animation={{
             enter:this.animateEnter,
             leave:this.animateLeave
           }}>
           <div data-show={this.state.enter} key="1" style={{
-          marginTop: '20px',
           width: '200px',
           height: '200px',
           backgroundColor: 'red'

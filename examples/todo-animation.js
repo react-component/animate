@@ -3,7 +3,7 @@
 import './assets/index.css';
 import React from 'react';
 import Animate from 'rc-animate';
-import $ from 'jquery';
+import velocity from 'velocity-animate';
 
 var Todo = React.createClass({
   getDefaultProps: function () {
@@ -32,24 +32,51 @@ var Todo = React.createClass({
 var TodoList = React.createClass({
   getInitialState: function () {
     return {
+      exclusive: false,
       items: ['hello', 'world', 'click', 'me']
     };
   },
   animateEnter(node, done){
-    $(node).css('display', 'none');
-    $(node).slideDown(1000,done);
+    var ok = false;
+
+    function complete() {
+      if (!ok) {
+        ok = 1;
+        done();
+      }
+    }
+
+    velocity(node, 'slideDown', {
+      duration: 1000,
+      complete: complete
+    });
     return {
-      stop:function(){
-        $(node).stop(true,true);
+      stop: function () {
+        velocity(node, 'finish');
+        // velocity complete is async
+        complete();
       }
     };
   },
   animateLeave(node, done){
-    $(node).css('display', '');
-    $(node).slideUp(1000,done);
+    var ok = false;
+
+    function complete() {
+      if (!ok) {
+        ok = 1;
+        done();
+      }
+    }
+
+    velocity(node, 'slideUp', {
+      duration: 1000,
+      complete: complete
+    });
     return {
-      stop:function(){
-        $(node).stop(true,true);
+      stop: function () {
+        velocity(node, 'finish');
+        // velocity complete is async
+        complete();
       }
     };
   },
@@ -63,6 +90,11 @@ var TodoList = React.createClass({
     newItems.splice(i, 1);
     this.setState({items: newItems});
   },
+  toggle(field){
+    this.setState({
+      [field]: !this.state[field]
+    });
+  },
   render: function () {
     var items = this.state.items.map(function (item, i) {
       return (
@@ -74,7 +106,13 @@ var TodoList = React.createClass({
     return (
       <div>
         <button onClick={this.handleAdd}>Add Item</button>
-        <Animate animation={{
+        &nbsp;
+        <label><input type='checkbox' onChange={this.toggle.bind(this,'exclusive')} checked={this.state.exclusive}/>
+          exclusive</label>
+        <br/><br/>
+        <Animate
+          exclusive={this.state.exclusive}
+          animation={{
           enter: this.animateEnter,
           leave: this.animateLeave
         }}>

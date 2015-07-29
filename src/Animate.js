@@ -64,10 +64,11 @@ var Animate = React.createClass({
     var props = this.props;
     var showProp = props.showProp;
     var exclusive = props.exclusive;
+    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
     // last props children if exclusive
     // exclusive needs immediate response
-    var currentChildren = exclusive ? toArrayChildren(getChildrenFromProps(props)) : this.state.children;
-    var newChildren = exclusive ? nextChildren : ChildrenUtils.mergeChildren(
+    var currentChildren = this.state.children;
+    var newChildren = ChildrenUtils.mergeChildren(
       currentChildren,
       nextChildren
     );
@@ -83,23 +84,17 @@ var Animate = React.createClass({
       });
     }
 
-    // exclusive needs immediate response
-    if (exclusive) {
-      currentChildren.forEach((c)=> {
-        this.stop(c.key);
-      });
-      // make middle state children invalid
-      // restore to last props children
-      newChildren.forEach((c)=> {
-        this.stop(c.key);
-      });
-    }
-
     this.setState({
       children: newChildren
     });
 
-    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
+    // exclusive needs immediate response
+    if (exclusive) {
+      Object.keys(currentlyAnimatingKeys).forEach((key) => {
+        this.stop(key);
+      });
+      currentChildren = toArrayChildren(getChildrenFromProps(props));
+    }
 
     nextChildren.forEach((c)=> {
       var key = c.key;
