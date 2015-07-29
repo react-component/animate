@@ -1,9 +1,9 @@
-webpackJsonp([8],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(26);
+	module.exports = __webpack_require__(24);
 
 
 /***/ },
@@ -40,7 +40,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 26:
+/***/ 24:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

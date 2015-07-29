@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		11:0
+/******/ 		9:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"alert","1":"exclusive","2":"hide-todo","3":"simple","4":"simple-animateMount","5":"simple-animation","6":"simple-exclusive","7":"simple-remove","8":"todo","9":"todo-animation","10":"transitionLeave"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"alert","1":"hide-todo","2":"simple","3":"simple-animateMount","4":"simple-animation","5":"simple-remove","6":"todo","7":"todo-animation","8":"transitionLeave"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -418,10 +418,11 @@
 	    var props = this.props;
 	    var showProp = props.showProp;
 	    var exclusive = props.exclusive;
+	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
 	    // last props children if exclusive
 	    // exclusive needs immediate response
-	    var currentChildren = exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
-	    var newChildren = exclusive ? nextChildren : _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
+	    var currentChildren = this.state.children;
+	    var newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
 	
 	    if (showProp && !exclusive) {
 	      newChildren = newChildren.map(function (c) {
@@ -432,23 +433,17 @@
 	      });
 	    }
 	
-	    // exclusive needs immediate response
-	    if (exclusive) {
-	      currentChildren.forEach(function (c) {
-	        _this.stop(c.key);
-	      });
-	      // make middle state children invalid
-	      // restore to last props children
-	      newChildren.forEach(function (c) {
-	        _this.stop(c.key);
-	      });
-	    }
-	
 	    this.setState({
 	      children: newChildren
 	    });
 	
-	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
+	    // exclusive needs immediate response
+	    if (exclusive) {
+	      Object.keys(currentlyAnimatingKeys).forEach(function (key) {
+	        _this.stop(key);
+	      });
+	      currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	    }
 	
 	    nextChildren.forEach(function (c) {
 	      var key = c.key;

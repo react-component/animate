@@ -234,7 +234,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-animate@1.0.5</h1>
+            <h1>rc-animate@1.1.0</h1>
             <p>css-transition ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
@@ -255,28 +255,31 @@ let remove = <span class="hljs-literal">false</span>;
   constructor(props) {
     <span class="hljs-keyword">super</span>(props);
     <span class="hljs-keyword">this</span>.state = {
+      exclusive:<span class="hljs-literal">false</span>,
       enter: <span class="hljs-literal">true</span>
     };
-    <span class="hljs-keyword">this</span>.toggleAnimate = <span class="hljs-keyword">this</span>.toggleAnimate.bind(<span class="hljs-keyword">this</span>);
   }
 
-  toggleAnimate() {
+  toggle(field){
     <span class="hljs-keyword">this</span>.setState({
-      enter: !<span class="hljs-keyword">this</span>.state.enter
+      [field]:!<span class="hljs-keyword">this</span>.state[field]
     });
   }
 
   render() {
     <span class="hljs-keyword">return</span> (
       &lt;div&gt;
-        &lt;button onClick={<span class="hljs-keyword">this</span>.toggleAnimate}&gt;toggle&lt;/button&gt;
+        &lt;label&gt;&lt;input <span class="hljs-class"><span class="hljs-keyword">type</span>=</span><span class="hljs-symbol">'checkbo</span>x' onChange={<span class="hljs-keyword">this</span>.toggle.bind(<span class="hljs-keyword">this</span>,<span class="hljs-symbol">'ente</span>r')} checked={<span class="hljs-keyword">this</span>.state.enter}/&gt; show&lt;/label&gt;
+        &amp;nbsp;
+        &lt;label&gt;&lt;input <span class="hljs-class"><span class="hljs-keyword">type</span>=</span><span class="hljs-symbol">'checkbo</span>x' onChange={<span class="hljs-keyword">this</span>.toggle.bind(<span class="hljs-keyword">this</span>,<span class="hljs-symbol">'exclusiv</span>e')} checked={<span class="hljs-keyword">this</span>.state.exclusive}/&gt; exclusive&lt;/label&gt;
+        &lt;br/&gt;&lt;br/&gt;
         &lt;<span class="hljs-type">Animate</span>
           component=<span class="hljs-string">""</span>
+          exclusive={<span class="hljs-keyword">this</span>.state.exclusive}
           showProp=<span class="hljs-symbol">'data</span>-show'
           transitionName=<span class="hljs-string">"fade"</span>&gt;
           &lt;div data-show={<span class="hljs-keyword">this</span>.state.enter} style={{
           visibility:<span class="hljs-keyword">this</span>.state.enter?'':<span class="hljs-symbol">'hidde</span>n',
-          marginTop: <span class="hljs-symbol">'20p</span>x',
           width: <span class="hljs-symbol">'200p</span>x',
           height: <span class="hljs-symbol">'200p</span>x',
           backgroundColor: <span class="hljs-symbol">'re</span>d'

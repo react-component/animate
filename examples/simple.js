@@ -1,14 +1,14 @@
-webpackJsonp([3],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(19);
+	module.exports = __webpack_require__(17);
 
 
 /***/ },
 
-/***/ 19:
+/***/ 17:
 /***/ function(module, exports, __webpack_require__) {
 
 	// use jsx to render html, do not modify simple.html
@@ -20,11 +20,13 @@ webpackJsonp([3],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	__webpack_require__(20);
+	__webpack_require__(18);
 	
 	var _rcAnimate = __webpack_require__(7);
 	
@@ -45,17 +47,15 @@ webpackJsonp([3],{
 	
 	    _get(Object.getPrototypeOf(Demo.prototype), 'constructor', this).call(this, props);
 	    this.state = {
+	      exclusive: false,
 	      enter: true
 	    };
-	    this.toggleAnimate = this.toggleAnimate.bind(this);
 	  }
 	
 	  _createClass(Demo, [{
-	    key: 'toggleAnimate',
-	    value: function toggleAnimate() {
-	      this.setState({
-	        enter: !this.state.enter
-	      });
+	    key: 'toggle',
+	    value: function toggle(field) {
+	      this.setState(_defineProperty({}, field, !this.state[field]));
 	    }
 	  }, {
 	    key: 'render',
@@ -64,19 +64,29 @@ webpackJsonp([3],{
 	        'div',
 	        null,
 	        _react2['default'].createElement(
-	          'button',
-	          { onClick: this.toggleAnimate },
-	          'toggle'
+	          'label',
+	          null,
+	          _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'enter'), checked: this.state.enter }),
+	          ' show'
 	        ),
+	        ' ',
+	        _react2['default'].createElement(
+	          'label',
+	          null,
+	          _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'exclusive'), checked: this.state.exclusive }),
+	          ' exclusive'
+	        ),
+	        _react2['default'].createElement('br', null),
+	        _react2['default'].createElement('br', null),
 	        _react2['default'].createElement(
 	          _rcAnimate2['default'],
 	          {
 	            component: "",
+	            exclusive: this.state.exclusive,
 	            showProp: 'data-show',
 	            transitionName: "fade" },
 	          _react2['default'].createElement('div', { 'data-show': this.state.enter, style: {
 	              visibility: this.state.enter ? '' : 'hidden',
-	              marginTop: '20px',
 	              width: '200px',
 	              height: '200px',
 	              backgroundColor: 'red'
@@ -93,13 +103,13 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 20:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(21);
+	var content = __webpack_require__(19);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(5)(content, {});
@@ -117,7 +127,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 21:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();

@@ -234,7 +234,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-animate@1.0.5</h1>
+            <h1>rc-animate@1.1.0</h1>
             <p>css-transition ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
@@ -245,7 +245,7 @@
 <span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.css'</span>;
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
-<span class="hljs-keyword">import</span> $ from <span class="hljs-string">'jquery'</span>;
+<span class="hljs-keyword">import</span> velocity <span class="hljs-keyword">from</span> <span class="hljs-string">'velocity-animate'</span>;
 
 <span class="hljs-keyword">var</span> Todo = React.createClass({
   getDefaultProps: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
@@ -274,24 +274,51 @@
 <span class="hljs-keyword">var</span> TodoList = React.createClass({
   getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">return</span> {
+      exclusive: <span class="hljs-literal">false</span>,
       items: [<span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>, <span class="hljs-string">'click'</span>, <span class="hljs-string">'me'</span>]
     };
   },
   animateEnter(node, done){
-    $(node).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">'none'</span>);
-    $(node).slideDown(<span class="hljs-number">1000</span>,done);
+    <span class="hljs-keyword">var</span> ok = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">if</span> (!ok) {
+        ok = <span class="hljs-number">1</span>;
+        done();
+      }
+    }
+
+    velocity(node, <span class="hljs-string">'slideDown'</span>, {
+      duration: <span class="hljs-number">1000</span>,
+      complete: complete
+    });
     <span class="hljs-keyword">return</span> {
-      stop:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-        $(node).stop(<span class="hljs-literal">true</span>,<span class="hljs-literal">true</span>);
+      stop: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        velocity(node, <span class="hljs-string">'finish'</span>);
+        <span class="hljs-comment">// velocity complete is async</span>
+        complete();
       }
     };
   },
   animateLeave(node, done){
-    $(node).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>);
-    $(node).slideUp(<span class="hljs-number">1000</span>,done);
+    <span class="hljs-keyword">var</span> ok = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">if</span> (!ok) {
+        ok = <span class="hljs-number">1</span>;
+        done();
+      }
+    }
+
+    velocity(node, <span class="hljs-string">'slideUp'</span>, {
+      duration: <span class="hljs-number">1000</span>,
+      complete: complete
+    });
     <span class="hljs-keyword">return</span> {
-      stop:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-        $(node).stop(<span class="hljs-literal">true</span>,<span class="hljs-literal">true</span>);
+      stop: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        velocity(node, <span class="hljs-string">'finish'</span>);
+        <span class="hljs-comment">// velocity complete is async</span>
+        complete();
       }
     };
   },
@@ -305,6 +332,11 @@
     newItems.splice(i, <span class="hljs-number">1</span>);
     <span class="hljs-keyword">this</span>.setState({items: newItems});
   },
+  toggle(field){
+    <span class="hljs-keyword">this</span>.setState({
+      [field]: !<span class="hljs-keyword">this</span>.state[field]
+    });
+  },
   render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">var</span> items = <span class="hljs-keyword">this</span>.state.items.map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">item, i</span>) </span>{
       <span class="hljs-keyword">return</span> (
@@ -316,7 +348,13 @@
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleAdd}</span>&gt;</span>Add Item<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">animation</span>=<span class="hljs-value">{{</span>
+        &amp;nbsp;
+        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'checkbox'</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,'exclusive')}</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.exclusive}</span>/&gt;</span>
+          exclusive<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span>
+          <span class="hljs-attribute">exclusive</span>=<span class="hljs-value">{this.state.exclusive}</span>
+          <span class="hljs-attribute">animation</span>=<span class="hljs-value">{{</span>
           <span class="hljs-attribute">enter:</span> <span class="hljs-attribute">this.animateEnter</span>,
           <span class="hljs-attribute">leave:</span> <span class="hljs-attribute">this.animateLeave</span>
         }}&gt;</span>
