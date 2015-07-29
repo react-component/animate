@@ -67,12 +67,12 @@ var Animate = React.createClass({
     // last props children if exclusive
     // exclusive needs immediate response
     var currentChildren = exclusive ? toArrayChildren(getChildrenFromProps(props)) : this.state.children;
-    var newChildren = ChildrenUtils.mergeChildren(
+    var newChildren = exclusive ? nextChildren : ChildrenUtils.mergeChildren(
       currentChildren,
       nextChildren
     );
 
-    if (showProp) {
+    if (showProp && !exclusive) {
       newChildren = newChildren.map((c) => {
         if (!c.props[showProp] && isShownInChildren(currentChildren, c, showProp)) {
           c = React.cloneElement(c, {
@@ -85,6 +85,9 @@ var Animate = React.createClass({
 
     // exclusive needs immediate response
     if (exclusive) {
+      currentChildren.forEach((c)=> {
+        this.stop(c.key);
+      });
       // make middle state children invalid
       // restore to last props children
       newChildren.forEach((c)=> {
@@ -138,10 +141,13 @@ var Animate = React.createClass({
   },
 
   performEnter(key) {
-    this.currentlyAnimatingKeys[key] = true;
-    this.refs[key].componentWillEnter(
-      this._handleDoneEntering.bind(this, key)
-    );
+    // may already remove by exclusive
+    if (this.refs[key]) {
+      this.currentlyAnimatingKeys[key] = true;
+      this.refs[key].componentWillEnter(
+        this._handleDoneEntering.bind(this, key)
+      );
+    }
   },
 
   _handleDoneEntering(key) {
@@ -161,8 +167,11 @@ var Animate = React.createClass({
   },
 
   performLeave(key) {
-    this.currentlyAnimatingKeys[key] = true;
-    this.refs[key].componentWillLeave(this._handleDoneLeaving.bind(this, key));
+    // may already remove by exclusive
+    if (this.refs[key]) {
+      this.currentlyAnimatingKeys[key] = true;
+      this.refs[key].componentWillLeave(this._handleDoneLeaving.bind(this, key));
+    }
   },
 
   isValidChildByKey(currentChildren, key) {
