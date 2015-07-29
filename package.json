@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "expect.js": "0.3.x",
-    "jquery": "~1.11.3",
     "node-dev": "2.x",
     "object-assign": "~3.0.0",
     "precommit-hook": "1.x",
