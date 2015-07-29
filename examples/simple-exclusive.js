@@ -30,6 +30,7 @@ class Demo extends Component {
         <button onClick={this.toggleAnimate}>toggle</button>
         <Animate
           component=""
+          exclusive={true}
           showProp='data-show'
           transitionName="fade">
           <div data-show={this.state.enter} style={{
