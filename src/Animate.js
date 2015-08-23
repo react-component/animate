@@ -210,13 +210,13 @@ const Animate = React.createClass({
       if (type === 'appear') {
         if (animUtil.isAppearSupported(props)) {
           props.onAppear(key);
+          props.onEnd(key, true);
         }
-        props.onEnd(key, true);
       } else {
         if (animUtil.isEnterSupported(props)) {
           props.onEnter(key);
+          props.onEnd(key, true);
         }
-        props.onEnd(key, true);
       }
       if (this.isMounted() && !isSameChildren(this.state.children, currentChildren)) {
         this.setState({
