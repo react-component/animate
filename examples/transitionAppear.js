@@ -1,7 +1,7 @@
 // use jsx to render html, do not modify simple.html
 'use strict';
 
-import './assets/index.css';
+import './assets/index.less';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
 
@@ -20,6 +20,10 @@ class Demo extends Component {
     });
   }
 
+  onAppear(key){
+    console.log(key);
+  }
+
   render() {
     return (
       <div>
@@ -27,7 +31,8 @@ class Demo extends Component {
         <Animate
           component=""
           showProp='data-show'
-          animateMount={true}
+          onAppear={this.onAppear}
+          transitionAppear={true}
           transitionName="fade">
           <div data-show={this.state.enter} key="1" style={{
           display:this.state.enter?'block':'none',

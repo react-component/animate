@@ -1,25 +1,29 @@
-'use strict';
-
 import React from 'react';
-import CssAnimate, {isCssAnimationSupported} from 'css-animation';
+import cssAnimate, {isCssAnimationSupported} from 'css-animation';
+import animUtil from './util';
 
-var transitionMap = {
+const transitionMap = {
   enter: 'transitionEnter',
-  leave: 'transitionLeave'
+  appear: 'transitionAppear',
+  leave: 'transitionLeave',
 };
 
-var AnimateChild = React.createClass({
+const AnimateChild = React.createClass({
+  propTypes: {
+    children: React.PropTypes.any,
+  },
+
   transition(animationType, finishCallback) {
-    var node = React.findDOMNode(this);
-    var props = this.props;
-    var transitionName = props.transitionName;
+    const node = React.findDOMNode(this);
+    const props = this.props;
+    const transitionName = props.transitionName;
     this.stop();
-    var end = () => {
+    const end = () => {
       this.stopper = null;
       finishCallback();
     };
     if ((isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
-      this.stopper = CssAnimate(node, transitionName + '-' + animationType, end);
+      this.stopper = cssAnimate(node, transitionName + '-' + animationType, end);
     } else {
       this.stopper = props.animation[animationType](node, end);
     }
@@ -37,17 +41,23 @@ var AnimateChild = React.createClass({
   },
 
   componentWillEnter(done) {
-    var props = this.props;
-    if (props.transitionEnter && props.transitionName || props.animation.enter) {
+    if (animUtil.isEnterSupported(this.props)) {
       this.transition('enter', done);
     } else {
       done();
     }
   },
 
+  componentWillAppear(done) {
+    if (animUtil.isAppearSupported(this.props)) {
+      this.transition('appear', done);
+    } else {
+      done();
+    }
+  },
+
   componentWillLeave(done) {
-    var props = this.props;
-    if (props.transitionLeave && props.transitionName || props.animation.leave) {
+    if (animUtil.isLeaveSupported(this.props)) {
       this.transition('leave', done);
     } else {
       done();
@@ -56,7 +66,7 @@ var AnimateChild = React.createClass({
 
   render() {
     return this.props.children;
-  }
+  },
 });
 
 export default AnimateChild;

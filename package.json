@@ -1,6 +1,6 @@
 {
   "name": "rc-animate",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "css-transition ui component for react",
   "keywords": [
     "react",
@@ -23,32 +23,31 @@
   "licenses": "MIT",
   "main": "./lib/index",
   "config": {
-    "port": 8000
+    "port": 8200
   },
   "scripts": {
     "build": "rc-tools run build",
-    "precommit": "rc-tools run precommit",
-    "less": "rc-tools run less",
     "gh-pages": "rc-tools run gh-pages",
     "start": "node --harmony node_modules/.bin/rc-server",
-    "publish": "rc-tools run tag",
+    "pub": "rc-tools run pub",
     "lint": "rc-tools run lint",
+    "karma": "rc-tools run karma",
     "saucelabs": "node --harmony node_modules/.bin/rc-tools run saucelabs",
     "browser-test": "node --harmony node_modules/.bin/rc-tools run browser-test",
     "browser-test-cover": "node --harmony node_modules/.bin/rc-tools run browser-test-cover"
   },
   "devDependencies": {
     "expect.js": "0.3.x",
-    "node-dev": "2.x",
+    "jquery": "~1.11.3",
     "object-assign": "~3.0.0",
     "precommit-hook": "1.x",
     "rc-server": "3.x",
-    "rc-tools": "3.x",
+    "rc-tools": "4.x",
     "react": "0.13.x",
     "velocity-animate": "~1.2.2"
   },
   "precommit": [
-    "precommit"
+    "lint"
   ],
   "dependencies": {
     "css-animation": "1.x"

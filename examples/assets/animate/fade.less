@@ -5,6 +5,13 @@
   animation-play-state: paused;
 }
 
+.fade-appear {
+  opacity: 0;
+  .motion-common();
+  animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  animation-play-state: paused;
+}
+
 .fade-leave {
   .motion-common();
   animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
@@ -12,6 +19,11 @@
 }
 
 .fade-enter.fade-enter-active {
+  animation-name: fadeIn;
+  animation-play-state: running;
+}
+
+.fade-appear.fade-appear-active {
   animation-name: fadeIn;
   animation-play-state: running;
 }

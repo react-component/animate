@@ -1,7 +1,7 @@
 // use jsx to render html, do not modify simple.html
 'use strict';
 
-import './assets/slow.css';
+import './assets/slow.less';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
 

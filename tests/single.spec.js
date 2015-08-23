@@ -13,13 +13,15 @@ var createClass = function (options) {
   return React.createClass({
     getInitialState(){
       return {
-        transitionEnter: options.transitionEnter
+        transitionEnter: options.transitionEnter,
+        transitionAppear: options.transitionAppear,
       };
     },
     render() {
       return (
         <Animate
           ref="anim"
+          transitionAppear={!!this.state.transitionAppear}
           transitionName="example"
           component={options.component}>
           {options.remove && !this.state.transitionEnter ? null : <div key="1">child element</div>}

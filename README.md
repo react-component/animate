@@ -77,6 +77,12 @@ React.render(<Animate animation={{}}><p key="1">1</p><p key="2">2</p></Animate>,
           <td></td>
           <td>transitionName, need to specify corresponding css</td>
         </tr>
+       <tr>
+         <td>transitionAppear</td>
+         <td>Boolean</td>
+         <td>false</td>
+         <td>whether support transition appear anim</td>
+       </tr>
         <tr>
           <td>transitionEnter</td>
           <td>Boolean</td>
@@ -91,7 +97,7 @@ React.render(<Animate animation={{}}><p key="1">1</p><p key="2">2</p></Animate>,
        </tr>
        <tr>
          <td>onEnd</td>
-         <td>function(key:String, enter:Boolean)</td>
+         <td>function(key:String, exists:Boolean)</td>
          <td>true</td>
          <td>animation end callback</td>
        </tr>
@@ -108,11 +114,11 @@ React.render(<Animate animation={{}}><p key="1">1</p><p key="2">2</p></Animate>,
 
 ### animation format
 
-with enter and leave as keys. for example:
+with appear, enter and leave as keys. for example:
 
 ```js
   {
-    enter: function(node, done){
+    appear: function(node, done){
       node.style.display='none';
       $(node).slideUp(done);
       return {
@@ -121,6 +127,9 @@ with enter and leave as keys. for example:
           $(node).stop(true);
         }
       };
+    },
+    enter: function(){
+      this.appear.apply(this,arguments);
     },
     leave: function(node, done){
       node.style.display='';
@@ -144,17 +153,17 @@ npm start
 
 ## Example
 
-http://localhost:8000/examples/index.md
+http://localhost:8200/examples/index.md
 
 online example: http://react-component.github.io/animate/examples/
 
 ## Test Case
 
-http://localhost:8000/tests/runner.html?coverage
+http://localhost:8200/tests/runner.html?coverage
 
 ## Coverage
 
-http://localhost:8000/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8000/tests/runner.html?coverage
+http://localhost:8200/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8200/tests/runner.html?coverage
 
 ## License
 

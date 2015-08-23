@@ -3,7 +3,16 @@
   transition: opacity .5s ease-in;
 }
 
+.example-appear {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
 .example-enter.example-enter-active {
+  opacity: 1;
+}
+
+.example-appear.example-appear-active {
   opacity: 1;
 }
 

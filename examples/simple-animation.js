@@ -1,7 +1,7 @@
 // use jsx to render html, do not modify simple.html
 'use strict';
 
-import './assets/index.css';
+import './assets/index.less';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
 import velocity from 'velocity-animate';

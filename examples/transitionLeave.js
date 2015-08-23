@@ -1,9 +1,8 @@
 'use strict';
 
-import './assets/index.css';
+import './assets/index.less';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
-import $ from 'jquery';
 
 let transitionEnter = true;
 let remove = false;
@@ -21,13 +20,18 @@ var Demo = React.createClass({
     });
   },
 
+  onEvent(e){
+    console.log(e);
+  },
+
 
   render() {
 
     var text = this.state.enter ? "ON" : "OFF";
     return (
       <div>
-        <Animate transitionLeave={false} transitionName="fade">
+        <Animate transitionLeave={false}
+                 transitionName="fade">
           <button key={text} onClick={this.toggleAnimate}>{text}</button>
         </Animate>
       </div>

@@ -10,6 +10,10 @@ var TestUtils = React.addons.TestUtils;
 require('./index.spec.css');
 
 module.exports = function (createClass, title) {
+  function getOpacity(node) {
+    return parseFloat(window.getComputedStyle(node).getPropertyValue('opacity'));
+  }
+
   describe(title, function () {
     describe('when remove is true', function () {
       var instance;
@@ -27,9 +31,34 @@ module.exports = function (createClass, title) {
         try {
           React.unmountComponentAtNode(div);
           document.body.removeChild(div);
-        }catch(e){
+        } catch (e) {
           console.log(e);
         }
+      });
+
+      describe('when transitionAppear', function () {
+        it('should render children', function () {
+          expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'span')[0]).not.to.be.ok();
+          var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
+          expect(getOpacity(React.findDOMNode(child))).to.be(1);
+        });
+
+        it('should anim children', function (done) {
+          var div = document.createElement('div');
+          document.body.appendChild(div);
+          var Component = createClass({transitionEnter: true, transitionAppear: true, component: '', remove: true});
+
+          var instance = React.render(<Component/>, div);
+          expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'span')[0]).not.to.be.ok();
+          var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
+          expect(getOpacity(React.findDOMNode(child))).not.to.be(1);
+          setTimeout(function () {
+            expect(getOpacity(React.findDOMNode(child))).to.be(1);
+            React.unmountComponentAtNode(div);
+            document.body.removeChild(div);
+            done();
+          }, 900);
+        });
       });
 
       describe('when transitionEnter', function () {
