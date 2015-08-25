@@ -229,29 +229,30 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
 <![endif]-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+  <link rel="stylesheet" href="transitionAppear.css" />
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-animate@1.1.0</h1>
+            <h1>rc-animate@1.2.2</h1>
             <p>css-transition ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
         <script src="common.js?nowrap"></script>
-        <script src="simple-animateMount.js?nowrap"></script>
+        <script src="transitionAppear.js?nowrap"></script>
         <div class="highlight"><pre><code><span class="hljs-comment">// use jsx to render html, do not modify simple.html</span>
-<span class="hljs-symbol">'use</span> strict';
+<span class="hljs-string">'use strict'</span>;
 
-<span class="hljs-keyword">import</span> './assets/index.css';
-<span class="hljs-keyword">import</span> <span class="hljs-type">Animate</span> from <span class="hljs-symbol">'rc</span>-animate';
-<span class="hljs-keyword">import</span> <span class="hljs-type">React</span>, {<span class="hljs-type">Component</span>} from <span class="hljs-symbol">'reac</span>t';
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
+<span class="hljs-keyword">import</span> Animate from <span class="hljs-string">'rc-animate'</span>;
+<span class="hljs-keyword">import</span> React, {Component} from <span class="hljs-string">'react'</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">Component</span> {</span>
+class Demo extends Component {
   constructor(props) {
     <span class="hljs-keyword">super</span>(props);
     <span class="hljs-keyword">this</span>.state = {
-      enter: <span class="hljs-literal">true</span>
+      enter: <span class="hljs-number">1</span>
     };
     <span class="hljs-keyword">this</span>.toggleAnimate = <span class="hljs-keyword">this</span>.toggleAnimate.bind(<span class="hljs-keyword">this</span>);
   }
@@ -262,29 +263,44 @@
     });
   }
 
+  onAppear(<span class="hljs-variable">key</span>){
+    console.<span class="hljs-built_in">log</span>(<span class="hljs-string">'appear'</span>,<span class="hljs-variable">key</span>);
+  }
+
+  onEnter(<span class="hljs-variable">key</span>){
+    console.<span class="hljs-built_in">log</span>(<span class="hljs-string">'enter'</span>,<span class="hljs-variable">key</span>);
+  }
+
+  onLeave(<span class="hljs-variable">key</span>){
+    console.<span class="hljs-built_in">log</span>(<span class="hljs-string">'leave'</span>,<span class="hljs-variable">key</span>);
+  }
+
   render() {
     <span class="hljs-keyword">return</span> (
       &lt;div&gt;
         &lt;button onClick={<span class="hljs-keyword">this</span>.toggleAnimate}&gt;toggle&lt;/button&gt;
-        &lt;<span class="hljs-type">Animate</span>
+        &lt;Animate
           component=<span class="hljs-string">""</span>
-          showProp=<span class="hljs-symbol">'data</span>-show'
-          animateMount={<span class="hljs-literal">true</span>}
+          showProp=<span class="hljs-string">'data-show'</span>
+          onAppear={<span class="hljs-keyword">this</span>.onAppear}
+          onEnter={<span class="hljs-keyword">this</span>.onEnter}
+          onLeave={<span class="hljs-keyword">this</span>.onLeave}
+          transitionAppear={<span class="hljs-keyword">true</span>}
           transitionName=<span class="hljs-string">"fade"</span>&gt;
-          &lt;div data-show={<span class="hljs-keyword">this</span>.state.enter} key=<span class="hljs-string">"1"</span> style={{
-          display:<span class="hljs-keyword">this</span>.state.enter?<span class="hljs-symbol">'bloc</span>k':<span class="hljs-symbol">'non</span>e',
-          marginTop: <span class="hljs-symbol">'20p</span>x',
-          width: <span class="hljs-symbol">'200p</span>x',
-          height: <span class="hljs-symbol">'200p</span>x',
-          backgroundColor: <span class="hljs-symbol">'re</span>d'
+          &lt;div data-show={<span class="hljs-keyword">this</span>.state.enter} <span class="hljs-variable">key</span>=<span class="hljs-string">"1"</span> style={{
+          display:<span class="hljs-keyword">this</span>.state.enter?<span class="hljs-string">'block'</span>:<span class="hljs-string">'none'</span>,
+          marginTop: <span class="hljs-string">'20px'</span>,
+          <span class="hljs-variable">width</span>: <span class="hljs-string">'200px'</span>,
+          <span class="hljs-variable">height</span>: <span class="hljs-string">'200px'</span>,
+          backgroundColor: <span class="hljs-string">'red'</span>
           }}&gt;&lt;/div&gt;
-        &lt;/<span class="hljs-type">Animate</span>&gt;
+        &lt;/Animate&gt;
       &lt;/div&gt;
     );
   }
 }
 
-<span class="hljs-type">React</span>.render(&lt;<span class="hljs-type">Demo</span> /&gt;, document.getElementById(<span class="hljs-symbol">'__react</span>-content'));
+React.render(&lt;Demo /&gt;, document.getElementById(<span class="hljs-string">'__react-content'</span>));
 </code></pre></div>
     </div>
     <a href="https://github.com/react-component/animate"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>

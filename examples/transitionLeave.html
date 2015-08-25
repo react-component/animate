@@ -229,12 +229,13 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
 <![endif]-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+  <link rel="stylesheet" href="transitionLeave.css" />
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-animate@1.1.0</h1>
+            <h1>rc-animate@1.2.2</h1>
             <p>css-transition ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
@@ -242,10 +243,9 @@
         <script src="transitionLeave.js?nowrap"></script>
         <div class="highlight"><pre><code><span class="hljs-pi">'use strict'</span>;
 
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.css'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
 <span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> $ from <span class="hljs-string">'jquery'</span>;
 
 <span class="hljs-keyword">let</span> transitionEnter = <span class="hljs-literal">true</span>;
 <span class="hljs-keyword">let</span> remove = <span class="hljs-literal">false</span>;
@@ -263,13 +263,18 @@
     });
   },
 
+  onEvent(e){
+    <span class="hljs-built_in">console</span>.log(e);
+  },
+
 
   render() {
 
     <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">this</span>.state.enter ? <span class="hljs-string">"ON"</span> : <span class="hljs-string">"OFF"</span>;
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">transitionLeave</span>=<span class="hljs-value">{false}</span> <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">transitionLeave</span>=<span class="hljs-value">{false}</span>
+                 <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>&gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{text}</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.toggleAnimate}</span>&gt;</span>{text}<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
