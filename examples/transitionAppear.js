@@ -9,7 +9,7 @@ class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      enter: true
+      enter: 1
     };
     this.toggleAnimate = this.toggleAnimate.bind(this);
   }
@@ -21,7 +21,15 @@ class Demo extends Component {
   }
 
   onAppear(key){
-    console.log(key);
+    console.log('appear',key);
+  }
+
+  onEnter(key){
+    console.log('enter',key);
+  }
+
+  onLeave(key){
+    console.log('leave',key);
   }
 
   render() {
@@ -32,6 +40,8 @@ class Demo extends Component {
           component=""
           showProp='data-show'
           onAppear={this.onAppear}
+          onEnter={this.onEnter}
+          onLeave={this.onLeave}
           transitionAppear={true}
           transitionName="fade">
           <div data-show={this.state.enter} key="1" style={{

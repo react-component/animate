@@ -55,12 +55,6 @@ const Animate = React.createClass({
     };
   },
 
-  componentDidMount() {
-    this.state.children.map((c) => {
-      return c.key;
-    }).forEach(this.performAppear);
-  },
-
   getInitialState() {
     this.currentlyAnimatingKeys = {};
     this.keysToEnter = [];
@@ -68,6 +62,19 @@ const Animate = React.createClass({
     return {
       children: toArrayChildren(getChildrenFromProps(this.props)),
     };
+  },
+
+  componentDidMount() {
+    const showProp = this.props.showProp;
+    let children = this.state.children;
+    if (showProp) {
+      children = children.filter((c)=> {
+        return !!c.props[showProp];
+      });
+    }
+    children.forEach((c) => {
+      this.performAppear(c.key);
+    });
   },
 
   componentWillReceiveProps(nextProps) {
