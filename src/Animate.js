@@ -215,12 +215,12 @@ const Animate = React.createClass({
       this.performLeave(key);
     } else {
       if (type === 'appear') {
-        if (animUtil.isAppearSupported(props)) {
+        if (animUtil.allowAppearCallback(props)) {
           props.onAppear(key);
           props.onEnd(key, true);
         }
       } else {
-        if (animUtil.isEnterSupported(props)) {
+        if (animUtil.allowEnterCallback(props)) {
           props.onEnter(key);
           props.onEnd(key, true);
         }
@@ -250,7 +250,7 @@ const Animate = React.createClass({
     if (this.isValidChildByKey(currentChildren, key)) {
       this.performEnter(key);
     } else {
-      if (animUtil.isLeaveSupported(props)) {
+      if (animUtil.allowLeaveCallback(props)) {
         props.onLeave(key);
         props.onEnd(key, false);
       }

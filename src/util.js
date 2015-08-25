@@ -8,5 +8,16 @@ const util = {
   isLeaveSupported(props) {
     return props.transitionName && props.transitionLeave || props.animation.leave;
   },
+
+
+  allowAppearCallback(props) {
+    return props.transitionAppear || props.animation.appear;
+  },
+  allowEnterCallback(props) {
+    return props.transitionEnter || props.animation.enter;
+  },
+  allowLeaveCallback(props) {
+    return props.transitionLeave || props.animation.leave;
+  },
 };
 export default util;
