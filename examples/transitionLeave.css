@@ -4,11 +4,11 @@
           animation-duration: .5s;
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
+  display: block !important;
   -webkit-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
           animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
   -webkit-animation-play-state: paused;
           animation-play-state: paused;
-  display: block !important;
 }
 .fade-appear {
   opacity: 0;
@@ -16,6 +16,7 @@
           animation-duration: .5s;
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
+  display: block !important;
   -webkit-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
           animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
   -webkit-animation-play-state: paused;
@@ -26,6 +27,7 @@
           animation-duration: .5s;
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
+  display: block !important;
   -webkit-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
           animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
   -webkit-animation-play-state: paused;

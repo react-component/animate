@@ -130,6 +130,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -229,20 +231,36 @@
 	    // exclusive needs immediate response
 	    var currentChildren = this.state.children;
 	    var newChildren = undefined;
-	
-	    if (!showProp) {
-	      newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
-	      this.setState({
-	        children: newChildren
+	    var needSetState = false;
+	    if (showProp) {
+	      needSetState = true;
+	      newChildren = currentChildren.map(function (currentChild) {
+	        var nextChild = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
+	        if (!nextChild.props[showProp] && currentChild.props[showProp]) {
+	          return _react2['default'].cloneElement(nextChild, _defineProperty({}, showProp, true));
+	        }
+	        return nextChild;
 	      });
+	    } else {
+	      newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
+	      if (newChildren.length !== currentChildren.length || newChildren.length !== nextChildren.length) {
+	        needSetState = true;
+	      }
 	    }
 	
 	    // exclusive needs immediate response
 	    if (exclusive) {
 	      Object.keys(currentlyAnimatingKeys).forEach(function (key) {
+	        needSetState = false;
 	        _this2.stop(key);
 	      });
 	      currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	    }
+	
+	    if (needSetState) {
+	      this.setState({
+	        children: newChildren
+	      });
 	    }
 	
 	    nextChildren.forEach(function (c) {
@@ -250,7 +268,7 @@
 	      if (currentlyAnimatingKeys[key]) {
 	        return;
 	      }
-	      var hasPrev = (0, _ChildrenUtils.inChildren)(currentChildren, c);
+	      var hasPrev = (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
 	      if (showProp) {
 	        if (hasPrev) {
 	          var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
@@ -269,7 +287,7 @@
 	      if (currentlyAnimatingKeys[key]) {
 	        return;
 	      }
-	      var hasNext = (0, _ChildrenUtils.inChildren)(nextChildren, c);
+	      var hasNext = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
 	      if (showProp) {
 	        if (hasNext) {
 	          var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
@@ -357,11 +375,6 @@
 	          props.onEnd(key, true);
 	        }
 	      }
-	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
-	        this.setState({
-	          children: currentChildren
-	        });
-	      }
 	    }
 	  },
 	
@@ -398,7 +411,7 @@
 	    if (showProp) {
 	      return (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
 	    }
-	    return (0, _ChildrenUtils.inChildrenByKey)(currentChildren, key);
+	    return (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
 	  },
 	
 	  stop: function stop(key) {
@@ -429,20 +442,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	function inChildren(children, child) {
-	  var found = 0;
-	  children.forEach(function (c) {
-	    if (found) {
-	      return;
-	    }
-	    found = c.key === child.key;
-	  });
-	  return found;
-	}
-	
-	exports['default'] = {
-	  inChildren: inChildren,
-	
+	var utils = {
 	  toArrayChildren: function toArrayChildren(children) {
 	    var ret = [];
 	    _react2['default'].Children.forEach(children, function (c) {
@@ -451,17 +451,19 @@
 	    return ret;
 	  },
 	
-	  inChildrenByKey: function inChildrenByKey(children, key) {
-	    var found = 0;
+	  findChildInChildrenByKey: function findChildInChildrenByKey(children, key) {
+	    var ret = 0;
 	    if (children) {
 	      children.forEach(function (c) {
-	        if (found) {
+	        if (ret) {
 	          return;
 	        }
-	        found = c.key === key;
+	        if (c.key === key) {
+	          ret = c;
+	        }
 	      });
 	    }
-	    return found;
+	    return ret;
 	  },
 	
 	  findShownChildInChildrenByKey: function findShownChildInChildrenByKey(children, key, showProp) {
@@ -515,7 +517,7 @@
 	    var nextChildrenPending = {};
 	    var pendingChildren = [];
 	    prev.forEach(function (c) {
-	      if (inChildren(next, c)) {
+	      if (utils.findChildInChildrenByKey(next, c.key)) {
 	        if (pendingChildren.length) {
 	          nextChildrenPending[c.key] = pendingChildren;
 	          pendingChildren = [];
@@ -537,6 +539,8 @@
 	    return ret;
 	  }
 	};
+	
+	exports['default'] = utils;
 	module.exports = exports['default'];
 
 /***/ },
