@@ -1,22 +1,35 @@
 // use jsx to render html, do not modify simple.html
 'use strict';
 
-import './assets/index.less';
+import './assets/slow.less';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
+
+const Box = React.createClass({
+  render(){
+    console.log('render',this.props.visible);
+    return <div style={{
+          display:this.props.visible?'block':'none',
+          marginTop: '20px',
+          width: '200px',
+          height: '200px',
+          backgroundColor: 'red'
+          }}></div>
+  }
+});
 
 class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      enter: 1
+      visible: 1
     };
     this.toggleAnimate = this.toggleAnimate.bind(this);
   }
 
   toggleAnimate() {
     this.setState({
-      enter: !this.state.enter
+      visible: !this.state.visible
     });
   }
 
@@ -38,19 +51,13 @@ class Demo extends Component {
         <button onClick={this.toggleAnimate}>toggle</button>
         <Animate
           component=""
-          showProp='data-show'
+          showProp='visible'
           onAppear={this.onAppear}
           onEnter={this.onEnter}
           onLeave={this.onLeave}
           transitionAppear={true}
           transitionName="fade">
-          <div data-show={this.state.enter} key="1" style={{
-          display:this.state.enter?'block':'none',
-          marginTop: '20px',
-          width: '200px',
-          height: '200px',
-          backgroundColor: 'red'
-          }}></div>
+         <Box visible={this.state.visible} />
         </Animate>
       </div>
     );

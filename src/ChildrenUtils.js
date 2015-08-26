@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 
 function inChildren(children, child) {
@@ -24,17 +22,6 @@ export default {
     return ret;
   },
 
-  isShownInChildren(children, child, showProp) {
-    let found = 0;
-    children.forEach((c) => {
-      if (found) {
-        return;
-      }
-      found = (c.key === child.key && c.props[showProp]);
-    });
-    return found;
-  },
-
   inChildrenByKey(children, key) {
     let found = 0;
     if (children) {
@@ -48,24 +35,42 @@ export default {
     return found;
   },
 
-  isShownInChildrenByKey(children, key, showProp) {
+  findShownChildInChildrenByKey(children, key, showProp) {
+    let ret = null;
+    if (children) {
+      children.forEach((c) => {
+        if (c.key === key && c.props[showProp]) {
+          if (ret) {
+            throw new Error('two child with same key for <rc-animate> children');
+          }
+          ret = c;
+        }
+      });
+    }
+    return ret;
+  },
+
+  findHiddenChildInChildrenByKey(children, key, showProp) {
     let found = 0;
     if (children) {
       children.forEach((c) => {
         if (found) {
           return;
         }
-        found = c.key === key && c.props[showProp];
+        found = c.key === key && !c.props[showProp];
       });
     }
     return found;
   },
 
-  isSameChildren(c1, c2) {
+  isSameChildren(c1, c2, showProp) {
     let same = c1.length === c2.length;
     if (same) {
-      c1.forEach((c, i) => {
-        if (c !== c2[i]) {
+      c1.forEach((child, i) => {
+        const child2 = c2[i];
+        if (child.key !== child2.key) {
+          same = false;
+        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
           same = false;
         }
       });

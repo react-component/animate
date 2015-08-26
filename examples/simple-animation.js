@@ -9,17 +9,29 @@ import velocity from 'velocity-animate';
 let transitionEnter = true;
 let remove = false;
 
+const Box = React.createClass({
+  render() {
+    console.log('render', this.props.visible);
+    return (<div style={{
+          width: '200px',
+          display: this.props.visible ? 'block' : 'none',
+          height: '200px',
+          backgroundColor: 'red'
+          }}></div>);
+  }
+});
+
 var Demo = React.createClass({
   getInitialState() {
     return {
-      enter: true,
-      exclusive:false
+      visible: true,
+      exclusive: false
     };
   },
 
   toggleAnimate() {
     this.setState({
-      enter: !this.state.enter
+      visible: !this.state.visible
     });
   },
 
@@ -32,6 +44,8 @@ var Demo = React.createClass({
         done();
       }
     }
+
+    node.style.display = 'none';
 
     velocity(node, 'slideDown', {
       duration: 1000,
@@ -56,6 +70,8 @@ var Demo = React.createClass({
       }
     }
 
+    node.style.display = 'block';
+
     velocity(node, 'slideUp', {
       duration: 1000,
       complete: complete
@@ -71,30 +87,28 @@ var Demo = React.createClass({
 
   toggle(field){
     this.setState({
-      [field]:!this.state[field]
+      [field]: !this.state[field]
     });
   },
 
   render() {
     return (
       <div>
-        <label><input type='checkbox' onChange={this.toggle.bind(this,'enter')} checked={this.state.enter}/> show</label>
+        <label><input type='checkbox' onChange={this.toggle.bind(this,'visible')} checked={this.state.visible}/>
+          show</label>
         &nbsp;
-        <label><input type='checkbox' onChange={this.toggle.bind(this,'exclusive')} checked={this.state.exclusive}/> exclusive</label>
+        <label><input type='checkbox' onChange={this.toggle.bind(this,'exclusive')} checked={this.state.exclusive}/>
+          exclusive</label>
         <br/><br/>
         <Animate
           component=""
           exclusive={this.state.exclusive}
-          showProp='data-show'
+          showProp='visible'
           animation={{
             enter:this.animateEnter,
             leave:this.animateLeave
           }}>
-          <div data-show={this.state.enter} key="1" style={{
-          width: '200px',
-          height: '200px',
-          backgroundColor: 'red'
-          }}></div>
+          <Box visible={this.state.visible}/>
         </Animate>
       </div>
     );
