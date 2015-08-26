@@ -2,9 +2,8 @@ import React from 'react';
 import ChildrenUtils, {
   toArrayChildren,
   findShownChildInChildrenByKey,
-  inChildrenByKey,
+  findChildInChildrenByKey,
   isSameChildren,
-  inChildren
 } from './ChildrenUtils';
 import AnimateChild from './AnimateChild';
 const defaultKey = 'rc_animate_' + Date.now();
@@ -86,23 +85,41 @@ const Animate = React.createClass({
     // exclusive needs immediate response
     let currentChildren = this.state.children;
     let newChildren;
-
-    if (!showProp) {
+    let needSetState = false;
+    if (showProp) {
+      needSetState = true;
+      newChildren = currentChildren.map((currentChild)=> {
+        const nextChild = findChildInChildrenByKey(nextChildren, currentChild.key);
+        if (!nextChild.props[showProp] && currentChild.props[showProp]) {
+          return React.cloneElement(nextChild, {
+            [showProp]: true,
+          });
+        }
+        return nextChild;
+      });
+    } else {
       newChildren = ChildrenUtils.mergeChildren(
         currentChildren,
         nextChildren
       );
-      this.setState({
-        children: newChildren,
-      });
+      if (newChildren.length !== currentChildren.length || newChildren.length !== nextChildren.length) {
+        needSetState = true;
+      }
     }
 
     // exclusive needs immediate response
     if (exclusive) {
       Object.keys(currentlyAnimatingKeys).forEach((key) => {
+        needSetState = false;
         this.stop(key);
       });
       currentChildren = toArrayChildren(getChildrenFromProps(props));
+    }
+
+    if (needSetState) {
+      this.setState({
+        children: newChildren,
+      });
     }
 
     nextChildren.forEach((c)=> {
@@ -110,7 +127,7 @@ const Animate = React.createClass({
       if (currentlyAnimatingKeys[key]) {
         return;
       }
-      const hasPrev = inChildren(currentChildren, c);
+      const hasPrev = findChildInChildrenByKey(currentChildren, key);
       if (showProp) {
         if (hasPrev) {
           const showInNow = findShownChildInChildrenByKey(currentChildren, key, showProp);
@@ -129,7 +146,7 @@ const Animate = React.createClass({
       if (currentlyAnimatingKeys[key]) {
         return;
       }
-      const hasNext = inChildren(nextChildren, c);
+      const hasNext = findChildInChildrenByKey(nextChildren, key);
       if (showProp) {
         if (hasNext) {
           const showInNext = findShownChildInChildrenByKey(nextChildren, key, showProp);
@@ -215,11 +232,6 @@ const Animate = React.createClass({
           props.onEnd(key, true);
         }
       }
-      if (this.isMounted() && !isSameChildren(this.state.children, currentChildren, props.showProp)) {
-        this.setState({
-          children: currentChildren,
-        });
-      }
     }
   },
 
@@ -257,7 +269,7 @@ const Animate = React.createClass({
     if (showProp) {
       return findShownChildInChildrenByKey(currentChildren, key, showProp);
     }
-    return inChildrenByKey(currentChildren, key);
+    return findChildInChildrenByKey(currentChildren, key);
   },
 
   stop(key) {

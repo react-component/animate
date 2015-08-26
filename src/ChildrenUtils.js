@@ -1,19 +1,6 @@
 import React from 'react';
 
-function inChildren(children, child) {
-  let found = 0;
-  children.forEach((c) => {
-    if (found) {
-      return;
-    }
-    found = c.key === child.key;
-  });
-  return found;
-}
-
-export default {
-  inChildren: inChildren,
-
+const utils = {
   toArrayChildren(children) {
     const ret = [];
     React.Children.forEach(children, (c)=> {
@@ -22,17 +9,19 @@ export default {
     return ret;
   },
 
-  inChildrenByKey(children, key) {
-    let found = 0;
+  findChildInChildrenByKey(children, key) {
+    let ret = 0;
     if (children) {
       children.forEach((c) => {
-        if (found) {
+        if (ret) {
           return;
         }
-        found = c.key === key;
+        if (c.key === key) {
+          ret = c;
+        }
       });
     }
-    return found;
+    return ret;
   },
 
   findShownChildInChildrenByKey(children, key, showProp) {
@@ -86,7 +75,7 @@ export default {
     const nextChildrenPending = {};
     let pendingChildren = [];
     prev.forEach((c) => {
-      if (inChildren(next, c)) {
+      if (utils.findChildInChildrenByKey(next, c.key)) {
         if (pendingChildren.length) {
           nextChildrenPending[c.key] = pendingChildren;
           pendingChildren = [];
@@ -108,3 +97,5 @@ export default {
     return ret;
   },
 };
+
+export default utils;
