@@ -8,10 +8,11 @@ var Animate = require('../index');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 require('./index.spec.css');
+var $ = require('jquery');
 
 module.exports = function (createClass, title) {
   function getOpacity(node) {
-    return parseFloat(window.getComputedStyle(node).getPropertyValue('opacity'));
+    return parseFloat($(node).css('opacity'));
   }
 
   describe(title, function () {
@@ -65,7 +66,7 @@ module.exports = function (createClass, title) {
         it('should render children', function () {
           expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'span')[0]).not.to.be.ok();
           var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
-          expect(React.findDOMNode(child).textContent).to.be('child element');
+          expect($(React.findDOMNode(child)).text()).to.be('child element');
         });
       });
 
@@ -88,7 +89,7 @@ module.exports = function (createClass, title) {
         it('should render again', function () {
           instance.setState({transitionEnter: true});
           var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
-          expect(React.findDOMNode(child).textContent).to.be('child element');
+          expect($(React.findDOMNode(child)).text()).to.be('child element');
         });
       })
     });
@@ -106,7 +107,7 @@ module.exports = function (createClass, title) {
         it('child still exists after transition', function () {
           instance.setState({transitionEnter: false});
           var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
-          expect(React.findDOMNode(child).textContent).to.be('child element');
+          expect($(React.findDOMNode(child)).text()).to.be('child element');
         });
       })
     });
@@ -129,7 +130,7 @@ module.exports = function (createClass, title) {
 
         it('will render container', function () {
           var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'ul');
-          expect(React.findDOMNode(child).textContent).to.be('child element');
+          expect($(React.findDOMNode(child)).text()).to.be('child element');
         });
       })
     });
