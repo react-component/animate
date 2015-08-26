@@ -235,7 +235,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-animate@1.2.2</h1>
+            <h1>rc-animate@1.2.4</h1>
             <p>css-transition ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
@@ -244,22 +244,35 @@
         <div class="highlight"><pre><code><span class="hljs-comment">// use jsx to render html, do not modify simple.html</span>
 <span class="hljs-string">'use strict'</span>;
 
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/slow.less'</span>;
 <span class="hljs-keyword">import</span> Animate from <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">import</span> React, {Component} from <span class="hljs-string">'react'</span>;
+
+<span class="hljs-keyword">const</span> Box = React.createClass({
+  render(){
+    console.<span class="hljs-built_in">log</span>(<span class="hljs-string">'render'</span>,<span class="hljs-keyword">this</span>.props.visible);
+    <span class="hljs-keyword">return</span> &lt;div style={{
+          display:<span class="hljs-keyword">this</span>.props.visible?<span class="hljs-string">'block'</span>:<span class="hljs-string">'none'</span>,
+          marginTop: <span class="hljs-string">'20px'</span>,
+          <span class="hljs-variable">width</span>: <span class="hljs-string">'200px'</span>,
+          <span class="hljs-variable">height</span>: <span class="hljs-string">'200px'</span>,
+          backgroundColor: <span class="hljs-string">'red'</span>
+          }}&gt;&lt;/div&gt;
+  }
+});
 
 class Demo extends Component {
   constructor(props) {
     <span class="hljs-keyword">super</span>(props);
     <span class="hljs-keyword">this</span>.state = {
-      enter: <span class="hljs-number">1</span>
+      visible: <span class="hljs-number">1</span>
     };
     <span class="hljs-keyword">this</span>.toggleAnimate = <span class="hljs-keyword">this</span>.toggleAnimate.bind(<span class="hljs-keyword">this</span>);
   }
 
   toggleAnimate() {
     <span class="hljs-keyword">this</span>.setState({
-      enter: !<span class="hljs-keyword">this</span>.state.enter
+      visible: !<span class="hljs-keyword">this</span>.state.visible
     });
   }
 
@@ -281,19 +294,13 @@ class Demo extends Component {
         &lt;button onClick={<span class="hljs-keyword">this</span>.toggleAnimate}&gt;toggle&lt;/button&gt;
         &lt;Animate
           component=<span class="hljs-string">""</span>
-          showProp=<span class="hljs-string">'data-show'</span>
+          showProp=<span class="hljs-string">'visible'</span>
           onAppear={<span class="hljs-keyword">this</span>.onAppear}
           onEnter={<span class="hljs-keyword">this</span>.onEnter}
           onLeave={<span class="hljs-keyword">this</span>.onLeave}
           transitionAppear={<span class="hljs-keyword">true</span>}
           transitionName=<span class="hljs-string">"fade"</span>&gt;
-          &lt;div data-show={<span class="hljs-keyword">this</span>.state.enter} <span class="hljs-variable">key</span>=<span class="hljs-string">"1"</span> style={{
-          display:<span class="hljs-keyword">this</span>.state.enter?<span class="hljs-string">'block'</span>:<span class="hljs-string">'none'</span>,
-          marginTop: <span class="hljs-string">'20px'</span>,
-          <span class="hljs-variable">width</span>: <span class="hljs-string">'200px'</span>,
-          <span class="hljs-variable">height</span>: <span class="hljs-string">'200px'</span>,
-          backgroundColor: <span class="hljs-string">'red'</span>
-          }}&gt;&lt;/div&gt;
+         &lt;Box visible={<span class="hljs-keyword">this</span>.state.visible} /&gt;
         &lt;/Animate&gt;
       &lt;/div&gt;
     );

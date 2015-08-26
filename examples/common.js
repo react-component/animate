@@ -130,8 +130,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -230,21 +228,14 @@
 	    // last props children if exclusive
 	    // exclusive needs immediate response
 	    var currentChildren = this.state.children;
-	    var newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
+	    var newChildren = undefined;
 	
-	    if (showProp && !exclusive) {
-	      newChildren = newChildren.map(function (c) {
-	        var ret = c;
-	        if (!c.props[showProp] && (0, _ChildrenUtils.isShownInChildren)(currentChildren, c, showProp)) {
-	          ret = _react2['default'].cloneElement(c, _defineProperty({}, showProp, true));
-	        }
-	        return ret;
+	    if (!showProp) {
+	      newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
+	      this.setState({
+	        children: newChildren
 	      });
 	    }
-	
-	    this.setState({
-	      children: newChildren
-	    });
 	
 	    // exclusive needs immediate response
 	    if (exclusive) {
@@ -262,7 +253,7 @@
 	      var hasPrev = (0, _ChildrenUtils.inChildren)(currentChildren, c);
 	      if (showProp) {
 	        if (hasPrev) {
-	          var showInNow = (0, _ChildrenUtils.isShownInChildren)(currentChildren, c, showProp);
+	          var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
 	          var showInNext = c.props[showProp];
 	          if (!showInNow && showInNext) {
 	            _this2.keysToEnter.push(key);
@@ -281,7 +272,7 @@
 	      var hasNext = (0, _ChildrenUtils.inChildren)(nextChildren, c);
 	      if (showProp) {
 	        if (hasNext) {
-	          var showInNext = (0, _ChildrenUtils.isShownInChildren)(nextChildren, c, showProp);
+	          var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
 	          var showInNow = c.props[showProp];
 	          if (!showInNext && showInNow) {
 	            _this2.keysToLeave.push(key);
@@ -356,17 +347,17 @@
 	      this.performLeave(key);
 	    } else {
 	      if (type === 'appear') {
-	        if (_util2['default'].isAppearSupported(props)) {
+	        if (_util2['default'].allowAppearCallback(props)) {
 	          props.onAppear(key);
 	          props.onEnd(key, true);
 	        }
 	      } else {
-	        if (_util2['default'].isEnterSupported(props)) {
+	        if (_util2['default'].allowEnterCallback(props)) {
 	          props.onEnter(key);
 	          props.onEnd(key, true);
 	        }
 	      }
-	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
 	        this.setState({
 	          children: currentChildren
 	        });
@@ -390,11 +381,11 @@
 	    if (this.isValidChildByKey(currentChildren, key)) {
 	      this.performEnter(key);
 	    } else {
-	      if (_util2['default'].isLeaveSupported(props)) {
+	      if (_util2['default'].allowLeaveCallback(props)) {
 	        props.onLeave(key);
 	        props.onEnd(key, false);
 	      }
-	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren)) {
+	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
 	        this.setState({
 	          children: currentChildren
 	        });
@@ -405,7 +396,7 @@
 	  isValidChildByKey: function isValidChildByKey(currentChildren, key) {
 	    var showProp = this.props.showProp;
 	    if (showProp) {
-	      return (0, _ChildrenUtils.isShownInChildrenByKey)(currentChildren, key, showProp);
+	      return (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
 	    }
 	    return (0, _ChildrenUtils.inChildrenByKey)(currentChildren, key);
 	  },
@@ -460,17 +451,6 @@
 	    return ret;
 	  },
 	
-	  isShownInChildren: function isShownInChildren(children, child, showProp) {
-	    var found = 0;
-	    children.forEach(function (c) {
-	      if (found) {
-	        return;
-	      }
-	      found = c.key === child.key && c.props[showProp];
-	    });
-	    return found;
-	  },
-	
 	  inChildrenByKey: function inChildrenByKey(children, key) {
 	    var found = 0;
 	    if (children) {
@@ -484,24 +464,42 @@
 	    return found;
 	  },
 	
-	  isShownInChildrenByKey: function isShownInChildrenByKey(children, key, showProp) {
+	  findShownChildInChildrenByKey: function findShownChildInChildrenByKey(children, key, showProp) {
+	    var ret = null;
+	    if (children) {
+	      children.forEach(function (c) {
+	        if (c.key === key && c.props[showProp]) {
+	          if (ret) {
+	            throw new Error('two child with same key for <rc-animate> children');
+	          }
+	          ret = c;
+	        }
+	      });
+	    }
+	    return ret;
+	  },
+	
+	  findHiddenChildInChildrenByKey: function findHiddenChildInChildrenByKey(children, key, showProp) {
 	    var found = 0;
 	    if (children) {
 	      children.forEach(function (c) {
 	        if (found) {
 	          return;
 	        }
-	        found = c.key === key && c.props[showProp];
+	        found = c.key === key && !c.props[showProp];
 	      });
 	    }
 	    return found;
 	  },
 	
-	  isSameChildren: function isSameChildren(c1, c2) {
+	  isSameChildren: function isSameChildren(c1, c2, showProp) {
 	    var same = c1.length === c2.length;
 	    if (same) {
-	      c1.forEach(function (c, i) {
-	        if (c !== c2[i]) {
+	      c1.forEach(function (child, i) {
+	        var child2 = c2[i];
+	        if (child.key !== child2.key) {
+	          same = false;
+	        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
 	          same = false;
 	        }
 	      });
@@ -934,6 +932,16 @@
 	  },
 	  isLeaveSupported: function isLeaveSupported(props) {
 	    return props.transitionName && props.transitionLeave || props.animation.leave;
+	  },
+	
+	  allowAppearCallback: function allowAppearCallback(props) {
+	    return props.transitionAppear || props.animation.appear;
+	  },
+	  allowEnterCallback: function allowEnterCallback(props) {
+	    return props.transitionEnter || props.animation.enter;
+	  },
+	  allowLeaveCallback: function allowLeaveCallback(props) {
+	    return props.transitionLeave || props.animation.leave;
 	  }
 	};
 	exports["default"] = util;

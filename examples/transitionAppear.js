@@ -8,7 +8,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 2:
+/***/ 16:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
@@ -31,7 +31,7 @@ webpackJsonp([7],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	__webpack_require__(2);
+	__webpack_require__(16);
 	
 	var _rcAnimate = __webpack_require__(4);
 	
@@ -41,6 +41,21 @@ webpackJsonp([7],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var Box = _react2['default'].createClass({
+	  displayName: 'Box',
+	
+	  render: function render() {
+	    console.log('render', this.props.visible);
+	    return _react2['default'].createElement('div', { style: {
+	        display: this.props.visible ? 'block' : 'none',
+	        marginTop: '20px',
+	        width: '200px',
+	        height: '200px',
+	        backgroundColor: 'red'
+	      } });
+	  }
+	});
+	
 	var Demo = (function (_Component) {
 	  _inherits(Demo, _Component);
 	
@@ -49,7 +64,7 @@ webpackJsonp([7],{
 	
 	    _get(Object.getPrototypeOf(Demo.prototype), 'constructor', this).call(this, props);
 	    this.state = {
-	      enter: 1
+	      visible: 1
 	    };
 	    this.toggleAnimate = this.toggleAnimate.bind(this);
 	  }
@@ -58,7 +73,7 @@ webpackJsonp([7],{
 	    key: 'toggleAnimate',
 	    value: function toggleAnimate() {
 	      this.setState({
-	        enter: !this.state.enter
+	        visible: !this.state.visible
 	      });
 	    }
 	  }, {
@@ -91,19 +106,13 @@ webpackJsonp([7],{
 	          _rcAnimate2['default'],
 	          {
 	            component: '',
-	            showProp: 'data-show',
+	            showProp: 'visible',
 	            onAppear: this.onAppear,
 	            onEnter: this.onEnter,
 	            onLeave: this.onLeave,
 	            transitionAppear: true,
 	            transitionName: 'fade' },
-	          _react2['default'].createElement('div', { 'data-show': this.state.enter, key: '1', style: {
-	              display: this.state.enter ? 'block' : 'none',
-	              marginTop: '20px',
-	              width: '200px',
-	              height: '200px',
-	              backgroundColor: 'red'
-	            } })
+	          _react2['default'].createElement(Box, { visible: this.state.visible })
 	        )
 	      );
 	    }

@@ -42,19 +42,33 @@ webpackJsonp([3],{
 	var transitionEnter = true;
 	var remove = false;
 	
+	var Box = _react2['default'].createClass({
+	  displayName: 'Box',
+	
+	  render: function render() {
+	    console.log('render', this.props.visible);
+	    return _react2['default'].createElement('div', { style: {
+	        width: '200px',
+	        display: this.props.visible ? 'block' : 'none',
+	        height: '200px',
+	        backgroundColor: 'red'
+	      } });
+	  }
+	});
+	
 	var Demo = _react2['default'].createClass({
 	  displayName: 'Demo',
 	
 	  getInitialState: function getInitialState() {
 	    return {
-	      enter: true,
+	      visible: true,
 	      exclusive: false
 	    };
 	  },
 	
 	  toggleAnimate: function toggleAnimate() {
 	    this.setState({
-	      enter: !this.state.enter
+	      visible: !this.state.visible
 	    });
 	  },
 	
@@ -67,6 +81,8 @@ webpackJsonp([3],{
 	        done();
 	      }
 	    }
+	
+	    node.style.display = 'none';
 	
 	    (0, _velocityAnimate2['default'])(node, 'slideDown', {
 	      duration: 1000,
@@ -90,6 +106,8 @@ webpackJsonp([3],{
 	        done();
 	      }
 	    }
+	
+	    node.style.display = 'block';
 	
 	    (0, _velocityAnimate2['default'])(node, 'slideUp', {
 	      duration: 1000,
@@ -115,15 +133,15 @@ webpackJsonp([3],{
 	      _react2['default'].createElement(
 	        'label',
 	        null,
-	        _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'enter'), checked: this.state.enter }),
-	        ' show'
+	        _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'visible'), checked: this.state.visible }),
+	        'show'
 	      ),
 	      ' ',
 	      _react2['default'].createElement(
 	        'label',
 	        null,
 	        _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'exclusive'), checked: this.state.exclusive }),
-	        ' exclusive'
+	        'exclusive'
 	      ),
 	      _react2['default'].createElement('br', null),
 	      _react2['default'].createElement('br', null),
@@ -132,16 +150,12 @@ webpackJsonp([3],{
 	        {
 	          component: '',
 	          exclusive: this.state.exclusive,
-	          showProp: 'data-show',
+	          showProp: 'visible',
 	          animation: {
 	            enter: this.animateEnter,
 	            leave: this.animateLeave
 	          } },
-	        _react2['default'].createElement('div', { 'data-show': this.state.enter, key: '1', style: {
-	            width: '200px',
-	            height: '200px',
-	            backgroundColor: 'red'
-	          } })
+	        _react2['default'].createElement(Box, { visible: this.state.visible })
 	      )
 	    );
 	  }
