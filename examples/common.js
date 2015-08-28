@@ -231,9 +231,7 @@
 	    // exclusive needs immediate response
 	    var currentChildren = this.state.children;
 	    var newChildren = undefined;
-	    var needSetState = false;
 	    if (showProp) {
-	      needSetState = true;
 	      newChildren = currentChildren.map(function (currentChild) {
 	        var nextChild = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
 	        if (!nextChild.props[showProp] && currentChild.props[showProp]) {
@@ -243,25 +241,20 @@
 	      });
 	    } else {
 	      newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
-	      if (newChildren.length !== currentChildren.length || newChildren.length !== nextChildren.length) {
-	        needSetState = true;
-	      }
 	    }
 	
 	    // exclusive needs immediate response
 	    if (exclusive) {
 	      Object.keys(currentlyAnimatingKeys).forEach(function (key) {
-	        needSetState = false;
 	        _this2.stop(key);
 	      });
 	      currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
 	    }
 	
-	    if (needSetState) {
-	      this.setState({
-	        children: newChildren
-	      });
-	    }
+	    // need render to avoid update
+	    this.setState({
+	      children: newChildren
+	    });
 	
 	    nextChildren.forEach(function (c) {
 	      var key = c.key;
