@@ -85,7 +85,6 @@ const Animate = React.createClass({
     // exclusive needs immediate response
     let currentChildren = this.state.children;
     let newChildren;
-    let needSetState = true;
     if (showProp) {
       newChildren = currentChildren.map((currentChild)=> {
         const nextChild = findChildInChildrenByKey(nextChildren, currentChild.key);
@@ -106,17 +105,15 @@ const Animate = React.createClass({
     // exclusive needs immediate response
     if (exclusive) {
       Object.keys(currentlyAnimatingKeys).forEach((key) => {
-        needSetState = false;
         this.stop(key);
       });
       currentChildren = toArrayChildren(getChildrenFromProps(props));
     }
 
-    if (needSetState) {
-      this.setState({
-        children: newChildren,
-      });
-    }
+    // need render to avoid update
+    this.setState({
+      children: newChildren,
+    });
 
     nextChildren.forEach((c)=> {
       const key = c.key;
