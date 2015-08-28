@@ -85,9 +85,8 @@ const Animate = React.createClass({
     // exclusive needs immediate response
     let currentChildren = this.state.children;
     let newChildren;
-    let needSetState = false;
+    let needSetState = true;
     if (showProp) {
-      needSetState = true;
       newChildren = currentChildren.map((currentChild)=> {
         const nextChild = findChildInChildrenByKey(nextChildren, currentChild.key);
         if (!nextChild.props[showProp] && currentChild.props[showProp]) {
@@ -102,9 +101,6 @@ const Animate = React.createClass({
         currentChildren,
         nextChildren
       );
-      if (newChildren.length !== currentChildren.length || newChildren.length !== nextChildren.length) {
-        needSetState = true;
-      }
     }
 
     // exclusive needs immediate response
