@@ -61,6 +61,7 @@ webpackJsonp([3],{
 	
 	  getInitialState: function getInitialState() {
 	    return {
+	      destroyed: false,
 	      visible: true,
 	      exclusive: false
 	    };
@@ -126,6 +127,12 @@ webpackJsonp([3],{
 	    this.setState(_defineProperty({}, field, !this.state[field]));
 	  },
 	
+	  destroy: function destroy() {
+	    this.setState({
+	      destroyed: true
+	    });
+	  },
+	
 	  render: function render() {
 	    return _react2['default'].createElement(
 	      'div',
@@ -143,6 +150,12 @@ webpackJsonp([3],{
 	        _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'exclusive'), checked: this.state.exclusive }),
 	        'exclusive'
 	      ),
+	      ' ',
+	      _react2['default'].createElement(
+	        'button',
+	        { onClick: this.destroy },
+	        'destroy'
+	      ),
 	      _react2['default'].createElement('br', null),
 	      _react2['default'].createElement('br', null),
 	      _react2['default'].createElement(
@@ -155,7 +168,7 @@ webpackJsonp([3],{
 	            enter: this.animateEnter,
 	            leave: this.animateLeave
 	          } },
-	        _react2['default'].createElement(Box, { visible: this.state.visible })
+	        this.state.destroyed ? null : _react2['default'].createElement(Box, { visible: this.state.visible })
 	      )
 	    );
 	  }

@@ -230,14 +230,20 @@
 	    // last props children if exclusive
 	    // exclusive needs immediate response
 	    var currentChildren = this.state.children;
-	    var newChildren = undefined;
+	    // in case destroy in showProp mode
+	    var newChildren = [];
 	    if (showProp) {
-	      newChildren = currentChildren.map(function (currentChild) {
+	      currentChildren.forEach(function (currentChild) {
 	        var nextChild = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
-	        if (!nextChild.props[showProp] && currentChild.props[showProp]) {
-	          return _react2['default'].cloneElement(nextChild, _defineProperty({}, showProp, true));
+	        var newChild = undefined;
+	        if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
+	          newChild = _react2['default'].cloneElement(nextChild || currentChild, _defineProperty({}, showProp, true));
+	        } else {
+	          newChild = nextChild;
 	        }
-	        return nextChild;
+	        if (newChild) {
+	          newChildren.push(newChild);
+	        }
 	      });
 	    } else {
 	      newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
@@ -263,12 +269,14 @@
 	      }
 	      var hasPrev = (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
 	      if (showProp) {
+	        var showInNext = c.props[showProp];
 	        if (hasPrev) {
 	          var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
-	          var showInNext = c.props[showProp];
 	          if (!showInNow && showInNext) {
 	            _this2.keysToEnter.push(key);
 	          }
+	        } else if (showInNext) {
+	          _this2.keysToEnter.push(key);
 	        }
 	      } else if (!hasPrev) {
 	        _this2.keysToEnter.push(key);
@@ -282,12 +290,14 @@
 	      }
 	      var hasNext = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
 	      if (showProp) {
+	        var showInNow = c.props[showProp];
 	        if (hasNext) {
 	          var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
-	          var showInNow = c.props[showProp];
 	          if (!showInNext && showInNow) {
 	            _this2.keysToLeave.push(key);
 	          }
+	        } else if (showInNow) {
+	          _this2.keysToLeave.push(key);
 	        }
 	      } else if (!hasNext) {
 	        _this2.keysToLeave.push(key);
@@ -306,23 +316,27 @@
 	
 	  render: function render() {
 	    var props = this.props;
-	    var children = this.state.children.map(function (child) {
-	      if (!child.key) {
-	        throw new Error('must set key for <rc-animate> children');
-	      }
-	      return _react2['default'].createElement(
-	        _AnimateChild2['default'],
-	        {
-	          key: child.key,
-	          ref: child.key,
-	          animation: props.animation,
-	          transitionName: props.transitionName,
-	          transitionEnter: props.transitionEnter,
-	          transitionAppear: props.transitionAppear,
-	          transitionLeave: props.transitionLeave },
-	        child
-	      );
-	    });
+	    var stateChildren = this.state.children;
+	    var children = null;
+	    if (stateChildren) {
+	      children = stateChildren.map(function (child) {
+	        if (!child.key) {
+	          throw new Error('must set key for <rc-animate> children');
+	        }
+	        return _react2['default'].createElement(
+	          _AnimateChild2['default'],
+	          {
+	            key: child.key,
+	            ref: child.key,
+	            animation: props.animation,
+	            transitionName: props.transitionName,
+	            transitionEnter: props.transitionEnter,
+	            transitionAppear: props.transitionAppear,
+	            transitionLeave: props.transitionLeave },
+	          child
+	        );
+	      });
+	    }
 	    var Component = props.component;
 	    if (Component) {
 	      return _react2['default'].createElement(
@@ -445,7 +459,7 @@
 	  },
 	
 	  findChildInChildrenByKey: function findChildInChildrenByKey(children, key) {
-	    var ret = 0;
+	    var ret = null;
 	    if (children) {
 	      children.forEach(function (c) {
 	        if (ret) {

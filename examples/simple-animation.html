@@ -235,7 +235,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>rc-animate@1.2.8</h1>
+            <h1>rc-animate@1.2.9</h1>
             <p>css-transition ui component for react</p>
         </div>
         <div class="example" id="__react-content"></div>
@@ -267,6 +267,7 @@ let remove = <span class="hljs-literal">false</span>;
 <span class="hljs-keyword">var</span> Demo = React.createClass({
   getInitialState() {
     <span class="hljs-keyword">return</span> {
+      destroyed:<span class="hljs-literal">false</span>,
       visible: <span class="hljs-literal">true</span>,
       exclusive: <span class="hljs-literal">false</span>
     };
@@ -334,6 +335,12 @@ let remove = <span class="hljs-literal">false</span>;
     });
   },
 
+  destroy(){
+    <span class="hljs-keyword">this</span>.setState({
+      destroyed:<span class="hljs-literal">true</span>
+    });
+  },
+
   render() {
     <span class="hljs-keyword">return</span> (
       &lt;div&gt;
@@ -342,6 +349,8 @@ let remove = <span class="hljs-literal">false</span>;
         &amp;nbsp;
         &lt;label&gt;&lt;input type=<span class="hljs-string">'checkbox'</span> onChange={<span class="hljs-keyword">this</span>.toggle.bind(<span class="hljs-keyword">this</span>,<span class="hljs-string">'exclusive'</span>)} checked={<span class="hljs-keyword">this</span>.state.exclusive}/&gt;
           exclusive&lt;/label&gt;
+        &amp;nbsp;
+        &lt;button onClick={<span class="hljs-keyword">this</span>.destroy}&gt;destroy&lt;/button&gt;
         &lt;br/&gt;&lt;br/&gt;
         &lt;Animate
           component=<span class="hljs-string">""</span>
@@ -351,7 +360,7 @@ let remove = <span class="hljs-literal">false</span>;
             enter:<span class="hljs-keyword">this</span>.animateEnter,
             leave:<span class="hljs-keyword">this</span>.animateLeave
           }}&gt;
-          &lt;Box visible={<span class="hljs-keyword">this</span>.state.visible}/&gt;
+          {<span class="hljs-keyword">this</span>.state.destroyed?<span class="hljs-literal">null</span>:&lt;Box visible={<span class="hljs-keyword">this</span>.state.visible}/&gt;}
         &lt;/Animate&gt;
       &lt;/div&gt;
     );

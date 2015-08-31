@@ -5,6 +5,7 @@
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   display: block !important;
+  visibility: visible !important;
   -webkit-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
           animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
   -webkit-animation-play-state: paused;
@@ -17,6 +18,7 @@
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   display: block !important;
+  visibility: visible !important;
   -webkit-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
           animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
   -webkit-animation-play-state: paused;
@@ -28,6 +30,7 @@
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   display: block !important;
+  visibility: visible !important;
   -webkit-animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
           animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
   -webkit-animation-play-state: paused;
