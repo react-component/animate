@@ -84,16 +84,22 @@ const Animate = React.createClass({
     // last props children if exclusive
     // exclusive needs immediate response
     let currentChildren = this.state.children;
-    let newChildren;
+    // in case destroy in showProp mode
+    let newChildren = [];
     if (showProp) {
-      newChildren = currentChildren.map((currentChild)=> {
+      currentChildren.forEach((currentChild)=> {
         const nextChild = findChildInChildrenByKey(nextChildren, currentChild.key);
-        if (!nextChild.props[showProp] && currentChild.props[showProp]) {
-          return React.cloneElement(nextChild, {
+        let newChild;
+        if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
+          newChild = React.cloneElement(nextChild || currentChild, {
             [showProp]: true,
           });
+        } else {
+          newChild = nextChild;
         }
-        return nextChild;
+        if (newChild) {
+          newChildren.push(newChild);
+        }
       });
     } else {
       newChildren = ChildrenUtils.mergeChildren(
@@ -122,12 +128,14 @@ const Animate = React.createClass({
       }
       const hasPrev = findChildInChildrenByKey(currentChildren, key);
       if (showProp) {
+        const showInNext = c.props[showProp];
         if (hasPrev) {
           const showInNow = findShownChildInChildrenByKey(currentChildren, key, showProp);
-          const showInNext = c.props[showProp];
           if (!showInNow && showInNext) {
             this.keysToEnter.push(key);
           }
+        } else if (showInNext) {
+          this.keysToEnter.push(key);
         }
       } else if (!hasPrev) {
         this.keysToEnter.push(key);
@@ -141,12 +149,14 @@ const Animate = React.createClass({
       }
       const hasNext = findChildInChildrenByKey(nextChildren, key);
       if (showProp) {
+        const showInNow = c.props[showProp];
         if (hasNext) {
           const showInNext = findShownChildInChildrenByKey(nextChildren, key, showProp);
-          const showInNow = c.props[showProp];
           if (!showInNext && showInNow) {
             this.keysToLeave.push(key);
           }
+        } else if (showInNow) {
+          this.keysToLeave.push(key);
         }
       } else if (!hasNext) {
         this.keysToLeave.push(key);
@@ -165,21 +175,25 @@ const Animate = React.createClass({
 
   render() {
     const props = this.props;
-    const children = this.state.children.map((child) => {
-      if (!child.key) {
-        throw new Error('must set key for <rc-animate> children');
-      }
-      return (<AnimateChild
-        key={child.key}
-        ref={child.key}
-        animation={props.animation}
-        transitionName={props.transitionName}
-        transitionEnter={props.transitionEnter}
-        transitionAppear={props.transitionAppear}
-        transitionLeave={props.transitionLeave}>
-        {child}
-      </AnimateChild>);
-    });
+    const stateChildren = this.state.children;
+    let children = null;
+    if (stateChildren) {
+      children = stateChildren.map((child) => {
+        if (!child.key) {
+          throw new Error('must set key for <rc-animate> children');
+        }
+        return (<AnimateChild
+          key={child.key}
+          ref={child.key}
+          animation={props.animation}
+          transitionName={props.transitionName}
+          transitionEnter={props.transitionEnter}
+          transitionAppear={props.transitionAppear}
+          transitionLeave={props.transitionLeave}>
+          {child}
+        </AnimateChild>);
+      });
+    }
     const Component = props.component;
     if (Component) {
       return <Component {...this.props}>{children}</Component>;

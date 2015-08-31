@@ -24,6 +24,7 @@ const Box = React.createClass({
 var Demo = React.createClass({
   getInitialState() {
     return {
+      destroyed:false,
       visible: true,
       exclusive: false
     };
@@ -91,6 +92,12 @@ var Demo = React.createClass({
     });
   },
 
+  destroy(){
+    this.setState({
+      destroyed:true
+    });
+  },
+
   render() {
     return (
       <div>
@@ -99,6 +106,8 @@ var Demo = React.createClass({
         &nbsp;
         <label><input type='checkbox' onChange={this.toggle.bind(this,'exclusive')} checked={this.state.exclusive}/>
           exclusive</label>
+        &nbsp;
+        <button onClick={this.destroy}>destroy</button>
         <br/><br/>
         <Animate
           component=""
@@ -108,7 +117,7 @@ var Demo = React.createClass({
             enter:this.animateEnter,
             leave:this.animateLeave
           }}>
-          <Box visible={this.state.visible}/>
+          {this.state.destroyed?null:<Box visible={this.state.visible}/>}
         </Animate>
       </div>
     );

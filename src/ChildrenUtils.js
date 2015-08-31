@@ -10,7 +10,7 @@ const utils = {
   },
 
   findChildInChildrenByKey(children, key) {
-    let ret = 0;
+    let ret = null;
     if (children) {
       children.forEach((c) => {
         if (ret) {
