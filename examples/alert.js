@@ -21,7 +21,7 @@ webpackJsonp([0],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcAnimate = __webpack_require__(4);
+	var _rcAnimate = __webpack_require__(159);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
