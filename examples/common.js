@@ -20615,6 +20615,11 @@
 	          newChildren.push(newChild);
 	        }
 	      });
+	      nextChildren.forEach(function (nextChild) {
+	        if (!(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
+	          newChildren.push(nextChild);
+	        }
+	      });
 	    } else {
 	      newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
 	    }
