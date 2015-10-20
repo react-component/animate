@@ -101,6 +101,11 @@ const Animate = React.createClass({
           newChildren.push(newChild);
         }
       });
+      nextChildren.forEach((nextChild) => {
+        if (!findChildInChildrenByKey(currentChildren, nextChild.key)) {
+          newChildren.push(nextChild);
+        }
+      });
     } else {
       newChildren = ChildrenUtils.mergeChildren(
         currentChildren,
