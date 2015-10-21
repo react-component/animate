@@ -4,6 +4,7 @@
 import './assets/index.less';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import velocity from 'velocity-animate';
 
 let transitionEnter = true;
@@ -124,4 +125,4 @@ var Demo = React.createClass({
   }
 });
 
-React.render(<Demo />, document.getElementById('__react-content'));
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));

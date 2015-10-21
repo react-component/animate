@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import cssAnimate, {isCssAnimationSupported} from 'css-animation';
 import animUtil from './util';
 
@@ -14,7 +15,7 @@ const AnimateChild = React.createClass({
   },
 
   transition(animationType, finishCallback) {
-    const node = React.findDOMNode(this);
+    const node = ReactDOM.findDOMNode(this);
     const props = this.props;
     const transitionName = props.transitionName;
     this.stop();

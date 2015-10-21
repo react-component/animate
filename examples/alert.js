@@ -2,6 +2,7 @@
 
 import './assets/index.less';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 var seed = 0;
 
@@ -101,7 +102,7 @@ function alert(str, time, type, callback) {
   if (!alertGroup) {
     var div = document.createElement('div');
     document.body.appendChild(div);
-    alertGroup = React.render(<AlertGroup/>, div);
+    alertGroup = ReactDOM.render(<AlertGroup/>, div);
   }
   alertGroup.addAlert({
     str: str,
@@ -121,7 +122,7 @@ function onClick() {
   }
 }
 
-React.render(<div>
+ReactDOM.render(<div>
     <h2>notification</h2>
     <button onClick={onClick}>show notification</button>
   </div>,

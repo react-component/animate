@@ -2,6 +2,7 @@
 
 import './assets/index.less';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import velocity from 'velocity-animate';
 
@@ -123,7 +124,7 @@ var TodoList = React.createClass({
   }
 });
 
-React.render(<div>
+ReactDOM.render(<div>
   <h2>Todo</h2>
   <TodoList />
 </div>, document.getElementById('__react-content'));

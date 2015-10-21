@@ -2,6 +2,7 @@
 
 import './assets/index.less';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 
 var Todo = React.createClass({
@@ -61,7 +62,7 @@ var TodoList = React.createClass({
   }
 });
 
-React.render(<div>
+ReactDOM.render(<div>
   <h2>Todo</h2>
   <TodoList />
 </div>, document.getElementById('__react-content'));
