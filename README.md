@@ -39,8 +39,8 @@ animate react element easily
 
 ```js
 var Animate = require('rc-animate');
-var React = require('react');
-React.render(<Animate animation={{}}><p key="1">1</p><p key="2">2</p></Animate>, container);
+var ReactDOM = require('react-dom');
+ReactDOM.render(<Animate animation={{}}><p key="1">1</p><p key="2">2</p></Animate>, container);
 ```
 
 ## API
