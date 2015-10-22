@@ -3,7 +3,7 @@ webpackJsonp([6],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(176);
+	module.exports = __webpack_require__(177);
 
 
 /***/ },
@@ -15,7 +15,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 173:
+/***/ 174:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.2). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
@@ -3889,7 +3889,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 176:
+/***/ 177:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3904,11 +3904,15 @@ webpackJsonp([6],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcAnimate = __webpack_require__(159);
+	var _reactDom = __webpack_require__(159);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _rcAnimate = __webpack_require__(160);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _velocityAnimate = __webpack_require__(173);
+	var _velocityAnimate = __webpack_require__(174);
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
@@ -4043,7 +4047,7 @@ webpackJsonp([6],{
 	  }
 	});
 	
-	_react2['default'].render(_react2['default'].createElement(
+	_reactDom2['default'].render(_react2['default'].createElement(
 	  'div',
 	  null,
 	  _react2['default'].createElement(

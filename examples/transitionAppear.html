@@ -239,7 +239,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-animate@1.3.0</h1>
+    <h1>rc-animate@2.0.0</h1>
 
     <p>css-transition ui component for react</p>
   </div>
@@ -253,6 +253,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/slow.less'</span>;
 <span class="hljs-keyword">import</span> Animate from <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">import</span> React, {Component} from <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM from <span class="hljs-string">'react-dom'</span>;
 
 <span class="hljs-keyword">const</span> Box = React.createClass({
   render(){
@@ -313,7 +314,7 @@ class Demo extends Component {
   }
 }
 
-React.render(&lt;Demo /&gt;, document.getElementById(<span class="hljs-string">'__react-content'</span>));
+ReactDOM.render(&lt;Demo /&gt;, document.getElementById(<span class="hljs-string">'__react-content'</span>));
 </code></pre>
   </div>
 </div>

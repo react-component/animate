@@ -21,7 +21,11 @@ webpackJsonp([0],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _rcAnimate = __webpack_require__(159);
+	var _reactDom = __webpack_require__(159);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _rcAnimate = __webpack_require__(160);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -135,7 +139,7 @@ webpackJsonp([0],[
 	  if (!alertGroup) {
 	    var div = document.createElement('div');
 	    document.body.appendChild(div);
-	    alertGroup = _react2['default'].render(_react2['default'].createElement(AlertGroup, null), div);
+	    alertGroup = _reactDom2['default'].render(_react2['default'].createElement(AlertGroup, null), div);
 	  }
 	  alertGroup.addAlert({
 	    str: str,
@@ -155,7 +159,7 @@ webpackJsonp([0],[
 	  }
 	}
 	
-	_react2['default'].render(_react2['default'].createElement(
+	_reactDom2['default'].render(_react2['default'].createElement(
 	  'div',
 	  null,
 	  _react2['default'].createElement(

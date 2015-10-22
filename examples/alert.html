@@ -239,7 +239,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-animate@1.3.0</h1>
+    <h1>rc-animate@2.0.0</h1>
 
     <p>css-transition ui component for react</p>
   </div>
@@ -251,6 +251,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
 <span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
 <span class="hljs-keyword">import</span> React from <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM from <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Animate from <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">var</span> seed = <span class="hljs-number">0</span>;
 
@@ -350,7 +351,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <span class="hljs-keyword">if</span> (!alertGroup) {
     <span class="hljs-keyword">var</span> div = document.createElement(<span class="hljs-string">'div'</span>);
     document.body.appendChild(div);
-    alertGroup = React.render(&lt;AlertGroup/&gt;, div);
+    alertGroup = ReactDOM.render(&lt;AlertGroup/&gt;, div);
   }
   alertGroup.addAlert({
     str: str,
@@ -370,7 +371,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   }
 }
 
-React.render(&lt;div&gt;
+ReactDOM.render(&lt;div&gt;
     &lt;h2&gt;notification&lt;/h2&gt;
     &lt;button onClick={onClick}&gt;show notification&lt;/button&gt;
   &lt;/div&gt;,

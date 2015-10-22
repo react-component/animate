@@ -3,19 +3,19 @@ webpackJsonp([7],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(177);
+	module.exports = __webpack_require__(178);
 
 
 /***/ },
 
-/***/ 171:
+/***/ 172:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 177:
+/***/ 178:
 /***/ function(module, exports, __webpack_require__) {
 
 	// use jsx to render html, do not modify simple.html
@@ -31,15 +31,19 @@ webpackJsonp([7],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	__webpack_require__(171);
+	__webpack_require__(172);
 	
-	var _rcAnimate = __webpack_require__(159);
+	var _rcAnimate = __webpack_require__(160);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
 	var Box = _react2['default'].createClass({
 	  displayName: 'Box',
@@ -121,7 +125,7 @@ webpackJsonp([7],{
 	  return Demo;
 	})(_react.Component);
 	
-	_react2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }
 

@@ -3,7 +3,7 @@ webpackJsonp([4],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(174);
+	module.exports = __webpack_require__(175);
 
 
 /***/ },
@@ -15,7 +15,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 174:
+/***/ 175:
 /***/ function(module, exports, __webpack_require__) {
 
 	// use jsx to render html, do not modify simple.html
@@ -33,13 +33,17 @@ webpackJsonp([4],{
 	
 	__webpack_require__(2);
 	
-	var _rcAnimate = __webpack_require__(159);
+	var _rcAnimate = __webpack_require__(160);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
 	var transitionEnter = true;
 	var remove = false;
@@ -95,7 +99,7 @@ webpackJsonp([4],{
 	  return Demo;
 	})(_react.Component);
 	
-	_react2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }
 
