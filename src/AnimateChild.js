@@ -14,29 +14,6 @@ const AnimateChild = React.createClass({
     children: React.PropTypes.any,
   },
 
-  transition(animationType, finishCallback) {
-    const node = ReactDOM.findDOMNode(this);
-    const props = this.props;
-    const transitionName = props.transitionName;
-    this.stop();
-    const end = () => {
-      this.stopper = null;
-      finishCallback();
-    };
-    if ((isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
-      this.stopper = cssAnimate(node, transitionName + '-' + animationType, end);
-    } else {
-      this.stopper = props.animation[animationType](node, end);
-    }
-  },
-
-  stop() {
-    if (this.stopper) {
-      this.stopper.stop();
-      this.stopper = null;
-    }
-  },
-
   componentWillUnmount() {
     this.stop();
   },
@@ -62,6 +39,29 @@ const AnimateChild = React.createClass({
       this.transition('leave', done);
     } else {
       done();
+    }
+  },
+
+  transition(animationType, finishCallback) {
+    const node = ReactDOM.findDOMNode(this);
+    const props = this.props;
+    const transitionName = props.transitionName;
+    this.stop();
+    const end = () => {
+      this.stopper = null;
+      finishCallback();
+    };
+    if ((isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
+      this.stopper = cssAnimate(node, transitionName + '-' + animationType, end);
+    } else {
+      this.stopper = props.animation[animationType](node, end);
+    }
+  },
+
+  stop() {
+    if (this.stopper) {
+      this.stopper.stop();
+      this.stopper = null;
     }
   },
 

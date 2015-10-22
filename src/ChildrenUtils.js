@@ -3,8 +3,8 @@ import React from 'react';
 const utils = {
   toArrayChildren(children) {
     const ret = [];
-    React.Children.forEach(children, (c)=> {
-      ret.push(c);
+    React.Children.forEach(children, (child)=> {
+      ret.push(child);
     });
     return ret;
   },
@@ -12,12 +12,12 @@ const utils = {
   findChildInChildrenByKey(children, key) {
     let ret = null;
     if (children) {
-      children.forEach((c) => {
+      children.forEach((child) => {
         if (ret) {
           return;
         }
-        if (c.key === key) {
-          ret = c;
+        if (child.key === key) {
+          ret = child;
         }
       });
     }
@@ -27,12 +27,12 @@ const utils = {
   findShownChildInChildrenByKey(children, key, showProp) {
     let ret = null;
     if (children) {
-      children.forEach((c) => {
-        if (c.key === key && c.props[showProp]) {
+      children.forEach((child) => {
+        if (child.key === key && child.props[showProp]) {
           if (ret) {
             throw new Error('two child with same key for <rc-animate> children');
           }
-          ret = c;
+          ret = child;
         }
       });
     }
@@ -42,11 +42,11 @@ const utils = {
   findHiddenChildInChildrenByKey(children, key, showProp) {
     let found = 0;
     if (children) {
-      children.forEach((c) => {
+      children.forEach((child) => {
         if (found) {
           return;
         }
-        found = c.key === key && !c.props[showProp];
+        found = child.key === key && !child.props[showProp];
       });
     }
     return found;
@@ -55,8 +55,8 @@ const utils = {
   isSameChildren(c1, c2, showProp) {
     let same = c1.length === c2.length;
     if (same) {
-      c1.forEach((child, i) => {
-        const child2 = c2[i];
+      c1.forEach((child, index) => {
+        const child2 = c2[index];
         if (child.key !== child2.key) {
           same = false;
         } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
@@ -74,22 +74,22 @@ const utils = {
     // the combined list
     const nextChildrenPending = {};
     let pendingChildren = [];
-    prev.forEach((c) => {
-      if (utils.findChildInChildrenByKey(next, c.key)) {
+    prev.forEach((child) => {
+      if (utils.findChildInChildrenByKey(next, child.key)) {
         if (pendingChildren.length) {
-          nextChildrenPending[c.key] = pendingChildren;
+          nextChildrenPending[child.key] = pendingChildren;
           pendingChildren = [];
         }
       } else {
-        pendingChildren.push(c);
+        pendingChildren.push(child);
       }
     });
 
-    next.forEach((c) => {
-      if (nextChildrenPending.hasOwnProperty(c.key)) {
-        ret = ret.concat(nextChildrenPending[c.key]);
+    next.forEach((child) => {
+      if (nextChildrenPending.hasOwnProperty(child.key)) {
+        ret = ret.concat(nextChildrenPending[child.key]);
       }
-      ret.push(c);
+      ret.push(child);
     });
 
     ret = ret.concat(pendingChildren);

@@ -66,12 +66,12 @@ const Animate = React.createClass({
     const showProp = this.props.showProp;
     let children = this.state.children;
     if (showProp) {
-      children = children.filter((c)=> {
-        return !!c.props[showProp];
+      children = children.filter((child)=> {
+        return !!child.props[showProp];
       });
     }
-    children.forEach((c) => {
-      this.performAppear(c.key);
+    children.forEach((child) => {
+      this.performAppear(child.key);
     });
   },
 
@@ -126,14 +126,14 @@ const Animate = React.createClass({
       children: newChildren,
     });
 
-    nextChildren.forEach((c)=> {
-      const key = c.key;
+    nextChildren.forEach((child)=> {
+      const key = child.key;
       if (currentlyAnimatingKeys[key]) {
         return;
       }
       const hasPrev = findChildInChildrenByKey(currentChildren, key);
       if (showProp) {
-        const showInNext = c.props[showProp];
+        const showInNext = child.props[showProp];
         if (hasPrev) {
           const showInNow = findShownChildInChildrenByKey(currentChildren, key, showProp);
           if (!showInNow && showInNext) {
@@ -147,14 +147,14 @@ const Animate = React.createClass({
       }
     });
 
-    currentChildren.forEach((c)=> {
-      const key = c.key;
+    currentChildren.forEach((child)=> {
+      const key = child.key;
       if (currentlyAnimatingKeys[key]) {
         return;
       }
       const hasNext = findChildInChildrenByKey(nextChildren, key);
       if (showProp) {
-        const showInNow = c.props[showProp];
+        const showInNow = child.props[showProp];
         if (hasNext) {
           const showInNext = findShownChildInChildrenByKey(nextChildren, key, showProp);
           if (!showInNext && showInNow) {
@@ -176,34 +176,6 @@ const Animate = React.createClass({
     const keysToLeave = this.keysToLeave;
     this.keysToLeave = [];
     keysToLeave.forEach(this.performLeave);
-  },
-
-  render() {
-    const props = this.props;
-    const stateChildren = this.state.children;
-    let children = null;
-    if (stateChildren) {
-      children = stateChildren.map((child) => {
-        if (!child.key) {
-          throw new Error('must set key for <rc-animate> children');
-        }
-        return (<AnimateChild
-          key={child.key}
-          ref={child.key}
-          animation={props.animation}
-          transitionName={props.transitionName}
-          transitionEnter={props.transitionEnter}
-          transitionAppear={props.transitionAppear}
-          transitionLeave={props.transitionLeave}>
-          {child}
-        </AnimateChild>);
-      });
-    }
-    const Component = props.component;
-    if (Component) {
-      return <Component {...this.props}>{children}</Component>;
-    }
-    return children[0] || null;
   },
 
   performEnter(key) {
@@ -290,6 +262,34 @@ const Animate = React.createClass({
     if (component) {
       component.stop();
     }
+  },
+
+  render() {
+    const props = this.props;
+    const stateChildren = this.state.children;
+    let children = null;
+    if (stateChildren) {
+      children = stateChildren.map((child) => {
+        if (!child.key) {
+          throw new Error('must set key for <rc-animate> children');
+        }
+        return (<AnimateChild
+          key={child.key}
+          ref={child.key}
+          animation={props.animation}
+          transitionName={props.transitionName}
+          transitionEnter={props.transitionEnter}
+          transitionAppear={props.transitionAppear}
+          transitionLeave={props.transitionLeave}>
+          {child}
+        </AnimateChild>);
+      });
+    }
+    const Component = props.component;
+    if (Component) {
+      return <Component {...this.props}>{children}</Component>;
+    }
+    return children[0] || null;
   },
 });
 
