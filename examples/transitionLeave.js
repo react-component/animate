@@ -3,6 +3,7 @@
 import './assets/index.less';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 
 let transitionEnter = true;
 let remove = false;
@@ -39,4 +40,4 @@ var Demo = React.createClass({
   }
 });
 
-React.render(<Demo />, document.getElementById('__react-content'));
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));

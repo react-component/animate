@@ -4,6 +4,7 @@
 import './assets/slow.less';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 
 const Box = React.createClass({
   render(){
@@ -64,4 +65,4 @@ class Demo extends Component {
   }
 }
 
-React.render(<Demo />, document.getElementById('__react-content'));
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));
