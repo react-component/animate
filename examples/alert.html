@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <title>alert.js - example - rc-animate@2.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -42,153 +43,170 @@
       hyphens: none;
       color: #E5E5C2;
     }
+  </style>
+  <style>
+/*
 
-    /*
 Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
 */
 
-    .hljs {
-      display: block;
-      overflow-x: auto;
-      padding: 0.5em;
-      background: #23241f;
-      -webkit-text-size-adjust: none;
-    }
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #23241f;
+  -webkit-text-size-adjust: none;
+}
 
-    .hljs,
-    .hljs-tag,
-    .css .hljs-rules,
-    .css .hljs-value,
-    .css .hljs-function
-    .hljs-preprocessor,
-    .hljs-pragma {
-      color: #f8f8f2;
-    }
+.hljs,
+.hljs-tag,
+.css .hljs-rule,
+.css .hljs-value,
+.aspectj .hljs-function,
+.css .hljs-function
+.hljs-preprocessor,
+.hljs-pragma {
+  color: #f8f8f2;
+}
 
-    .hljs-strongemphasis,
-    .hljs-strong,
-    .hljs-emphasis {
-      color: #a8a8a2;
-    }
+.hljs-strongemphasis,
+.hljs-strong,
+.hljs-emphasis {
+  color: #a8a8a2;
+}
 
-    .hljs-bullet,
-    .hljs-blockquote,
-    .hljs-horizontal_rule,
-    .hljs-number,
-    .hljs-regexp,
-    .alias .hljs-keyword,
-    .hljs-literal,
-    .hljs-hexcolor {
-      color: #ae81ff;
-    }
+.hljs-bullet,
+.hljs-blockquote,
+.hljs-horizontal_rule,
+.hljs-number,
+.hljs-regexp,
+.alias .hljs-keyword,
+.hljs-literal,
+.hljs-hexcolor {
+  color: #ae81ff;
+}
 
-    .hljs-tag .hljs-value,
-    .hljs-code,
-    .hljs-title,
-    .css .hljs-class,
-    .hljs-class .hljs-title:last-child {
-      color: #a6e22e;
-    }
+.hljs-code,
+.hljs-title,
+.css .hljs-class,
+.hljs-class .hljs-title:last-child {
+  color: #a6e22e;
+  /*color: #e6db74;*/
+}
 
-    .hljs-link_url {
-      font-size: 80%;
-    }
+.hljs-link_url {
+  font-size: 80%;
+}
 
-    .hljs-strong,
-    .hljs-strongemphasis {
-      font-weight: bold;
-    }
+.hljs-strong,
+.hljs-strongemphasis {
+  font-weight: bold;
+}
 
-    .hljs-emphasis,
-    .hljs-strongemphasis,
-    .hljs-class .hljs-title:last-child {
-      font-style: italic;
-    }
+.hljs-emphasis,
+.hljs-strongemphasis,
+.hljs-class .hljs-title:last-child,
+.hljs-typename {
+  font-style: italic;
+}
 
-    .hljs-keyword,
-    .hljs-function,
-    .hljs-change,
-    .hljs-winutils,
-    .hljs-flow,
-    .nginx .hljs-title,
-    .tex .hljs-special,
-    .hljs-header,
-    .hljs-attribute,
-    .hljs-symbol,
-    .hljs-symbol .hljs-string,
-    .hljs-tag .hljs-title,
-    .hljs-value,
-    .alias .hljs-keyword:first-child,
-    .css .hljs-tag,
-    .css .unit,
-    .css .hljs-important {
-      color: #f92672;
-    }
+.hljs-keyword,
+.ruby .hljs-class .hljs-keyword:first-child,
+.ruby .hljs-function .hljs-keyword,
+.hljs-function,
+.hljs-change,
+.hljs-winutils,
+.hljs-flow,
+.nginx .hljs-title,
+.tex .hljs-special,
+.hljs-header,
+.hljs-symbol,
+.hljs-symbol .hljs-string,
+.hljs-tag .hljs-title,
+.hljs-value,
+.alias .hljs-keyword:first-child,
+.css .hljs-tag,
+.css .unit,
+.css .hljs-important {
+  color: #f92672;
+}
 
-    .hljs-function .hljs-keyword,
-    .hljs-class .hljs-keyword:first-child,
-    .hljs-constant,
-    .css .hljs-attribute {
-      color: #66d9ef;
-    }
+.hljs-function .hljs-keyword,
+.hljs-class .hljs-keyword:first-child,
+.hljs-aspect .hljs-keyword:first-child,
+.hljs-constant,
+.hljs-typename,
+.hljs-name,
+.css .hljs-attribute {
+  color: #66d9ef;
+}
 
-    .hljs-variable,
-    .hljs-params,
-    .hljs-class .hljs-title {
-      color: #f8f8f2;
-    }
+.hljs-variable,
+.hljs-params,
+.hljs-class .hljs-title,
+.hljs-aspect .hljs-title {
+  color: #f8f8f2;
+}
 
-    .hljs-string,
-    .css .hljs-id,
-    .hljs-subst,
-    .hljs-type,
-    .ruby .hljs-class .hljs-parent,
-    .hljs-built_in,
-    .django .hljs-template_tag,
-    .django .hljs-variable,
-    .smalltalk .hljs-class,
-    .django .hljs-filter .hljs-argument,
-    .smalltalk .hljs-localvars,
-    .smalltalk .hljs-array,
-    .hljs-attr_selector,
-    .hljs-pseudo,
-    .hljs-addition,
-    .hljs-stream,
-    .hljs-envvar,
-    .apache .hljs-tag,
-    .apache .hljs-cbracket,
-    .tex .hljs-command,
-    .hljs-prompt,
-    .hljs-link_label,
-    .hljs-link_url {
-      color: #e6db74;
-    }
+.hljs-tag .hljs-value,
+.hljs-string,
+.css .hljs-id,
+.hljs-subst,
+.hljs-type,
+.ruby .hljs-class .hljs-parent,
+.django .hljs-template_tag,
+.django .hljs-variable,
+.smalltalk .hljs-class,
+.django .hljs-filter .hljs-argument,
+.smalltalk .hljs-localvars,
+.smalltalk .hljs-array,
+.hljs-attr_selector,
+.hljs-pseudo,
+.hljs-addition,
+.hljs-stream,
+.hljs-envvar,
+.apache .hljs-tag,
+.apache .hljs-cbracket,
+.tex .hljs-command,
+.hljs-prompt,
+.hljs-link_label,
+.hljs-link_url {
+  color: #e6db74;
+}
 
-    .hljs-comment,
-    .hljs-javadoc,
-    .hljs-annotation,
-    .hljs-decorator,
-    .hljs-template_comment,
-    .hljs-pi,
-    .hljs-doctype,
-    .hljs-deletion,
-    .hljs-shebang,
-    .apache .hljs-sqbracket,
-    .tex .hljs-formula {
-      color: #75715e;
-    }
+.hljs-comment,
+.hljs-annotation,
+.hljs-decorator,
+.hljs-pi,
+.hljs-doctype,
+.hljs-deletion,
+.hljs-shebang,
+.apache .hljs-sqbracket,
+.tex .hljs-formula {
+  color: #75715e;
+}
 
-    .coffeescript .javascript,
-    .javascript .xml,
-    .tex .hljs-formula,
-    .xml .javascript,
-    .xml .vbscript,
-    .xml .css,
-    .xml .hljs-cdata,
-    .xml .php,
-    .php .xml {
-      opacity: 0.5;
-    }
+.coffeescript .javascript,
+.javascript .xml,
+.tex .hljs-formula,
+.xml .javascript,
+.xml .vbscript,
+.xml .css,
+.xml .hljs-cdata,
+.xml .php,
+.php .xml {
+  opacity: 0.5;
+}
+/***********/
+.hljs-attribute{
+  color: #a6e22e;
+}
+/***** node keyword ******/
+.hljs-built_in{
+  color: #3396dc;
+  font-weight: bold;
+}
   </style>
   <style>
     .container {
@@ -246,13 +264,12 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="alert.js?nowrap"></script>
-  <div class="highlight">
-    <pre><code><span class="hljs-string">'use strict'</span>;
+  <div class="highlight"><pre><code language="js"><span class="hljs-pi">'use strict'</span>;
 
 <span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
-<span class="hljs-keyword">import</span> React from <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM from <span class="hljs-string">'react-dom'</span>;
-<span class="hljs-keyword">import</span> Animate from <span class="hljs-string">'rc-animate'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">var</span> seed = <span class="hljs-number">0</span>;
 
 <span class="hljs-keyword">var</span> Alert = React.createClass({
@@ -263,51 +280,51 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     onEnd: React.PropTypes.func
   },
 
-  getDefaultProps: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  getDefaultProps: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">return</span> {
-      onEnd: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+      onEnd: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
       },
       time: <span class="hljs-number">2000</span>,
       type: <span class="hljs-string">'success'</span>
     }
   },
 
-  componentDidMount: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  componentDidMount: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">var</span> props = <span class="hljs-keyword">this</span>.props;
-    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
       props.onEnd();
     }, props.time);
   },
 
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">var</span> props = <span class="hljs-keyword">this</span>.props;
-    <span class="hljs-keyword">return</span> &lt;div style={{
-    background: <span class="hljs-string">'yellow'</span>,
-  width: <span class="hljs-number">600</span>,
-  padding: <span class="hljs-number">20</span>,
-  marginLeft: <span class="hljs-string">'auto'</span>,
-  marginRight: <span class="hljs-string">'auto'</span>
-    }}&gt;{props.str}&lt;/div&gt;;
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span>
+    <span class="hljs-attribute">background:</span> '<span class="hljs-attribute">yellow</span>',
+  <span class="hljs-attribute">width:</span> <span class="hljs-attribute">600</span>,
+  <span class="hljs-attribute">padding:</span> <span class="hljs-attribute">20</span>,
+  <span class="hljs-attribute">marginLeft:</span> '<span class="hljs-attribute">auto</span>',
+  <span class="hljs-attribute">marginRight:</span> '<span class="hljs-attribute">auto</span>'
+    }}&gt;</span>{props.str}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>;</span>
   }
 });
 
 
 <span class="hljs-keyword">var</span> AlertGroup = React.createClass({
-  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">return</span> {
       alerts: []
     }
   },
-  addAlert: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> </span>{
+  addAlert: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a</span>) </span>{
     <span class="hljs-keyword">this</span>.setState({
       alerts: <span class="hljs-keyword">this</span>.state.alerts.concat(a)
     });
   },
-  onEnd: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
+  onEnd: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) </span>{
     <span class="hljs-keyword">var</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
     <span class="hljs-keyword">var</span> ret = [];
     <span class="hljs-keyword">var</span> target;
-    alerts.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> </span>{
+    alerts.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a</span>) </span>{
       <span class="hljs-keyword">if</span> (a.key === key) {
         target = a;
       } <span class="hljs-keyword">else</span> {
@@ -317,72 +334,73 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-keyword">if</span> (target) {
       <span class="hljs-keyword">this</span>.setState({
         alerts: ret
-      }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">if</span> (target.<span class="hljs-keyword">callback</span>) {
-          target.<span class="hljs-keyword">callback</span>();
+      }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">if</span> (target.callback) {
+          target.callback();
         }
       })
     }
   },
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">var</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
-    <span class="hljs-keyword">var</span> children = alerts.map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a)</span> </span>{
+    <span class="hljs-keyword">var</span> children = alerts.map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a</span>) </span>{
       <span class="hljs-keyword">if</span> (!a.key) {
         seed++;
         a.key = seed + <span class="hljs-string">''</span>;
       }
-      <span class="hljs-keyword">return</span> &lt;Alert {...a} onEnd={self.onEnd.bind(self, a.key)}/&gt;
+      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Alert</span> {<span class="hljs-attribute">...a</span>} <span class="hljs-attribute">onEnd</span>=<span class="hljs-value">{self.onEnd.bind(self,</span> <span class="hljs-attribute">a.key</span>)}/&gt;</span>
     });
-    <span class="hljs-keyword">return</span> &lt;div style={{
-    position: <span class="hljs-string">'fixed'</span>,
-  width: <span class="hljs-string">'100%'</span>,
-  top: <span class="hljs-number">50</span>,
-  zIndex: <span class="hljs-number">9999</span>
-    }}&gt;
-      &lt;Animate transitionName=<span class="hljs-string">"fade"</span>&gt;{children}&lt;/Animate&gt;
-    &lt;/div&gt;;
+    return <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span>
+    <span class="hljs-attribute">position:</span> '<span class="hljs-attribute">fixed</span>',
+  <span class="hljs-attribute">width:</span> '<span class="hljs-attribute">100</span>%',
+  <span class="hljs-attribute">top:</span> <span class="hljs-attribute">50</span>,
+  <span class="hljs-attribute">zIndex:</span> <span class="hljs-attribute">9999</span>
+    }}&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>;</span>
   }
 });
 
 <span class="hljs-keyword">var</span> alertGroup;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alert</span><span class="hljs-params">(str, time, type, callback)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alert</span>(<span class="hljs-params">str, time, type, callback</span>) </span>{
   <span class="hljs-keyword">if</span> (!alertGroup) {
-    <span class="hljs-keyword">var</span> div = document.createElement(<span class="hljs-string">'div'</span>);
-    document.body.appendChild(div);
-    alertGroup = ReactDOM.render(&lt;AlertGroup/&gt;, div);
+    <span class="hljs-keyword">var</span> div = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+    <span class="hljs-built_in">document</span>.body.appendChild(div);
+    alertGroup = ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">AlertGroup</span>/&gt;</span>, div);
   }
   alertGroup.addAlert({
     str: str,
     time: time,
     type: type,
-    <span class="hljs-keyword">callback</span>: <span class="hljs-keyword">callback</span>
+    callback: callback
   });
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onClick</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
-    (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i)</span> </span>{
-      setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-        alert(i);
-      }, <span class="hljs-number">1000</span> * i);
-    })(i);
+function onClick() {
+  for (var i = 0; i <span class="hljs-tag">&lt; <span class="hljs-attribute">4</span>; <span class="hljs-attribute">i</span>++) {
+    (<span class="hljs-attribute">function</span> (<span class="hljs-attribute">i</span>) {
+      <span class="hljs-attribute">setTimeout</span>(<span class="hljs-attribute">function</span> () {
+        <span class="hljs-attribute">alert</span>(<span class="hljs-attribute">i</span>);
+      }, <span class="hljs-attribute">1000</span> * <span class="hljs-attribute">i</span>);
+    })(<span class="hljs-attribute">i</span>);
   }
 }
 
-ReactDOM.render(&lt;div&gt;
-    &lt;h2&gt;notification&lt;/h2&gt;
-    &lt;button onClick={onClick}&gt;show notification&lt;/button&gt;
-  &lt;/div&gt;,
-  document.getElementById(<span class="hljs-string">'__react-content'</span>));
-</code></pre>
-  </div>
+<span class="hljs-attribute">ReactDOM.render</span>(&lt;<span class="hljs-attribute">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>notification<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{onClick}</span>&gt;</span>show notification<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
+  document.getElementById('__react-content'));
+</span></code></pre></div>
 </div>
-<a href="https://github.com/react-component/animate"><img style="position: absolute; top: 0; right: 0; border: 0;"
-                            src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-                            alt="Fork me on GitHub"
-                            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+<a href="https://github.com/react-component/animate">
+  <img style="position: absolute; top: 0; right: 0; border: 0;"
+       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+       alt="Fork me on GitHub"
+       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
 </body>
 
 </html>

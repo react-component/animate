@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <title>simple.js - example - rc-animate@2.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -42,153 +43,170 @@
       hyphens: none;
       color: #E5E5C2;
     }
+  </style>
+  <style>
+/*
 
-    /*
 Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
 */
 
-    .hljs {
-      display: block;
-      overflow-x: auto;
-      padding: 0.5em;
-      background: #23241f;
-      -webkit-text-size-adjust: none;
-    }
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #23241f;
+  -webkit-text-size-adjust: none;
+}
 
-    .hljs,
-    .hljs-tag,
-    .css .hljs-rules,
-    .css .hljs-value,
-    .css .hljs-function
-    .hljs-preprocessor,
-    .hljs-pragma {
-      color: #f8f8f2;
-    }
+.hljs,
+.hljs-tag,
+.css .hljs-rule,
+.css .hljs-value,
+.aspectj .hljs-function,
+.css .hljs-function
+.hljs-preprocessor,
+.hljs-pragma {
+  color: #f8f8f2;
+}
 
-    .hljs-strongemphasis,
-    .hljs-strong,
-    .hljs-emphasis {
-      color: #a8a8a2;
-    }
+.hljs-strongemphasis,
+.hljs-strong,
+.hljs-emphasis {
+  color: #a8a8a2;
+}
 
-    .hljs-bullet,
-    .hljs-blockquote,
-    .hljs-horizontal_rule,
-    .hljs-number,
-    .hljs-regexp,
-    .alias .hljs-keyword,
-    .hljs-literal,
-    .hljs-hexcolor {
-      color: #ae81ff;
-    }
+.hljs-bullet,
+.hljs-blockquote,
+.hljs-horizontal_rule,
+.hljs-number,
+.hljs-regexp,
+.alias .hljs-keyword,
+.hljs-literal,
+.hljs-hexcolor {
+  color: #ae81ff;
+}
 
-    .hljs-tag .hljs-value,
-    .hljs-code,
-    .hljs-title,
-    .css .hljs-class,
-    .hljs-class .hljs-title:last-child {
-      color: #a6e22e;
-    }
+.hljs-code,
+.hljs-title,
+.css .hljs-class,
+.hljs-class .hljs-title:last-child {
+  color: #a6e22e;
+  /*color: #e6db74;*/
+}
 
-    .hljs-link_url {
-      font-size: 80%;
-    }
+.hljs-link_url {
+  font-size: 80%;
+}
 
-    .hljs-strong,
-    .hljs-strongemphasis {
-      font-weight: bold;
-    }
+.hljs-strong,
+.hljs-strongemphasis {
+  font-weight: bold;
+}
 
-    .hljs-emphasis,
-    .hljs-strongemphasis,
-    .hljs-class .hljs-title:last-child {
-      font-style: italic;
-    }
+.hljs-emphasis,
+.hljs-strongemphasis,
+.hljs-class .hljs-title:last-child,
+.hljs-typename {
+  font-style: italic;
+}
 
-    .hljs-keyword,
-    .hljs-function,
-    .hljs-change,
-    .hljs-winutils,
-    .hljs-flow,
-    .nginx .hljs-title,
-    .tex .hljs-special,
-    .hljs-header,
-    .hljs-attribute,
-    .hljs-symbol,
-    .hljs-symbol .hljs-string,
-    .hljs-tag .hljs-title,
-    .hljs-value,
-    .alias .hljs-keyword:first-child,
-    .css .hljs-tag,
-    .css .unit,
-    .css .hljs-important {
-      color: #f92672;
-    }
+.hljs-keyword,
+.ruby .hljs-class .hljs-keyword:first-child,
+.ruby .hljs-function .hljs-keyword,
+.hljs-function,
+.hljs-change,
+.hljs-winutils,
+.hljs-flow,
+.nginx .hljs-title,
+.tex .hljs-special,
+.hljs-header,
+.hljs-symbol,
+.hljs-symbol .hljs-string,
+.hljs-tag .hljs-title,
+.hljs-value,
+.alias .hljs-keyword:first-child,
+.css .hljs-tag,
+.css .unit,
+.css .hljs-important {
+  color: #f92672;
+}
 
-    .hljs-function .hljs-keyword,
-    .hljs-class .hljs-keyword:first-child,
-    .hljs-constant,
-    .css .hljs-attribute {
-      color: #66d9ef;
-    }
+.hljs-function .hljs-keyword,
+.hljs-class .hljs-keyword:first-child,
+.hljs-aspect .hljs-keyword:first-child,
+.hljs-constant,
+.hljs-typename,
+.hljs-name,
+.css .hljs-attribute {
+  color: #66d9ef;
+}
 
-    .hljs-variable,
-    .hljs-params,
-    .hljs-class .hljs-title {
-      color: #f8f8f2;
-    }
+.hljs-variable,
+.hljs-params,
+.hljs-class .hljs-title,
+.hljs-aspect .hljs-title {
+  color: #f8f8f2;
+}
 
-    .hljs-string,
-    .css .hljs-id,
-    .hljs-subst,
-    .hljs-type,
-    .ruby .hljs-class .hljs-parent,
-    .hljs-built_in,
-    .django .hljs-template_tag,
-    .django .hljs-variable,
-    .smalltalk .hljs-class,
-    .django .hljs-filter .hljs-argument,
-    .smalltalk .hljs-localvars,
-    .smalltalk .hljs-array,
-    .hljs-attr_selector,
-    .hljs-pseudo,
-    .hljs-addition,
-    .hljs-stream,
-    .hljs-envvar,
-    .apache .hljs-tag,
-    .apache .hljs-cbracket,
-    .tex .hljs-command,
-    .hljs-prompt,
-    .hljs-link_label,
-    .hljs-link_url {
-      color: #e6db74;
-    }
+.hljs-tag .hljs-value,
+.hljs-string,
+.css .hljs-id,
+.hljs-subst,
+.hljs-type,
+.ruby .hljs-class .hljs-parent,
+.django .hljs-template_tag,
+.django .hljs-variable,
+.smalltalk .hljs-class,
+.django .hljs-filter .hljs-argument,
+.smalltalk .hljs-localvars,
+.smalltalk .hljs-array,
+.hljs-attr_selector,
+.hljs-pseudo,
+.hljs-addition,
+.hljs-stream,
+.hljs-envvar,
+.apache .hljs-tag,
+.apache .hljs-cbracket,
+.tex .hljs-command,
+.hljs-prompt,
+.hljs-link_label,
+.hljs-link_url {
+  color: #e6db74;
+}
 
-    .hljs-comment,
-    .hljs-javadoc,
-    .hljs-annotation,
-    .hljs-decorator,
-    .hljs-template_comment,
-    .hljs-pi,
-    .hljs-doctype,
-    .hljs-deletion,
-    .hljs-shebang,
-    .apache .hljs-sqbracket,
-    .tex .hljs-formula {
-      color: #75715e;
-    }
+.hljs-comment,
+.hljs-annotation,
+.hljs-decorator,
+.hljs-pi,
+.hljs-doctype,
+.hljs-deletion,
+.hljs-shebang,
+.apache .hljs-sqbracket,
+.tex .hljs-formula {
+  color: #75715e;
+}
 
-    .coffeescript .javascript,
-    .javascript .xml,
-    .tex .hljs-formula,
-    .xml .javascript,
-    .xml .vbscript,
-    .xml .css,
-    .xml .hljs-cdata,
-    .xml .php,
-    .php .xml {
-      opacity: 0.5;
-    }
+.coffeescript .javascript,
+.javascript .xml,
+.tex .hljs-formula,
+.xml .javascript,
+.xml .vbscript,
+.xml .css,
+.xml .hljs-cdata,
+.xml .php,
+.php .xml {
+  opacity: 0.5;
+}
+/***********/
+.hljs-attribute{
+  color: #a6e22e;
+}
+/***** node keyword ******/
+.hljs-built_in{
+  color: #3396dc;
+  font-weight: bold;
+}
   </style>
   <style>
     .container {
@@ -246,66 +264,74 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="simple.js?nowrap"></script>
-  <div class="highlight">
-    <pre><code><span class="hljs-comment">// use jsx to render html, do not modify simple.html</span>
-<span class="hljs-symbol">'use</span> strict';
+  <div class="highlight"><pre><code language="js"><span class="hljs-comment">// use jsx to render html, do not modify simple.html</span>
+<span class="hljs-pi">'use strict'</span>;
 
-<span class="hljs-keyword">import</span> './assets/slow.less';
-<span class="hljs-keyword">import</span> <span class="hljs-type">Animate</span> from <span class="hljs-symbol">'rc</span>-animate';
-<span class="hljs-keyword">import</span> <span class="hljs-type">React</span>, {<span class="hljs-type">Component</span>} from <span class="hljs-symbol">'reac</span>t';
-<span class="hljs-keyword">import</span> <span class="hljs-type">ReactDOM</span> from <span class="hljs-symbol">'react</span>-dom';
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/slow.less'</span>;
+<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
+<span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> assign <span class="hljs-keyword">from</span> <span class="hljs-string">'object-assign'</span>;
 
-let transitionEnter = <span class="hljs-literal">true</span>;
-let remove = <span class="hljs-literal">false</span>;
+<span class="hljs-keyword">let</span> transitionEnter = <span class="hljs-literal">true</span>;
+<span class="hljs-keyword">let</span> remove = <span class="hljs-literal">false</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">Component</span> {</span>
+<span class="hljs-keyword">const</span> Div = (props)=&gt;{
+  <span class="hljs-keyword">var</span> {style,show}=props;
+  style=assign({},style,{
+    display:show?<span class="hljs-string">''</span>:<span class="hljs-string">'none'</span>
+  });
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> {<span class="hljs-attribute">...props</span>} <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>/&gt;</span>
+};
+
+class Demo extends Component {
 
   constructor(props) {
-    <span class="hljs-keyword">super</span>(props);
-    <span class="hljs-keyword">this</span>.state = {
-      exclusive:<span class="hljs-literal">false</span>,
-      enter: <span class="hljs-literal">true</span>
+    super(props);
+    this.state = {
+      exclusive:false,
+      enter: true
     };
   }
 
   toggle(field){
-    <span class="hljs-keyword">this</span>.setState({
-      [field]:!<span class="hljs-keyword">this</span>.state[field]
+    this.setState({
+      [field]:!this.state[field]
     });
   }
 
   render() {
-    <span class="hljs-keyword">return</span> (
-      &lt;div&gt;
-        &lt;label&gt;&lt;input <span class="hljs-class"><span class="hljs-keyword">type</span>=</span><span class="hljs-symbol">'checkbo</span>x' onChange={<span class="hljs-keyword">this</span>.toggle.bind(<span class="hljs-keyword">this</span>,<span class="hljs-symbol">'ente</span>r')} checked={<span class="hljs-keyword">this</span>.state.enter}/&gt; show&lt;/label&gt;
+    return (
+      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'checkbox'</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,'enter')}</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.enter}</span>/&gt;</span> show<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         &amp;nbsp;
-        &lt;label&gt;&lt;input <span class="hljs-class"><span class="hljs-keyword">type</span>=</span><span class="hljs-symbol">'checkbo</span>x' onChange={<span class="hljs-keyword">this</span>.toggle.bind(<span class="hljs-keyword">this</span>,<span class="hljs-symbol">'exclusiv</span>e')} checked={<span class="hljs-keyword">this</span>.state.exclusive}/&gt; exclusive&lt;/label&gt;
-        &lt;br/&gt;&lt;br/&gt;
-        &lt;<span class="hljs-type">Animate</span>
-          component=<span class="hljs-string">""</span>
-          exclusive={<span class="hljs-keyword">this</span>.state.exclusive}
-          showProp=<span class="hljs-symbol">'data</span>-show'
-          transitionName=<span class="hljs-string">"fade"</span>&gt;
-          &lt;div data-show={<span class="hljs-keyword">this</span>.state.enter} style={{
-          visibility:<span class="hljs-keyword">this</span>.state.enter?'':<span class="hljs-symbol">'hidde</span>n',
-          width: <span class="hljs-symbol">'200p</span>x',
-          height: <span class="hljs-symbol">'200p</span>x',
-          backgroundColor: <span class="hljs-symbol">'re</span>d'
-          }}&gt;&lt;/div&gt;
-        &lt;/<span class="hljs-type">Animate</span>&gt;
-      &lt;/div&gt;
-    );
+        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'checkbox'</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,'exclusive')}</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.exclusive}</span>/&gt;</span> exclusive<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span>
+          <span class="hljs-attribute">component</span>=<span class="hljs-value">""</span>
+          <span class="hljs-attribute">exclusive</span>=<span class="hljs-value">{this.state.exclusive}</span>
+          <span class="hljs-attribute">showProp</span>=<span class="hljs-value">'show'</span>
+          <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">Div</span> <span class="hljs-attribute">show</span>=<span class="hljs-value">{this.state.enter}</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span>
+          <span class="hljs-attribute">width:</span> '<span class="hljs-attribute">200px</span>',
+          <span class="hljs-attribute">height:</span> '<span class="hljs-attribute">200px</span>',
+          <span class="hljs-attribute">backgroundColor:</span> '<span class="hljs-attribute">red</span>'
+          }}/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    )</span>;
   }
 }
 
-<span class="hljs-type">ReactDOM</span>.render(&lt;<span class="hljs-type">Demo</span> /&gt;, document.getElementById(<span class="hljs-symbol">'__react</span>-content'));
-</code></pre>
-  </div>
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
+</span></code></pre></div>
 </div>
-<a href="https://github.com/react-component/animate"><img style="position: absolute; top: 0; right: 0; border: 0;"
-                            src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-                            alt="Fork me on GitHub"
-                            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+<a href="https://github.com/react-component/animate">
+  <img style="position: absolute; top: 0; right: 0; border: 0;"
+       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+       alt="Fork me on GitHub"
+       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+</a>
 </body>
 
 </html>
