@@ -34,18 +34,18 @@
     "karma": "rc-tools run karma",
     "saucelabs": "rc-tools run saucelabs",
     "browser-test": "rc-tools run browser-test",
-    "browser-test-cover": "rc-tools run browser-test-cover",
-    "validate": "npm ls"
+    "browser-test-cover": "rc-tools run browser-test-cover"
   },
   "devDependencies": {
     "expect.js": "0.3.x",
     "jquery": "~1.11.3",
-    "object-assign": "~3.0.0",
-    "precommit-hook-eslint": "~3.0.0",
+    "object-assign": "4.x",
+    "pre-commit": "1.x",
     "rc-server": "3.x",
     "rc-tools": "4.x",
     "react": "0.14.x",
     "react-dom": "0.14.x",
+    "react-addons-test-utils": "~0.14.0",
     "velocity-animate": "~1.2.2"
   },
   "pre-commit": [

@@ -5,9 +5,18 @@ import './assets/slow.less';
 import Animate from 'rc-animate';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import assign from 'object-assign';
 
 let transitionEnter = true;
 let remove = false;
+
+const Div = (props)=>{
+  var {style,show}=props;
+  style=assign({},style,{
+    display:show?'':'none'
+  });
+  return <div {...props} style={style}/>
+};
 
 class Demo extends Component {
 
@@ -35,14 +44,13 @@ class Demo extends Component {
         <Animate
           component=""
           exclusive={this.state.exclusive}
-          showProp='data-show'
+          showProp='show'
           transitionName="fade">
-          <div data-show={this.state.enter} style={{
-          visibility:this.state.enter?'':'hidden',
+          <Div show={this.state.enter} style={{
           width: '200px',
           height: '200px',
           backgroundColor: 'red'
-          }}></div>
+          }}/>
         </Animate>
       </div>
     );

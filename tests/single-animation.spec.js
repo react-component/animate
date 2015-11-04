@@ -5,8 +5,8 @@
 
 var expect = require('expect.js');
 var Animate = require('../index');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
 require('./index.spec.css');
 var $ = require('jquery');
 
