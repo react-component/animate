@@ -1,6 +1,7 @@
 import React from 'react';
-import ChildrenUtils, {
+import {
   toArrayChildren,
+  mergeChildren,
   findShownChildInChildrenByKey,
   findChildInChildrenByKey,
   isSameChildren,
@@ -31,6 +32,7 @@ const Animate = React.createClass({
     transitionName: React.PropTypes.string,
     transitionEnter: React.PropTypes.bool,
     transitionAppear: React.PropTypes.bool,
+    exclusive: React.PropTypes.bool,
     transitionLeave: React.PropTypes.bool,
     onEnd: React.PropTypes.func,
     onEnter: React.PropTypes.func,
@@ -66,7 +68,7 @@ const Animate = React.createClass({
     const showProp = this.props.showProp;
     let children = this.state.children;
     if (showProp) {
-      children = children.filter((child)=> {
+      children = children.filter((child) => {
         return !!child.props[showProp];
       });
     }
@@ -79,11 +81,10 @@ const Animate = React.createClass({
     const nextChildren = toArrayChildren(getChildrenFromProps(nextProps));
     const props = this.props;
     const showProp = props.showProp;
-    const exclusive = props.exclusive;
     const currentlyAnimatingKeys = this.currentlyAnimatingKeys;
     // last props children if exclusive
     // exclusive needs immediate response
-    let currentChildren = this.state.children;
+    const currentChildren = this.state.children;
     // in case destroy in showProp mode
     let newChildren = [];
     if (showProp) {
@@ -107,18 +108,10 @@ const Animate = React.createClass({
         }
       });
     } else {
-      newChildren = ChildrenUtils.mergeChildren(
+      newChildren = mergeChildren(
         currentChildren,
         nextChildren
       );
-    }
-
-    // exclusive needs immediate response
-    if (exclusive) {
-      Object.keys(currentlyAnimatingKeys).forEach((key) => {
-        this.stop(key);
-      });
-      currentChildren = toArrayChildren(getChildrenFromProps(props));
     }
 
     // need render to avoid update
@@ -170,12 +163,20 @@ const Animate = React.createClass({
   },
 
   componentDidUpdate() {
-    const keysToEnter = this.keysToEnter;
-    this.keysToEnter = [];
-    keysToEnter.forEach(this.performEnter);
-    const keysToLeave = this.keysToLeave;
-    this.keysToLeave = [];
-    keysToLeave.forEach(this.performLeave);
+    // exclusive needs immediate response
+    if (this.props.exclusive) {
+      Object.keys(this.currentlyAnimatingKeys).forEach((key) => {
+        this.stop(key);
+      });
+    }
+    if (this.isMounted()) {
+      const keysToEnter = this.keysToEnter;
+      this.keysToEnter = [];
+      keysToEnter.forEach(this.performEnter);
+      const keysToLeave = this.keysToLeave;
+      this.keysToLeave = [];
+      keysToLeave.forEach(this.performLeave);
+    }
   },
 
   performEnter(key) {

@@ -59,9 +59,10 @@ const AnimateChild = React.createClass({
   },
 
   stop() {
-    if (this.stopper) {
-      this.stopper.stop();
+    const stopper = this.stopper;
+    if (stopper) {
       this.stopper = null;
+      stopper.stop();
     }
   },
 

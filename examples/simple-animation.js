@@ -12,7 +12,6 @@ let remove = false;
 
 const Box = React.createClass({
   render() {
-    console.log('render', this.props.visible);
     return (<div style={{
           width: '200px',
           display: this.props.visible ? 'block' : 'none',
