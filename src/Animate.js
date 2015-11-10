@@ -162,9 +162,9 @@ const Animate = React.createClass({
     });
   },
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     // exclusive needs immediate response
-    if (this.props.exclusive) {
+    if (this.props.exclusive && this.props !== prevProps) {
       Object.keys(this.currentlyAnimatingKeys).forEach((key) => {
         this.stop(key);
       });
