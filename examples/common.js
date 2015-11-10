@@ -19878,11 +19878,11 @@
 	    });
 	  },
 	
-	  componentDidUpdate: function componentDidUpdate() {
+	  componentDidUpdate: function componentDidUpdate(prevProps) {
 	    var _this3 = this;
 	
 	    // exclusive needs immediate response
-	    if (this.props.exclusive) {
+	    if (this.props.exclusive && this.props !== prevProps) {
 	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
 	        _this3.stop(key);
 	      });
