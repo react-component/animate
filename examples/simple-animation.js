@@ -50,7 +50,6 @@ webpackJsonp([3],{
 	  displayName: 'Box',
 	
 	  render: function render() {
-	    console.log('render', this.props.visible);
 	    return _react2['default'].createElement('div', { style: {
 	        width: '200px',
 	        display: this.props.visible ? 'block' : 'none',

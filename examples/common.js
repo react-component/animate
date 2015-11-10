@@ -19716,8 +19716,6 @@
 	
 	var _ChildrenUtils = __webpack_require__(164);
 	
-	var _ChildrenUtils2 = _interopRequireDefault(_ChildrenUtils);
-	
 	var _AnimateChild = __webpack_require__(165);
 	
 	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
@@ -19751,6 +19749,7 @@
 	    transitionName: _react2['default'].PropTypes.string,
 	    transitionEnter: _react2['default'].PropTypes.bool,
 	    transitionAppear: _react2['default'].PropTypes.bool,
+	    exclusive: _react2['default'].PropTypes.bool,
 	    transitionLeave: _react2['default'].PropTypes.bool,
 	    onEnd: _react2['default'].PropTypes.func,
 	    onEnter: _react2['default'].PropTypes.func,
@@ -19803,7 +19802,6 @@
 	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
 	    var props = this.props;
 	    var showProp = props.showProp;
-	    var exclusive = props.exclusive;
 	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
 	    // last props children if exclusive
 	    // exclusive needs immediate response
@@ -19829,15 +19827,7 @@
 	        }
 	      });
 	    } else {
-	      newChildren = _ChildrenUtils2['default'].mergeChildren(currentChildren, nextChildren);
-	    }
-	
-	    // exclusive needs immediate response
-	    if (exclusive) {
-	      Object.keys(currentlyAnimatingKeys).forEach(function (key) {
-	        _this2.stop(key);
-	      });
-	      currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	      newChildren = (0, _ChildrenUtils.mergeChildren)(currentChildren, nextChildren);
 	    }
 	
 	    // need render to avoid update
@@ -19889,12 +19879,22 @@
 	  },
 	
 	  componentDidUpdate: function componentDidUpdate() {
-	    var keysToEnter = this.keysToEnter;
-	    this.keysToEnter = [];
-	    keysToEnter.forEach(this.performEnter);
-	    var keysToLeave = this.keysToLeave;
-	    this.keysToLeave = [];
-	    keysToLeave.forEach(this.performLeave);
+	    var _this3 = this;
+	
+	    // exclusive needs immediate response
+	    if (this.props.exclusive) {
+	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
+	        _this3.stop(key);
+	      });
+	    }
+	    if (this.isMounted()) {
+	      var keysToEnter = this.keysToEnter;
+	      this.keysToEnter = [];
+	      keysToEnter.forEach(this.performEnter);
+	      var keysToLeave = this.keysToLeave;
+	      this.keysToLeave = [];
+	      keysToLeave.forEach(this.performLeave);
+	    }
 	  },
 	
 	  performEnter: function performEnter(key) {
@@ -20025,6 +20025,12 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	exports.toArrayChildren = toArrayChildren;
+	exports.findChildInChildrenByKey = findChildInChildrenByKey;
+	exports.findShownChildInChildrenByKey = findShownChildInChildrenByKey;
+	exports.findHiddenChildInChildrenByKey = findHiddenChildInChildrenByKey;
+	exports.isSameChildren = isSameChildren;
+	exports.mergeChildren = mergeChildren;
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -20032,106 +20038,101 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var utils = {
-	  toArrayChildren: function toArrayChildren(children) {
-	    var ret = [];
-	    _react2['default'].Children.forEach(children, function (child) {
-	      ret.push(child);
-	    });
-	    return ret;
-	  },
+	function toArrayChildren(children) {
+	  var ret = [];
+	  _react2['default'].Children.forEach(children, function (child) {
+	    ret.push(child);
+	  });
+	  return ret;
+	}
 	
-	  findChildInChildrenByKey: function findChildInChildrenByKey(children, key) {
-	    var ret = null;
-	    if (children) {
-	      children.forEach(function (child) {
-	        if (ret) {
-	          return;
-	        }
-	        if (child.key === key) {
-	          ret = child;
-	        }
-	      });
-	    }
-	    return ret;
-	  },
-	
-	  findShownChildInChildrenByKey: function findShownChildInChildrenByKey(children, key, showProp) {
-	    var ret = null;
-	    if (children) {
-	      children.forEach(function (child) {
-	        if (child.key === key && child.props[showProp]) {
-	          if (ret) {
-	            throw new Error('two child with same key for <rc-animate> children');
-	          }
-	          ret = child;
-	        }
-	      });
-	    }
-	    return ret;
-	  },
-	
-	  findHiddenChildInChildrenByKey: function findHiddenChildInChildrenByKey(children, key, showProp) {
-	    var found = 0;
-	    if (children) {
-	      children.forEach(function (child) {
-	        if (found) {
-	          return;
-	        }
-	        found = child.key === key && !child.props[showProp];
-	      });
-	    }
-	    return found;
-	  },
-	
-	  isSameChildren: function isSameChildren(c1, c2, showProp) {
-	    var same = c1.length === c2.length;
-	    if (same) {
-	      c1.forEach(function (child, index) {
-	        var child2 = c2[index];
-	        if (child.key !== child2.key) {
-	          same = false;
-	        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
-	          same = false;
-	        }
-	      });
-	    }
-	    return same;
-	  },
-	
-	  mergeChildren: function mergeChildren(prev, next) {
-	    var ret = [];
-	
-	    // For each key of `next`, the list of keys to insert before that key in
-	    // the combined list
-	    var nextChildrenPending = {};
-	    var pendingChildren = [];
-	    prev.forEach(function (child) {
-	      if (utils.findChildInChildrenByKey(next, child.key)) {
-	        if (pendingChildren.length) {
-	          nextChildrenPending[child.key] = pendingChildren;
-	          pendingChildren = [];
-	        }
-	      } else {
-	        pendingChildren.push(child);
+	function findChildInChildrenByKey(children, key) {
+	  var ret = null;
+	  if (children) {
+	    children.forEach(function (child) {
+	      if (ret) {
+	        return;
+	      }
+	      if (child.key === key) {
+	        ret = child;
 	      }
 	    });
-	
-	    next.forEach(function (child) {
-	      if (nextChildrenPending.hasOwnProperty(child.key)) {
-	        ret = ret.concat(nextChildrenPending[child.key]);
-	      }
-	      ret.push(child);
-	    });
-	
-	    ret = ret.concat(pendingChildren);
-	
-	    return ret;
 	  }
-	};
+	  return ret;
+	}
 	
-	exports['default'] = utils;
-	module.exports = exports['default'];
+	function findShownChildInChildrenByKey(children, key, showProp) {
+	  var ret = null;
+	  if (children) {
+	    children.forEach(function (child) {
+	      if (child.key === key && child.props[showProp]) {
+	        if (ret) {
+	          throw new Error('two child with same key for <rc-animate> children');
+	        }
+	        ret = child;
+	      }
+	    });
+	  }
+	  return ret;
+	}
+	
+	function findHiddenChildInChildrenByKey(children, key, showProp) {
+	  var found = 0;
+	  if (children) {
+	    children.forEach(function (child) {
+	      if (found) {
+	        return;
+	      }
+	      found = child.key === key && !child.props[showProp];
+	    });
+	  }
+	  return found;
+	}
+	
+	function isSameChildren(c1, c2, showProp) {
+	  var same = c1.length === c2.length;
+	  if (same) {
+	    c1.forEach(function (child, index) {
+	      var child2 = c2[index];
+	      if (child.key !== child2.key) {
+	        same = false;
+	      } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
+	        same = false;
+	      }
+	    });
+	  }
+	  return same;
+	}
+	
+	function mergeChildren(prev, next) {
+	  var ret = [];
+	
+	  // For each key of `next`, the list of keys to insert before that key in
+	  // the combined list
+	  var nextChildrenPending = {};
+	  var pendingChildren = [];
+	  prev.forEach(function (child) {
+	    if (findChildInChildrenByKey(next, child.key)) {
+	      if (pendingChildren.length) {
+	        nextChildrenPending[child.key] = pendingChildren;
+	        pendingChildren = [];
+	      }
+	    } else {
+	      pendingChildren.push(child);
+	    }
+	  });
+	
+	  next.forEach(function (child) {
+	    if (nextChildrenPending.hasOwnProperty(child.key)) {
+	      ret = ret.concat(nextChildrenPending[child.key]);
+	    }
+	    ret.push(child);
+	  });
+	
+	  ret = ret.concat(pendingChildren);
+	
+	  return ret;
+	}
 
 /***/ },
 /* 165 */
@@ -20221,9 +20222,10 @@
 	  },
 	
 	  stop: function stop() {
-	    if (this.stopper) {
-	      this.stopper.stop();
+	    var stopper = this.stopper;
+	    if (stopper) {
 	      this.stopper = null;
+	      stopper.stop();
 	    }
 	  },
 	
