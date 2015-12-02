@@ -5,7 +5,7 @@ import {
   findShownChildInChildrenByKey,
   findChildInChildrenByKey,
   isSameChildren,
-  } from './ChildrenUtils';
+} from './ChildrenUtils';
 import AnimateChild from './AnimateChild';
 const defaultKey = 'rc_animate_' + Date.now();
 import animUtil from './util';
@@ -271,8 +271,11 @@ const Animate = React.createClass({
     let children = null;
     if (stateChildren) {
       children = stateChildren.map((child) => {
-        if (!child || !child.key) {
+        if (child === null) {
           return child;
+        }
+        if (!child.key) {
+          throw new Error('must set key for <rc-animate> children');
         }
         return (<AnimateChild
           key={child.key}
