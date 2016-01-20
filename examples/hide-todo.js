@@ -1,62 +1,68 @@
-'use strict';
+/* eslint no-console:0, react/no-multi-comp:0 */
 
 import './assets/index.less';
-import React from 'react';
+import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import assign from 'object-assign';
 
-var Todo = React.createClass({
-  getDefaultProps: function () {
+const Todo = React.createClass({
+  propTypes: {
+    children: PropTypes.any,
+    end: PropTypes.func,
+    onClick: PropTypes.func,
+  },
+  getDefaultProps() {
     return {
       visible: true,
-      end: function () {
-      }
-    }
+      end() {
+      },
+    };
   },
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     console.log('componentWillUnmount');
     console.log(this.props.children);
     this.props.end();
   },
-  render: function () {
-    var props = this.props;
-    return <div onClick={this.props.onClick}
-                style={{
-                display: props.visible ? 'block' : 'none',
-                width:100,
-                border:'1px solid red',
-                padding:10,
-                margin:10
-      }}>
+  render() {
+    const props = this.props;
+    const style = {
+      display: props.visible ? 'block' : 'none',
+      width: 100,
+      border: '1px solid red',
+      padding: 10,
+      margin: 10,
+    };
+    return (<div onClick={this.props.onClick}
+                style={style}>
       {props.children}
-    </div>;
-  }
+    </div>);
+  },
 });
-var TodoList = React.createClass({
-  getInitialState: function () {
+const TodoList = React.createClass({
+  getInitialState() {
     return {
       items: [
         {content: 'hello', visible: true},
         {content: 'world', visible: true},
         {content: 'click', visible: true},
-        {content: 'me', visible: true}]
+        {content: 'me', visible: true}],
     };
   },
-  handleHide: function (i, item) {
-    var newItems = this.state.items.concat([]);
+  handleHide(i, item) {
+    const newItems = this.state.items.concat([]);
     newItems.forEach((n, index)=> {
       newItems[index] = assign({}, n, {
-        visible: true
+        visible: true,
       });
     });
     newItems[i] = assign({}, item, {
-      visible: false
+      visible: false,
     });
     this.setState({items: newItems});
   },
-  render: function () {
-    var items = this.state.items.map(function (item, i) {
+  render() {
+    const items = this.state.items.map((item, i) => {
       return (
         <Todo key={item.content}
               visible={item.visible}
@@ -64,7 +70,7 @@ var TodoList = React.createClass({
           {item.content}
         </Todo>
       );
-    }.bind(this));
+    });
     return (
       <div>
         <Animate
@@ -74,7 +80,7 @@ var TodoList = React.createClass({
         </Animate>
       </div>
     );
-  }
+  },
 });
 
 ReactDOM.render(<div>

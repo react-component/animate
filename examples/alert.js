@@ -1,64 +1,60 @@
-'use strict';
+/* eslint no-console:0, react/no-multi-comp:0 */
 
 import './assets/index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
-var seed = 0;
+let seed = 0;
 
-var Alert = React.createClass({
-  protoTypes: {
+const Alert = React.createClass({
+  propTypes: {
     time: React.PropTypes.number,
     type: React.PropTypes.number,
     str: React.PropTypes.string,
-    onEnd: React.PropTypes.func
+    onEnd: React.PropTypes.func,
   },
 
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
-      onEnd: function () {
+      onEnd() {
       },
       time: 2000,
-      type: 'success'
-    }
+      type: 'success',
+    };
   },
 
-  componentDidMount: function () {
-    var props = this.props;
-    setTimeout(function () {
+  componentDidMount() {
+    const props = this.props;
+    setTimeout(() => {
       props.onEnd();
     }, props.time);
   },
 
-  render: function () {
-    var props = this.props;
-    return <div style={{
-    background: 'yellow',
-  width: 600,
-  padding: 20,
-  marginLeft: 'auto',
-  marginRight: 'auto'
-    }}>{props.str}</div>;
-  }
+  render() {
+    const props = this.props;
+    const style = {
+      background: 'yellow',
+      width: 600,
+      padding: 20,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    };
+    return <div style={style}>{props.str}</div>;
+  },
 });
 
 
-var AlertGroup = React.createClass({
-  getInitialState: function () {
+const AlertGroup = React.createClass({
+  getInitialState() {
     return {
-      alerts: []
-    }
+      alerts: [],
+    };
   },
-  addAlert: function (a) {
-    this.setState({
-      alerts: this.state.alerts.concat(a)
-    });
-  },
-  onEnd: function (key) {
-    var alerts = this.state.alerts;
-    var ret = [];
-    var target;
-    alerts.forEach(function (a) {
+  onEnd(key) {
+    const alerts = this.state.alerts;
+    const ret = [];
+    let target;
+    alerts.forEach((a) => {
       if (a.key === key) {
         target = a;
       } else {
@@ -67,40 +63,46 @@ var AlertGroup = React.createClass({
     });
     if (target) {
       this.setState({
-        alerts: ret
-      }, function () {
+        alerts: ret,
+      }, () => {
         if (target.callback) {
           target.callback();
         }
-      })
+      });
     }
   },
-  render: function () {
-    var alerts = this.state.alerts;
-    var self = this;
-    var children = alerts.map(function (a) {
+  addAlert(a) {
+    this.setState({
+      alerts: this.state.alerts.concat(a),
+    });
+  },
+  render() {
+    const alerts = this.state.alerts;
+    const self = this;
+    const children = alerts.map((a) => {
       if (!a.key) {
         seed++;
         a.key = seed + '';
       }
-      return <Alert {...a} onEnd={self.onEnd.bind(self, a.key)}/>
+      return <Alert {...a} onEnd={self.onEnd.bind(self, a.key)}/>;
     });
-    return <div style={{
-    position: 'fixed',
-  width: '100%',
-  top: 50,
-  zIndex: 9999
-    }}>
+    const style = {
+      position: 'fixed',
+      width: '100%',
+      top: 50,
+      zIndex: 9999,
+    };
+    return (<div style={style}>
       <Animate transitionName="fade">{children}</Animate>
-    </div>;
-  }
+    </div>);
+  },
 });
 
-var alertGroup;
+let alertGroup;
 
 function alert(str, time, type, callback) {
   if (!alertGroup) {
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     document.body.appendChild(div);
     alertGroup = ReactDOM.render(<AlertGroup/>, div);
   }
@@ -108,17 +110,21 @@ function alert(str, time, type, callback) {
     str: str,
     time: time,
     type: type,
-    callback: callback
+    callback: callback,
   });
 }
 
+function alertFn(i) {
+  function m() {
+    alert(i);
+  }
+
+  return m;
+}
+
 function onClick() {
-  for (var i = 0; i < 4; i++) {
-    (function (i) {
-      setTimeout(function () {
-        alert(i);
-      }, 1000 * i);
-    })(i);
+  for (let i = 0; i < 4; i++) {
+    setTimeout(alertFn(i), 1000 * i);
   }
 }
 

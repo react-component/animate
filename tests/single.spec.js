@@ -1,17 +1,13 @@
-/**
- * only require other specs here
- */
-'use strict';
+/* eslint no-console:0, react/no-multi-comp:0 */
 
-var expect = require('expect.js');
-var Animate = require('../index');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
+const Animate = require('../index');
+const React = require('react');
+
 require('./index.spec.css');
 
-var createClass = function (options) {
+function createClass(options) {
   return React.createClass({
-    getInitialState(){
+    getInitialState() {
       return {
         transitionEnter: options.transitionEnter,
         transitionAppear: options.transitionAppear,
@@ -27,11 +23,11 @@ var createClass = function (options) {
           {options.remove && !this.state.transitionEnter ? null : <div key="1">child element</div>}
         </Animate>
       );
-    }
+    },
   });
-};
+}
 
-var CssAnimation = require('css-animation');
+const CssAnimation = require('css-animation');
 if (CssAnimation.isCssAnimationSupported) {
   require('./single-common.spec')(createClass, 'transition');
 }

@@ -1,44 +1,50 @@
-'use strict';
+/* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
 
 import './assets/index.less';
-import React from 'react';
+import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import velocity from 'velocity-animate';
 
-var Todo = React.createClass({
-  getDefaultProps: function () {
-    return {
-      end: function () {
-      }
-    }
+const Todo = React.createClass({
+  propTypes: {
+    children: PropTypes.any,
+    end: PropTypes.func,
+    onClick: PropTypes.func,
   },
-  componentWillUnmount: function () {
+  getDefaultProps() {
+    return {
+      end() {
+      },
+    };
+  },
+  componentWillUnmount() {
     console.log('componentWillUnmount');
     console.log(this.props.children);
     this.props.end();
   },
-  render: function () {
-    var props = this.props;
-    return <div onClick={this.props.onClick} style={{
-                width:100,
-                border:'1px solid red',
-                padding:10,
-                margin:10
-    }}>
+  render() {
+    const props = this.props;
+    const style = {
+      width: 100,
+      border: '1px solid red',
+      padding: 10,
+      margin: 10,
+    };
+    return (<div onClick={this.props.onClick} style={style}>
       {props.children}
-    </div>;
-  }
+    </div>);
+  },
 });
-var TodoList = React.createClass({
-  getInitialState: function () {
+const TodoList = React.createClass({
+  getInitialState() {
     return {
       exclusive: false,
-      items: ['hello', 'world', 'click', 'me']
+      items: ['hello', 'world', 'click', 'me'],
     };
   },
-  animateEnter(node, done){
-    var ok = false;
+  animateEnter(node, done) {
+    let ok = false;
 
     function complete() {
       if (!ok) {
@@ -49,18 +55,18 @@ var TodoList = React.createClass({
 
     velocity(node, 'slideDown', {
       duration: 1000,
-      complete: complete
+      complete: complete,
     });
     return {
-      stop: function () {
+      stop() {
         velocity(node, 'finish');
         // velocity complete is async
         complete();
-      }
+      },
     };
   },
-  animateLeave(node, done){
-    var ok = false;
+  animateLeave(node, done) {
+    let ok = false;
 
     function complete() {
       if (!ok) {
@@ -71,57 +77,58 @@ var TodoList = React.createClass({
 
     velocity(node, 'slideUp', {
       duration: 1000,
-      complete: complete
+      complete: complete,
     });
     return {
-      stop: function () {
+      stop() {
         velocity(node, 'finish');
         // velocity complete is async
         complete();
-      }
+      },
     };
   },
-  handleAdd: function () {
-    var newItems =
+  handleAdd() {
+    const newItems =
       this.state.items.concat([prompt('Enter some text')]);
     this.setState({items: newItems});
   },
-  handleRemove: function (i) {
-    var newItems = this.state.items;
+  handleRemove(i) {
+    const newItems = this.state.items;
     newItems.splice(i, 1);
     this.setState({items: newItems});
   },
-  toggle(field){
+  toggle(field) {
     this.setState({
-      [field]: !this.state[field]
+      [field]: !this.state[field],
     });
   },
-  render: function () {
-    var items = this.state.items.map(function (item, i) {
+  render() {
+    const items = this.state.items.map((item, i) => {
       return (
         <Todo key={item} onClick={this.handleRemove.bind(this, i)}>
           {item}
         </Todo>
       );
-    }.bind(this));
+    });
+    const anim = {
+      enter: this.animateEnter,
+      leave: this.animateLeave,
+    };
     return (
       <div>
         <button onClick={this.handleAdd}>Add Item</button>
         &nbsp;
-        <label><input type='checkbox' onChange={this.toggle.bind(this,'exclusive')} checked={this.state.exclusive}/>
+        <label><input type="checkbox" onChange={this.toggle.bind(this, 'exclusive')} checked={this.state.exclusive}/>
           exclusive</label>
         <br/><br/>
         <Animate
           exclusive={this.state.exclusive}
-          animation={{
-          enter: this.animateEnter,
-          leave: this.animateLeave
-        }}>
+          animation={anim}>
           {items}
         </Animate>
       </div>
     );
-  }
+  },
 });
 
 ReactDOM.render(<div>

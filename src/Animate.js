@@ -78,13 +78,19 @@ const Animate = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
+    this.nextProps = nextProps;
     const nextChildren = toArrayChildren(getChildrenFromProps(nextProps));
     const props = this.props;
+    // exclusive needs immediate response
+    if (props.exclusive) {
+      Object.keys(this.currentlyAnimatingKeys).forEach((key) => {
+        this.stop(key);
+      });
+    }
     const showProp = props.showProp;
     const currentlyAnimatingKeys = this.currentlyAnimatingKeys;
     // last props children if exclusive
-    // exclusive needs immediate response
-    const currentChildren = this.state.children;
+    const currentChildren = props.exclusive ? toArrayChildren(getChildrenFromProps(props)) : this.state.children;
     // in case destroy in showProp mode
     let newChildren = [];
     if (showProp) {
@@ -162,13 +168,7 @@ const Animate = React.createClass({
     });
   },
 
-  componentDidUpdate(prevProps) {
-    // exclusive needs immediate response
-    if (this.props.exclusive && this.props !== prevProps) {
-      Object.keys(this.currentlyAnimatingKeys).forEach((key) => {
-        this.stop(key);
-      });
-    }
+  componentDidUpdate() {
     if (this.isMounted()) {
       const keysToEnter = this.keysToEnter;
       this.keysToEnter = [];
@@ -201,6 +201,10 @@ const Animate = React.createClass({
   handleDoneAdding(key, type) {
     const props = this.props;
     delete this.currentlyAnimatingKeys[key];
+    // if update on exclusive mode, skip check
+    if (props.exclusive && props !== this.nextProps) {
+      return;
+    }
     const currentChildren = toArrayChildren(getChildrenFromProps(props));
     if (!this.isValidChildByKey(currentChildren, key)) {
       // exclusive will not need this
@@ -228,10 +232,13 @@ const Animate = React.createClass({
     }
   },
 
-
   handleDoneLeaving(key) {
     const props = this.props;
     delete this.currentlyAnimatingKeys[key];
+    // if update on exclusive mode, skip check
+    if (props.exclusive && props !== this.nextProps) {
+      return;
+    }
     const currentChildren = toArrayChildren(getChildrenFromProps(props));
     // in case state change is too fast
     if (this.isValidChildByKey(currentChildren, key)) {
@@ -267,6 +274,7 @@ const Animate = React.createClass({
 
   render() {
     const props = this.props;
+    this.nextProps = props;
     const stateChildren = this.state.children;
     let children = null;
     if (stateChildren) {

@@ -1,138 +1,131 @@
-/**
- * only require other specs here
- */
-'use strict';
+/* eslint no-console:0, react/no-multi-comp:0 */
 
-var expect = require('expect.js');
-var Animate = require('../index');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
+const expect = require('expect.js');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const TestUtils = require('react-addons-test-utils');
 require('./index.spec.css');
-var $ = require('jquery');
+const $ = require('jquery');
 
-module.exports = function (createClass, title) {
+module.exports = function test(createClass, title) {
   function getOpacity(node) {
     return parseFloat($(node).css('opacity'));
   }
 
-  describe(title, function () {
-    describe('when remove is true', function () {
-      var instance;
-      var div;
+  describe(title, () => {
+    describe('when remove is true', () => {
+      let instance;
+      let div;
 
-      beforeEach(function () {
+      beforeEach(() => {
         div = document.createElement('div');
         document.body.appendChild(div);
-        var Component = createClass({transitionEnter: true, component: '', remove: true});
+        const Component = createClass({transitionEnter: true, component: '', remove: true});
 
-        instance = React.render(<Component/>, div);
+        instance = ReactDOM.render(<Component/>, div);
       });
 
-      afterEach(function () {
+      afterEach(() => {
         try {
-          React.unmountComponentAtNode(div);
+          ReactDOM.unmountComponentAtNode(div);
           document.body.removeChild(div);
         } catch (e) {
           console.log(e);
         }
       });
 
-      describe('when transitionAppear', function () {
-        it('should render children', function () {
+      describe('when transitionAppear', () => {
+        it('should render children', () => {
           expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'span')[0]).not.to.be.ok();
-          var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
-          expect(getOpacity(React.findDOMNode(child))).to.be(1);
+          const child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
+          expect(getOpacity(ReactDOM.findDOMNode(child))).to.be(1);
         });
 
-        it('should anim children', function (done) {
-          var div = document.createElement('div');
-          document.body.appendChild(div);
-          var Component = createClass({transitionEnter: true, transitionAppear: true, component: '', remove: true});
+        it('should anim children', (done) => {
+          const innerDiv = document.createElement('div');
+          document.body.appendChild(innerDiv);
+          const Component = createClass({transitionEnter: true, transitionAppear: true, component: '', remove: true});
 
-          var instance = React.render(<Component/>, div);
-          expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'span')[0]).not.to.be.ok();
-          var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
-          expect(getOpacity(React.findDOMNode(child))).not.to.be(1);
-          setTimeout(function () {
-            expect(getOpacity(React.findDOMNode(child))).to.be(1);
-            React.unmountComponentAtNode(div);
-            document.body.removeChild(div);
+          const innerInstance = ReactDOM.render(<Component/>, innerDiv);
+          expect(TestUtils.scryRenderedDOMComponentsWithTag(innerInstance, 'span')[0]).not.to.be.ok();
+          const child = TestUtils.findRenderedDOMComponentWithTag(innerInstance, 'div');
+          expect(getOpacity(ReactDOM.findDOMNode(child))).not.to.be(1);
+          setTimeout(() => {
+            expect(getOpacity(ReactDOM.findDOMNode(child))).to.be(1);
+            ReactDOM.unmountComponentAtNode(innerDiv);
+            document.body.removeChild(innerDiv);
             done();
           }, 900);
         });
       });
 
-      describe('when transitionEnter', function () {
-        it('should render children', function () {
+      describe('when transitionEnter', () => {
+        it('should render children', () => {
           expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'span')[0]).not.to.be.ok();
-          var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
-          expect($(React.findDOMNode(child)).text()).to.be('child element');
+          const child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
+          expect($(ReactDOM.findDOMNode(child)).text()).to.be('child element');
         });
       });
 
-      describe('when toggle transitionEnter', function () {
-        it('should remove children after transition', function (done) {
+      describe('when toggle transitionEnter', () => {
+        it('should remove children after transition', (done) => {
           if (window.callPhantom) {
             return done();
           }
           instance.setState({transitionEnter: false});
           expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'div')[0]).to.be.ok();
-          setTimeout(function () {
+          setTimeout(() => {
             expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'div')[0]).not.to.be.ok();
             done();
           }, 1000);
         });
       });
 
-      describe('toggle transitionEnter after remove', function () {
-
-        it('should render again', function () {
+      describe('toggle transitionEnter after remove', () => {
+        it('should render again', () => {
           instance.setState({transitionEnter: true});
-          var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
-          expect($(React.findDOMNode(child)).text()).to.be('child element');
+          const child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
+          expect($(ReactDOM.findDOMNode(child)).text()).to.be('child element');
         });
-      })
+      });
     });
 
-    describe('when remove is false', function () {
-      var instance;
+    describe('when remove is false', () => {
+      let instance;
 
-      before(function () {
-        var Component = createClass({transitionEnter: true, remove: false});
+      before(() => {
+        const Component = createClass({transitionEnter: true, remove: false});
         instance = TestUtils.renderIntoDocument(<Component/>);
       });
 
-      describe('when toggle transitionEnter', function () {
-
-        it('child still exists after transition', function () {
+      describe('when toggle transitionEnter', () => {
+        it('child still exists after transition', () => {
           instance.setState({transitionEnter: false});
-          var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
-          expect($(React.findDOMNode(child)).text()).to.be('child element');
+          const child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
+          expect($(ReactDOM.findDOMNode(child)).text()).to.be('child element');
         });
-      })
+      });
     });
 
-    describe('when define container', function () {
-      var instance;
+    describe('when define container', () => {
+      let instance;
 
-      before(function () {
-
-        var Component = createClass({
+      before(() => {
+        const Component = createClass({
           transitionEnter: true,
           remove: false,
-          component: 'ul'
+          component: 'ul',
         });
 
         instance = TestUtils.renderIntoDocument(<Component/>);
       });
 
-      describe('when transitionEnter', function () {
-
-        it('will render container', function () {
-          var child = TestUtils.findRenderedDOMComponentWithTag(instance, 'ul');
-          expect($(React.findDOMNode(child)).text()).to.be('child element');
+      describe('when transitionEnter', () => {
+        it('will render container', () => {
+          const child = TestUtils.findRenderedDOMComponentWithTag(instance, 'ul');
+          expect($(ReactDOM.findDOMNode(child)).text()).to.be('child element');
         });
-      })
+      });
     });
   });
 };

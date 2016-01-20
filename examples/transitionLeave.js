@@ -1,34 +1,29 @@
-'use strict';
+/* eslint no-console:0, react/no-multi-comp:0 */
 
 import './assets/index.less';
 import Animate from 'rc-animate';
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
-let transitionEnter = true;
-let remove = false;
-
-var Demo = React.createClass({
+const Demo = React.createClass({
   getInitialState() {
     return {
-      enter: true
+      enter: true,
     };
+  },
+
+  onEvent(e) {
+    console.log(e);
   },
 
   toggleAnimate() {
     this.setState({
-      enter: !this.state.enter
+      enter: !this.state.enter,
     });
   },
 
-  onEvent(e){
-    console.log(e);
-  },
-
-
   render() {
-
-    var text = this.state.enter ? "ON" : "OFF";
+    const text = this.state.enter ? 'ON' : 'OFF';
     return (
       <div>
         <Animate transitionLeave={false}
@@ -37,7 +32,7 @@ var Demo = React.createClass({
         </Animate>
       </div>
     );
-  }
+  },
 });
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

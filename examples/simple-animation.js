@@ -1,43 +1,42 @@
-// use jsx to render html, do not modify simple.html
-'use strict';
+/* eslint no-console:0, react/no-multi-comp:0 */
 
 import './assets/index.less';
 import Animate from 'rc-animate';
-import React, {Component} from 'react';
+import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import velocity from 'velocity-animate';
-
-let transitionEnter = true;
-let remove = false;
-
 const Box = React.createClass({
+  propTypes: {
+    visible: PropTypes.bool,
+  },
   render() {
-    return (<div style={{
-          width: '200px',
-          display: this.props.visible ? 'block' : 'none',
-          height: '200px',
-          backgroundColor: 'red'
-          }}></div>);
-  }
+    const style = {
+      width: '200px',
+      display: this.props.visible ? 'block' : 'none',
+      height: '200px',
+      backgroundColor: 'red',
+    };
+    return (<div style={style}></div>);
+  },
 });
 
-var Demo = React.createClass({
+const Demo = React.createClass({
   getInitialState() {
     return {
-      destroyed:false,
+      destroyed: false,
       visible: true,
-      exclusive: false
+      exclusive: false,
     };
   },
 
   toggleAnimate() {
     this.setState({
-      visible: !this.state.visible
+      visible: !this.state.visible,
     });
   },
 
-  animateEnter(node, done){
-    var ok = false;
+  animateEnter(node, done) {
+    let ok = false;
 
     function complete() {
       if (!ok) {
@@ -50,19 +49,19 @@ var Demo = React.createClass({
 
     velocity(node, 'slideDown', {
       duration: 1000,
-      complete: complete
+      complete: complete,
     });
     return {
-      stop: function () {
+      stop() {
         velocity(node, 'finish');
         // velocity complete is async
         complete();
-      }
+      },
     };
   },
 
-  animateLeave(node, done){
-    var ok = false;
+  animateLeave(node, done) {
+    let ok = false;
 
     function complete() {
       if (!ok) {
@@ -75,36 +74,40 @@ var Demo = React.createClass({
 
     velocity(node, 'slideUp', {
       duration: 1000,
-      complete: complete
+      complete: complete,
     });
     return {
-      stop: function () {
+      stop() {
         velocity(node, 'finish');
         // velocity complete is async
         complete();
-      }
+      },
     };
   },
 
-  toggle(field){
+  toggle(field) {
     this.setState({
-      [field]: !this.state[field]
+      [field]: !this.state[field],
     });
   },
 
-  destroy(){
+  destroy() {
     this.setState({
-      destroyed:true
+      destroyed: true,
     });
   },
 
   render() {
+    const anim = {
+      enter: this.animateEnter,
+      leave: this.animateLeave,
+    };
     return (
       <div>
-        <label><input type='checkbox' onChange={this.toggle.bind(this,'visible')} checked={this.state.visible}/>
+        <label><input type="checkbox" onChange={this.toggle.bind(this, 'visible')} checked={this.state.visible}/>
           show</label>
         &nbsp;
-        <label><input type='checkbox' onChange={this.toggle.bind(this,'exclusive')} checked={this.state.exclusive}/>
+        <label><input type="checkbox" onChange={this.toggle.bind(this, 'exclusive')} checked={this.state.exclusive}/>
           exclusive</label>
         &nbsp;
         <button onClick={this.destroy}>destroy</button>
@@ -112,16 +115,13 @@ var Demo = React.createClass({
         <Animate
           component=""
           exclusive={this.state.exclusive}
-          showProp='visible'
-          animation={{
-            enter:this.animateEnter,
-            leave:this.animateLeave
-          }}>
-          {this.state.destroyed?null:<Box visible={this.state.visible}/>}
+          showProp="visible"
+          animation={anim}>
+          {this.state.destroyed ? null : <Box visible={this.state.visible}/>}
         </Animate>
       </div>
     );
-  }
+  },
 });
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));
