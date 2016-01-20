@@ -18,6 +18,8 @@ webpackJsonp([8],{
 /***/ 180:
 /***/ function(module, exports, __webpack_require__) {
 
+	/* eslint no-console:0, react/no-multi-comp:0 */
+	
 	'use strict';
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -36,9 +38,6 @@ webpackJsonp([8],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var transitionEnter = true;
-	var remove = false;
-	
 	var Demo = _react2['default'].createClass({
 	  displayName: 'Demo',
 	
@@ -48,19 +47,18 @@ webpackJsonp([8],{
 	    };
 	  },
 	
+	  onEvent: function onEvent(e) {
+	    console.log(e);
+	  },
+	
 	  toggleAnimate: function toggleAnimate() {
 	    this.setState({
 	      enter: !this.state.enter
 	    });
 	  },
 	
-	  onEvent: function onEvent(e) {
-	    console.log(e);
-	  },
-	
 	  render: function render() {
-	
-	    var text = this.state.enter ? "ON" : "OFF";
+	    var text = this.state.enter ? 'ON' : 'OFF';
 	    return _react2['default'].createElement(
 	      'div',
 	      null,

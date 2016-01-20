@@ -18,7 +18,8 @@ webpackJsonp([3],{
 /***/ 174:
 /***/ function(module, exports, __webpack_require__) {
 
-	// use jsx to render html, do not modify simple.html
+	/* eslint no-console:0, react/no-multi-comp:0 */
+	
 	'use strict';
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -43,19 +44,20 @@ webpackJsonp([3],{
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
-	var transitionEnter = true;
-	var remove = false;
-	
 	var Box = _react2['default'].createClass({
 	  displayName: 'Box',
 	
+	  propTypes: {
+	    visible: _react.PropTypes.bool
+	  },
 	  render: function render() {
-	    return _react2['default'].createElement('div', { style: {
-	        width: '200px',
-	        display: this.props.visible ? 'block' : 'none',
-	        height: '200px',
-	        backgroundColor: 'red'
-	      } });
+	    var style = {
+	      width: '200px',
+	      display: this.props.visible ? 'block' : 'none',
+	      height: '200px',
+	      backgroundColor: 'red'
+	    };
+	    return _react2['default'].createElement('div', { style: style });
 	  }
 	});
 	
@@ -137,6 +139,10 @@ webpackJsonp([3],{
 	  },
 	
 	  render: function render() {
+	    var anim = {
+	      enter: this.animateEnter,
+	      leave: this.animateLeave
+	    };
 	    return _react2['default'].createElement(
 	      'div',
 	      null,
@@ -167,10 +173,7 @@ webpackJsonp([3],{
 	          component: '',
 	          exclusive: this.state.exclusive,
 	          showProp: 'visible',
-	          animation: {
-	            enter: this.animateEnter,
-	            leave: this.animateLeave
-	          } },
+	          animation: anim },
 	        this.state.destroyed ? null : _react2['default'].createElement(Box, { visible: this.state.visible })
 	      )
 	    );

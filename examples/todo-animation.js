@@ -3910,6 +3910,8 @@ webpackJsonp([6],{
 /***/ 178:
 /***/ function(module, exports, __webpack_require__) {
 
+	/* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
+	
 	'use strict';
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -3937,6 +3939,11 @@ webpackJsonp([6],{
 	var Todo = _react2['default'].createClass({
 	  displayName: 'Todo',
 	
+	  propTypes: {
+	    children: _react.PropTypes.any,
+	    end: _react.PropTypes.func,
+	    onClick: _react.PropTypes.func
+	  },
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      end: function end() {}
@@ -3949,14 +3956,15 @@ webpackJsonp([6],{
 	  },
 	  render: function render() {
 	    var props = this.props;
+	    var style = {
+	      width: 100,
+	      border: '1px solid red',
+	      padding: 10,
+	      margin: 10
+	    };
 	    return _react2['default'].createElement(
 	      'div',
-	      { onClick: this.props.onClick, style: {
-	          width: 100,
-	          border: '1px solid red',
-	          padding: 10,
-	          margin: 10
-	        } },
+	      { onClick: this.props.onClick, style: style },
 	      props.children
 	    );
 	  }
@@ -4027,13 +4035,19 @@ webpackJsonp([6],{
 	    this.setState(_defineProperty({}, field, !this.state[field]));
 	  },
 	  render: function render() {
-	    var items = this.state.items.map((function (item, i) {
+	    var _this = this;
+	
+	    var items = this.state.items.map(function (item, i) {
 	      return _react2['default'].createElement(
 	        Todo,
-	        { key: item, onClick: this.handleRemove.bind(this, i) },
+	        { key: item, onClick: _this.handleRemove.bind(_this, i) },
 	        item
 	      );
-	    }).bind(this));
+	    });
+	    var anim = {
+	      enter: this.animateEnter,
+	      leave: this.animateLeave
+	    };
 	    return _react2['default'].createElement(
 	      'div',
 	      null,
@@ -4055,10 +4069,7 @@ webpackJsonp([6],{
 	        _rcAnimate2['default'],
 	        {
 	          exclusive: this.state.exclusive,
-	          animation: {
-	            enter: this.animateEnter,
-	            leave: this.animateLeave
-	          } },
+	          animation: anim },
 	        items
 	      )
 	    );

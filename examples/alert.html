@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>alert.js - example - rc-animate@2.0.2</title>
+  <title>alert.js - example - rc-animate@2.0.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,74 +257,70 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-animate@2.0.2</h1>
+    <h1>rc-animate@2.0.3</h1>
 
     <p>css-transition ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="alert.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-pi">'use strict'</span>;
+  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
 
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
-<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
-<span class="hljs-keyword">var</span> seed = <span class="hljs-number">0</span>;
+import <span class="hljs-string">'./assets/index.less'</span>;
+import React from <span class="hljs-string">'react'</span>;
+import ReactDOM from <span class="hljs-string">'react-dom'</span>;
+import Animate from <span class="hljs-string">'rc-animate'</span>;
+<span class="hljs-keyword">let</span> seed = <span class="hljs-number">0</span>;
 
-<span class="hljs-keyword">var</span> Alert = React.createClass({
-  protoTypes: {
+<span class="hljs-keyword">const</span> Alert = React.createClass({
+  propTypes: {
     time: React.PropTypes.number,
     type: React.PropTypes.number,
     str: React.PropTypes.string,
-    onEnd: React.PropTypes.func
+    onEnd: React.PropTypes.func,
   },
 
-  getDefaultProps: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  getDefaultProps() {
     <span class="hljs-keyword">return</span> {
-      onEnd: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      onEnd() {
       },
       time: <span class="hljs-number">2000</span>,
-      type: <span class="hljs-string">'success'</span>
-    }
+      type: <span class="hljs-string">'success'</span>,
+    };
   },
 
-  componentDidMount: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> props = <span class="hljs-keyword">this</span>.props;
-    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  componentDidMount() {
+    <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
+    setTimeout(() =&gt; {
       props.onEnd();
     }, props.time);
   },
 
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> props = <span class="hljs-keyword">this</span>.props;
-    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span>
-    <span class="hljs-attribute">background:</span> '<span class="hljs-attribute">yellow</span>',
-  <span class="hljs-attribute">width:</span> <span class="hljs-attribute">600</span>,
-  <span class="hljs-attribute">padding:</span> <span class="hljs-attribute">20</span>,
-  <span class="hljs-attribute">marginLeft:</span> '<span class="hljs-attribute">auto</span>',
-  <span class="hljs-attribute">marginRight:</span> '<span class="hljs-attribute">auto</span>'
-    }}&gt;</span>{props.str}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>;</span>
-  }
+  render() {
+    <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
+    <span class="hljs-keyword">const</span> style = {
+      background: <span class="hljs-string">'yellow'</span>,
+      width: <span class="hljs-number">600</span>,
+      padding: <span class="hljs-number">20</span>,
+      marginLeft: <span class="hljs-string">'auto'</span>,
+      marginRight: <span class="hljs-string">'auto'</span>,
+    };
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>&gt;</span>{props.str}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>;</span>
+  },
 });
 
 
-<span class="hljs-keyword">var</span> AlertGroup = React.createClass({
-  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+<span class="hljs-keyword">const</span> AlertGroup = React.createClass({
+  getInitialState() {
     <span class="hljs-keyword">return</span> {
-      alerts: []
-    }
+      alerts: [],
+    };
   },
-  addAlert: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a</span>) </span>{
-    <span class="hljs-keyword">this</span>.setState({
-      alerts: <span class="hljs-keyword">this</span>.state.alerts.concat(a)
-    });
-  },
-  onEnd: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) </span>{
-    <span class="hljs-keyword">var</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
-    <span class="hljs-keyword">var</span> ret = [];
-    <span class="hljs-keyword">var</span> target;
-    alerts.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a</span>) </span>{
+  onEnd(key) {
+    <span class="hljs-keyword">const</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
+    <span class="hljs-keyword">const</span> ret = [];
+    <span class="hljs-keyword">let</span> target;
+    alerts.forEach((a) =&gt; {
       <span class="hljs-keyword">if</span> (a.key === key) {
         target = a;
       } <span class="hljs-keyword">else</span> {
@@ -333,58 +329,68 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     });
     <span class="hljs-keyword">if</span> (target) {
       <span class="hljs-keyword">this</span>.setState({
-        alerts: ret
-      }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        alerts: ret,
+      }, () =&gt; {
         <span class="hljs-keyword">if</span> (target.callback) {
           target.callback();
         }
-      })
+      });
     }
   },
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
-    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
-    <span class="hljs-keyword">var</span> children = alerts.map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a</span>) </span>{
+  addAlert(a) {
+    <span class="hljs-keyword">this</span>.setState({
+      alerts: <span class="hljs-keyword">this</span>.state.alerts.concat(a),
+    });
+  },
+  render() {
+    <span class="hljs-keyword">const</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
+    <span class="hljs-keyword">const</span> self = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> children = alerts.map((a) =&gt; {
       <span class="hljs-keyword">if</span> (!a.key) {
         seed++;
         a.key = seed + <span class="hljs-string">''</span>;
       }
-      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Alert</span> {<span class="hljs-attribute">...a</span>} <span class="hljs-attribute">onEnd</span>=<span class="hljs-value">{self.onEnd.bind(self,</span> <span class="hljs-attribute">a.key</span>)}/&gt;</span>
+      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Alert</span> {<span class="hljs-attribute">...a</span>} <span class="hljs-attribute">onEnd</span>=<span class="hljs-value">{self.onEnd.bind(self,</span> <span class="hljs-attribute">a.key</span>)}/&gt;</span>;</span>
     });
-    return <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span>
-    <span class="hljs-attribute">position:</span> '<span class="hljs-attribute">fixed</span>',
-  <span class="hljs-attribute">width:</span> '<span class="hljs-attribute">100</span>%',
-  <span class="hljs-attribute">top:</span> <span class="hljs-attribute">50</span>,
-  <span class="hljs-attribute">zIndex:</span> <span class="hljs-attribute">9999</span>
-    }}&gt;</span>
+    <span class="hljs-keyword">const</span> style = {
+      position: <span class="hljs-string">'fixed'</span>,
+      width: <span class="hljs-string">'100%'</span>,
+      top: <span class="hljs-number">50</span>,
+      zIndex: <span class="hljs-number">9999</span>,
+    };
+    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>;</span>
-  }
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>);
+  },
 });
 
-<span class="hljs-keyword">var</span> alertGroup;
+let alertGroup;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alert</span>(<span class="hljs-params">str, time, type, callback</span>) </span>{
-  <span class="hljs-keyword">if</span> (!alertGroup) {
-    <span class="hljs-keyword">var</span> div = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
-    <span class="hljs-built_in">document</span>.body.appendChild(div);
-    alertGroup = ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">AlertGroup</span>/&gt;</span>, div);
+function alert(str, time, type, callback) {
+  if (!alertGroup) {
+    const div = document.createElement('div');
+    document.body.appendChild(div);
+    alertGroup = ReactDOM.render(<span class="hljs-tag">&lt;<span class="hljs-title">AlertGroup</span>/&gt;</span>, div);
   }
   alertGroup.addAlert({
     str: str,
     time: time,
     type: type,
-    callback: callback
+    callback: callback,
   });
 }
 
+function alertFn(i) {
+  function m() {
+    alert(i);
+  }
+
+  return m;
+}
+
 function onClick() {
-  for (var i = 0; i <span class="hljs-tag">&lt; <span class="hljs-attribute">4</span>; <span class="hljs-attribute">i</span>++) {
-    (<span class="hljs-attribute">function</span> (<span class="hljs-attribute">i</span>) {
-      <span class="hljs-attribute">setTimeout</span>(<span class="hljs-attribute">function</span> () {
-        <span class="hljs-attribute">alert</span>(<span class="hljs-attribute">i</span>);
-      }, <span class="hljs-attribute">1000</span> * <span class="hljs-attribute">i</span>);
-    })(<span class="hljs-attribute">i</span>);
+  for (let i = 0; i <span class="hljs-tag">&lt; <span class="hljs-attribute">4</span>; <span class="hljs-attribute">i</span>++) {
+    <span class="hljs-attribute">setTimeout</span>(<span class="hljs-attribute">alertFn</span>(<span class="hljs-attribute">i</span>), <span class="hljs-attribute">1000</span> * <span class="hljs-attribute">i</span>);
   }
 }
 

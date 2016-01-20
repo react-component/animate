@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>simple-animation.js - example - rc-animate@2.0.2</title>
+  <title>simple-animation.js - example - rc-animate@2.0.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,120 +257,123 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-animate@2.0.2</h1>
+    <h1>rc-animate@2.0.3</h1>
 
     <p>css-transition ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="simple-animation.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-comment">// use jsx to render html, do not modify simple.html</span>
-<span class="hljs-pi">'use strict'</span>;
+  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
 
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
-<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
-<span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
-<span class="hljs-keyword">import</span> velocity <span class="hljs-keyword">from</span> <span class="hljs-string">'velocity-animate'</span>;
-
-<span class="hljs-keyword">let</span> transitionEnter = <span class="hljs-literal">true</span>;
-<span class="hljs-keyword">let</span> remove = <span class="hljs-literal">false</span>;
-
+import <span class="hljs-string">'./assets/index.less'</span>;
+import Animate from <span class="hljs-string">'rc-animate'</span>;
+import React, {PropTypes} from <span class="hljs-string">'react'</span>;
+import ReactDOM from <span class="hljs-string">'react-dom'</span>;
+import velocity from <span class="hljs-string">'velocity-animate'</span>;
 <span class="hljs-keyword">const</span> Box = React.createClass({
+  propTypes: {
+    visible: PropTypes.bool,
+  },
   render() {
-    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span>
-          <span class="hljs-attribute">width:</span> '<span class="hljs-attribute">200px</span>',
-          <span class="hljs-attribute">display:</span> <span class="hljs-attribute">this.props.visible</span> ? '<span class="hljs-attribute">block</span>' <span class="hljs-attribute">:</span> '<span class="hljs-attribute">none</span>',
-          <span class="hljs-attribute">height:</span> '<span class="hljs-attribute">200px</span>',
-          <span class="hljs-attribute">backgroundColor:</span> '<span class="hljs-attribute">red</span>'
-          }}&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  }
+    <span class="hljs-keyword">const</span> style = {
+      width: <span class="hljs-string">'200px'</span>,
+      display: <span class="hljs-keyword">this</span>.props.visible ? <span class="hljs-string">'block'</span> : <span class="hljs-string">'none'</span>,
+      height: <span class="hljs-string">'200px'</span>,
+      backgroundColor: <span class="hljs-string">'red'</span>,
+    };
+    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>);
+  },
 });
 
-<span class="hljs-keyword">var</span> Demo = React.createClass({
+const Demo = React.createClass({
   getInitialState() {
-    <span class="hljs-keyword">return</span> {
-      destroyed:<span class="hljs-literal">false</span>,
-      visible: <span class="hljs-literal">true</span>,
-      exclusive: <span class="hljs-literal">false</span>
+    return {
+      destroyed: false,
+      visible: true,
+      exclusive: false,
     };
   },
 
   toggleAnimate() {
-    <span class="hljs-keyword">this</span>.setState({
-      visible: !<span class="hljs-keyword">this</span>.state.visible
+    this.setState({
+      visible: !this.state.visible,
     });
   },
 
-  animateEnter(node, done){
-    <span class="hljs-keyword">var</span> ok = <span class="hljs-literal">false</span>;
+  animateEnter(node, done) {
+    let ok = false;
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span>(<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">if</span> (!ok) {
-        ok = <span class="hljs-number">1</span>;
+    function complete() {
+      if (!ok) {
+        ok = 1;
         done();
       }
     }
 
-    node.style.display = <span class="hljs-string">'none'</span>;
+    node.style.display = 'none';
 
-    velocity(node, <span class="hljs-string">'slideDown'</span>, {
-      duration: <span class="hljs-number">1000</span>,
-      complete: complete
+    velocity(node, 'slideDown', {
+      duration: 1000,
+      complete: complete,
     });
-    <span class="hljs-keyword">return</span> {
-      stop: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        velocity(node, <span class="hljs-string">'finish'</span>);
-        <span class="hljs-comment">// velocity complete is async</span>
+    return {
+      stop() {
+        velocity(node, 'finish');
+        // velocity complete is async
         complete();
-      }
+      },
     };
   },
 
-  animateLeave(node, done){
-    <span class="hljs-keyword">var</span> ok = <span class="hljs-literal">false</span>;
+  animateLeave(node, done) {
+    let ok = false;
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">complete</span>(<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">if</span> (!ok) {
-        ok = <span class="hljs-number">1</span>;
+    function complete() {
+      if (!ok) {
+        ok = 1;
         done();
       }
     }
 
-    node.style.display = <span class="hljs-string">'block'</span>;
+    node.style.display = 'block';
 
-    velocity(node, <span class="hljs-string">'slideUp'</span>, {
-      duration: <span class="hljs-number">1000</span>,
-      complete: complete
+    velocity(node, 'slideUp', {
+      duration: 1000,
+      complete: complete,
     });
-    <span class="hljs-keyword">return</span> {
-      stop: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        velocity(node, <span class="hljs-string">'finish'</span>);
-        <span class="hljs-comment">// velocity complete is async</span>
+    return {
+      stop() {
+        velocity(node, 'finish');
+        // velocity complete is async
         complete();
-      }
+      },
     };
   },
 
-  toggle(field){
-    <span class="hljs-keyword">this</span>.setState({
-      [field]: !<span class="hljs-keyword">this</span>.state[field]
+  toggle(field) {
+    this.setState({
+      [field]: !this.state[field],
     });
   },
 
-  destroy(){
-    <span class="hljs-keyword">this</span>.setState({
-      destroyed:<span class="hljs-literal">true</span>
+  destroy() {
+    this.setState({
+      destroyed: true,
     });
   },
 
   render() {
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'checkbox'</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,'visible')}</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.visible}</span>/&gt;</span>
+    const anim = {
+      enter: this.animateEnter,
+      leave: this.animateLeave,
+    };
+    return (
+      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,</span> '<span class="hljs-attribute">visible</span>')} <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.visible}</span>/&gt;</span>
           show<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         &amp;nbsp;
-        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'checkbox'</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,'exclusive')}</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.exclusive}</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,</span> '<span class="hljs-attribute">exclusive</span>')} <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.exclusive}</span>/&gt;</span>
           exclusive<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         &amp;nbsp;
         <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.destroy}</span>&gt;</span>destroy<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
@@ -378,19 +381,16 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span>
           <span class="hljs-attribute">component</span>=<span class="hljs-value">""</span>
           <span class="hljs-attribute">exclusive</span>=<span class="hljs-value">{this.state.exclusive}</span>
-          <span class="hljs-attribute">showProp</span>=<span class="hljs-value">'visible'</span>
-          <span class="hljs-attribute">animation</span>=<span class="hljs-value">{{</span>
-            <span class="hljs-attribute">enter:this.animateEnter</span>,
-            <span class="hljs-attribute">leave:this.animateLeave</span>
-          }}&gt;</span>
-          {this.state.destroyed?null:<span class="hljs-tag">&lt;<span class="hljs-title">Box</span> <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>/&gt;</span>}
+          <span class="hljs-attribute">showProp</span>=<span class="hljs-value">"visible"</span>
+          <span class="hljs-attribute">animation</span>=<span class="hljs-value">{anim}</span>&gt;</span>
+          {this.state.destroyed ? null : <span class="hljs-tag">&lt;<span class="hljs-title">Box</span> <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>/&gt;</span>}
         <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>;
-  }
+    );
+  },
 });
 
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(<span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
 </div>
 <a href="https://github.com/react-component/animate">

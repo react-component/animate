@@ -9,6 +9,8 @@ webpackJsonp([0],[
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* eslint no-console:0, react/no-multi-comp:0 */
+	
 	'use strict';
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -34,7 +36,7 @@ webpackJsonp([0],[
 	var Alert = _react2['default'].createClass({
 	  displayName: 'Alert',
 	
-	  protoTypes: {
+	  propTypes: {
 	    time: _react2['default'].PropTypes.number,
 	    type: _react2['default'].PropTypes.number,
 	    str: _react2['default'].PropTypes.string,
@@ -58,15 +60,16 @@ webpackJsonp([0],[
 	
 	  render: function render() {
 	    var props = this.props;
+	    var style = {
+	      background: 'yellow',
+	      width: 600,
+	      padding: 20,
+	      marginLeft: 'auto',
+	      marginRight: 'auto'
+	    };
 	    return _react2['default'].createElement(
 	      'div',
-	      { style: {
-	          background: 'yellow',
-	          width: 600,
-	          padding: 20,
-	          marginLeft: 'auto',
-	          marginRight: 'auto'
-	        } },
+	      { style: style },
 	      props.str
 	    );
 	  }
@@ -80,15 +83,10 @@ webpackJsonp([0],[
 	      alerts: []
 	    };
 	  },
-	  addAlert: function addAlert(a) {
-	    this.setState({
-	      alerts: this.state.alerts.concat(a)
-	    });
-	  },
 	  onEnd: function onEnd(key) {
 	    var alerts = this.state.alerts;
 	    var ret = [];
-	    var target;
+	    var target = undefined;
 	    alerts.forEach(function (a) {
 	      if (a.key === key) {
 	        target = a;
@@ -106,6 +104,11 @@ webpackJsonp([0],[
 	      });
 	    }
 	  },
+	  addAlert: function addAlert(a) {
+	    this.setState({
+	      alerts: this.state.alerts.concat(a)
+	    });
+	  },
 	  render: function render() {
 	    var alerts = this.state.alerts;
 	    var self = this;
@@ -116,14 +119,15 @@ webpackJsonp([0],[
 	      }
 	      return _react2['default'].createElement(Alert, _extends({}, a, { onEnd: self.onEnd.bind(self, a.key) }));
 	    });
+	    var style = {
+	      position: 'fixed',
+	      width: '100%',
+	      top: 50,
+	      zIndex: 9999
+	    };
 	    return _react2['default'].createElement(
 	      'div',
-	      { style: {
-	          position: 'fixed',
-	          width: '100%',
-	          top: 50,
-	          zIndex: 9999
-	        } },
+	      { style: style },
 	      _react2['default'].createElement(
 	        _rcAnimate2['default'],
 	        { transitionName: 'fade' },
@@ -133,7 +137,7 @@ webpackJsonp([0],[
 	  }
 	});
 	
-	var alertGroup;
+	var alertGroup = undefined;
 	
 	function alert(str, time, type, callback) {
 	  if (!alertGroup) {
@@ -149,13 +153,17 @@ webpackJsonp([0],[
 	  });
 	}
 	
+	function alertFn(i) {
+	  function m() {
+	    alert(i);
+	  }
+	
+	  return m;
+	}
+	
 	function onClick() {
 	  for (var i = 0; i < 4; i++) {
-	    (function (i) {
-	      setTimeout(function () {
-	        alert(i);
-	      }, 1000 * i);
-	    })(i);
+	    setTimeout(alertFn(i), 1000 * i);
 	  }
 	}
 	

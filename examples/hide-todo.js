@@ -18,6 +18,8 @@ webpackJsonp([1],{
 /***/ 170:
 /***/ function(module, exports, __webpack_require__) {
 
+	/* eslint no-console:0, react/no-multi-comp:0 */
+	
 	'use strict';
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -43,6 +45,11 @@ webpackJsonp([1],{
 	var Todo = _react2['default'].createClass({
 	  displayName: 'Todo',
 	
+	  propTypes: {
+	    children: _react.PropTypes.any,
+	    end: _react.PropTypes.func,
+	    onClick: _react.PropTypes.func
+	  },
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      visible: true,
@@ -56,16 +63,17 @@ webpackJsonp([1],{
 	  },
 	  render: function render() {
 	    var props = this.props;
+	    var style = {
+	      display: props.visible ? 'block' : 'none',
+	      width: 100,
+	      border: '1px solid red',
+	      padding: 10,
+	      margin: 10
+	    };
 	    return _react2['default'].createElement(
 	      'div',
 	      { onClick: this.props.onClick,
-	        style: {
-	          display: props.visible ? 'block' : 'none',
-	          width: 100,
-	          border: '1px solid red',
-	          padding: 10,
-	          margin: 10
-	        } },
+	        style: style },
 	      props.children
 	    );
 	  }
@@ -91,15 +99,17 @@ webpackJsonp([1],{
 	    this.setState({ items: newItems });
 	  },
 	  render: function render() {
-	    var items = this.state.items.map((function (item, i) {
+	    var _this = this;
+	
+	    var items = this.state.items.map(function (item, i) {
 	      return _react2['default'].createElement(
 	        Todo,
 	        { key: item.content,
 	          visible: item.visible,
-	          onClick: this.handleHide.bind(this, i, item) },
+	          onClick: _this.handleHide.bind(_this, i, item) },
 	        item.content
 	      );
-	    }).bind(this));
+	    });
 	    return _react2['default'].createElement(
 	      'div',
 	      null,

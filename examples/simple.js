@@ -57,7 +57,8 @@ webpackJsonp([2],{
 /***/ 172:
 /***/ function(module, exports, __webpack_require__) {
 
-	// use jsx to render html, do not modify simple.html
+	/* eslint no-console:0, react/no-multi-comp:0 */
+	
 	'use strict';
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -92,17 +93,14 @@ webpackJsonp([2],{
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var transitionEnter = true;
-	var remove = false;
-	
 	var Div = function Div(props) {
 	  var style = props.style;
 	  var show = props.show;
 	
-	  style = (0, _objectAssign2['default'])({}, style, {
+	  var newStyle = (0, _objectAssign2['default'])({}, style, {
 	    display: show ? '' : 'none'
 	  });
-	  return _react2['default'].createElement('div', _extends({}, props, { style: style }));
+	  return _react2['default'].createElement('div', _extends({}, props, { style: newStyle }));
 	};
 	
 	var Demo = (function (_Component) {
@@ -126,6 +124,11 @@ webpackJsonp([2],{
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var style = {
+	        width: '200px',
+	        height: '200px',
+	        backgroundColor: 'red'
+	      };
 	      return _react2['default'].createElement(
 	        'div',
 	        null,
@@ -133,14 +136,14 @@ webpackJsonp([2],{
 	          'label',
 	          null,
 	          _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'enter'), checked: this.state.enter }),
-	          ' show'
+	          'show'
 	        ),
 	        ' ',
 	        _react2['default'].createElement(
 	          'label',
 	          null,
 	          _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'exclusive'), checked: this.state.exclusive }),
-	          ' exclusive'
+	          'exclusive'
 	        ),
 	        _react2['default'].createElement('br', null),
 	        _react2['default'].createElement('br', null),
@@ -151,11 +154,7 @@ webpackJsonp([2],{
 	            exclusive: this.state.exclusive,
 	            showProp: 'show',
 	            transitionName: 'fade' },
-	          _react2['default'].createElement(Div, { show: this.state.enter, style: {
-	              width: '200px',
-	              height: '200px',
-	              backgroundColor: 'red'
-	            } })
+	          _react2['default'].createElement(Div, { show: this.state.enter, style: style })
 	        )
 	      );
 	    }

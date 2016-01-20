@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>transitionLeave.js - example - rc-animate@2.0.2</title>
+  <title>transitionLeave.js - example - rc-animate@2.0.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,44 +257,39 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
 <div class="container">
   <div class="header">
-    <h1>rc-animate@2.0.2</h1>
+    <h1>rc-animate@2.0.3</h1>
 
     <p>css-transition ui component for react</p>
   </div>
   <div class="example" id="__react-content"></div>
   <script src="common.js?nowrap"></script>
   <script src="transitionLeave.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-pi">'use strict'</span>;
+  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
 
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
-<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
-<span class="hljs-keyword">import</span> React, {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+import <span class="hljs-string">'./assets/index.less'</span>;
+import Animate from <span class="hljs-string">'rc-animate'</span>;
+import React from <span class="hljs-string">'react'</span>;
+import ReactDOM from <span class="hljs-string">'react-dom'</span>;
 
-<span class="hljs-keyword">let</span> transitionEnter = <span class="hljs-literal">true</span>;
-<span class="hljs-keyword">let</span> remove = <span class="hljs-literal">false</span>;
-
-<span class="hljs-keyword">var</span> Demo = React.createClass({
+<span class="hljs-keyword">const</span> Demo = React.createClass({
   getInitialState() {
     <span class="hljs-keyword">return</span> {
-      enter: <span class="hljs-literal">true</span>
+      enter: <span class="hljs-literal">true</span>,
     };
+  },
+
+  onEvent(e) {
+    <span class="hljs-built_in">console</span>.log(e);
   },
 
   toggleAnimate() {
     <span class="hljs-keyword">this</span>.setState({
-      enter: !<span class="hljs-keyword">this</span>.state.enter
+      enter: !<span class="hljs-keyword">this</span>.state.enter,
     });
   },
 
-  onEvent(e){
-    <span class="hljs-built_in">console</span>.log(e);
-  },
-
-
   render() {
-
-    <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">this</span>.state.enter ? <span class="hljs-string">"ON"</span> : <span class="hljs-string">"OFF"</span>;
+    <span class="hljs-keyword">const</span> text = <span class="hljs-keyword">this</span>.state.enter ? <span class="hljs-string">'ON'</span> : <span class="hljs-string">'OFF'</span>;
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">transitionLeave</span>=<span class="hljs-value">{false}</span>
@@ -302,11 +297,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
           <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">{text}</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.toggleAnimate}</span>&gt;</span>{text}<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>;
-  }
+    );
+  },
 });
 
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(<span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
 </div>
 <a href="https://github.com/react-component/animate">
