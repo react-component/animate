@@ -244,14 +244,14 @@ const Animate = React.createClass({
     if (this.isValidChildByKey(currentChildren, key)) {
       this.performEnter(key);
     } else {
-      if (animUtil.allowLeaveCallback(props)) {
-        props.onLeave(key);
-        props.onEnd(key, false);
-      }
       if (this.isMounted() && !isSameChildren(this.state.children, currentChildren, props.showProp)) {
         this.setState({
           children: currentChildren,
         });
+      }
+      if (animUtil.allowLeaveCallback(props)) {
+        props.onLeave(key);
+        props.onEnd(key, false);
       }
     }
   },
