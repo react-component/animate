@@ -10,10 +10,6 @@ animate react element easily
 [![node version][node-image]][node-url]
 [![npm download][download-image]][download-url]
 
-[![Sauce Test Status](https://saucelabs.com/buildstatus/rc_animate)](https://saucelabs.com/u/rc_animate)
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/rc_animate.svg)](https://saucelabs.com/u/rc_animate)
-
 [npm-image]: http://img.shields.io/npm/v/rc-animate.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-animate
 [travis-image]: https://img.shields.io/travis/react-component/animate.svg?style=flat-square
@@ -163,11 +159,18 @@ online example: http://react-component.github.io/animate/examples/
 
 ## Test Case
 
-http://localhost:8200/tests/runner.html?coverage
+```
+npm test
+npm run chrome-test
+```
 
 ## Coverage
 
-http://localhost:8200/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8200/tests/runner.html?coverage
+```
+npm run coverage
+```
+
+open coverage/ dir
 
 ## License
 

@@ -26,8 +26,10 @@ const Demo = React.createClass({
     const text = this.state.enter ? 'ON' : 'OFF';
     return (
       <div>
-        <Animate transitionLeave={false}
-                 transitionName="fade">
+        <Animate
+          transitionLeave={false}
+          transitionName="fade"
+        >
           <button key={text} onClick={this.toggleAnimate}>{text}</button>
         </Animate>
       </div>

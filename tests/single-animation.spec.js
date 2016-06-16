@@ -36,7 +36,8 @@ function createClass(options) {
             appear: this.state.transitionAppear ? this.fake.bind(this, 'appear') : null,
             leave: this.fake.bind(this, 'leave'),
           }}
-          component={options.component}>
+          component={options.component}
+        >
           {options.remove && !this.state.transitionEnter ? null : <div key="1">child element</div>}
         </Animate>
       );

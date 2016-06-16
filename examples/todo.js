@@ -1,7 +1,7 @@
 /* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
 
 import './assets/index.less';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 
@@ -37,16 +37,16 @@ const Todo = React.createClass({
 });
 const TodoList = React.createClass({
   getInitialState() {
-    return {items: ['hello', 'world', 'click', 'me']};
+    return { items: ['hello', 'world', 'click', 'me'] };
   },
   handleAdd() {
     const items = this.state.items.concat([prompt('Enter some text')]);
-    this.setState({items});
+    this.setState({ items });
   },
   handleRemove(i) {
     const items = this.state.items.concat();
     items.splice(i, 1);
-    this.setState({items});
+    this.setState({ items });
   },
   render() {
     const items = this.state.items.map((item, i) => {

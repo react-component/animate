@@ -2,7 +2,7 @@
 
 import './assets/index.less';
 import Animate from 'rc-animate';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import velocity from 'velocity-animate';
 const Box = React.createClass({
@@ -49,7 +49,7 @@ const Demo = React.createClass({
 
     velocity(node, 'slideDown', {
       duration: 1000,
-      complete: complete,
+      complete,
     });
     return {
       stop() {
@@ -74,7 +74,7 @@ const Demo = React.createClass({
 
     velocity(node, 'slideUp', {
       duration: 1000,
-      complete: complete,
+      complete,
     });
     return {
       stop() {
@@ -104,10 +104,18 @@ const Demo = React.createClass({
     };
     return (
       <div>
-        <label><input type="checkbox" onChange={this.toggle.bind(this, 'visible')} checked={this.state.visible}/>
+        <label><input
+          type="checkbox"
+          onChange={this.toggle.bind(this, 'visible')}
+          checked={this.state.visible}
+        />
           show</label>
         &nbsp;
-        <label><input type="checkbox" onChange={this.toggle.bind(this, 'exclusive')} checked={this.state.exclusive}/>
+        <label><input
+          type="checkbox"
+          onChange={this.toggle.bind(this, 'exclusive')}
+          checked={this.state.exclusive}
+        />
           exclusive</label>
         &nbsp;
         <button onClick={this.destroy}>destroy</button>
@@ -116,7 +124,8 @@ const Demo = React.createClass({
           component=""
           exclusive={this.state.exclusive}
           showProp="visible"
-          animation={anim}>
+          animation={anim}
+        >
           {this.state.destroyed ? null : <Box visible={this.state.visible}/>}
         </Animate>
       </div>

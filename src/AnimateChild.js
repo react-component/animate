@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import cssAnimate, {isCssAnimationSupported} from 'css-animation';
+import cssAnimate, { isCssAnimationSupported } from 'css-animation';
 import animUtil from './util';
 
 const transitionMap = {
@@ -22,7 +22,7 @@ const AnimateChild = React.createClass({
     if (animUtil.isEnterSupported(this.props)) {
       this.transition('enter', done);
     } else {
-      done();
+      setTimeout(done, 0);
     }
   },
 
@@ -30,7 +30,7 @@ const AnimateChild = React.createClass({
     if (animUtil.isAppearSupported(this.props)) {
       this.transition('appear', done);
     } else {
-      done();
+      setTimeout(done, 0);
     }
   },
 
@@ -38,7 +38,10 @@ const AnimateChild = React.createClass({
     if (animUtil.isLeaveSupported(this.props)) {
       this.transition('leave', done);
     } else {
-      done();
+      // always sync, do not interupt with react component life cycle
+      // update hidden -> animate hidden ->
+      // didUpdate -> animate leave -> unmount (if animate is none)
+      setTimeout(done, 0);
     }
   },
 
@@ -51,8 +54,9 @@ const AnimateChild = React.createClass({
       this.stopper = null;
       finishCallback();
     };
-    if ((isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
-      this.stopper = cssAnimate(node, transitionName + '-' + animationType, end);
+    if ((isCssAnimationSupported || !props.animation[animationType]) &&
+      transitionName && props[transitionMap[animationType]]) {
+      this.stopper = cssAnimate(node, `${transitionName}-${animationType}`, end);
     } else {
       this.stopper = props.animation[animationType](node, end);
     }

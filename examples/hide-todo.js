@@ -1,7 +1,7 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
 import './assets/index.less';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import assign from 'object-assign';
@@ -33,8 +33,10 @@ const Todo = React.createClass({
       padding: 10,
       margin: 10,
     };
-    return (<div onClick={this.props.onClick}
-                style={style}>
+    return (<div
+      onClick={this.props.onClick}
+      style={style}
+    >
       {props.children}
     </div>);
   },
@@ -43,15 +45,15 @@ const TodoList = React.createClass({
   getInitialState() {
     return {
       items: [
-        {content: 'hello', visible: true},
-        {content: 'world', visible: true},
-        {content: 'click', visible: true},
-        {content: 'me', visible: true}],
+        { content: 'hello', visible: true },
+        { content: 'world', visible: true },
+        { content: 'click', visible: true },
+        { content: 'me', visible: true }],
     };
   },
   handleHide(i, item) {
     const newItems = this.state.items.concat([]);
-    newItems.forEach((n, index)=> {
+    newItems.forEach((n, index) => {
       newItems[index] = assign({}, n, {
         visible: true,
       });
@@ -59,14 +61,16 @@ const TodoList = React.createClass({
     newItems[i] = assign({}, item, {
       visible: false,
     });
-    this.setState({items: newItems});
+    this.setState({ items: newItems });
   },
   render() {
     const items = this.state.items.map((item, i) => {
       return (
-        <Todo key={item.content}
-              visible={item.visible}
-              onClick={this.handleHide.bind(this, i, item)}>
+        <Todo
+          key={item.content}
+          visible={item.visible}
+          onClick={this.handleHide.bind(this, i, item)}
+        >
           {item.content}
         </Todo>
       );
@@ -75,7 +79,8 @@ const TodoList = React.createClass({
       <div>
         <Animate
           showProp="visible"
-          transitionName="fade">
+          transitionName="fade"
+        >
           {items}
         </Animate>
       </div>

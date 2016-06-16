@@ -19,7 +19,8 @@ function createClass(options) {
           ref="anim"
           transitionAppear={!!this.state.transitionAppear}
           transitionName="example"
-          component={options.component}>
+          component={options.component}
+        >
           {options.remove && !this.state.transitionEnter ? null : <div key="1">child element</div>}
         </Animate>
       );

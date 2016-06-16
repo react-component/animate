@@ -31,7 +31,8 @@ const Demo = React.createClass({
         <button onClick={this.toggleAnimate}>toggle</button>
         <Animate
           component=""
-          transitionName="fade">
+          transitionName="fade"
+        >
           {this.state.enter ? <div key="1" style={style}/> : null}
         </Animate>
       </div>

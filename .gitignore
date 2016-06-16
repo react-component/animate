@@ -24,4 +24,4 @@ dist
 assets/**/*.css
 build
 lib
-examples/**/*.css
+coverage

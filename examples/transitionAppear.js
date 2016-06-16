@@ -2,7 +2,7 @@
 
 import './assets/slow.less';
 import Animate from 'rc-animate';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 const Box = React.createClass({
@@ -58,7 +58,8 @@ const Demo = React.createClass({
           onEnter={this.onEnter}
           onLeave={this.onLeave}
           transitionAppear
-          transitionName="fade">
+          transitionName="fade"
+        >
           <Box visible={this.state.visible}/>
         </Animate>
       </div>

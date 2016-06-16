@@ -2,16 +2,21 @@
 
 import './assets/slow.less';
 import Animate from 'rc-animate';
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import assign from 'object-assign';
 
-const Div = (props)=> {
-  const {style, show} = props;
+const Div = (props) => {
+  const { style, show } = props;
   const newStyle = assign({}, style, {
     display: show ? '' : 'none',
   });
   return <div {...props} style={newStyle}/>;
+};
+
+Div.propTypes = {
+  style: PropTypes.object,
+  show: PropTypes.bool,
 };
 
 class Demo extends Component {
@@ -38,17 +43,26 @@ class Demo extends Component {
     };
     return (
       <div>
-        <label><input type="checkbox" onChange={this.toggle.bind(this, 'enter')} checked={this.state.enter}/>
+        <label><input
+          type="checkbox"
+          onChange={this.toggle.bind(this, 'enter')}
+          checked={this.state.enter}
+        />
           show</label>
         &nbsp;
-        <label><input type="checkbox" onChange={this.toggle.bind(this, 'exclusive')} checked={this.state.exclusive}/>
+        <label><input
+          type="checkbox"
+          onChange={this.toggle.bind(this, 'exclusive')}
+          checked={this.state.exclusive}
+        />
           exclusive</label>
         <br/><br/>
         <Animate
           component=""
           exclusive={this.state.exclusive}
           showProp="show"
-          transitionName="fade">
+          transitionName="fade"
+        >
           <Div show={this.state.enter} style={style}/>
         </Animate>
       </div>

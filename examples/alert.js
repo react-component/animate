@@ -82,7 +82,7 @@ const AlertGroup = React.createClass({
     const children = alerts.map((a) => {
       if (!a.key) {
         seed++;
-        a.key = seed + '';
+        a.key = String(seed);
       }
       return <Alert {...a} onEnd={self.onEnd.bind(self, a.key)}/>;
     });
@@ -107,10 +107,10 @@ function alert(str, time, type, callback) {
     alertGroup = ReactDOM.render(<AlertGroup/>, div);
   }
   alertGroup.addAlert({
-    str: str,
-    time: time,
-    type: type,
-    callback: callback,
+    str,
+    time,
+    type,
+    callback,
   });
 }
 

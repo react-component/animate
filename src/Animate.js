@@ -7,7 +7,7 @@ import {
   isSameChildren,
 } from './ChildrenUtils';
 import AnimateChild from './AnimateChild';
-const defaultKey = 'rc_animate_' + Date.now();
+const defaultKey = `rc_animate_${Date.now()}`;
 import animUtil from './util';
 
 function getChildrenFromProps(props) {
@@ -90,11 +90,13 @@ const Animate = React.createClass({
     const showProp = props.showProp;
     const currentlyAnimatingKeys = this.currentlyAnimatingKeys;
     // last props children if exclusive
-    const currentChildren = props.exclusive ? toArrayChildren(getChildrenFromProps(props)) : this.state.children;
+    const currentChildren = props.exclusive ?
+      toArrayChildren(getChildrenFromProps(props)) :
+      this.state.children;
     // in case destroy in showProp mode
     let newChildren = [];
     if (showProp) {
-      currentChildren.forEach((currentChild)=> {
+      currentChildren.forEach((currentChild) => {
         const nextChild = findChildInChildrenByKey(nextChildren, currentChild.key);
         let newChild;
         if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
@@ -125,7 +127,7 @@ const Animate = React.createClass({
       children: newChildren,
     });
 
-    nextChildren.forEach((child)=> {
+    nextChildren.forEach((child) => {
       const key = child.key;
       if (currentlyAnimatingKeys[key]) {
         return;
@@ -146,7 +148,7 @@ const Animate = React.createClass({
       }
     });
 
-    currentChildren.forEach((child)=> {
+    currentChildren.forEach((child) => {
       const key = child.key;
       if (currentlyAnimatingKeys[key]) {
         return;
@@ -169,14 +171,12 @@ const Animate = React.createClass({
   },
 
   componentDidUpdate() {
-    if (this.isMounted()) {
-      const keysToEnter = this.keysToEnter;
-      this.keysToEnter = [];
-      keysToEnter.forEach(this.performEnter);
-      const keysToLeave = this.keysToLeave;
-      this.keysToLeave = [];
-      keysToLeave.forEach(this.performLeave);
-    }
+    const keysToEnter = this.keysToEnter;
+    this.keysToEnter = [];
+    keysToEnter.forEach(this.performEnter);
+    const keysToLeave = this.keysToLeave;
+    this.keysToLeave = [];
+    keysToLeave.forEach(this.performLeave);
   },
 
   performEnter(key) {
@@ -244,7 +244,9 @@ const Animate = React.createClass({
     if (this.isValidChildByKey(currentChildren, key)) {
       this.performEnter(key);
     } else {
-      if (this.isMounted() && !isSameChildren(this.state.children, currentChildren, props.showProp)) {
+      /* eslint react/no-is-mounted:0 */
+      if (this.isMounted() && !isSameChildren(this.state.children,
+          currentChildren, props.showProp)) {
         this.setState({
           children: currentChildren,
         });
@@ -285,16 +287,19 @@ const Animate = React.createClass({
         if (!child.key) {
           throw new Error('must set key for <rc-animate> children');
         }
-        return (<AnimateChild
-          key={child.key}
-          ref={child.key}
-          animation={props.animation}
-          transitionName={props.transitionName}
-          transitionEnter={props.transitionEnter}
-          transitionAppear={props.transitionAppear}
-          transitionLeave={props.transitionLeave}>
-          {child}
-        </AnimateChild>);
+        return (
+          <AnimateChild
+            key={child.key}
+            ref={child.key}
+            animation={props.animation}
+            transitionName={props.transitionName}
+            transitionEnter={props.transitionEnter}
+            transitionAppear={props.transitionAppear}
+            transitionLeave={props.transitionLeave}
+          >
+            {child}
+          </AnimateChild>
+        );
       });
     }
     const Component = props.component;

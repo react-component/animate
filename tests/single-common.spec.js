@@ -20,7 +20,7 @@ module.exports = function test(createClass, title) {
       beforeEach(() => {
         div = document.createElement('div');
         document.body.appendChild(div);
-        const Component = createClass({transitionEnter: true, component: '', remove: true});
+        const Component = createClass({ transitionEnter: true, component: '', remove: true });
 
         instance = ReactDOM.render(<Component/>, div);
       });
@@ -44,10 +44,16 @@ module.exports = function test(createClass, title) {
         it('should anim children', (done) => {
           const innerDiv = document.createElement('div');
           document.body.appendChild(innerDiv);
-          const Component = createClass({transitionEnter: true, transitionAppear: true, component: '', remove: true});
+          const Component = createClass({
+            transitionEnter: true,
+            transitionAppear: true,
+            component: '',
+            remove: true,
+          });
 
           const innerInstance = ReactDOM.render(<Component/>, innerDiv);
-          expect(TestUtils.scryRenderedDOMComponentsWithTag(innerInstance, 'span')[0]).not.to.be.ok();
+          expect(TestUtils.scryRenderedDOMComponentsWithTag(innerInstance,
+            'span')[0]).not.to.be.ok();
           const child = TestUtils.findRenderedDOMComponentWithTag(innerInstance, 'div');
           expect(getOpacity(ReactDOM.findDOMNode(child))).not.to.be(1);
           setTimeout(() => {
@@ -72,7 +78,7 @@ module.exports = function test(createClass, title) {
           if (window.callPhantom) {
             return done();
           }
-          instance.setState({transitionEnter: false});
+          instance.setState({ transitionEnter: false });
           expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'div')[0]).to.be.ok();
           setTimeout(() => {
             expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'div')[0]).not.to.be.ok();
@@ -83,7 +89,7 @@ module.exports = function test(createClass, title) {
 
       describe('toggle transitionEnter after remove', () => {
         it('should render again', () => {
-          instance.setState({transitionEnter: true});
+          instance.setState({ transitionEnter: true });
           const child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
           expect($(ReactDOM.findDOMNode(child)).text()).to.be('child element');
         });
@@ -94,13 +100,13 @@ module.exports = function test(createClass, title) {
       let instance;
 
       before(() => {
-        const Component = createClass({transitionEnter: true, remove: false});
+        const Component = createClass({ transitionEnter: true, remove: false });
         instance = TestUtils.renderIntoDocument(<Component/>);
       });
 
       describe('when toggle transitionEnter', () => {
         it('child still exists after transition', () => {
-          instance.setState({transitionEnter: false});
+          instance.setState({ transitionEnter: false });
           const child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
           expect($(ReactDOM.findDOMNode(child)).text()).to.be('child element');
         });

@@ -32,19 +32,19 @@ const Todo = React.createClass({
 });
 const TodoList = React.createClass({
   getInitialState() {
-    return {items: ['hello', 'world', 'click', 'me']};
+    return { items: ['hello', 'world', 'click', 'me'] };
   },
 
   handleAdd(item) {
     const newItems =
       this.state.items.concat(item);
-    this.setState({items: newItems});
+    this.setState({ items: newItems });
   },
 
   handleRemove(i) {
     const newItems = this.state.items;
     newItems.splice(i, 1);
-    this.setState({items: newItems});
+    this.setState({ items: newItems });
   },
 
   render() {

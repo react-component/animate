@@ -1,7 +1,7 @@
 /* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
 
 import './assets/index.less';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import velocity from 'velocity-animate';
@@ -55,7 +55,7 @@ const TodoList = React.createClass({
 
     velocity(node, 'slideDown', {
       duration: 1000,
-      complete: complete,
+      complete,
     });
     return {
       stop() {
@@ -77,7 +77,7 @@ const TodoList = React.createClass({
 
     velocity(node, 'slideUp', {
       duration: 1000,
-      complete: complete,
+      complete,
     });
     return {
       stop() {
@@ -90,12 +90,12 @@ const TodoList = React.createClass({
   handleAdd() {
     const newItems =
       this.state.items.concat([prompt('Enter some text')]);
-    this.setState({items: newItems});
+    this.setState({ items: newItems });
   },
   handleRemove(i) {
     const newItems = this.state.items;
     newItems.splice(i, 1);
-    this.setState({items: newItems});
+    this.setState({ items: newItems });
   },
   toggle(field) {
     this.setState({
@@ -118,12 +118,18 @@ const TodoList = React.createClass({
       <div>
         <button onClick={this.handleAdd}>Add Item</button>
         &nbsp;
-        <label><input type="checkbox" onChange={this.toggle.bind(this, 'exclusive')} checked={this.state.exclusive}/>
+        <label>
+          <input
+            type="checkbox"
+            onChange={this.toggle.bind(this, 'exclusive')}
+            checked={this.state.exclusive}
+          />
           exclusive</label>
         <br/><br/>
         <Animate
           exclusive={this.state.exclusive}
-          animation={anim}>
+          animation={anim}
+        >
           {items}
         </Animate>
       </div>

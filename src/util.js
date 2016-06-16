@@ -8,8 +8,6 @@ const util = {
   isLeaveSupported(props) {
     return props.transitionName && props.transitionLeave || props.animation.leave;
   },
-
-
   allowAppearCallback(props) {
     return props.transitionAppear || props.animation.appear;
   },

@@ -2,7 +2,7 @@ import React from 'react';
 
 export function toArrayChildren(children) {
   const ret = [];
-  React.Children.forEach(children, (child)=> {
+  React.Children.forEach(children, (child) => {
     ret.push(child);
   });
   return ret;
