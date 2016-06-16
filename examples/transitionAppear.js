@@ -3,30 +3,26 @@ webpackJsonp([7],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(179);
+	module.exports = __webpack_require__(188);
 
 
 /***/ },
 
-/***/ 173:
+/***/ 182:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 179:
+/***/ 188:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint no-console:0, react/no-multi-comp:0 */
-	
 	'use strict';
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	__webpack_require__(182);
 	
-	__webpack_require__(173);
-	
-	var _rcAnimate = __webpack_require__(161);
+	var _rcAnimate = __webpack_require__(170);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -34,11 +30,15 @@ webpackJsonp([7],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var Box = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/* eslint no-console:0, react/no-multi-comp:0 */
+	
+	var Box = _react2.default.createClass({
 	  displayName: 'Box',
 	
 	  propTypes: {
@@ -53,48 +53,42 @@ webpackJsonp([7],{
 	      height: '200px',
 	      backgroundColor: 'red'
 	    };
-	    return _react2['default'].createElement('div', { style: style });
+	    return _react2.default.createElement('div', { style: style });
 	  }
 	});
 	
-	var Demo = _react2['default'].createClass({
+	var Demo = _react2.default.createClass({
 	  displayName: 'Demo',
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      visible: 1
 	    };
 	  },
-	
 	  onAppear: function onAppear(key) {
 	    console.log('appear', key);
 	  },
-	
 	  onEnter: function onEnter(key) {
 	    console.log('enter', key);
 	  },
-	
 	  onLeave: function onLeave(key) {
 	    console.log('leave', key);
 	  },
-	
 	  toggleAnimate: function toggleAnimate() {
 	    this.setState({
 	      visible: !this.state.visible
 	    });
 	  },
-	
 	  render: function render() {
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'button',
 	        { onClick: this.toggleAnimate },
 	        'toggle'
 	      ),
-	      _react2['default'].createElement(
-	        _rcAnimate2['default'],
+	      _react2.default.createElement(
+	        _rcAnimate2.default,
 	        {
 	          component: '',
 	          showProp: 'visible',
@@ -102,14 +96,15 @@ webpackJsonp([7],{
 	          onEnter: this.onEnter,
 	          onLeave: this.onLeave,
 	          transitionAppear: true,
-	          transitionName: 'fade' },
-	        _react2['default'].createElement(Box, { visible: this.state.visible })
+	          transitionName: 'fade'
+	        },
+	        _react2.default.createElement(Box, { visible: this.state.visible })
 	      )
 	    );
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }
 

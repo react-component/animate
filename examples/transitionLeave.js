@@ -3,7 +3,7 @@ webpackJsonp([8],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(180);
+	module.exports = __webpack_require__(189);
 
 
 /***/ },
@@ -15,18 +15,14 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 180:
+/***/ 189:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint no-console:0, react/no-multi-comp:0 */
-	
 	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	__webpack_require__(2);
 	
-	var _rcAnimate = __webpack_require__(161);
+	var _rcAnimate = __webpack_require__(170);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -34,39 +30,41 @@ webpackJsonp([8],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var Demo = _react2['default'].createClass({
-	  displayName: 'Demo',
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/* eslint no-console:0, react/no-multi-comp:0 */
+	
+	var Demo = _react2.default.createClass({
+	  displayName: 'Demo',
 	  getInitialState: function getInitialState() {
 	    return {
 	      enter: true
 	    };
 	  },
-	
 	  onEvent: function onEvent(e) {
 	    console.log(e);
 	  },
-	
 	  toggleAnimate: function toggleAnimate() {
 	    this.setState({
 	      enter: !this.state.enter
 	    });
 	  },
-	
 	  render: function render() {
 	    var text = this.state.enter ? 'ON' : 'OFF';
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2['default'].createElement(
-	        _rcAnimate2['default'],
-	        { transitionLeave: false,
-	          transitionName: 'fade' },
-	        _react2['default'].createElement(
+	      _react2.default.createElement(
+	        _rcAnimate2.default,
+	        {
+	          transitionLeave: false,
+	          transitionName: 'fade'
+	        },
+	        _react2.default.createElement(
 	          'button',
 	          { key: text, onClick: this.toggleAnimate },
 	          text
@@ -76,7 +74,7 @@ webpackJsonp([8],{
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }
 

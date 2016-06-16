@@ -3,7 +3,7 @@ webpackJsonp([4],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(176);
+	module.exports = __webpack_require__(185);
 
 
 /***/ },
@@ -15,18 +15,14 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 176:
+/***/ 185:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint no-console:0, react/no-multi-comp:0 */
-	
 	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	__webpack_require__(2);
 	
-	var _rcAnimate = __webpack_require__(161);
+	var _rcAnimate = __webpack_require__(170);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -34,25 +30,26 @@ webpackJsonp([4],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var Demo = _react2['default'].createClass({
-	  displayName: 'Demo',
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/* eslint no-console:0, react/no-multi-comp:0 */
+	
+	var Demo = _react2.default.createClass({
+	  displayName: 'Demo',
 	  getInitialState: function getInitialState() {
 	    return {
 	      enter: true
 	    };
 	  },
-	
 	  toggleAnimate: function toggleAnimate() {
 	    this.setState({
 	      enter: !this.state.enter
 	    });
 	  },
-	
 	  render: function render() {
 	    var style = {
 	      display: this.state.enter ? 'block' : 'none',
@@ -61,26 +58,27 @@ webpackJsonp([4],{
 	      height: '200px',
 	      backgroundColor: 'red'
 	    };
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'button',
 	        { onClick: this.toggleAnimate },
 	        'toggle'
 	      ),
-	      _react2['default'].createElement(
-	        _rcAnimate2['default'],
+	      _react2.default.createElement(
+	        _rcAnimate2.default,
 	        {
 	          component: '',
-	          transitionName: 'fade' },
-	        this.state.enter ? _react2['default'].createElement('div', { key: '1', style: style }) : null
+	          transitionName: 'fade'
+	        },
+	        this.state.enter ? _react2.default.createElement('div', { key: '1', style: style }) : null
 	      )
 	    );
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }
 

@@ -2,12 +2,12 @@
 <html>
 
 <head>
-  <title>alert.js - example - rc-animate@2.0.4</title>
+  <title>alert.js - example - rc-animate@2.1.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
+  <link href="https://a.alipayobjects.com/normalize.css/3.0.1/normalize.css" rel="stylesheet"/>
   <style>
     .highlight pre {
       padding: .8em 1em;
@@ -251,25 +251,25 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <!--[if lt IE 9]>
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
+  
   <link rel="stylesheet" href="alert.css" />
 </head>
 
 <body>
-<div class="container">
-  <div class="header">
-    <h1>rc-animate@2.0.4</h1>
+  <div class="container">
+    <div class="header">
+      <h1>rc-animate@2.1.0</h1>
 
-    <p>css-transition ui component for react</p>
-  </div>
-  <div class="example" id="__react-content"></div>
-  <script src="common.js?nowrap"></script>
-  <script src="alert.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
+      <p>css-transition ui component for react</p>
+    </div>
+    <div class="example" id="__react-content"></div>
 
-import <span class="hljs-string">'./assets/index.less'</span>;
-import React from <span class="hljs-string">'react'</span>;
-import ReactDOM from <span class="hljs-string">'react-dom'</span>;
-import Animate from <span class="hljs-string">'rc-animate'</span>;
+    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">let</span> seed = <span class="hljs-number">0</span>;
 
 <span class="hljs-keyword">const</span> Alert = React.createClass({
@@ -348,7 +348,7 @@ import Animate from <span class="hljs-string">'rc-animate'</span>;
     <span class="hljs-keyword">const</span> children = alerts.map((a) =&gt; {
       <span class="hljs-keyword">if</span> (!a.key) {
         seed++;
-        a.key = seed + <span class="hljs-string">''</span>;
+        a.key = <span class="hljs-built_in">String</span>(seed);
       }
       <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Alert</span> {<span class="hljs-attribute">...a</span>} <span class="hljs-attribute">onEnd</span>=<span class="hljs-value">{self.onEnd.bind(self,</span> <span class="hljs-attribute">a.key</span>)}/&gt;</span>;</span>
     });
@@ -360,23 +360,23 @@ import Animate from <span class="hljs-string">'rc-animate'</span>;
     };
     <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>);
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
   },
 });
 
-let alertGroup;
+<span class="hljs-keyword">let</span> alertGroup;
 
-function alert(str, time, type, callback) {
-  if (!alertGroup) {
-    const div = document.createElement('div');
-    document.body.appendChild(div);
-    alertGroup = ReactDOM.render(<span class="hljs-tag">&lt;<span class="hljs-title">AlertGroup</span>/&gt;</span>, div);
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alert</span>(<span class="hljs-params">str, time, type, callback</span>) </span>{
+  <span class="hljs-keyword">if</span> (!alertGroup) {
+    <span class="hljs-keyword">const</span> div = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+    <span class="hljs-built_in">document</span>.body.appendChild(div);
+    alertGroup = ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">AlertGroup</span>/&gt;</span>, div);
   }
   alertGroup.addAlert({
-    str: str,
-    time: time,
-    type: type,
-    callback: callback,
+    str,
+    time,
+    type,
+    callback,
   });
 }
 
@@ -400,13 +400,16 @@ function onClick() {
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
   document.getElementById('__react-content'));
 </span></code></pre></div>
-</div>
-<a href="https://github.com/react-component/animate">
-  <img style="position: absolute; top: 0; right: 0; border: 0;"
-       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-       alt="Fork me on GitHub"
-       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-</a>
+  </div>
+  <a href="https://github.com/react-component/animate">
+    <img style="position: absolute; top: 0; right: 0; border: 0;"
+         src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+         alt="Fork me on GitHub"
+         data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+  </a>
+  
+  <script src="common.js?nowrap"></script>
+  <script src="alert.js?nowrap"></script>
 </body>
 
 </html>

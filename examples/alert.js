@@ -9,13 +9,9 @@ webpackJsonp([0],[
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint no-console:0, react/no-multi-comp:0 */
-	
 	'use strict';
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* eslint no-console:0, react/no-multi-comp:0 */
 	
 	__webpack_require__(2);
 	
@@ -23,41 +19,42 @@ webpackJsonp([0],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAnimate = __webpack_require__(161);
+	var _rcAnimate = __webpack_require__(170);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	var seed = 0;
 	
-	var Alert = _react2['default'].createClass({
+	var Alert = _react2.default.createClass({
 	  displayName: 'Alert',
 	
 	  propTypes: {
-	    time: _react2['default'].PropTypes.number,
-	    type: _react2['default'].PropTypes.number,
-	    str: _react2['default'].PropTypes.string,
-	    onEnd: _react2['default'].PropTypes.func
+	    time: _react2.default.PropTypes.number,
+	    type: _react2.default.PropTypes.number,
+	    str: _react2.default.PropTypes.string,
+	    onEnd: _react2.default.PropTypes.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      onEnd: function onEnd() {},
+	
 	      time: 2000,
 	      type: 'success'
 	    };
 	  },
-	
 	  componentDidMount: function componentDidMount() {
 	    var props = this.props;
 	    setTimeout(function () {
 	      props.onEnd();
 	    }, props.time);
 	  },
-	
 	  render: function render() {
 	    var props = this.props;
 	    var style = {
@@ -67,7 +64,7 @@ webpackJsonp([0],[
 	      marginLeft: 'auto',
 	      marginRight: 'auto'
 	    };
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { style: style },
 	      props.str
@@ -75,9 +72,8 @@ webpackJsonp([0],[
 	  }
 	});
 	
-	var AlertGroup = _react2['default'].createClass({
+	var AlertGroup = _react2.default.createClass({
 	  displayName: 'AlertGroup',
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      alerts: []
@@ -86,7 +82,7 @@ webpackJsonp([0],[
 	  onEnd: function onEnd(key) {
 	    var alerts = this.state.alerts;
 	    var ret = [];
-	    var target = undefined;
+	    var target = void 0;
 	    alerts.forEach(function (a) {
 	      if (a.key === key) {
 	        target = a;
@@ -115,9 +111,9 @@ webpackJsonp([0],[
 	    var children = alerts.map(function (a) {
 	      if (!a.key) {
 	        seed++;
-	        a.key = seed + '';
+	        a.key = String(seed);
 	      }
-	      return _react2['default'].createElement(Alert, _extends({}, a, { onEnd: self.onEnd.bind(self, a.key) }));
+	      return _react2.default.createElement(Alert, _extends({}, a, { onEnd: self.onEnd.bind(self, a.key) }));
 	    });
 	    var style = {
 	      position: 'fixed',
@@ -125,11 +121,11 @@ webpackJsonp([0],[
 	      top: 50,
 	      zIndex: 9999
 	    };
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { style: style },
-	      _react2['default'].createElement(
-	        _rcAnimate2['default'],
+	      _react2.default.createElement(
+	        _rcAnimate2.default,
 	        { transitionName: 'fade' },
 	        children
 	      )
@@ -137,13 +133,13 @@ webpackJsonp([0],[
 	  }
 	});
 	
-	var alertGroup = undefined;
+	var alertGroup = void 0;
 	
 	function alert(str, time, type, callback) {
 	  if (!alertGroup) {
 	    var div = document.createElement('div');
 	    document.body.appendChild(div);
-	    alertGroup = _reactDom2['default'].render(_react2['default'].createElement(AlertGroup, null), div);
+	    alertGroup = _reactDom2.default.render(_react2.default.createElement(AlertGroup, null), div);
 	  }
 	  alertGroup.addAlert({
 	    str: str,
@@ -167,15 +163,15 @@ webpackJsonp([0],[
 	  }
 	}
 	
-	_reactDom2['default'].render(_react2['default'].createElement(
+	_reactDom2.default.render(_react2.default.createElement(
 	  'div',
 	  null,
-	  _react2['default'].createElement(
+	  _react2.default.createElement(
 	    'h2',
 	    null,
 	    'notification'
 	  ),
-	  _react2['default'].createElement(
+	  _react2.default.createElement(
 	    'button',
 	    { onClick: onClick },
 	    'show notification'

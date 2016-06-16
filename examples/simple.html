@@ -2,12 +2,12 @@
 <html>
 
 <head>
-  <title>simple.js - example - rc-animate@2.0.4</title>
+  <title>simple.js - example - rc-animate@2.1.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
+  <link href="https://a.alipayobjects.com/normalize.css/3.0.1/normalize.css" rel="stylesheet"/>
   <style>
     .highlight pre {
       padding: .8em 1em;
@@ -251,39 +251,44 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <!--[if lt IE 9]>
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
+  
   <link rel="stylesheet" href="simple.css" />
 </head>
 
 <body>
-<div class="container">
-  <div class="header">
-    <h1>rc-animate@2.0.4</h1>
+  <div class="container">
+    <div class="header">
+      <h1>rc-animate@2.1.0</h1>
 
-    <p>css-transition ui component for react</p>
-  </div>
-  <div class="example" id="__react-content"></div>
-  <script src="common.js?nowrap"></script>
-  <script src="simple.js?nowrap"></script>
-  <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
+      <p>css-transition ui component for react</p>
+    </div>
+    <div class="example" id="__react-content"></div>
 
-import <span class="hljs-string">'./assets/slow.less'</span>;
-import Animate from <span class="hljs-string">'rc-animate'</span>;
-import React, {Component} from <span class="hljs-string">'react'</span>;
-import ReactDOM from <span class="hljs-string">'react-dom'</span>;
-import assign from <span class="hljs-string">'object-assign'</span>;
+    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
 
-<span class="hljs-keyword">const</span> Div = (props)=&gt; {
-  <span class="hljs-keyword">const</span> {style, show} = props;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/slow.less'</span>;
+<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
+<span class="hljs-keyword">import</span> React, { Component, PropTypes } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> assign <span class="hljs-keyword">from</span> <span class="hljs-string">'object-assign'</span>;
+
+<span class="hljs-keyword">const</span> Div = (props) =&gt; {
+  <span class="hljs-keyword">const</span> { style, show } = props;
   <span class="hljs-keyword">const</span> newStyle = assign({}, style, {
     display: show ? <span class="hljs-string">''</span> : <span class="hljs-string">'none'</span>,
   });
   <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> {<span class="hljs-attribute">...props</span>} <span class="hljs-attribute">style</span>=<span class="hljs-value">{newStyle}</span>/&gt;</span>;</span>
 };
 
-<span class="hljs-keyword">class</span> Demo extends Component {
+Div.propTypes = {
+  style: PropTypes.object,
+  show: PropTypes.bool,
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
 
   constructor(props) {
-    super(props);
+    <span class="hljs-keyword">super</span>(props);
     <span class="hljs-keyword">this</span>.state = {
       exclusive: <span class="hljs-literal">false</span>,
       enter: <span class="hljs-literal">true</span>,
@@ -304,33 +309,45 @@ import assign from <span class="hljs-string">'object-assign'</span>;
     };
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,</span> '<span class="hljs-attribute">enter</span>')} <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.enter}</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span>
+          <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span>
+          <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,</span> '<span class="hljs-attribute">enter</span>')}
+          <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.enter}</span>
+        /&gt;</span>
           show<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         &amp;nbsp;
-        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,</span> '<span class="hljs-attribute">exclusive</span>')} <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.exclusive}</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span>
+          <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span>
+          <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,</span> '<span class="hljs-attribute">exclusive</span>')}
+          <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.exclusive}</span>
+        /&gt;</span>
           exclusive<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span>
           <span class="hljs-attribute">component</span>=<span class="hljs-value">""</span>
           <span class="hljs-attribute">exclusive</span>=<span class="hljs-value">{this.state.exclusive}</span>
           <span class="hljs-attribute">showProp</span>=<span class="hljs-value">"show"</span>
-          <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>&gt;</span>
+          <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>
+        &gt;</span>
           <span class="hljs-tag">&lt;<span class="hljs-title">Div</span> <span class="hljs-attribute">show</span>=<span class="hljs-value">{this.state.enter}</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>/&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    );
+    )</span>;
   }
 }
 
-ReactDOM.render(<span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
-</div>
-<a href="https://github.com/react-component/animate">
-  <img style="position: absolute; top: 0; right: 0; border: 0;"
-       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-       alt="Fork me on GitHub"
-       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-</a>
+  </div>
+  <a href="https://github.com/react-component/animate">
+    <img style="position: absolute; top: 0; right: 0; border: 0;"
+         src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+         alt="Fork me on GitHub"
+         data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+  </a>
+  
+  <script src="common.js?nowrap"></script>
+  <script src="simple.js?nowrap"></script>
 </body>
 
 </html>

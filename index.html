@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-animate@2.0.4 - css-transition ui component for react</title>
+  <title>rc-animate@2.1.0 - css-transition ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>rc-animate@2.0.4</h1>
+  <h1>rc-animate@2.1.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -776,8 +776,6 @@
 <a href="https://gemnasium.com/react-component/animate" title="null"><img src="http://img.shields.io/gemnasium/react-component/animate.svg?style=flat-square" alt="gemnasium deps"></a>
 <a href="http://nodejs.org/download/" title="null"><img src="https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square" alt="node version"></a>
 <a href="https://npmjs.org/package/rc-animate" title="null"><img src="https://img.shields.io/npm/dm/rc-animate.svg?style=flat-square" alt="npm download"></a></p>
-<p><a href="https://saucelabs.com/u/rc_animate" title="null"><img src="https://saucelabs.com/buildstatus/rc_animate" alt="Sauce Test Status"></a></p>
-<p><a href="https://saucelabs.com/u/rc_animate" title="null"><img src="https://saucelabs.com/browser-matrix/rc_animate.svg" alt="Sauce Test Status"></a></p>
 <h2>Feature<a id="user-content-feature" name="feature" class="anchor" aria-hidden="true" href="#feature"><span class="octicon octicon-link"></span></a></h2><ul>
 <li>support ie8,ie8+,chrome,firefox,safari</li>
 </ul>
@@ -855,24 +853,24 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-t
 
 <h3>animation format<a id="user-content-animation-format" name="animation-format" class="anchor" aria-hidden="true" href="#animation-format"><span class="octicon octicon-link"></span></a></h3><p>with appear, enter and leave as keys. for example:</p>
 <div class="highlight"><pre><code language="js">  {
-    appear: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node, done)</span></span>{
+    appear: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">node, done</span>)</span>{
       node.style.display=<span class="hljs-string">'none'</span>;
       $(node).slideUp(done);
       <span class="hljs-keyword">return</span> {
-        stop:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+        stop:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
           <span class="hljs-comment">// jq will call done on finish</span>
           $(node).stop(<span class="hljs-literal">true</span>);
         }
       };
     },
-    enter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    enter: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
       <span class="hljs-keyword">this</span>.appear.apply(<span class="hljs-keyword">this</span>,<span class="hljs-built_in">arguments</span>);
     },
-    leave: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node, done)</span></span>{
+    leave: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">node, done</span>)</span>{
       node.style.display=<span class="hljs-string">''</span>;
       $(node).slideDown(done);
       <span class="hljs-keyword">return</span> {
-        stop:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+        stop:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
           <span class="hljs-comment">// jq will call done on finish</span>
           $(node).stop(<span class="hljs-literal">true</span>);
         }
@@ -881,8 +879,8 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-t
   }</code></pre></div><h2>Development<a id="user-content-development" name="development" class="anchor" aria-hidden="true" href="#development"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm install
 npm start</code></pre></div><h2>Example<a id="user-content-example" name="example" class="anchor" aria-hidden="true" href="#example"><span class="octicon octicon-link"></span></a></h2><p><a href="http://localhost:8200/examples/index.md" title="null">http://localhost:8200/examples/index.md</a></p>
 <p>online example: <a href="http://react-component.github.io/animate/examples/" title="null">http://react-component.github.io/animate/examples/</a></p>
-<h2>Test Case<a id="user-content-test-case" name="test-case" class="anchor" aria-hidden="true" href="#test-case"><span class="octicon octicon-link"></span></a></h2><p><a href="http://localhost:8200/tests/runner.html?coverage" title="null">http://localhost:8200/tests/runner.html?coverage</a></p>
-<h2>Coverage<a id="user-content-coverage" name="coverage" class="anchor" aria-hidden="true" href="#coverage"><span class="octicon octicon-link"></span></a></h2><p><a href="http://localhost:8200/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8200/tests/runner.html?coverage" title="null">http://localhost:8200/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8200/tests/runner.html?coverage</a></p>
+<h2>Test Case<a id="user-content-test-case" name="test-case" class="anchor" aria-hidden="true" href="#test-case"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm test
+npm run chrome-test</code></pre></div><h2>Coverage<a id="user-content-coverage" name="coverage" class="anchor" aria-hidden="true" href="#coverage"><span class="octicon octicon-link"></span></a></h2><div class="highlight"><pre><code language="undefined">npm run coverage</code></pre></div><p>open coverage/ dir</p>
 <h2>License<a id="user-content-license" name="license" class="anchor" aria-hidden="true" href="#license"><span class="octicon octicon-link"></span></a></h2><p>rc-animate is released under the MIT license.</p>
 
   </div>

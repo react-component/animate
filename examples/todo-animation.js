@@ -3,7 +3,7 @@ webpackJsonp([6],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(178);
+	module.exports = __webpack_require__(187);
 
 
 /***/ },
@@ -15,7 +15,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 175:
+/***/ 184:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
@@ -3907,16 +3907,10 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 178:
+/***/ 187:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
-	
 	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	__webpack_require__(2);
 	
@@ -3924,19 +3918,23 @@ webpackJsonp([6],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAnimate = __webpack_require__(161);
+	var _rcAnimate = __webpack_require__(170);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _velocityAnimate = __webpack_require__(175);
+	var _velocityAnimate = __webpack_require__(184);
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
-	var Todo = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
+	
+	var Todo = _react2.default.createClass({
 	  displayName: 'Todo',
 	
 	  propTypes: {
@@ -3962,16 +3960,15 @@ webpackJsonp([6],{
 	      padding: 10,
 	      margin: 10
 	    };
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { onClick: this.props.onClick, style: style },
 	      props.children
 	    );
 	  }
 	});
-	var TodoList = _react2['default'].createClass({
+	var TodoList = _react2.default.createClass({
 	  displayName: 'TodoList',
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      exclusive: false,
@@ -3988,13 +3985,13 @@ webpackJsonp([6],{
 	      }
 	    }
 	
-	    (0, _velocityAnimate2['default'])(node, 'slideDown', {
+	    (0, _velocityAnimate2.default)(node, 'slideDown', {
 	      duration: 1000,
 	      complete: complete
 	    });
 	    return {
 	      stop: function stop() {
-	        (0, _velocityAnimate2['default'])(node, 'finish');
+	        (0, _velocityAnimate2.default)(node, 'finish');
 	        // velocity complete is async
 	        complete();
 	      }
@@ -4010,13 +4007,13 @@ webpackJsonp([6],{
 	      }
 	    }
 	
-	    (0, _velocityAnimate2['default'])(node, 'slideUp', {
+	    (0, _velocityAnimate2.default)(node, 'slideUp', {
 	      duration: 1000,
 	      complete: complete
 	    });
 	    return {
 	      stop: function stop() {
-	        (0, _velocityAnimate2['default'])(node, 'finish');
+	        (0, _velocityAnimate2.default)(node, 'finish');
 	        // velocity complete is async
 	        complete();
 	      }
@@ -4038,7 +4035,7 @@ webpackJsonp([6],{
 	    var _this = this;
 	
 	    var items = this.state.items.map(function (item, i) {
-	      return _react2['default'].createElement(
+	      return _react2.default.createElement(
 	        Todo,
 	        { key: item, onClick: _this.handleRemove.bind(_this, i) },
 	        item
@@ -4048,43 +4045,48 @@ webpackJsonp([6],{
 	      enter: this.animateEnter,
 	      leave: this.animateLeave
 	    };
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'button',
 	        { onClick: this.handleAdd },
 	        'Add Item'
 	      ),
 	      ' ',
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'label',
 	        null,
-	        _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'exclusive'), checked: this.state.exclusive }),
+	        _react2.default.createElement('input', {
+	          type: 'checkbox',
+	          onChange: this.toggle.bind(this, 'exclusive'),
+	          checked: this.state.exclusive
+	        }),
 	        'exclusive'
 	      ),
-	      _react2['default'].createElement('br', null),
-	      _react2['default'].createElement('br', null),
-	      _react2['default'].createElement(
-	        _rcAnimate2['default'],
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement(
+	        _rcAnimate2.default,
 	        {
 	          exclusive: this.state.exclusive,
-	          animation: anim },
+	          animation: anim
+	        },
 	        items
 	      )
 	    );
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(
+	_reactDom2.default.render(_react2.default.createElement(
 	  'div',
 	  null,
-	  _react2['default'].createElement(
+	  _react2.default.createElement(
 	    'h2',
 	    null,
 	    'Todo'
 	  ),
-	  _react2['default'].createElement(TodoList, null)
+	  _react2.default.createElement(TodoList, null)
 	), document.getElementById('__react-content'));
 
 /***/ }

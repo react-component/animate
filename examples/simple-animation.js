@@ -3,7 +3,7 @@ webpackJsonp([3],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(174);
+	module.exports = __webpack_require__(183);
 
 
 /***/ },
@@ -15,20 +15,14 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 174:
+/***/ 183:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint no-console:0, react/no-multi-comp:0 */
-	
 	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	__webpack_require__(2);
 	
-	var _rcAnimate = __webpack_require__(161);
+	var _rcAnimate = __webpack_require__(170);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -36,15 +30,19 @@ webpackJsonp([3],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _velocityAnimate = __webpack_require__(175);
+	var _velocityAnimate = __webpack_require__(184);
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
-	var Box = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /* eslint no-console:0, react/no-multi-comp:0 */
+	
+	var Box = _react2.default.createClass({
 	  displayName: 'Box',
 	
 	  propTypes: {
@@ -57,13 +55,12 @@ webpackJsonp([3],{
 	      height: '200px',
 	      backgroundColor: 'red'
 	    };
-	    return _react2['default'].createElement('div', { style: style });
+	    return _react2.default.createElement('div', { style: style });
 	  }
 	});
 	
-	var Demo = _react2['default'].createClass({
+	var Demo = _react2.default.createClass({
 	  displayName: 'Demo',
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      destroyed: false,
@@ -71,13 +68,11 @@ webpackJsonp([3],{
 	      exclusive: false
 	    };
 	  },
-	
 	  toggleAnimate: function toggleAnimate() {
 	    this.setState({
 	      visible: !this.state.visible
 	    });
 	  },
-	
 	  animateEnter: function animateEnter(node, done) {
 	    var ok = false;
 	
@@ -90,19 +85,18 @@ webpackJsonp([3],{
 	
 	    node.style.display = 'none';
 	
-	    (0, _velocityAnimate2['default'])(node, 'slideDown', {
+	    (0, _velocityAnimate2.default)(node, 'slideDown', {
 	      duration: 1000,
 	      complete: complete
 	    });
 	    return {
 	      stop: function stop() {
-	        (0, _velocityAnimate2['default'])(node, 'finish');
+	        (0, _velocityAnimate2.default)(node, 'finish');
 	        // velocity complete is async
 	        complete();
 	      }
 	    };
 	  },
-	
 	  animateLeave: function animateLeave(node, done) {
 	    var ok = false;
 	
@@ -115,76 +109,82 @@ webpackJsonp([3],{
 	
 	    node.style.display = 'block';
 	
-	    (0, _velocityAnimate2['default'])(node, 'slideUp', {
+	    (0, _velocityAnimate2.default)(node, 'slideUp', {
 	      duration: 1000,
 	      complete: complete
 	    });
 	    return {
 	      stop: function stop() {
-	        (0, _velocityAnimate2['default'])(node, 'finish');
+	        (0, _velocityAnimate2.default)(node, 'finish');
 	        // velocity complete is async
 	        complete();
 	      }
 	    };
 	  },
-	
 	  toggle: function toggle(field) {
 	    this.setState(_defineProperty({}, field, !this.state[field]));
 	  },
-	
 	  destroy: function destroy() {
 	    this.setState({
 	      destroyed: true
 	    });
 	  },
-	
 	  render: function render() {
 	    var anim = {
 	      enter: this.animateEnter,
 	      leave: this.animateLeave
 	    };
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'label',
 	        null,
-	        _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'visible'), checked: this.state.visible }),
+	        _react2.default.createElement('input', {
+	          type: 'checkbox',
+	          onChange: this.toggle.bind(this, 'visible'),
+	          checked: this.state.visible
+	        }),
 	        'show'
 	      ),
 	      ' ',
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'label',
 	        null,
-	        _react2['default'].createElement('input', { type: 'checkbox', onChange: this.toggle.bind(this, 'exclusive'), checked: this.state.exclusive }),
+	        _react2.default.createElement('input', {
+	          type: 'checkbox',
+	          onChange: this.toggle.bind(this, 'exclusive'),
+	          checked: this.state.exclusive
+	        }),
 	        'exclusive'
 	      ),
 	      ' ',
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'button',
 	        { onClick: this.destroy },
 	        'destroy'
 	      ),
-	      _react2['default'].createElement('br', null),
-	      _react2['default'].createElement('br', null),
-	      _react2['default'].createElement(
-	        _rcAnimate2['default'],
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement(
+	        _rcAnimate2.default,
 	        {
 	          component: '',
 	          exclusive: this.state.exclusive,
 	          showProp: 'visible',
-	          animation: anim },
-	        this.state.destroyed ? null : _react2['default'].createElement(Box, { visible: this.state.visible })
+	          animation: anim
+	        },
+	        this.state.destroyed ? null : _react2.default.createElement(Box, { visible: this.state.visible })
 	      )
 	    );
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(Demo, null), document.getElementById('__react-content'));
+	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ },
 
-/***/ 175:
+/***/ 184:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */

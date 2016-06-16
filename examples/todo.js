@@ -3,7 +3,7 @@ webpackJsonp([5],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(177);
+	module.exports = __webpack_require__(186);
 
 
 /***/ },
@@ -15,14 +15,10 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 177:
+/***/ 186:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
-	
 	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	__webpack_require__(2);
 	
@@ -30,15 +26,19 @@ webpackJsonp([5],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(160);
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAnimate = __webpack_require__(161);
+	var _rcAnimate = __webpack_require__(170);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var Todo = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
+	
+	var Todo = _react2.default.createClass({
 	  displayName: 'Todo',
 	
 	  propTypes: {
@@ -64,16 +64,15 @@ webpackJsonp([5],{
 	      padding: 10,
 	      margin: 10
 	    };
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { onClick: this.props.onClick, style: style },
 	      props.children
 	    );
 	  }
 	});
-	var TodoList = _react2['default'].createClass({
+	var TodoList = _react2.default.createClass({
 	  displayName: 'TodoList',
-	
 	  getInitialState: function getInitialState() {
 	    return { items: ['hello', 'world', 'click', 'me'] };
 	  },
@@ -90,22 +89,22 @@ webpackJsonp([5],{
 	    var _this = this;
 	
 	    var items = this.state.items.map(function (item, i) {
-	      return _react2['default'].createElement(
+	      return _react2.default.createElement(
 	        Todo,
 	        { key: item, onClick: _this.handleRemove.bind(_this, i) },
 	        item
 	      );
 	    });
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'button',
 	        { onClick: this.handleAdd },
 	        'Add Item'
 	      ),
-	      _react2['default'].createElement(
-	        _rcAnimate2['default'],
+	      _react2.default.createElement(
+	        _rcAnimate2.default,
 	        { transitionName: 'fade' },
 	        items
 	      )
@@ -113,15 +112,15 @@ webpackJsonp([5],{
 	  }
 	});
 	
-	_reactDom2['default'].render(_react2['default'].createElement(
+	_reactDom2.default.render(_react2.default.createElement(
 	  'div',
 	  null,
-	  _react2['default'].createElement(
+	  _react2.default.createElement(
 	    'h2',
 	    null,
 	    'Todo'
 	  ),
-	  _react2['default'].createElement(TodoList, null)
+	  _react2.default.createElement(TodoList, null)
 	), document.getElementById('__react-content'));
 
 /***/ }
