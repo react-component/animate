@@ -15,7 +15,7 @@ export function findChildInChildrenByKey(children, key) {
       if (ret) {
         return;
       }
-      if (child.key === key) {
+      if (child && child.key === key) {
         ret = child;
       }
     });
@@ -27,7 +27,7 @@ export function findShownChildInChildrenByKey(children, key, showProp) {
   let ret = null;
   if (children) {
     children.forEach((child) => {
-      if (child.key === key && child.props[showProp]) {
+      if (child && child.key === key && child.props[showProp]) {
         if (ret) {
           throw new Error('two child with same key for <rc-animate> children');
         }
@@ -45,7 +45,7 @@ export function findHiddenChildInChildrenByKey(children, key, showProp) {
       if (found) {
         return;
       }
-      found = child.key === key && !child.props[showProp];
+      found = child && child.key === key && !child.props[showProp];
     });
   }
   return found;
@@ -56,10 +56,14 @@ export function isSameChildren(c1, c2, showProp) {
   if (same) {
     c1.forEach((child, index) => {
       const child2 = c2[index];
-      if (child.key !== child2.key) {
-        same = false;
-      } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
-        same = false;
+      if (child && child2) {
+        if ((child && !child2) || (!child && child2)) {
+          same = false;
+        } else if (child.key !== child2.key) {
+          same = false;
+        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
+          same = false;
+        }
       }
     });
   }
@@ -74,7 +78,7 @@ export function mergeChildren(prev, next) {
   const nextChildrenPending = {};
   let pendingChildren = [];
   prev.forEach((child) => {
-    if (findChildInChildrenByKey(next, child.key)) {
+    if (child && findChildInChildrenByKey(next, child.key)) {
       if (pendingChildren.length) {
         nextChildrenPending[child.key] = pendingChildren;
         pendingChildren = [];
@@ -85,7 +89,7 @@ export function mergeChildren(prev, next) {
   });
 
   next.forEach((child) => {
-    if (nextChildrenPending.hasOwnProperty(child.key)) {
+    if (child && nextChildrenPending.hasOwnProperty(child.key)) {
       ret = ret.concat(nextChildrenPending[child.key]);
     }
     ret.push(child);

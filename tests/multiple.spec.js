@@ -139,11 +139,11 @@ describe('Animate', () => {
     }, 1400);
   });
 
-  it('does not fail with null/undefined children', function(done) {
+  it('does not fail with null/undefined children', (done) => {
     ReactDOM.render(
       <Animate>
         {undefined}
-        <div key='test'></div>
+        <div key="test"></div>
       </Animate>,
       container,
       done
