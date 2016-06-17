@@ -143,6 +143,7 @@ describe('Animate', () => {
     ReactDOM.render(
       <Animate>
         {undefined}
+        {null}
         <div key="test"></div>
       </Animate>,
       container,
