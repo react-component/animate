@@ -29,7 +29,10 @@ const Animate = React.createClass({
   propTypes: {
     component: React.PropTypes.any,
     animation: React.PropTypes.object,
-    transitionName: React.PropTypes.string,
+    transitionName: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.object,
+    ]),
     transitionEnter: React.PropTypes.bool,
     transitionAppear: React.PropTypes.bool,
     exclusive: React.PropTypes.bool,
