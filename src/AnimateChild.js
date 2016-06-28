@@ -49,6 +49,7 @@ const AnimateChild = React.createClass({
     const node = ReactDOM.findDOMNode(this);
     const props = this.props;
     const transitionName = props.transitionName;
+    const nameIsObj = typeof transitionName === 'object';
     this.stop();
     const end = () => {
       this.stopper = null;
@@ -56,7 +57,8 @@ const AnimateChild = React.createClass({
     };
     if ((isCssAnimationSupported || !props.animation[animationType]) &&
       transitionName && props[transitionMap[animationType]]) {
-      this.stopper = cssAnimate(node, `${transitionName}-${animationType}`, end);
+      const name = nameIsObj ? transitionName[animationType] : `${transitionName}-${animationType}`;
+      this.stopper = cssAnimate(node, name, end);
     } else {
       this.stopper = props.animation[animationType](node, end);
     }
