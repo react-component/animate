@@ -73,9 +73,9 @@ ReactDOM.render(<Animate animation={{}}><p key="1">1</p><p key="2">2</p></Animat
         </tr>
         <tr>
           <td>transitionName</td>
-          <td>String</td>
+          <td>String|Object</td>
           <td></td>
-          <td>transitionName, need to specify corresponding css</td>
+          <td>specify corresponding css, see ReactCSSTransitionGroup</td>
         </tr>
        <tr>
          <td>transitionAppear</td>
