@@ -20655,15 +20655,19 @@
 	    if (this.isValidChildByKey(currentChildren, key)) {
 	      this.performEnter(key);
 	    } else {
+	      var end = function end() {
+	        if (_util2.default.allowLeaveCallback(props)) {
+	          props.onLeave(key);
+	          props.onEnd(key, false);
+	        }
+	      };
 	      /* eslint react/no-is-mounted:0 */
 	      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
 	        this.setState({
 	          children: currentChildren
-	        });
-	      }
-	      if (_util2.default.allowLeaveCallback(props)) {
-	        props.onLeave(key);
-	        props.onEnd(key, false);
+	        }, end);
+	      } else {
+	        end();
 	      }
 	    }
 	  },
@@ -20892,14 +20896,14 @@
 	    if (_util2.default.isEnterSupported(this.props)) {
 	      this.transition('enter', done);
 	    } else {
-	      setTimeout(done, 0);
+	      done();
 	    }
 	  },
 	  componentWillAppear: function componentWillAppear(done) {
 	    if (_util2.default.isAppearSupported(this.props)) {
 	      this.transition('appear', done);
 	    } else {
-	      setTimeout(done, 0);
+	      done();
 	    }
 	  },
 	  componentWillLeave: function componentWillLeave(done) {
@@ -20909,7 +20913,7 @@
 	      // always sync, do not interupt with react component life cycle
 	      // update hidden -> animate hidden ->
 	      // didUpdate -> animate leave -> unmount (if animate is none)
-	      setTimeout(done, 0);
+	      done();
 	    }
 	  },
 	  transition: function transition(animationType, finishCallback) {
