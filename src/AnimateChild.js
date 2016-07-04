@@ -22,7 +22,7 @@ const AnimateChild = React.createClass({
     if (animUtil.isEnterSupported(this.props)) {
       this.transition('enter', done);
     } else {
-      setTimeout(done, 0);
+      done();
     }
   },
 
@@ -30,7 +30,7 @@ const AnimateChild = React.createClass({
     if (animUtil.isAppearSupported(this.props)) {
       this.transition('appear', done);
     } else {
-      setTimeout(done, 0);
+      done();
     }
   },
 
@@ -41,7 +41,7 @@ const AnimateChild = React.createClass({
       // always sync, do not interupt with react component life cycle
       // update hidden -> animate hidden ->
       // didUpdate -> animate leave -> unmount (if animate is none)
-      setTimeout(done, 0);
+      done();
     }
   },
 
