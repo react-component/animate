@@ -311,7 +311,14 @@ const Animate = React.createClass({
     }
     const Component = props.component;
     if (Component) {
-      return <Component {...this.props}>{children}</Component>;
+      let passedProps = props;
+      if (typeof Component === 'string') {
+        passedProps = {
+          className: props.className,
+          style: props.style,
+        };
+      }
+      return <Component {...passedProps}>{children}</Component>;
     }
     return children[0] || null;
   },
