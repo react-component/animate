@@ -20715,9 +20715,16 @@
 	    }
 	    var Component = props.component;
 	    if (Component) {
+	      var passedProps = props;
+	      if (typeof Component === 'string') {
+	        passedProps = {
+	          className: props.className,
+	          style: props.style
+	        };
+	      }
 	      return _react2.default.createElement(
 	        Component,
-	        this.props,
+	        passedProps,
 	        children
 	      );
 	    }
