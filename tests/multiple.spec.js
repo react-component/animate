@@ -124,7 +124,7 @@ describe('Animate', () => {
         expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item').length).to.be(3);
       }
       done();
-    }, 1400);
+    }, 1000);
   });
 
   it('transitionLeave works', function t1(done) {
@@ -148,7 +148,7 @@ describe('Animate', () => {
           .not.to.contain('example-enter-active');
       }
       done();
-    }, 1400);
+    }, 1000);
   });
 
   it('does not generate an error when a null or undefined child is present', () => {
@@ -175,6 +175,6 @@ describe('Animate', () => {
         expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item').length).to.be(3);
       }
       done();
-    }, 1400);
+    }, 1000);
   });
 });
