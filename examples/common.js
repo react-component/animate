@@ -20500,7 +20500,9 @@
 	      });
 	    }
 	    children.forEach(function (child) {
-	      _this.performAppear(child.key);
+	      if (child) {
+	        _this.performAppear(child.key);
+	      }
 	    });
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
@@ -20523,7 +20525,7 @@
 	    var newChildren = [];
 	    if (showProp) {
 	      currentChildren.forEach(function (currentChild) {
-	        var nextChild = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
+	        var nextChild = currentChild && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
 	        var newChild = void 0;
 	        if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
 	          newChild = _react2.default.cloneElement(nextChild || currentChild, _defineProperty({}, showProp, true));
@@ -20535,7 +20537,7 @@
 	        }
 	      });
 	      nextChildren.forEach(function (nextChild) {
-	        if (!(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
+	        if (!nextChild || !(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
 	          newChildren.push(nextChild);
 	        }
 	      });
@@ -20549,11 +20551,11 @@
 	    });
 	
 	    nextChildren.forEach(function (child) {
-	      var key = child.key;
-	      if (currentlyAnimatingKeys[key]) {
+	      var key = child && child.key;
+	      if (child && currentlyAnimatingKeys[key]) {
 	        return;
 	      }
-	      var hasPrev = (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
+	      var hasPrev = child && (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
 	      if (showProp) {
 	        var showInNext = child.props[showProp];
 	        if (hasPrev) {
@@ -20570,11 +20572,11 @@
 	    });
 	
 	    currentChildren.forEach(function (child) {
-	      var key = child.key;
-	      if (currentlyAnimatingKeys[key]) {
+	      var key = child && child.key;
+	      if (child && currentlyAnimatingKeys[key]) {
 	        return;
 	      }
-	      var hasNext = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
+	      var hasNext = child && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
 	      if (showProp) {
 	        var showInNow = child.props[showProp];
 	        if (hasNext) {
@@ -20692,7 +20694,7 @@
 	    var children = null;
 	    if (stateChildren) {
 	      children = stateChildren.map(function (child) {
-	        if (child === null) {
+	        if (child === null || child === undefined) {
 	          return child;
 	        }
 	        if (!child.key) {
@@ -20772,7 +20774,7 @@
 	      if (ret) {
 	        return;
 	      }
-	      if (child.key === key) {
+	      if (child && child.key === key) {
 	        ret = child;
 	      }
 	    });
@@ -20784,7 +20786,7 @@
 	  var ret = null;
 	  if (children) {
 	    children.forEach(function (child) {
-	      if (child.key === key && child.props[showProp]) {
+	      if (child && child.key === key && child.props[showProp]) {
 	        if (ret) {
 	          throw new Error('two child with same key for <rc-animate> children');
 	        }
@@ -20802,7 +20804,7 @@
 	      if (found) {
 	        return;
 	      }
-	      found = child.key === key && !child.props[showProp];
+	      found = child && child.key === key && !child.props[showProp];
 	    });
 	  }
 	  return found;
@@ -20813,10 +20815,14 @@
 	  if (same) {
 	    c1.forEach(function (child, index) {
 	      var child2 = c2[index];
-	      if (child.key !== child2.key) {
-	        same = false;
-	      } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
-	        same = false;
+	      if (child && child2) {
+	        if (child && !child2 || !child && child2) {
+	          same = false;
+	        } else if (child.key !== child2.key) {
+	          same = false;
+	        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
+	          same = false;
+	        }
 	      }
 	    });
 	  }
@@ -20831,7 +20837,7 @@
 	  var nextChildrenPending = {};
 	  var pendingChildren = [];
 	  prev.forEach(function (child) {
-	    if (findChildInChildrenByKey(next, child.key)) {
+	    if (child && findChildInChildrenByKey(next, child.key)) {
 	      if (pendingChildren.length) {
 	        nextChildrenPending[child.key] = pendingChildren;
 	        pendingChildren = [];
@@ -20842,7 +20848,7 @@
 	  });
 	
 	  next.forEach(function (child) {
-	    if (nextChildrenPending.hasOwnProperty(child.key)) {
+	    if (child && nextChildrenPending.hasOwnProperty(child.key)) {
 	      ret = ret.concat(nextChildrenPending[child.key]);
 	    }
 	    ret.push(child);
