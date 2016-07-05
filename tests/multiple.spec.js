@@ -47,8 +47,20 @@ const TodoList = React.createClass({
     this.setState({ items: newItems });
   },
 
+  insertUndefined(i) {
+    const newItems = this.state.items;
+    newItems.splice(i, 1, undefined);
+    this.setState({ items: newItems });
+  },
+
   render() {
     const items = this.state.items.map((item, i) => {
+      // Allow testing of null/undefined values by just passing them directly to
+      // Animate instead of wrapping them with a Todo component
+      if (item === null || item === undefined) {
+        return item;
+      }
+
       return (
         <Todo key={item} onClick={this.handleRemove.bind(this, i)}>
           {item}
@@ -134,6 +146,33 @@ describe('Animate', () => {
           .not.to.contain('example-enter');
         expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item')[4].className)
           .not.to.contain('example-enter-active');
+      }
+      done();
+    }, 1400);
+  });
+
+  it('does not generate an error when a null or undefined child is present', () => {
+    list.handleAdd(null);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item').length).to.be(4);
+    list.handleAdd(undefined);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item').length).to.be(4);
+  });
+
+  it('transitionLeave works when a child becomes undefined', function t4(done) {
+    this.timeout(5999);
+    list.insertUndefined(0);
+    setTimeout(() => {
+      expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item').length).to.be(4);
+      if (!window.callPhantom) {
+        expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item')[0].className)
+          .to.contain('example-leave');
+        expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item')[0].className)
+          .to.contain('example-leave-active');
+      }
+    }, 100);
+    setTimeout(() => {
+      if (!window.callPhantom) {
+        expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item').length).to.be(3);
       }
       done();
     }, 1400);

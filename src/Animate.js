@@ -76,7 +76,9 @@ const Animate = React.createClass({
       });
     }
     children.forEach((child) => {
-      this.performAppear(child.key);
+      if (child) {
+        this.performAppear(child.key);
+      }
     });
   },
 
@@ -100,7 +102,7 @@ const Animate = React.createClass({
     let newChildren = [];
     if (showProp) {
       currentChildren.forEach((currentChild) => {
-        const nextChild = findChildInChildrenByKey(nextChildren, currentChild.key);
+        const nextChild = currentChild && findChildInChildrenByKey(nextChildren, currentChild.key);
         let newChild;
         if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
           newChild = React.cloneElement(nextChild || currentChild, {
@@ -114,7 +116,7 @@ const Animate = React.createClass({
         }
       });
       nextChildren.forEach((nextChild) => {
-        if (!findChildInChildrenByKey(currentChildren, nextChild.key)) {
+        if (!nextChild || !findChildInChildrenByKey(currentChildren, nextChild.key)) {
           newChildren.push(nextChild);
         }
       });
@@ -131,11 +133,11 @@ const Animate = React.createClass({
     });
 
     nextChildren.forEach((child) => {
-      const key = child.key;
-      if (currentlyAnimatingKeys[key]) {
+      const key = child && child.key;
+      if (child && currentlyAnimatingKeys[key]) {
         return;
       }
-      const hasPrev = findChildInChildrenByKey(currentChildren, key);
+      const hasPrev = child && findChildInChildrenByKey(currentChildren, key);
       if (showProp) {
         const showInNext = child.props[showProp];
         if (hasPrev) {
@@ -152,11 +154,11 @@ const Animate = React.createClass({
     });
 
     currentChildren.forEach((child) => {
-      const key = child.key;
-      if (currentlyAnimatingKeys[key]) {
+      const key = child && child.key;
+      if (child && currentlyAnimatingKeys[key]) {
         return;
       }
-      const hasNext = findChildInChildrenByKey(nextChildren, key);
+      const hasNext = child && findChildInChildrenByKey(nextChildren, key);
       if (showProp) {
         const showInNow = child.props[showProp];
         if (hasNext) {
@@ -288,7 +290,7 @@ const Animate = React.createClass({
     let children = null;
     if (stateChildren) {
       children = stateChildren.map((child) => {
-        if (child === null) {
+        if (child === null || child === undefined) {
           return child;
         }
         if (!child.key) {
