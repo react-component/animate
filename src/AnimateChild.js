@@ -58,7 +58,14 @@ const AnimateChild = React.createClass({
     if ((isCssAnimationSupported || !props.animation[animationType]) &&
       transitionName && props[transitionMap[animationType]]) {
       const name = nameIsObj ? transitionName[animationType] : `${transitionName}-${animationType}`;
-      this.stopper = cssAnimate(node, name, end);
+      let activeName = `${name}-active`;
+      if (nameIsObj && transitionName[`${animationType}Active`]) {
+        activeName = transitionName[`${animationType}Active`];
+      }
+      this.stopper = cssAnimate(node, {
+        name,
+        active: activeName,
+      }, end);
     } else {
       this.stopper = props.animation[animationType](node, end);
     }

@@ -9,7 +9,7 @@ let seed = 0;
 const Alert = React.createClass({
   propTypes: {
     time: React.PropTypes.number,
-    type: React.PropTypes.number,
+    type: React.PropTypes.string,
     str: React.PropTypes.string,
     onEnd: React.PropTypes.func,
   },
@@ -93,7 +93,7 @@ const AlertGroup = React.createClass({
       zIndex: 9999,
     };
     return (<div style={style}>
-      <Animate transitionName="fade">{children}</Animate>
+      <Animate transitionName="fade" component="div">{children}</Animate>
     </div>);
   },
 });
@@ -116,7 +116,7 @@ function alert(str, time, type, callback) {
 
 function alertFn(i) {
   function m() {
-    alert(i);
+    alert(`${i}`);
   }
 
   return m;
