@@ -36,7 +36,7 @@ webpackJsonp([0],[
 	
 	  propTypes: {
 	    time: _react2.default.PropTypes.number,
-	    type: _react2.default.PropTypes.number,
+	    type: _react2.default.PropTypes.string,
 	    str: _react2.default.PropTypes.string,
 	    onEnd: _react2.default.PropTypes.func
 	  },
@@ -126,7 +126,7 @@ webpackJsonp([0],[
 	      { style: style },
 	      _react2.default.createElement(
 	        _rcAnimate2.default,
-	        { transitionName: 'fade' },
+	        { transitionName: 'fade', component: 'div' },
 	        children
 	      )
 	    );
@@ -151,7 +151,7 @@ webpackJsonp([0],[
 	
 	function alertFn(i) {
 	  function m() {
-	    alert(i);
+	    alert('' + i);
 	  }
 	
 	  return m;
