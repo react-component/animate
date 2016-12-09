@@ -33,10 +33,15 @@ animate react element easily
 
 ## Usage
 
-```js
+```jsx
 var Animate = require('rc-animate');
 var ReactDOM = require('react-dom');
-ReactDOM.render(<Animate animation={{}}><p key="1">1</p><p key="2">2</p></Animate>, container);
+ReactDOM.render(
+  <Animate animation={{ ... }}>
+    <p key="1">1</p>
+    <p key="2">2</p>
+  </Animate>
+, container);
 ```
 
 ## API
