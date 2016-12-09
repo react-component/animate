@@ -34,14 +34,14 @@ animate react element easily
 ## Usage
 
 ```jsx
-var Animate = require('rc-animate');
-var ReactDOM = require('react-dom');
+import Animate from 'rc-animate';
+
 ReactDOM.render(
   <Animate animation={{ ... }}>
     <p key="1">1</p>
     <p key="2">2</p>
   </Animate>
-, container);
+, mountNode);
 ```
 
 ## API
