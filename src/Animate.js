@@ -28,6 +28,7 @@ function noop() {
 const Animate = React.createClass({
   propTypes: {
     component: React.PropTypes.any,
+    componentProps: React.PropTypes.object,
     animation: React.PropTypes.object,
     transitionName: React.PropTypes.oneOfType([
       React.PropTypes.string,
@@ -48,6 +49,7 @@ const Animate = React.createClass({
     return {
       animation: {},
       component: 'span',
+      componentProps: {},
       transitionEnter: true,
       transitionLeave: true,
       transitionAppear: false,
@@ -318,6 +320,7 @@ const Animate = React.createClass({
         passedProps = {
           className: props.className,
           style: props.style,
+          ...props.componentProps,
         };
       }
       return <Component {...passedProps}>{children}</Component>;

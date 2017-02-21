@@ -65,6 +65,12 @@ ReactDOM.render(
           <td>wrap dom node or component for children. set to '' if you do not wrap for only one child</td>
         </tr>
         <tr>
+          <td>componentProps</td>
+          <td>Object</td>
+          <td>{}</td>
+          <td>extra props that will be passed to component</td>
+        </tr>
+        <tr>
           <td>showProp</td>
           <td>String</td>
           <td></td>
