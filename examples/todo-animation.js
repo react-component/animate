@@ -3,7 +3,7 @@ webpackJsonp([6],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(187);
+	module.exports = __webpack_require__(197);
 
 
 /***/ },
@@ -15,7 +15,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 184:
+/***/ 194:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
@@ -3907,7 +3907,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 187:
+/***/ 197:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3918,15 +3918,15 @@ webpackJsonp([6],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(34);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAnimate = __webpack_require__(170);
+	var _rcAnimate = __webpack_require__(180);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _velocityAnimate = __webpack_require__(184);
+	var _velocityAnimate = __webpack_require__(194);
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
@@ -4053,7 +4053,7 @@ webpackJsonp([6],{
 	        { onClick: this.handleAdd },
 	        'Add Item'
 	      ),
-	      ' ',
+	      '\xA0',
 	      _react2.default.createElement(
 	        'label',
 	        null,
