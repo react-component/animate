@@ -5,9 +5,10 @@ const ReactDOM = require('react-dom');
 const PropTypes = require('prop-types');
 const TestUtils = require('react-addons-test-utils');
 const expect = require('expect.js');
+const createReactClass = require('create-react-class');
 require('./index.spec.css');
 
-const Todo = React.createClass({
+const Todo = createReactClass({
   propTypes: {
     end: PropTypes.func,
     onClick: PropTypes.func,
@@ -30,7 +31,7 @@ const Todo = React.createClass({
     </div>);
   },
 });
-const TodoList = React.createClass({
+const TodoList = createReactClass({
   getInitialState() {
     return { items: ['hello', 'world', 'click', 'me'] };
   },

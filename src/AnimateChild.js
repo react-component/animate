@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cssAnimate, { isCssAnimationSupported } from 'css-animation';
@@ -10,7 +9,8 @@ const transitionMap = {
   leave: 'transitionLeave',
 };
 
-const AnimateChild = React.createClass({
+const createReactClass = require('create-react-class');
+const AnimateChild = createReactClass({
   propTypes: {
     children: PropTypes.any,
   },

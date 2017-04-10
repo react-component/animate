@@ -26,7 +26,8 @@ function getChildrenFromProps(props) {
 function noop() {
 }
 
-const Animate = React.createClass({
+const createReactClass = require('create-react-class');
+const Animate = createReactClass({
   propTypes: {
     component: PropTypes.any,
     componentProps: PropTypes.object,
