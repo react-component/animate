@@ -2,7 +2,7 @@
 const Animate = require('../');
 const React = require('react');
 const ReactDOM = require('react-dom');
-const PropTypes = React.PropTypes;
+const PropTypes = require('prop-types');
 const TestUtils = require('react-addons-test-utils');
 const expect = require('expect.js');
 require('./index.spec.css');

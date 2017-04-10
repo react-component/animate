@@ -2,16 +2,17 @@
 
 import './assets/index.less';
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 let seed = 0;
 
 const Alert = React.createClass({
   propTypes: {
-    time: React.PropTypes.number,
-    type: React.PropTypes.string,
-    str: React.PropTypes.string,
-    onEnd: React.PropTypes.func,
+    time: PropTypes.number,
+    type: PropTypes.string,
+    str: PropTypes.string,
+    onEnd: PropTypes.func,
   },
 
   getDefaultProps() {

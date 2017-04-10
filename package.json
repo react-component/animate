@@ -52,6 +52,7 @@
     "lint"
   ],
   "dependencies": {
-    "css-animation": "^1.3.0"
+    "css-animation": "^1.3.0",
+    "prop-types": "^15.5.6"
   }
 }

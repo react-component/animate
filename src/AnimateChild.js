@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cssAnimate, { isCssAnimationSupported } from 'css-animation';
 import animUtil from './util';
@@ -11,7 +12,7 @@ const transitionMap = {
 
 const AnimateChild = React.createClass({
   propTypes: {
-    children: React.PropTypes.any,
+    children: PropTypes.any,
   },
 
   componentWillUnmount() {

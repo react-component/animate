@@ -1,7 +1,8 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
 import './assets/index.less';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import assign from 'object-assign';
