@@ -2,11 +2,12 @@
 
 const Animate = require('../index');
 const React = require('react');
+const createReactClass = require('create-react-class');
 
 require('./index.spec.css');
 
 function createClass(options) {
-  return React.createClass({
+  return createReactClass({
     getInitialState() {
       return {
         transitionEnter: options.transitionEnter,

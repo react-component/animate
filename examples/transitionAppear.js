@@ -2,7 +2,8 @@
 
 import './assets/slow.less';
 import Animate from 'rc-animate';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
 const Box = React.createClass({

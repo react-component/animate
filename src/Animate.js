@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   toArrayChildren,
   mergeChildren,
@@ -25,24 +26,25 @@ function getChildrenFromProps(props) {
 function noop() {
 }
 
-const Animate = React.createClass({
+const createReactClass = require('create-react-class');
+const Animate = createReactClass({
   propTypes: {
-    component: React.PropTypes.any,
-    componentProps: React.PropTypes.object,
-    animation: React.PropTypes.object,
-    transitionName: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.object,
+    component: PropTypes.any,
+    componentProps: PropTypes.object,
+    animation: PropTypes.object,
+    transitionName: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
     ]),
-    transitionEnter: React.PropTypes.bool,
-    transitionAppear: React.PropTypes.bool,
-    exclusive: React.PropTypes.bool,
-    transitionLeave: React.PropTypes.bool,
-    onEnd: React.PropTypes.func,
-    onEnter: React.PropTypes.func,
-    onLeave: React.PropTypes.func,
-    onAppear: React.PropTypes.func,
-    showProp: React.PropTypes.string,
+    transitionEnter: PropTypes.bool,
+    transitionAppear: PropTypes.bool,
+    exclusive: PropTypes.bool,
+    transitionLeave: PropTypes.bool,
+    onEnd: PropTypes.func,
+    onEnter: PropTypes.func,
+    onLeave: PropTypes.func,
+    onAppear: PropTypes.func,
+    showProp: PropTypes.string,
   },
 
   getDefaultProps() {

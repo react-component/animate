@@ -2,7 +2,8 @@
 
 import './assets/slow.less';
 import Animate from 'rc-animate';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import assign from 'object-assign';
 
