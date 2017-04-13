@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import {
   toArrayChildren,
@@ -26,7 +27,6 @@ function getChildrenFromProps(props) {
 function noop() {
 }
 
-const createReactClass = require('create-react-class');
 const Animate = createReactClass({
   propTypes: {
     component: PropTypes.any,
