@@ -261,8 +261,7 @@ const Animate = createReactClass({
           props.onEnd(key, false);
         }
       };
-      /* eslint react/no-is-mounted:0 */
-      if (this.isMounted() && !isSameChildren(this.state.children,
+      if (!isSameChildren(this.state.children,
           currentChildren, props.showProp)) {
         this.setState({
           children: currentChildren,
