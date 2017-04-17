@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import {
   toArrayChildren,
@@ -27,10 +26,8 @@ function getChildrenFromProps(props) {
 function noop() {
 }
 
-const Animate = createReactClass({
-  displayName: 'Animate',
-
-  propTypes: {
+export default class Animate extends React.Component {
+  static propTypes = {
     component: PropTypes.any,
     componentProps: PropTypes.object,
     animation: PropTypes.object,
@@ -47,31 +44,32 @@ const Animate = createReactClass({
     onLeave: PropTypes.func,
     onAppear: PropTypes.func,
     showProp: PropTypes.string,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      animation: {},
-      component: 'span',
-      componentProps: {},
-      transitionEnter: true,
-      transitionLeave: true,
-      transitionAppear: false,
-      onEnd: noop,
-      onEnter: noop,
-      onLeave: noop,
-      onAppear: noop,
-    };
-  },
+  static defaultProps = {
+    animation: {},
+    component: 'span',
+    componentProps: {},
+    transitionEnter: true,
+    transitionLeave: true,
+    transitionAppear: false,
+    onEnd: noop,
+    onEnter: noop,
+    onLeave: noop,
+    onAppear: noop,
+  }
 
-  getInitialState() {
+  constructor(props) {
+    super(props);
+
     this.currentlyAnimatingKeys = {};
     this.keysToEnter = [];
     this.keysToLeave = [];
-    return {
+
+    this.state = {
       children: toArrayChildren(getChildrenFromProps(this.props)),
     };
-  },
+  }
 
   componentDidMount() {
     const showProp = this.props.showProp;
@@ -86,7 +84,7 @@ const Animate = createReactClass({
         this.performAppear(child.key);
       }
     });
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     this.nextProps = nextProps;
@@ -179,7 +177,7 @@ const Animate = createReactClass({
         this.keysToLeave.push(key);
       }
     });
-  },
+  }
 
   componentDidUpdate() {
     const keysToEnter = this.keysToEnter;
@@ -188,9 +186,9 @@ const Animate = createReactClass({
     const keysToLeave = this.keysToLeave;
     this.keysToLeave = [];
     keysToLeave.forEach(this.performLeave);
-  },
+  }
 
-  performEnter(key) {
+  performEnter = (key) => {
     // may already remove by exclusive
     if (this.refs[key]) {
       this.currentlyAnimatingKeys[key] = true;
@@ -198,18 +196,18 @@ const Animate = createReactClass({
         this.handleDoneAdding.bind(this, key, 'enter')
       );
     }
-  },
+  }
 
-  performAppear(key) {
+  performAppear = (key) => {
     if (this.refs[key]) {
       this.currentlyAnimatingKeys[key] = true;
       this.refs[key].componentWillAppear(
         this.handleDoneAdding.bind(this, key, 'appear')
       );
     }
-  },
+  }
 
-  handleDoneAdding(key, type) {
+  handleDoneAdding = (key, type) => {
     const props = this.props;
     delete this.currentlyAnimatingKeys[key];
     // if update on exclusive mode, skip check
@@ -233,17 +231,17 @@ const Animate = createReactClass({
         }
       }
     }
-  },
+  }
 
-  performLeave(key) {
+  performLeave = (key) => {
     // may already remove by exclusive
     if (this.refs[key]) {
       this.currentlyAnimatingKeys[key] = true;
       this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
     }
-  },
+  }
 
-  handleDoneLeaving(key) {
+  handleDoneLeaving = (key) => {
     const props = this.props;
     delete this.currentlyAnimatingKeys[key];
     // if update on exclusive mode, skip check
@@ -270,7 +268,7 @@ const Animate = createReactClass({
         end();
       }
     }
-  },
+  }
 
   isValidChildByKey(currentChildren, key) {
     const showProp = this.props.showProp;
@@ -278,7 +276,7 @@ const Animate = createReactClass({
       return findShownChildInChildrenByKey(currentChildren, key, showProp);
     }
     return findChildInChildrenByKey(currentChildren, key);
-  },
+  }
 
   stop(key) {
     delete this.currentlyAnimatingKeys[key];
@@ -286,7 +284,7 @@ const Animate = createReactClass({
     if (component) {
       component.stop();
     }
-  },
+  }
 
   render() {
     const props = this.props;
@@ -329,7 +327,5 @@ const Animate = createReactClass({
       return <Component {...passedProps}>{children}</Component>;
     }
     return children[0] || null;
-  },
-});
-
-export default Animate;
+  }
+}

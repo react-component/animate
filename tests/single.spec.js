@@ -2,18 +2,16 @@
 
 const Animate = require('../index');
 const React = require('react');
-const createReactClass = require('create-react-class');
 
 require('./index.spec.css');
 
 function createClass(options) {
-  return createReactClass({
-    getInitialState() {
-      return {
-        transitionEnter: options.transitionEnter,
-        transitionAppear: options.transitionAppear,
-      };
-    },
+  return class extends React.Component {
+    state = {
+      transitionEnter: options.transitionEnter,
+      transitionAppear: options.transitionAppear,
+    }
+
     render() {
       return (
         <Animate
@@ -25,8 +23,8 @@ function createClass(options) {
           {options.remove && !this.state.transitionEnter ? null : <div key="1">child element</div>}
         </Animate>
       );
-    },
-  });
+    }
+  };
 }
 
 const CssAnimation = require('css-animation');

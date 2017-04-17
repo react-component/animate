@@ -1,5 +1,5 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cssAnimate, { isCssAnimationSupported } from 'css-animation';
 import animUtil from './util';
@@ -10,16 +10,14 @@ const transitionMap = {
   leave: 'transitionLeave',
 };
 
-const AnimateChild = createReactClass({
-  displayName: 'AnimateChild',
-
-  propTypes: {
+export default class AnimateChild extends React.Component {
+  static propTypes = {
     children: PropTypes.any,
-  },
+  }
 
   componentWillUnmount() {
     this.stop();
-  },
+  }
 
   componentWillEnter(done) {
     if (animUtil.isEnterSupported(this.props)) {
@@ -27,7 +25,7 @@ const AnimateChild = createReactClass({
     } else {
       done();
     }
-  },
+  }
 
   componentWillAppear(done) {
     if (animUtil.isAppearSupported(this.props)) {
@@ -35,7 +33,7 @@ const AnimateChild = createReactClass({
     } else {
       done();
     }
-  },
+  }
 
   componentWillLeave(done) {
     if (animUtil.isLeaveSupported(this.props)) {
@@ -46,7 +44,7 @@ const AnimateChild = createReactClass({
       // didUpdate -> animate leave -> unmount (if animate is none)
       done();
     }
-  },
+  }
 
   transition(animationType, finishCallback) {
     const node = ReactDOM.findDOMNode(this);
@@ -72,7 +70,7 @@ const AnimateChild = createReactClass({
     } else {
       this.stopper = props.animation[animationType](node, end);
     }
-  },
+  }
 
   stop() {
     const stopper = this.stopper;
@@ -80,11 +78,9 @@ const AnimateChild = createReactClass({
       this.stopper = null;
       stopper.stop();
     }
-  },
+  }
 
   render() {
     return this.props.children;
-  },
-});
-
-export default AnimateChild;
+  }
+}

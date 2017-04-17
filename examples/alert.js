@@ -7,29 +7,26 @@ import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 let seed = 0;
 
-const Alert = React.createClass({
-  propTypes: {
+class Alert extends React.Component {
+  static propTypes = {
     time: PropTypes.number,
     type: PropTypes.string,
     str: PropTypes.string,
     onEnd: PropTypes.func,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      onEnd() {
-      },
-      time: 2000,
-      type: 'success',
-    };
-  },
+  static defaultProps = {
+    onEnd() {},
+    time: 2000,
+    type: 'success',
+  }
 
   componentDidMount() {
     const props = this.props;
     setTimeout(() => {
       props.onEnd();
     }, props.time);
-  },
+  }
 
   render() {
     const props = this.props;
@@ -41,17 +38,16 @@ const Alert = React.createClass({
       marginRight: 'auto',
     };
     return <div style={style}>{props.str}</div>;
-  },
-});
+  }
+}
 
 
-const AlertGroup = React.createClass({
-  getInitialState() {
-    return {
-      alerts: [],
-    };
-  },
-  onEnd(key) {
+class AlertGroup extends React.Component {
+  state = {
+    alerts: [],
+  }
+
+  onEnd = (key) => {
     const alerts = this.state.alerts;
     const ret = [];
     let target;
@@ -71,12 +67,14 @@ const AlertGroup = React.createClass({
         }
       });
     }
-  },
-  addAlert(a) {
+  }
+
+  addAlert = (a) => {
     this.setState({
       alerts: this.state.alerts.concat(a),
     });
-  },
+  }
+
   render() {
     const alerts = this.state.alerts;
     const self = this;
@@ -96,8 +94,8 @@ const AlertGroup = React.createClass({
     return (<div style={style}>
       <Animate transitionName="fade" component="div">{children}</Animate>
     </div>);
-  },
-});
+  }
+}
 
 let alertGroup;
 
@@ -129,8 +127,10 @@ function onClick() {
   }
 }
 
-ReactDOM.render(<div>
+ReactDOM.render(
+  <div>
     <h2>notification</h2>
     <button onClick={onClick}>show notification</button>
   </div>,
-  document.getElementById('__react-content'));
+  document.getElementById('__react-content')
+);

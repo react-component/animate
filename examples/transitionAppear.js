@@ -6,10 +6,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
-const Box = React.createClass({
-  propTypes: {
+class Box extends React.Component {
+  static propTypes = {
     visible: PropTypes.bool,
-  },
+  }
+
   render() {
     console.log('render', this.props.visible);
     const style = {
@@ -20,33 +21,31 @@ const Box = React.createClass({
       backgroundColor: 'red',
     };
     return (<div style={style}/>);
-  },
-});
+  }
+}
 
-const Demo = React.createClass({
-  getInitialState() {
-    return {
-      visible: 1,
-    };
-  },
+class Demo extends React.Component {
+  state = {
+    visible: true,
+  }
 
-  onAppear(key) {
+  onAppear = (key) => {
     console.log('appear', key);
-  },
+  }
 
-  onEnter(key) {
+  onEnter = (key) => {
     console.log('enter', key);
-  },
+  }
 
-  onLeave(key) {
+  onLeave = (key) => {
     console.log('leave', key);
-  },
+  }
 
-  toggleAnimate() {
+  toggleAnimate = () => {
     this.setState({
       visible: !this.state.visible,
     });
-  },
+  }
 
   render() {
     return (
@@ -65,7 +64,7 @@ const Demo = React.createClass({
         </Animate>
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

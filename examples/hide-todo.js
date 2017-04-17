@@ -7,24 +7,24 @@ import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import assign from 'object-assign';
 
-const Todo = React.createClass({
-  propTypes: {
+class Todo extends React.Component {
+  static propTypes = {
     children: PropTypes.any,
     end: PropTypes.func,
     onClick: PropTypes.func,
-  },
-  getDefaultProps() {
-    return {
-      visible: true,
-      end() {
-      },
-    };
-  },
+  }
+
+  static defaultProps = {
+    visible: true,
+    end() {},
+  }
+
   componentWillUnmount() {
     console.log('componentWillUnmount');
     console.log(this.props.children);
     this.props.end();
-  },
+  }
+
   render() {
     const props = this.props;
     const style = {
@@ -40,19 +40,19 @@ const Todo = React.createClass({
     >
       {props.children}
     </div>);
-  },
-});
-const TodoList = React.createClass({
-  getInitialState() {
-    return {
-      items: [
-        { content: 'hello', visible: true },
-        { content: 'world', visible: true },
-        { content: 'click', visible: true },
-        { content: 'me', visible: true }],
-    };
-  },
-  handleHide(i, item) {
+  }
+}
+
+class TodoList extends React.Component {
+  state = {
+    items: [
+      { content: 'hello', visible: true },
+      { content: 'world', visible: true },
+      { content: 'click', visible: true },
+      { content: 'me', visible: true }],
+  }
+
+  handleHide = (i, item) => {
     const newItems = this.state.items.concat([]);
     newItems.forEach((n, index) => {
       newItems[index] = assign({}, n, {
@@ -63,7 +63,8 @@ const TodoList = React.createClass({
       visible: false,
     });
     this.setState({ items: newItems });
-  },
+  }
+
   render() {
     const items = this.state.items.map((item, i) => {
       return (
@@ -86,10 +87,13 @@ const TodoList = React.createClass({
         </Animate>
       </div>
     );
-  },
-});
+  }
+}
 
-ReactDOM.render(<div>
-  <h2>Hide Todo</h2>
-  <TodoList />
-</div>, document.getElementById('__react-content'));
+ReactDOM.render(
+  <div>
+    <h2>Hide Todo</h2>
+    <TodoList />
+  </div>,
+  document.getElementById('__react-content')
+);

@@ -6,10 +6,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import velocity from 'velocity-animate';
-const Box = React.createClass({
-  propTypes: {
+
+class Box extends React.Component {
+  static propTypes = {
     visible: PropTypes.bool,
-  },
+  }
+
   render() {
     const style = {
       width: '200px',
@@ -18,25 +20,23 @@ const Box = React.createClass({
       backgroundColor: 'red',
     };
     return (<div style={style}></div>);
-  },
-});
+  }
+}
 
-const Demo = React.createClass({
-  getInitialState() {
-    return {
-      destroyed: false,
-      visible: true,
-      exclusive: false,
-    };
-  },
+class Demo extends React.Component {
+  state = {
+    destroyed: false,
+    visible: true,
+    exclusive: false,
+  }
 
-  toggleAnimate() {
+  toggleAnimate = () => {
     this.setState({
       visible: !this.state.visible,
     });
-  },
+  }
 
-  animateEnter(node, done) {
+  animateEnter = (node, done) => {
     let ok = false;
 
     function complete() {
@@ -59,9 +59,9 @@ const Demo = React.createClass({
         complete();
       },
     };
-  },
+  }
 
-  animateLeave(node, done) {
+  animateLeave = (node, done) => {
     let ok = false;
 
     function complete() {
@@ -84,25 +84,26 @@ const Demo = React.createClass({
         complete();
       },
     };
-  },
+  }
 
-  toggle(field) {
+  toggle = (field) => {
     this.setState({
       [field]: !this.state[field],
     });
-  },
+  }
 
-  destroy() {
+  destroy = () => {
     this.setState({
       destroyed: true,
     });
-  },
+  }
 
   render() {
     const anim = {
       enter: this.animateEnter,
       leave: this.animateLeave,
     };
+
     return (
       <div>
         <label><input
@@ -131,7 +132,7 @@ const Demo = React.createClass({
         </Animate>
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

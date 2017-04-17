@@ -5,22 +5,20 @@ import Animate from 'rc-animate';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Demo = React.createClass({
-  getInitialState() {
-    return {
-      enter: true,
-    };
-  },
+class Demo extends React.Component {
+  state = {
+    enter: true,
+  }
 
-  onEvent(e) {
+  onEvent = (e) => {
     console.log(e);
-  },
+  }
 
-  toggleAnimate() {
+  toggleAnimate = () => {
     this.setState({
       enter: !this.state.enter,
     });
-  },
+  }
 
   render() {
     const text = this.state.enter ? 'ON' : 'OFF';
@@ -34,7 +32,7 @@ const Demo = React.createClass({
         </Animate>
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

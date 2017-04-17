@@ -5,18 +5,16 @@ import Animate from 'rc-animate';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Demo = React.createClass({
-  getInitialState() {
-    return {
-      enter: true,
-    };
-  },
+class Demo extends React.Component {
+  state = {
+    enter: true,
+  }
 
-  toggleAnimate() {
+  toggleAnimate = () => {
     this.setState({
       enter: !this.state.enter,
     });
-  },
+  }
 
   render() {
     const style = {
@@ -37,7 +35,7 @@ const Demo = React.createClass({
         </Animate>
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));

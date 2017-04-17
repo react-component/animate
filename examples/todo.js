@@ -6,23 +6,23 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 
-const Todo = React.createClass({
-  propTypes: {
+class Todo extends React.Component {
+  static propTypes = {
     children: PropTypes.any,
     end: PropTypes.func,
     onClick: PropTypes.func,
-  },
-  getDefaultProps() {
-    return {
-      end() {
-      },
-    };
-  },
+  }
+
+  static defaultProps = {
+    end() {},
+  }
+
   componentWillUnmount() {
     console.log('componentWillUnmount');
     console.log(this.props.children);
     this.props.end();
-  },
+  }
+
   render() {
     const props = this.props;
     const style = {
@@ -31,24 +31,30 @@ const Todo = React.createClass({
       padding: 10,
       margin: 10,
     };
-    return (<div onClick={this.props.onClick} style={style}>
-      {props.children}
-    </div>);
-  },
-});
-const TodoList = React.createClass({
-  getInitialState() {
-    return { items: ['hello', 'world', 'click', 'me'] };
-  },
-  handleAdd() {
+    return (
+      <div onClick={this.props.onClick} style={style}>
+        {props.children}
+      </div>
+    );
+  }
+}
+
+class TodoList extends React.Component {
+  state = {
+    items: ['hello', 'world', 'click', 'me'],
+  }
+
+  handleAdd = () => {
     const items = this.state.items.concat([prompt('Enter some text')]);
     this.setState({ items });
-  },
-  handleRemove(i) {
+  }
+
+  handleRemove = (i) => {
     const items = this.state.items.concat();
     items.splice(i, 1);
     this.setState({ items });
-  },
+  }
+
   render() {
     const items = this.state.items.map((item, i) => {
       return (
@@ -65,10 +71,13 @@ const TodoList = React.createClass({
         </Animate>
       </div>
     );
-  },
-});
+  }
+}
 
-ReactDOM.render(<div>
-  <h2>Todo</h2>
-  <TodoList />
-</div>, document.getElementById('__react-content'));
+ReactDOM.render(
+  <div>
+    <h2>Todo</h2>
+    <TodoList />
+  </div>,
+  document.getElementById('__react-content')
+);

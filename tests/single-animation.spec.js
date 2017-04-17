@@ -2,20 +2,17 @@
 
 const Animate = require('../index');
 const React = require('react');
-const createReactClass = require('create-react-class');
 require('./index.spec.css');
 const $ = require('jquery');
 
 function createClass(options) {
-  return createReactClass({
-    getInitialState() {
-      return {
-        transitionEnter: options.transitionEnter,
-        transitionAppear: options.transitionAppear,
-      };
-    },
+  return class extends React.Component {
+    state = {
+      transitionEnter: options.transitionEnter,
+      transitionAppear: options.transitionAppear,
+    }
 
-    fake(type, node, done) {
+    fake = (type, node, done) => {
       if (type === 'appear' || type === 'enter') {
         node.style.display = 'none';
         $(node).fadeIn(500, done);
@@ -27,7 +24,7 @@ function createClass(options) {
           $(node).stop(1, 1);
         },
       };
-    },
+    }
 
     render() {
       return (
@@ -42,8 +39,8 @@ function createClass(options) {
           {options.remove && !this.state.transitionEnter ? null : <div key="1">child element</div>}
         </Animate>
       );
-    },
-  });
+    }
+  };
 }
 
 require('./single-common.spec')(createClass, 'animation');

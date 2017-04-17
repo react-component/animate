@@ -5,54 +5,54 @@ const ReactDOM = require('react-dom');
 const PropTypes = require('prop-types');
 const TestUtils = require('react-addons-test-utils');
 const expect = require('expect.js');
-const createReactClass = require('create-react-class');
 require('./index.spec.css');
 
-const Todo = createReactClass({
-  propTypes: {
+class Todo extends React.Component {
+  static propTypes = {
     end: PropTypes.func,
     onClick: PropTypes.func,
-  },
-  getDefaultProps() {
-    return {
-      end() {
-      },
-    };
-  },
+  }
+
+  static defaultProps = {
+    end() {},
+  }
 
   componentWillUnmount() {
     this.props.end();
-  },
+  }
 
   render() {
     const props = this.props;
-    return (<div onClick={this.props.onClick} className="item">
-      {props.children}
-    </div>);
-  },
-});
-const TodoList = createReactClass({
-  getInitialState() {
-    return { items: ['hello', 'world', 'click', 'me'] };
-  },
+    return (
+      <div onClick={this.props.onClick} className="item">
+        {props.children}
+      </div>
+    );
+  }
+}
 
-  handleAdd(item) {
+class TodoList extends React.Component {
+  state = {
+    items: ['hello', 'world', 'click', 'me'],
+  }
+
+  handleAdd = (item) => {
     const newItems =
       this.state.items.concat(item);
     this.setState({ items: newItems });
-  },
+  }
 
-  handleRemove(i) {
+  handleRemove = (i) => {
     const newItems = this.state.items;
     newItems.splice(i, 1);
     this.setState({ items: newItems });
-  },
+  }
 
-  insertUndefined(i) {
+  insertUndefined = (i) => {
     const newItems = this.state.items;
     newItems.splice(i, 1, undefined);
     this.setState({ items: newItems });
-  },
+  }
 
   render() {
     const items = this.state.items.map((item, i) => {
@@ -75,8 +75,8 @@ const TodoList = createReactClass({
         </Animate>
       </div>
     );
-  },
-});
+  }
+}
 
 describe('Animate', () => {
   let list;

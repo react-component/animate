@@ -7,23 +7,23 @@ import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import velocity from 'velocity-animate';
 
-const Todo = React.createClass({
-  propTypes: {
+class Todo extends React.Component {
+  static propTypes = {
     children: PropTypes.any,
     end: PropTypes.func,
     onClick: PropTypes.func,
-  },
-  getDefaultProps() {
-    return {
-      end() {
-      },
-    };
-  },
+  }
+
+  static defaultProps = {
+    end() {},
+  }
+
   componentWillUnmount() {
     console.log('componentWillUnmount');
     console.log(this.props.children);
     this.props.end();
-  },
+  }
+
   render() {
     const props = this.props;
     const style = {
@@ -32,19 +32,21 @@ const Todo = React.createClass({
       padding: 10,
       margin: 10,
     };
-    return (<div onClick={this.props.onClick} style={style}>
-      {props.children}
-    </div>);
-  },
-});
-const TodoList = React.createClass({
-  getInitialState() {
-    return {
-      exclusive: false,
-      items: ['hello', 'world', 'click', 'me'],
-    };
-  },
-  animateEnter(node, done) {
+    return (
+      <div onClick={this.props.onClick} style={style}>
+        {props.children}
+      </div>
+    );
+  }
+}
+
+class TodoList extends React.Component {
+  state = {
+    exclusive: false,
+    items: ['hello', 'world', 'click', 'me'],
+  }
+
+  animateEnter = (node, done) => {
     let ok = false;
 
     function complete() {
@@ -65,8 +67,9 @@ const TodoList = React.createClass({
         complete();
       },
     };
-  },
-  animateLeave(node, done) {
+  }
+
+  animateLeave = (node, done) => {
     let ok = false;
 
     function complete() {
@@ -87,22 +90,26 @@ const TodoList = React.createClass({
         complete();
       },
     };
-  },
-  handleAdd() {
+  }
+
+  handleAdd = () => {
     const newItems =
       this.state.items.concat([prompt('Enter some text')]);
     this.setState({ items: newItems });
-  },
-  handleRemove(i) {
+  }
+
+  handleRemove = (i) => {
     const newItems = this.state.items;
     newItems.splice(i, 1);
     this.setState({ items: newItems });
-  },
-  toggle(field) {
+  }
+
+  toggle = (field) => {
     this.setState({
       [field]: !this.state[field],
     });
-  },
+  }
+
   render() {
     const items = this.state.items.map((item, i) => {
       return (
@@ -135,10 +142,13 @@ const TodoList = React.createClass({
         </Animate>
       </div>
     );
-  },
-});
+  }
+}
 
-ReactDOM.render(<div>
-  <h2>Todo</h2>
-  <TodoList />
-</div>, document.getElementById('__react-content'));
+ReactDOM.render(
+  <div>
+    <h2>Todo</h2>
+    <TodoList />
+  </div>,
+  document.getElementById('__react-content')
+);
