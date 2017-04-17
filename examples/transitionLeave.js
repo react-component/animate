@@ -1,22 +1,22 @@
 webpackJsonp([8],{
 
 /***/ 0:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(207);
 
 
-/***/ }),
+/***/ },
 
 /***/ 2:
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ }),
+/***/ },
 
 /***/ 207:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -76,7 +76,7 @@ webpackJsonp([8],{
 	
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
-/***/ })
+/***/ }
 
 });
 //# sourceMappingURL=transitionLeave.js.map
