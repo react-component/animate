@@ -1,23 +1,23 @@
 webpackJsonp([2],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(191);
+	module.exports = __webpack_require__(199);
 
 
-/***/ },
+/***/ }),
 
-/***/ 191:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 199:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* eslint no-console:0, react/no-multi-comp:0 */
 	
-	__webpack_require__(192);
+	__webpack_require__(200);
 	
-	var _rcAnimate = __webpack_require__(180);
+	var _rcAnimate = __webpack_require__(186);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -25,7 +25,11 @@ webpackJsonp([2],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _propTypes = __webpack_require__(38);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
@@ -56,8 +60,8 @@ webpackJsonp([2],{
 	};
 	
 	Div.propTypes = {
-	  style: _react.PropTypes.object,
-	  show: _react.PropTypes.bool
+	  style: _propTypes2.default.object,
+	  show: _propTypes2.default.bool
 	};
 	
 	var Demo = function (_Component) {
@@ -129,14 +133,14 @@ webpackJsonp([2],{
 	
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
-/***/ },
+/***/ }),
 
-/***/ 192:
-/***/ function(module, exports) {
+/***/ 200:
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=simple.js.map

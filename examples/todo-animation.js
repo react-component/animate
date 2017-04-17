@@ -1,22 +1,22 @@
 webpackJsonp([6],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(197);
+	module.exports = __webpack_require__(205);
 
 
-/***/ },
+/***/ }),
 
 /***/ 2:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
+/***/ }),
 
-/***/ 194:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 202:
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
 	
@@ -3905,10 +3905,10 @@ webpackJsonp([6],{
 	Velocity, however, doesn't make this distinction. Thus, converting to or from the % unit with these subproperties
 	will produce an inaccurate conversion value. The same issue exists with the cx/cy attributes of SVG circles and ellipses. */
 
-/***/ },
+/***/ }),
 
-/***/ 197:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 205:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -3918,15 +3918,19 @@ webpackJsonp([6],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _propTypes = __webpack_require__(38);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAnimate = __webpack_require__(180);
+	var _rcAnimate = __webpack_require__(186);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _velocityAnimate = __webpack_require__(194);
+	var _velocityAnimate = __webpack_require__(202);
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
@@ -3938,9 +3942,9 @@ webpackJsonp([6],{
 	  displayName: 'Todo',
 	
 	  propTypes: {
-	    children: _react.PropTypes.any,
-	    end: _react.PropTypes.func,
-	    onClick: _react.PropTypes.func
+	    children: _propTypes2.default.any,
+	    end: _propTypes2.default.func,
+	    onClick: _propTypes2.default.func
 	  },
 	  getDefaultProps: function getDefaultProps() {
 	    return {
@@ -4089,7 +4093,7 @@ webpackJsonp([6],{
 	  _react2.default.createElement(TodoList, null)
 	), document.getElementById('__react-content'));
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=todo-animation.js.map

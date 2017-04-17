@@ -1,22 +1,22 @@
 webpackJsonp([1],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(190);
+	module.exports = __webpack_require__(198);
 
 
-/***/ },
+/***/ }),
 
 /***/ 2:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
+/***/ }),
 
-/***/ 190:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 198:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -26,11 +26,15 @@ webpackJsonp([1],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _propTypes = __webpack_require__(38);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAnimate = __webpack_require__(180);
+	var _rcAnimate = __webpack_require__(186);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -40,13 +44,15 @@ webpackJsonp([1],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/* eslint no-console:0, react/no-multi-comp:0 */
+	
 	var Todo = _react2.default.createClass({
 	  displayName: 'Todo',
 	
 	  propTypes: {
-	    children: _react.PropTypes.any,
-	    end: _react.PropTypes.func,
-	    onClick: _react.PropTypes.func
+	    children: _propTypes2.default.any,
+	    end: _propTypes2.default.func,
+	    onClick: _propTypes2.default.func
 	  },
 	  getDefaultProps: function getDefaultProps() {
 	    return {
@@ -77,8 +83,7 @@ webpackJsonp([1],{
 	      props.children
 	    );
 	  }
-	}); /* eslint no-console:0, react/no-multi-comp:0 */
-	
+	});
 	var TodoList = _react2.default.createClass({
 	  displayName: 'TodoList',
 	  getInitialState: function getInitialState() {
@@ -138,7 +143,7 @@ webpackJsonp([1],{
 	  _react2.default.createElement(TodoList, null)
 	), document.getElementById('__react-content'));
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=hide-todo.js.map

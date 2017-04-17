@@ -1,13 +1,13 @@
 webpackJsonp([0],[
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -19,11 +19,15 @@ webpackJsonp([0],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _propTypes = __webpack_require__(38);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _rcAnimate = __webpack_require__(180);
+	var _rcAnimate = __webpack_require__(186);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -35,10 +39,10 @@ webpackJsonp([0],[
 	  displayName: 'Alert',
 	
 	  propTypes: {
-	    time: _react2.default.PropTypes.number,
-	    type: _react2.default.PropTypes.string,
-	    str: _react2.default.PropTypes.string,
-	    onEnd: _react2.default.PropTypes.func
+	    time: _propTypes2.default.number,
+	    type: _propTypes2.default.string,
+	    str: _propTypes2.default.string,
+	    onEnd: _propTypes2.default.func
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -178,12 +182,12 @@ webpackJsonp([0],[
 	  )
 	), document.getElementById('__react-content'));
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ }
+/***/ })
 ]);
 //# sourceMappingURL=alert.js.map

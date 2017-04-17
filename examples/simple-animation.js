@@ -1,28 +1,28 @@
 webpackJsonp([3],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(193);
+	module.exports = __webpack_require__(201);
 
 
-/***/ },
+/***/ }),
 
 /***/ 2:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
+/***/ }),
 
-/***/ 193:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 201:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	__webpack_require__(2);
 	
-	var _rcAnimate = __webpack_require__(180);
+	var _rcAnimate = __webpack_require__(186);
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
@@ -30,11 +30,15 @@ webpackJsonp([3],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _propTypes = __webpack_require__(38);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactDom = __webpack_require__(40);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _velocityAnimate = __webpack_require__(194);
+	var _velocityAnimate = __webpack_require__(202);
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
@@ -46,7 +50,7 @@ webpackJsonp([3],{
 	  displayName: 'Box',
 	
 	  propTypes: {
-	    visible: _react.PropTypes.bool
+	    visible: _propTypes2.default.bool
 	  },
 	  render: function render() {
 	    var style = {
@@ -182,10 +186,10 @@ webpackJsonp([3],{
 	
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
-/***/ },
+/***/ }),
 
-/***/ 194:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 202:
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
 	
@@ -4074,7 +4078,7 @@ webpackJsonp([3],{
 	Velocity, however, doesn't make this distinction. Thus, converting to or from the % unit with these subproperties
 	will produce an inaccurate conversion value. The same issue exists with the cx/cy attributes of SVG circles and ellipses. */
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=simple-animation.js.map
