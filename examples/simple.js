@@ -1,21 +1,21 @@
 webpackJsonp([2],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(199);
+	module.exports = __webpack_require__(197);
 
 
-/***/ },
+/***/ }),
 
-/***/ 199:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 197:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* eslint no-console:0, react/no-multi-comp:0 */
 	
-	__webpack_require__(200);
+	__webpack_require__(198);
 	
 	var _rcAnimate = __webpack_require__(186);
 	
@@ -133,14 +133,14 @@ webpackJsonp([2],{
 	
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
-/***/ },
+/***/ }),
 
-/***/ 200:
-/***/ function(module, exports) {
+/***/ 198:
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=simple.js.map

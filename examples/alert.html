@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>alert.js - example - rc-animate@2.3.5</title>
+  <title>alert.js - example - rc-animate@2.3.6</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@2.3.5</h1>
+      <h1>rc-animate@2.3.6</h1>
 
       <p>css-transition ui component for react</p>
     </div>
@@ -278,29 +278,26 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">let</span> seed = <span class="hljs-number">0</span>;
 
-<span class="hljs-keyword">const</span> Alert = React.createClass({
-  propTypes: {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Alert</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  static propTypes = {
     time: PropTypes.number,
     type: PropTypes.string,
     str: PropTypes.string,
     onEnd: PropTypes.func,
-  },
+  }
 
-  getDefaultProps() {
-    <span class="hljs-keyword">return</span> {
-      onEnd() {
-      },
-      time: <span class="hljs-number">2000</span>,
-      type: <span class="hljs-string">'success'</span>,
-    };
-  },
+  static defaultProps = {
+    onEnd() {},
+    time: <span class="hljs-number">2000</span>,
+    type: <span class="hljs-string">'success'</span>,
+  }
 
   componentDidMount() {
     <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
     setTimeout(() =&gt; {
       props.onEnd();
     }, props.time);
-  },
+  }
 
   render() {
     <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
@@ -312,17 +309,16 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       marginRight: <span class="hljs-string">'auto'</span>,
     };
     <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>&gt;</span>{props.str}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>;</span>
-  },
-});
+  }
+}
 
 
-<span class="hljs-keyword">const</span> AlertGroup = React.createClass({
-  getInitialState() {
-    <span class="hljs-keyword">return</span> {
-      alerts: [],
-    };
-  },
-  onEnd(key) {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AlertGroup</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = {
+    alerts: [],
+  }
+
+  onEnd = (key) =&gt; {
     <span class="hljs-keyword">const</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
     <span class="hljs-keyword">const</span> ret = [];
     <span class="hljs-keyword">let</span> target;
@@ -342,12 +338,14 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         }
       });
     }
-  },
-  addAlert(a) {
+  }
+
+  addAlert = (a) =&gt; {
     <span class="hljs-keyword">this</span>.setState({
       alerts: <span class="hljs-keyword">this</span>.state.alerts.concat(a),
     });
-  },
+  }
+
   render() {
     <span class="hljs-keyword">const</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
     <span class="hljs-keyword">const</span> self = <span class="hljs-keyword">this</span>;
@@ -367,8 +365,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span> <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span> <span class="hljs-attribute">component</span>=<span class="hljs-value">"div"</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  },
-});
+  }
+}
 
 <span class="hljs-keyword">let</span> alertGroup;
 
@@ -400,11 +398,13 @@ function onClick() {
   }
 }
 
-<span class="hljs-attribute">ReactDOM.render</span>(&lt;<span class="hljs-attribute">div</span>&gt;</span>
+<span class="hljs-attribute">ReactDOM.render</span>(
+  &lt;<span class="hljs-attribute">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>notification<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{onClick}</span>&gt;</span>show notification<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content'));
+  document.getElementById('__react-content')
+);
 </span></code></pre></div>
   </div>
   <a href="https://github.com/react-component/animate">

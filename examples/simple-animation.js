@@ -1,22 +1,22 @@
 webpackJsonp([3],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(201);
+	module.exports = __webpack_require__(199);
 
 
-/***/ },
+/***/ }),
 
 /***/ 2:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
+/***/ }),
 
-/***/ 201:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 199:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -38,21 +38,32 @@ webpackJsonp([3],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _velocityAnimate = __webpack_require__(202);
+	var _velocityAnimate = __webpack_require__(200);
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /* eslint no-console:0, react/no-multi-comp:0 */
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var Box = _react2.default.createClass({
-	  displayName: 'Box',
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
-	  propTypes: {
-	    visible: _propTypes2.default.bool
-	  },
-	  render: function render() {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /* eslint no-console:0, react/no-multi-comp:0 */
+	
+	var Box = function (_React$Component) {
+	  _inherits(Box, _React$Component);
+	
+	  function Box() {
+	    _classCallCheck(this, Box);
+	
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+	  }
+	
+	  Box.prototype.render = function render() {
 	    var style = {
 	      width: '200px',
 	      display: this.props.visible ? 'block' : 'none',
@@ -60,84 +71,96 @@ webpackJsonp([3],{
 	      backgroundColor: 'red'
 	    };
 	    return _react2.default.createElement('div', { style: style });
-	  }
-	});
+	  };
 	
-	var Demo = _react2.default.createClass({
-	  displayName: 'Demo',
-	  getInitialState: function getInitialState() {
-	    return {
+	  return Box;
+	}(_react2.default.Component);
+	
+	Box.propTypes = {
+	  visible: _propTypes2.default.bool
+	};
+	
+	var Demo = function (_React$Component2) {
+	  _inherits(Demo, _React$Component2);
+	
+	  function Demo() {
+	    var _temp, _this2, _ret;
+	
+	    _classCallCheck(this, Demo);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, _React$Component2.call.apply(_React$Component2, [this].concat(args))), _this2), _this2.state = {
 	      destroyed: false,
 	      visible: true,
 	      exclusive: false
-	    };
-	  },
-	  toggleAnimate: function toggleAnimate() {
-	    this.setState({
-	      visible: !this.state.visible
-	    });
-	  },
-	  animateEnter: function animateEnter(node, done) {
-	    var ok = false;
+	    }, _this2.toggleAnimate = function () {
+	      _this2.setState({
+	        visible: !_this2.state.visible
+	      });
+	    }, _this2.animateEnter = function (node, done) {
+	      var ok = false;
 	
-	    function complete() {
-	      if (!ok) {
-	        ok = 1;
-	        done();
+	      function complete() {
+	        if (!ok) {
+	          ok = 1;
+	          done();
+	        }
 	      }
-	    }
 	
-	    node.style.display = 'none';
+	      node.style.display = 'none';
 	
-	    (0, _velocityAnimate2.default)(node, 'slideDown', {
-	      duration: 1000,
-	      complete: complete
-	    });
-	    return {
-	      stop: function stop() {
-	        (0, _velocityAnimate2.default)(node, 'finish');
-	        // velocity complete is async
-	        complete();
+	      (0, _velocityAnimate2.default)(node, 'slideDown', {
+	        duration: 1000,
+	        complete: complete
+	      });
+	      return {
+	        stop: function stop() {
+	          (0, _velocityAnimate2.default)(node, 'finish');
+	          // velocity complete is async
+	          complete();
+	        }
+	      };
+	    }, _this2.animateLeave = function (node, done) {
+	      var ok = false;
+	
+	      function complete() {
+	        if (!ok) {
+	          ok = 1;
+	          done();
+	        }
 	      }
-	    };
-	  },
-	  animateLeave: function animateLeave(node, done) {
-	    var ok = false;
 	
-	    function complete() {
-	      if (!ok) {
-	        ok = 1;
-	        done();
-	      }
-	    }
+	      node.style.display = 'block';
 	
-	    node.style.display = 'block';
+	      (0, _velocityAnimate2.default)(node, 'slideUp', {
+	        duration: 1000,
+	        complete: complete
+	      });
+	      return {
+	        stop: function stop() {
+	          (0, _velocityAnimate2.default)(node, 'finish');
+	          // velocity complete is async
+	          complete();
+	        }
+	      };
+	    }, _this2.toggle = function (field) {
+	      _this2.setState(_defineProperty({}, field, !_this2.state[field]));
+	    }, _this2.destroy = function () {
+	      _this2.setState({
+	        destroyed: true
+	      });
+	    }, _temp), _possibleConstructorReturn(_this2, _ret);
+	  }
 	
-	    (0, _velocityAnimate2.default)(node, 'slideUp', {
-	      duration: 1000,
-	      complete: complete
-	    });
-	    return {
-	      stop: function stop() {
-	        (0, _velocityAnimate2.default)(node, 'finish');
-	        // velocity complete is async
-	        complete();
-	      }
-	    };
-	  },
-	  toggle: function toggle(field) {
-	    this.setState(_defineProperty({}, field, !this.state[field]));
-	  },
-	  destroy: function destroy() {
-	    this.setState({
-	      destroyed: true
-	    });
-	  },
-	  render: function render() {
+	  Demo.prototype.render = function render() {
 	    var anim = {
 	      enter: this.animateEnter,
 	      leave: this.animateLeave
 	    };
+	
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -181,15 +204,17 @@ webpackJsonp([3],{
 	        this.state.destroyed ? null : _react2.default.createElement(Box, { visible: this.state.visible })
 	      )
 	    );
-	  }
-	});
+	  };
+	
+	  return Demo;
+	}(_react2.default.Component);
 	
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('__react-content'));
 
-/***/ },
+/***/ }),
 
-/***/ 202:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 200:
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
 	
@@ -4078,7 +4103,7 @@ webpackJsonp([3],{
 	Velocity, however, doesn't make this distinction. Thus, converting to or from the % unit with these subproperties
 	will produce an inaccurate conversion value. The same issue exists with the cx/cy attributes of SVG circles and ellipses. */
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=simple-animation.js.map

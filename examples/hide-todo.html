@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>hide-todo.js - example - rc-animate@2.3.5</title>
+  <title>hide-todo.js - example - rc-animate@2.3.6</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@2.3.5</h1>
+      <h1>rc-animate@2.3.6</h1>
 
       <p>css-transition ui component for react</p>
     </div>
@@ -278,24 +278,24 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">import</span> assign <span class="hljs-keyword">from</span> <span class="hljs-string">'object-assign'</span>;
 
-<span class="hljs-keyword">const</span> Todo = React.createClass({
-  propTypes: {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Todo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  static propTypes = {
     children: PropTypes.any,
     end: PropTypes.func,
     onClick: PropTypes.func,
-  },
-  getDefaultProps() {
-    <span class="hljs-keyword">return</span> {
-      visible: <span class="hljs-literal">true</span>,
-      end() {
-      },
-    };
-  },
+  }
+
+  static defaultProps = {
+    visible: <span class="hljs-literal">true</span>,
+    end() {},
+  }
+
   componentWillUnmount() {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'componentWillUnmount'</span>);
     <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.props.children);
     <span class="hljs-keyword">this</span>.props.end();
-  },
+  }
+
   render() {
     <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
     <span class="hljs-keyword">const</span> style = {
@@ -311,19 +311,19 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     &gt;</span>
       {props.children}
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  },
-});
-<span class="hljs-keyword">const</span> TodoList = React.createClass({
-  getInitialState() {
-    <span class="hljs-keyword">return</span> {
-      items: [
-        { content: <span class="hljs-string">'hello'</span>, visible: <span class="hljs-literal">true</span> },
-        { content: <span class="hljs-string">'world'</span>, visible: <span class="hljs-literal">true</span> },
-        { content: <span class="hljs-string">'click'</span>, visible: <span class="hljs-literal">true</span> },
-        { content: <span class="hljs-string">'me'</span>, visible: <span class="hljs-literal">true</span> }],
-    };
-  },
-  handleHide(i, item) {
+  }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TodoList</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = {
+    items: [
+      { content: <span class="hljs-string">'hello'</span>, visible: <span class="hljs-literal">true</span> },
+      { content: <span class="hljs-string">'world'</span>, visible: <span class="hljs-literal">true</span> },
+      { content: <span class="hljs-string">'click'</span>, visible: <span class="hljs-literal">true</span> },
+      { content: <span class="hljs-string">'me'</span>, visible: <span class="hljs-literal">true</span> }],
+  }
+
+  handleHide = (i, item) =&gt; {
     <span class="hljs-keyword">const</span> newItems = <span class="hljs-keyword">this</span>.state.items.concat([]);
     newItems.forEach((n, index) =&gt; {
       newItems[index] = assign({}, n, {
@@ -334,7 +334,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       visible: <span class="hljs-literal">false</span>,
     });
     <span class="hljs-keyword">this</span>.setState({ items: newItems });
-  },
+  }
+
   render() {
     <span class="hljs-keyword">const</span> items = <span class="hljs-keyword">this</span>.state.items.map((item, i) =&gt; {
       <span class="hljs-keyword">return</span> (
@@ -357,13 +358,16 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     )</span>;
-  },
-});
+  }
+}
 
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Hide Todo<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">TodoList</span> /&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>, document.getElementById('__react-content'));
+ReactDOM.render(
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Hide Todo<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">TodoList</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
+  document.getElementById('__react-content')
+);
 </span></code></pre></div>
   </div>
   <a href="https://github.com/react-component/animate">

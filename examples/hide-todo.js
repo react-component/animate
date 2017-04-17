@@ -1,22 +1,22 @@
 webpackJsonp([1],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(198);
+	module.exports = __webpack_require__(196);
 
 
-/***/ },
+/***/ }),
 
 /***/ 2:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
+/***/ }),
 
-/***/ 198:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 196:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -44,28 +44,30 @@ webpackJsonp([1],{
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	/* eslint no-console:0, react/no-multi-comp:0 */
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
-	var Todo = _react2.default.createClass({
-	  displayName: 'Todo',
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  propTypes: {
-	    children: _propTypes2.default.any,
-	    end: _propTypes2.default.func,
-	    onClick: _propTypes2.default.func
-	  },
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      visible: true,
-	      end: function end() {}
-	    };
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /* eslint no-console:0, react/no-multi-comp:0 */
+	
+	var Todo = function (_React$Component) {
+	  _inherits(Todo, _React$Component);
+	
+	  function Todo() {
+	    _classCallCheck(this, Todo);
+	
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+	  }
+	
+	  Todo.prototype.componentWillUnmount = function componentWillUnmount() {
 	    console.log('componentWillUnmount');
 	    console.log(this.props.children);
 	    this.props.end();
-	  },
-	  render: function render() {
+	  };
+	
+	  Todo.prototype.render = function render() {
 	    var props = this.props;
 	    var style = {
 	      display: props.visible ? 'block' : 'none',
@@ -82,29 +84,51 @@ webpackJsonp([1],{
 	      },
 	      props.children
 	    );
-	  }
-	});
-	var TodoList = _react2.default.createClass({
-	  displayName: 'TodoList',
-	  getInitialState: function getInitialState() {
-	    return {
+	  };
+	
+	  return Todo;
+	}(_react2.default.Component);
+	
+	Todo.propTypes = {
+	  children: _propTypes2.default.any,
+	  end: _propTypes2.default.func,
+	  onClick: _propTypes2.default.func
+	};
+	Todo.defaultProps = {
+	  visible: true,
+	  end: function end() {}
+	};
+	
+	var TodoList = function (_React$Component2) {
+	  _inherits(TodoList, _React$Component2);
+	
+	  function TodoList() {
+	    var _temp, _this2, _ret;
+	
+	    _classCallCheck(this, TodoList);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, _React$Component2.call.apply(_React$Component2, [this].concat(args))), _this2), _this2.state = {
 	      items: [{ content: 'hello', visible: true }, { content: 'world', visible: true }, { content: 'click', visible: true }, { content: 'me', visible: true }]
-	    };
-	  },
-	  handleHide: function handleHide(i, item) {
-	    var newItems = this.state.items.concat([]);
-	    newItems.forEach(function (n, index) {
-	      newItems[index] = (0, _objectAssign2.default)({}, n, {
-	        visible: true
+	    }, _this2.handleHide = function (i, item) {
+	      var newItems = _this2.state.items.concat([]);
+	      newItems.forEach(function (n, index) {
+	        newItems[index] = (0, _objectAssign2.default)({}, n, {
+	          visible: true
+	        });
 	      });
-	    });
-	    newItems[i] = (0, _objectAssign2.default)({}, item, {
-	      visible: false
-	    });
-	    this.setState({ items: newItems });
-	  },
-	  render: function render() {
-	    var _this = this;
+	      newItems[i] = (0, _objectAssign2.default)({}, item, {
+	        visible: false
+	      });
+	      _this2.setState({ items: newItems });
+	    }, _temp), _possibleConstructorReturn(_this2, _ret);
+	  }
+	
+	  TodoList.prototype.render = function render() {
+	    var _this3 = this;
 	
 	    var items = this.state.items.map(function (item, i) {
 	      return _react2.default.createElement(
@@ -112,7 +136,7 @@ webpackJsonp([1],{
 	        {
 	          key: item.content,
 	          visible: item.visible,
-	          onClick: _this.handleHide.bind(_this, i, item)
+	          onClick: _this3.handleHide.bind(_this3, i, item)
 	        },
 	        item.content
 	      );
@@ -129,8 +153,10 @@ webpackJsonp([1],{
 	        items
 	      )
 	    );
-	  }
-	});
+	  };
+	
+	  return TodoList;
+	}(_react2.default.Component);
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  'div',
@@ -143,7 +169,7 @@ webpackJsonp([1],{
 	  _react2.default.createElement(TodoList, null)
 	), document.getElementById('__react-content'));
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=hide-todo.js.map

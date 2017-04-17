@@ -1,22 +1,22 @@
 webpackJsonp([6],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(205);
+	module.exports = __webpack_require__(203);
 
 
-/***/ },
+/***/ }),
 
 /***/ 2:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
+/***/ }),
 
-/***/ 202:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 200:
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
 	
@@ -3905,10 +3905,10 @@ webpackJsonp([6],{
 	Velocity, however, doesn't make this distinction. Thus, converting to or from the % unit with these subproperties
 	will produce an inaccurate conversion value. The same issue exists with the cx/cy attributes of SVG circles and ellipses. */
 
-/***/ },
+/***/ }),
 
-/***/ 205:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 203:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -3930,33 +3930,38 @@ webpackJsonp([6],{
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
-	var _velocityAnimate = __webpack_require__(202);
+	var _velocityAnimate = __webpack_require__(200);
 	
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var Todo = _react2.default.createClass({
-	  displayName: 'Todo',
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 	
-	  propTypes: {
-	    children: _propTypes2.default.any,
-	    end: _propTypes2.default.func,
-	    onClick: _propTypes2.default.func
-	  },
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      end: function end() {}
-	    };
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
+	
+	var Todo = function (_React$Component) {
+	  _inherits(Todo, _React$Component);
+	
+	  function Todo() {
+	    _classCallCheck(this, Todo);
+	
+	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+	  }
+	
+	  Todo.prototype.componentWillUnmount = function componentWillUnmount() {
 	    console.log('componentWillUnmount');
 	    console.log(this.props.children);
 	    this.props.end();
-	  },
-	  render: function render() {
+	  };
+	
+	  Todo.prototype.render = function render() {
 	    var props = this.props;
 	    var style = {
 	      width: 100,
@@ -3969,79 +3974,96 @@ webpackJsonp([6],{
 	      { onClick: this.props.onClick, style: style },
 	      props.children
 	    );
-	  }
-	});
-	var TodoList = _react2.default.createClass({
-	  displayName: 'TodoList',
-	  getInitialState: function getInitialState() {
-	    return {
+	  };
+	
+	  return Todo;
+	}(_react2.default.Component);
+	
+	Todo.propTypes = {
+	  children: _propTypes2.default.any,
+	  end: _propTypes2.default.func,
+	  onClick: _propTypes2.default.func
+	};
+	Todo.defaultProps = {
+	  end: function end() {}
+	};
+	
+	var TodoList = function (_React$Component2) {
+	  _inherits(TodoList, _React$Component2);
+	
+	  function TodoList() {
+	    var _temp, _this2, _ret;
+	
+	    _classCallCheck(this, TodoList);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, _React$Component2.call.apply(_React$Component2, [this].concat(args))), _this2), _this2.state = {
 	      exclusive: false,
 	      items: ['hello', 'world', 'click', 'me']
-	    };
-	  },
-	  animateEnter: function animateEnter(node, done) {
-	    var ok = false;
+	    }, _this2.animateEnter = function (node, done) {
+	      var ok = false;
 	
-	    function complete() {
-	      if (!ok) {
-	        ok = 1;
-	        done();
+	      function complete() {
+	        if (!ok) {
+	          ok = 1;
+	          done();
+	        }
 	      }
-	    }
 	
-	    (0, _velocityAnimate2.default)(node, 'slideDown', {
-	      duration: 1000,
-	      complete: complete
-	    });
-	    return {
-	      stop: function stop() {
-	        (0, _velocityAnimate2.default)(node, 'finish');
-	        // velocity complete is async
-	        complete();
-	      }
-	    };
-	  },
-	  animateLeave: function animateLeave(node, done) {
-	    var ok = false;
+	      (0, _velocityAnimate2.default)(node, 'slideDown', {
+	        duration: 1000,
+	        complete: complete
+	      });
+	      return {
+	        stop: function stop() {
+	          (0, _velocityAnimate2.default)(node, 'finish');
+	          // velocity complete is async
+	          complete();
+	        }
+	      };
+	    }, _this2.animateLeave = function (node, done) {
+	      var ok = false;
 	
-	    function complete() {
-	      if (!ok) {
-	        ok = 1;
-	        done();
+	      function complete() {
+	        if (!ok) {
+	          ok = 1;
+	          done();
+	        }
 	      }
-	    }
 	
-	    (0, _velocityAnimate2.default)(node, 'slideUp', {
-	      duration: 1000,
-	      complete: complete
-	    });
-	    return {
-	      stop: function stop() {
-	        (0, _velocityAnimate2.default)(node, 'finish');
-	        // velocity complete is async
-	        complete();
-	      }
-	    };
-	  },
-	  handleAdd: function handleAdd() {
-	    var newItems = this.state.items.concat([prompt('Enter some text')]);
-	    this.setState({ items: newItems });
-	  },
-	  handleRemove: function handleRemove(i) {
-	    var newItems = this.state.items;
-	    newItems.splice(i, 1);
-	    this.setState({ items: newItems });
-	  },
-	  toggle: function toggle(field) {
-	    this.setState(_defineProperty({}, field, !this.state[field]));
-	  },
-	  render: function render() {
-	    var _this = this;
+	      (0, _velocityAnimate2.default)(node, 'slideUp', {
+	        duration: 1000,
+	        complete: complete
+	      });
+	      return {
+	        stop: function stop() {
+	          (0, _velocityAnimate2.default)(node, 'finish');
+	          // velocity complete is async
+	          complete();
+	        }
+	      };
+	    }, _this2.handleAdd = function () {
+	      var newItems = _this2.state.items.concat([prompt('Enter some text')]);
+	      _this2.setState({ items: newItems });
+	    }, _this2.handleRemove = function (i) {
+	      var newItems = _this2.state.items;
+	      newItems.splice(i, 1);
+	      _this2.setState({ items: newItems });
+	    }, _this2.toggle = function (field) {
+	      _this2.setState(_defineProperty({}, field, !_this2.state[field]));
+	    }, _temp), _possibleConstructorReturn(_this2, _ret);
+	  }
+	
+	  TodoList.prototype.render = function render() {
+	    var _this3 = this;
 	
 	    var items = this.state.items.map(function (item, i) {
 	      return _react2.default.createElement(
 	        Todo,
-	        { key: item, onClick: _this.handleRemove.bind(_this, i) },
+	        { key: item, onClick: _this3.handleRemove.bind(_this3, i) },
 	        item
 	      );
 	    });
@@ -4079,8 +4101,10 @@ webpackJsonp([6],{
 	        items
 	      )
 	    );
-	  }
-	});
+	  };
+	
+	  return TodoList;
+	}(_react2.default.Component);
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  'div',
@@ -4093,7 +4117,7 @@ webpackJsonp([6],{
 	  _react2.default.createElement(TodoList, null)
 	), document.getElementById('__react-content'));
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=todo-animation.js.map
