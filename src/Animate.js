@@ -28,6 +28,8 @@ function noop() {
 }
 
 const Animate = createReactClass({
+  displayName: 'Animate',
+
   propTypes: {
     component: PropTypes.any,
     componentProps: PropTypes.object,

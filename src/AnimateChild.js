@@ -11,6 +11,8 @@ const transitionMap = {
 };
 
 const AnimateChild = createReactClass({
+  displayName: 'AnimateChild',
+
   propTypes: {
     children: PropTypes.any,
   },
