@@ -265,10 +265,9 @@ export default class Animate extends React.Component {
           currentChildren, props.showProp)) {
         this.setState({
           children: currentChildren,
-        }, end);
-      } else {
-        end();
+        });
       }
+      end();
     }
   }
 
