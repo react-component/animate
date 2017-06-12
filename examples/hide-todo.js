@@ -1,175 +1,184 @@
-webpackJsonp([1],{
+webpackJsonp([7],{
 
-/***/ 0:
+/***/ 139:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_index_less__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__assets_index_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_animate__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_object_assign__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_object_assign__);
+
+
+
+
+/* eslint no-console:0, react/no-multi-comp:0 */
+
+
+
+
+
+
+
+
+var Todo = function (_React$Component) {
+  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(Todo, _React$Component);
+
+  function Todo() {
+    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, Todo);
+
+    return __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Todo.__proto__ || Object.getPrototypeOf(Todo)).apply(this, arguments));
+  }
+
+  __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(Todo, [{
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      console.log('componentWillUnmount');
+      console.log(this.props.children);
+      this.props.end();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var props = this.props;
+      var style = {
+        display: props.visible ? 'block' : 'none',
+        width: 100,
+        border: '1px solid red',
+        padding: 10,
+        margin: 10
+      };
+      return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+        'div',
+        {
+          onClick: this.props.onClick,
+          style: style
+        },
+        props.children
+      );
+    }
+  }]);
+
+  return Todo;
+}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
+
+Todo.propTypes = {
+  children: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.any,
+  end: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
+  onClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
+};
+Todo.defaultProps = {
+  visible: true,
+  end: function end() {}
+};
+
+var TodoList = function (_React$Component2) {
+  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(TodoList, _React$Component2);
+
+  function TodoList() {
+    var _ref;
+
+    var _temp, _this2, _ret;
+
+    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, TodoList);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this2 = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = TodoList.__proto__ || Object.getPrototypeOf(TodoList)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
+      items: [{ content: 'hello', visible: true }, { content: 'world', visible: true }, { content: 'click', visible: true }, { content: 'me', visible: true }]
+    }, _this2.handleHide = function (i, item) {
+      var newItems = _this2.state.items.concat([]);
+      newItems.forEach(function (n, index) {
+        newItems[index] = __WEBPACK_IMPORTED_MODULE_9_object_assign___default()({}, n, {
+          visible: true
+        });
+      });
+      newItems[i] = __WEBPACK_IMPORTED_MODULE_9_object_assign___default()({}, item, {
+        visible: false
+      });
+      _this2.setState({ items: newItems });
+    }, _temp), __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(_this2, _ret);
+  }
+
+  __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(TodoList, [{
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      var items = this.state.items.map(function (item, i) {
+        return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+          Todo,
+          {
+            key: item.content,
+            visible: item.visible,
+            onClick: _this3.handleHide.bind(_this3, i, item)
+          },
+          item.content
+        );
+      });
+      return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_8_rc_animate__["a" /* default */],
+          {
+            showProp: 'visible',
+            transitionName: 'fade'
+          },
+          items
+        )
+      );
+    }
+  }]);
+
+  return TodoList;
+}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
+
+__WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+  'div',
+  null,
+  __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+    'h2',
+    null,
+    'Hide Todo'
+  ),
+  __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(TodoList, null)
+), document.getElementById('__react-content'));
+
+/***/ }),
+
+/***/ 293:
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(196);
+module.exports = __webpack_require__(139);
 
 
 /***/ }),
 
-/***/ 2:
+/***/ 7:
 /***/ (function(module, exports) {
 
-	// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 196:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	__webpack_require__(2);
-	
-	var _react = __webpack_require__(3);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(38);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _reactDom = __webpack_require__(40);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _rcAnimate = __webpack_require__(186);
-	
-	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
-	
-	var _objectAssign = __webpack_require__(6);
-	
-	var _objectAssign2 = _interopRequireDefault(_objectAssign);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /* eslint no-console:0, react/no-multi-comp:0 */
-	
-	var Todo = function (_React$Component) {
-	  _inherits(Todo, _React$Component);
-	
-	  function Todo() {
-	    _classCallCheck(this, Todo);
-	
-	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
-	  }
-	
-	  Todo.prototype.componentWillUnmount = function componentWillUnmount() {
-	    console.log('componentWillUnmount');
-	    console.log(this.props.children);
-	    this.props.end();
-	  };
-	
-	  Todo.prototype.render = function render() {
-	    var props = this.props;
-	    var style = {
-	      display: props.visible ? 'block' : 'none',
-	      width: 100,
-	      border: '1px solid red',
-	      padding: 10,
-	      margin: 10
-	    };
-	    return _react2.default.createElement(
-	      'div',
-	      {
-	        onClick: this.props.onClick,
-	        style: style
-	      },
-	      props.children
-	    );
-	  };
-	
-	  return Todo;
-	}(_react2.default.Component);
-	
-	Todo.propTypes = {
-	  children: _propTypes2.default.any,
-	  end: _propTypes2.default.func,
-	  onClick: _propTypes2.default.func
-	};
-	Todo.defaultProps = {
-	  visible: true,
-	  end: function end() {}
-	};
-	
-	var TodoList = function (_React$Component2) {
-	  _inherits(TodoList, _React$Component2);
-	
-	  function TodoList() {
-	    var _temp, _this2, _ret;
-	
-	    _classCallCheck(this, TodoList);
-	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, _React$Component2.call.apply(_React$Component2, [this].concat(args))), _this2), _this2.state = {
-	      items: [{ content: 'hello', visible: true }, { content: 'world', visible: true }, { content: 'click', visible: true }, { content: 'me', visible: true }]
-	    }, _this2.handleHide = function (i, item) {
-	      var newItems = _this2.state.items.concat([]);
-	      newItems.forEach(function (n, index) {
-	        newItems[index] = (0, _objectAssign2.default)({}, n, {
-	          visible: true
-	        });
-	      });
-	      newItems[i] = (0, _objectAssign2.default)({}, item, {
-	        visible: false
-	      });
-	      _this2.setState({ items: newItems });
-	    }, _temp), _possibleConstructorReturn(_this2, _ret);
-	  }
-	
-	  TodoList.prototype.render = function render() {
-	    var _this3 = this;
-	
-	    var items = this.state.items.map(function (item, i) {
-	      return _react2.default.createElement(
-	        Todo,
-	        {
-	          key: item.content,
-	          visible: item.visible,
-	          onClick: _this3.handleHide.bind(_this3, i, item)
-	        },
-	        item.content
-	      );
-	    });
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        _rcAnimate2.default,
-	        {
-	          showProp: 'visible',
-	          transitionName: 'fade'
-	        },
-	        items
-	      )
-	    );
-	  };
-	
-	  return TodoList;
-	}(_react2.default.Component);
-	
-	_reactDom2.default.render(_react2.default.createElement(
-	  'div',
-	  null,
-	  _react2.default.createElement(
-	    'h2',
-	    null,
-	    'Hide Todo'
-	  ),
-	  _react2.default.createElement(TodoList, null)
-	), document.getElementById('__react-content'));
+// removed by extract-text-webpack-plugin
 
 /***/ })
 
-});
+},[293]);
 //# sourceMappingURL=hide-todo.js.map
