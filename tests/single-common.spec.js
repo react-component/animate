@@ -1,13 +1,13 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-const expect = require('expect.js');
-const React = require('react');
-const ReactDOM = require('react-dom');
-const TestUtils = require('react-addons-test-utils');
-require('./index.spec.css');
-const $ = require('jquery');
+import expect from 'expect.js';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-dom/test-utils';
+import './index.spec.css';
+import $ from 'jquery';
 
-module.exports = function test(createClass, title) {
+export default function test(createClass, title) {
   function getOpacity(node) {
     return parseFloat($(node).css('opacity'));
   }

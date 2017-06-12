@@ -1,11 +1,12 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
-const Animate = require('../');
-const React = require('react');
-const ReactDOM = require('react-dom');
-const PropTypes = require('prop-types');
-const TestUtils = require('react-addons-test-utils');
-const expect = require('expect.js');
-require('./index.spec.css');
+import Animate from '../';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import TestUtils from 'react-dom/test-utils';
+import expect from 'expect.js';
+import './index.spec.css';
+import CssAnimation from 'css-animation';
 
 class Todo extends React.Component {
   static propTypes = {
@@ -103,7 +104,6 @@ describe('Animate', () => {
     expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item').length).to.be(4);
   });
 
-  const CssAnimation = require('css-animation');
   if (!CssAnimation.isCssAnimationSupported) {
     return;
   }
