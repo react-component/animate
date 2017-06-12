@@ -2,7 +2,6 @@
 const Animate = require('../');
 const React = require('react');
 const ReactDOM = require('react-dom');
-const TestUtils = require('react-addons-test-utils');
 const expect = require('expect.js');
 require('./index.spec.css');
 
@@ -10,7 +9,7 @@ class Child extends React.Component {
   state = {
     visible: true,
   };
-  onClick = () => {
+  componentDidMount() {
     // strange setTimeout
     setTimeout(() => {
       this.setState({ visible: false });
@@ -19,14 +18,9 @@ class Child extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Animate onLeave={this.props.onLeave} transitionName="example">
-          {this.state.visible ? <div key="xxxx">xxxx</div> : null}
-        </Animate>
-        <button id="remove" onClick={this.onClick}>
-          click here to remove father
-        </button>
-      </div>
+      <Animate onLeave={this.props.onLeave} transitionName="example">
+        {this.state.visible ? <div key="xxxx">xxxx</div> : null}
+      </Animate>
     );
   }
 }
@@ -68,10 +62,9 @@ describe('animation end', () => {
   });
 
   it('onLeave should always be triggered when father is unmounted', (done) => {
-    TestUtils.Simulate.click(document.getElementById('remove'));
     setTimeout(() => {
       expect(onLeaveCalled).to.be(true);
       done();
-    }, 500);
+    }, 0);
   });
 });
