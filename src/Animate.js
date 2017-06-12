@@ -69,6 +69,8 @@ export default class Animate extends React.Component {
     this.state = {
       children: toArrayChildren(getChildrenFromProps(this.props)),
     };
+
+    this.childrenRefs = {};
   }
 
   componentDidMount() {
@@ -190,18 +192,18 @@ export default class Animate extends React.Component {
 
   performEnter = (key) => {
     // may already remove by exclusive
-    if (this.refs[key]) {
+    if (this.childrenRefs[key]) {
       this.currentlyAnimatingKeys[key] = true;
-      this.refs[key].componentWillEnter(
+      this.childrenRefs[key].componentWillEnter(
         this.handleDoneAdding.bind(this, key, 'enter')
       );
     }
   }
 
   performAppear = (key) => {
-    if (this.refs[key]) {
+    if (this.childrenRefs[key]) {
       this.currentlyAnimatingKeys[key] = true;
-      this.refs[key].componentWillAppear(
+      this.childrenRefs[key].componentWillAppear(
         this.handleDoneAdding.bind(this, key, 'appear')
       );
     }
@@ -235,9 +237,9 @@ export default class Animate extends React.Component {
 
   performLeave = (key) => {
     // may already remove by exclusive
-    if (this.refs[key]) {
+    if (this.childrenRefs[key]) {
       this.currentlyAnimatingKeys[key] = true;
-      this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
+      this.childrenRefs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
     }
   }
 
@@ -280,7 +282,7 @@ export default class Animate extends React.Component {
 
   stop(key) {
     delete this.currentlyAnimatingKeys[key];
-    const component = this.refs[key];
+    const component = this.childrenRefs[key];
     if (component) {
       component.stop();
     }
@@ -302,7 +304,7 @@ export default class Animate extends React.Component {
         return (
           <AnimateChild
             key={child.key}
-            ref={child.key}
+            ref={node => this.childrenRefs[child.key] = node}
             animation={props.animation}
             transitionName={props.transitionName}
             transitionEnter={props.transitionEnter}
