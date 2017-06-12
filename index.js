@@ -1,2 +1,3 @@
 // do not modify this file
-module.exports = require('./src/');
+import Animate from './src/Animate';
+export default Animate;

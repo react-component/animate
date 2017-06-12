@@ -1,4 +1,4 @@
-require('./single.spec');
-require('./single-animation.spec');
-require('./multiple.spec');
-require('./end.spec');
+import './single.spec';
+import './single-animation.spec';
+import './multiple.spec';
+import './end.spec';

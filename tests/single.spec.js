@@ -1,9 +1,9 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-const Animate = require('../index');
-const React = require('react');
+import Animate from '../index';
+import React from 'react';
 
-require('./index.spec.css');
+import './index.spec.css';
 
 function createClass(options) {
   return class extends React.Component {
@@ -27,7 +27,8 @@ function createClass(options) {
   };
 }
 
-const CssAnimation = require('css-animation');
+import CssAnimation from 'css-animation';
+import single from './single-common.spec';
 if (CssAnimation.isCssAnimationSupported) {
-  require('./single-common.spec')(createClass, 'transition');
+  single(createClass, 'transition');
 }

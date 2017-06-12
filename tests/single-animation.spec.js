@@ -1,9 +1,9 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-const Animate = require('../index');
-const React = require('react');
-require('./index.spec.css');
-const $ = require('jquery');
+import Animate from '../index';
+import React from 'react';
+import './index.spec.css';
+import $ from 'jquery';
 
 function createClass(options) {
   return class extends React.Component {
@@ -43,4 +43,6 @@ function createClass(options) {
   };
 }
 
-require('./single-common.spec')(createClass, 'animation');
+import single from './single-common.spec';
+
+single(createClass, 'animation');
