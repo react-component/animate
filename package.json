@@ -55,7 +55,7 @@
   ],
   "dependencies": {
     "babel-runtime": "6.x",
-    "css-animation": "1.x",
+    "css-animation": "^1.3.2",
     "prop-types": "15.x"
   }
 }
