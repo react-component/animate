@@ -66,22 +66,22 @@ export default class Animate extends React.Component {
     this.keysToEnter = [];
     this.keysToLeave = [];
 
+    let children = toArrayChildren(getChildrenFromProps(this.props));
+    const showProp = this.props.showProp;
+    if (showProp) {
+      children = children.filter((child) => {
+        return !!child.props[showProp];
+      });
+    }
     this.state = {
-      children: toArrayChildren(getChildrenFromProps(this.props)),
+      children,
     };
 
     this.childrenRefs = {};
   }
 
   componentDidMount() {
-    const showProp = this.props.showProp;
-    let children = this.state.children;
-    if (showProp) {
-      children = children.filter((child) => {
-        return !!child.props[showProp];
-      });
-    }
-    children.forEach((child) => {
+    this.state.children.forEach((child) => {
       if (child) {
         this.performAppear(child.key);
       }
