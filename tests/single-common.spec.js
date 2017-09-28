@@ -133,5 +133,23 @@ export default function test(createClass, title) {
         });
       });
     });
+
+    describe('when showProp is false', () => {
+      let instance;
+
+      before(() => {
+        const Component = createClass({});
+
+        instance = TestUtils.renderIntoDocument(<Component showProp="visible">
+          <sp visible={false}>showProp child</sp>
+        </Component>);
+      });
+
+      describe('when initial', () => {
+        it('will child not exist', () => {
+          expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'sp')[0]).not.to.be.ok();
+        });
+      });
+    });
   });
 }
