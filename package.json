@@ -40,14 +40,15 @@
     "coverage": "rc-test run coverage"
   },
   "devDependencies": {
+    "core-js": "^2.5.1",
     "expect.js": "0.3.x",
     "jquery": "~1.11.3",
     "object-assign": "4.x",
     "pre-commit": "1.x",
     "rc-test": "6.x",
     "rc-tools": "6.x",
-    "react": "15.x",
-    "react-dom": "15.x",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "velocity-animate": "~1.2.2"
   },
   "pre-commit": [
