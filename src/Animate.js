@@ -11,6 +11,8 @@ import AnimateChild from './AnimateChild';
 const defaultKey = `rc_animate_${Date.now()}`;
 import animUtil from './util';
 
+const IS_FRAGMENT_SUPPORTED = React.version > '16';
+
 function getChildrenFromProps(props) {
   const children = props.children;
   if (React.isValidElement(children)) {
@@ -327,6 +329,9 @@ export default class Animate extends React.Component {
         };
       }
       return <Component {...passedProps}>{children}</Component>;
+    }
+    if (IS_FRAGMENT_SUPPORTED) {
+      return children;
     }
     return children[0] || null;
   }
