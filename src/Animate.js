@@ -67,7 +67,7 @@ export default class Animate extends React.Component {
     this.keysToLeave = [];
 
     this.state = {
-      children: toArrayChildren(getChildrenFromProps(this.props)),
+      children: toArrayChildren(getChildrenFromProps(props)),
     };
 
     this.childrenRefs = {};
