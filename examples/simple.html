@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>simple.js - example - rc-animate@2.4.1</title>
+  <title>simple.js - example - rc-animate@2.4.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@2.4.1</h1>
+      <h1>rc-animate@2.4.3</h1>
 
       <p>css-transition ui component for react</p>
     </div>
@@ -279,11 +279,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> assign <span class="hljs-keyword">from</span> <span class="hljs-string">'object-assign'</span>;
 
 <span class="hljs-keyword">const</span> Div = (props) =&gt; {
-  <span class="hljs-keyword">const</span> { style, show } = props;
+  <span class="hljs-keyword">const</span> { style, show, ...restProps } = props;
   <span class="hljs-keyword">const</span> newStyle = assign({}, style, {
     display: show ? <span class="hljs-string">''</span> : <span class="hljs-string">'none'</span>,
   });
-  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> {<span class="hljs-attribute">...props</span>} <span class="hljs-attribute">style</span>=<span class="hljs-value">{newStyle}</span>/&gt;</span>;</span>
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> {<span class="hljs-attribute">...restProps</span>} <span class="hljs-attribute">style</span>=<span class="hljs-value">{newStyle}</span>/&gt;</span>;</span>
 };
 
 Div.propTypes = {
