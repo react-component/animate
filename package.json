@@ -37,7 +37,8 @@
     "saucelabs": "rc-test run saucelabs",
     "test": "rc-test run test",
     "chrome-test": "rc-test run chrome-test",
-    "coverage": "rc-test run coverage"
+    "coverage": "rc-test run coverage",
+    "prepublish": "rc-tools run guard"
   },
   "devDependencies": {
     "core-js": "^2.5.1",
