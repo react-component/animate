@@ -27,6 +27,8 @@ function noop() {
 }
 
 export default class Animate extends React.Component {
+  static isAnimate = true; // eslint-disable-line
+
   static propTypes = {
     component: PropTypes.any,
     componentProps: PropTypes.object,
