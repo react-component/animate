@@ -46,6 +46,7 @@ export default class Animate extends React.Component {
     onLeave: PropTypes.func,
     onAppear: PropTypes.func,
     showProp: PropTypes.string,
+    children: PropTypes.node,
   }
 
   static defaultProps = {
