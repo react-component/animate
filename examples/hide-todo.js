@@ -5,7 +5,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
-import assign from 'object-assign';
 
 class Todo extends React.Component {
   static propTypes = {
@@ -55,13 +54,9 @@ class TodoList extends React.Component {
   handleHide = (i, item) => {
     const newItems = this.state.items.concat([]);
     newItems.forEach((n, index) => {
-      newItems[index] = assign({}, n, {
-        visible: true,
-      });
+      newItems[index] = { ...n, visible: true };
     });
-    newItems[i] = assign({}, item, {
-      visible: false,
-    });
+    newItems[i] = { ...item, visible: false };
     this.setState({ items: newItems });
   }
 

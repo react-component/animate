@@ -5,13 +5,10 @@ import Animate from 'rc-animate';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import assign from 'object-assign';
 
 const Div = (props) => {
   const { style, show, ...restProps } = props;
-  const newStyle = assign({}, style, {
-    display: show ? '' : 'none',
-  });
+  const newStyle = { ...style, display: show ? '' : 'none' };
   return <div {...restProps} style={newStyle}/>;
 };
 
