@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { cloneProps, getTransitionName, supportTransition } from './util';
 
 const clonePropList = [
+  'appeared',
   'show',
   'exclusive',
   'children',
@@ -26,14 +27,15 @@ class AnimateChild extends React.Component {
     transitionEnter: PropTypes.bool,
     transitionLeave: PropTypes.bool,
     exclusive: PropTypes.bool,
+    appeared: PropTypes.bool,
     showProp: PropTypes.string,
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { appeared, prevProps = {} } = prevState;
+    const { prevProps = {} } = prevState;
     const {
       transitionName, transitionAppear, transitionEnter, transitionLeave,
-      exclusive,
+      exclusive, appeared,
     } = nextProps;
 
     const newState = {
@@ -50,38 +52,38 @@ class AnimateChild extends React.Component {
       return false;
     }
 
+    function pushTransition(transition) {
+      newState.transitionQueue = newState.transitionQueue || prevState.transitionQueue;
+      if (exclusive) {
+        newState.transitionQueue = [transition];
+        newState.transitionActive = false;
+      } else {
+        newState.transitionQueue.push(transition);
+      }
+    }
+
     // Child update. Only set child.
     processState('children', (child) => {
       newState.child = child;
     });
 
+    processState('appeared', (isAppeared) => {
+      if (isAppeared && transitionAppear) {
+        pushTransition({
+          basic: getTransitionName(transitionName, 'appear'),
+          active: getTransitionName(transitionName, 'appear-active'),
+        });
+      }
+    });
+
     // Show update
     processState('show', (show) => {
-      newState.transitionQueue = prevState.transitionQueue.slice();
-
-      function pushTransition(transition) {
-        if (exclusive) {
-          newState.transitionQueue = [transition];
-          newState.transitionActive = false;
-        } else {
-          newState.transitionQueue.push(transition);
-        }
-      }
-
-      if (!appeared && show) {
-        newState.appeared = true;
-        if (transitionAppear) {
-          pushTransition({
-            basic: getTransitionName(transitionName, 'appear'),
-            active: getTransitionName(transitionName, 'appear-active'),
-          });
-        }
-      } else if (appeared && show && transitionEnter) {
+      if (!appeared && show && transitionEnter) {
         pushTransition({
           basic: getTransitionName(transitionName, 'enter'),
           active: getTransitionName(transitionName, 'enter-active'),
         });
-      } else if (appeared && !show && transitionLeave) {
+      } else if (!appeared && !show && transitionLeave) {
         pushTransition({
           basic: getTransitionName(transitionName, 'leave'),
           active: getTransitionName(transitionName, 'leave-active'),
@@ -107,8 +109,6 @@ class AnimateChild extends React.Component {
     child: null,
     transitionQueue: [],
     transitionActive: false,
-
-    appeared: false,
   }
 
   componentDidMount() {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 
 import AnimateChild from './AnimateChild';
-import { cloneProps } from './util';
+import { cloneProps, mergeChildren } from './util';
 
 const defaultKey = `rc_animate_${Date.now()}`;
 const clonePropList = ['children'];
@@ -59,19 +59,32 @@ class Animate extends React.Component {
     }
 
     processState('children', (children) => {
+      const prevChildren = prevState.children;
       newState.children = (React.Children.toArray(children) || [])
         .filter(node => node);
+
+      // Merge prev children to keep the animation
+      newState.children = mergeChildren(prevChildren, newState.children);
+      console.log('children update:', newState);
     });
 
     return newState;
   }
 
   state = {
+    appeared: true,
     children: [],
   };
 
+  componentDidMount() {
+    // Next animation update will not rigger appear
+    setTimeout(() => {
+      this.setState({ appeared: false });
+    });
+  }
+
   render() {
-    const { children } = this.state;
+    const { appeared, children } = this.state;
     const {
       component: Component, componentProps,
       className, style, showProp,
@@ -83,10 +96,13 @@ class Animate extends React.Component {
         throw new Error('must set key for <rc-animate> children');
       }
 
+      const show = showProp ? node.props[showProp] : true;
+
       return (
         <AnimateChild
           {...this.props}
-          show={node.props[showProp]}
+          appeared={appeared}
+          show={show}
           className={node.props.className}
           style={node.props.style}
           key={node.key || defaultKey}
