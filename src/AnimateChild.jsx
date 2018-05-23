@@ -36,6 +36,11 @@ class AnimateChild extends React.Component {
 
     animateKey: PropTypes.any,
     onChildLeaved: PropTypes.func,
+
+    // Customize event handler
+    onChildAppear: PropTypes.func,
+    onChildEnter: PropTypes.func,
+    onChildLeave: PropTypes.func,
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -60,8 +65,6 @@ class AnimateChild extends React.Component {
     }
 
     function pushTransition(transition) {
-      if (!supportTransition) return;
-
       newState.transitionQueue = newState.transitionQueue || prevState.transitionQueue;
       if (exclusive) {
         newState.transitionQueue = [transition];
@@ -129,6 +132,9 @@ class AnimateChild extends React.Component {
     // To avoid break the behaviour that component not handle animation/transition
     // also can handle the animate, let keep the logic.
     this.$prevEle = null;
+
+    // Check if transition first come
+    this.currentTransition = null;
   }
 
   state = {
@@ -151,37 +157,58 @@ class AnimateChild extends React.Component {
 
   onDomUpdated = () => {
     const { transitionQueue, transitionActive } = this.state;
+    const { animateKey, onChildAppear, onChildEnter, onChildLeave } = this.props;
+
     const transition = transitionQueue[0];
 
-    // [Legacy] Since origin code use js to set `className`.
-    // This caused that any component without support `className` can be forced set.
-    // Let's keep the logic.
     const $ele = ReactDOM.findDOMNode(this);
+
     if (transition && $ele) {
+      // [Legacy] Since origin code use js to set `className`.
+      // This caused that any component without support `className` can be forced set.
+      // Let's keep the logic.
       const nodeClasses = classes($ele);
       nodeClasses.add(transition.basic);
 
       if (transitionActive) {
         nodeClasses.add(transition.active);
       }
-    }
 
-    // [Legacy] Add animation/transition event by dom level
-    if (supportTransition && this.$prevEle !== $ele) {
-      this.cleanDomEvent();
+      // [Legacy] Add animation/transition event by dom level
+      if (supportTransition && this.$prevEle !== $ele) {
+        this.cleanDomEvent();
 
-      this.$prevEle = $ele;
-      this.$prevEle.addEventListener(animationEndName, this.onMotionEnd);
-      this.$prevEle.addEventListener(transitionEndName, this.onMotionEnd);
-    }
+        this.$prevEle = $ele;
+        this.$prevEle.addEventListener(animationEndName, this.onMotionEnd);
+        this.$prevEle.addEventListener(transitionEndName, this.onMotionEnd);
+      }
 
-    // Update transition active class
-    if (transition && !transitionActive) {
-      // requestAnimationFrame not support in IE 9-
-      // Use setTimeout instead
-      setTimeout(() => {
-        this.setState({ transitionActive: true });
-      });
+      // Check if transition update
+      if (this.currentTransition !== transition) {
+        this.currentTransition = transition;
+
+        if (transition.type === 'appear' && onChildAppear) {
+          onChildAppear(animateKey, $ele);
+        } else if (transition.type === 'enter' && onChildEnter) {
+          onChildEnter(animateKey, $ele);
+        } else if (transition.type === 'leave' && onChildLeave) {
+          onChildLeave(animateKey, $ele);
+        }
+      }
+
+      // Update transition active class
+      if (!transitionActive) {
+        // requestAnimationFrame not support in IE 9-
+        // Use setTimeout instead
+        setTimeout(() => {
+          this.setState({transitionActive: true});
+        }, 0);
+      }
+
+      // Call onMotionEnd directly
+      if (!supportTransition) {
+        this.onMotionEnd({ target: $ele });
+      }
     }
   };
 
