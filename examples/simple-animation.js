@@ -7,10 +7,10 @@ import ReactDOM from 'react-dom';
 import velocity from 'velocity-animate';
 import './assets/index.less';
 
-const Box = () => {
+const Box = (props) => {
   const style = {
     width: '200px',
-    display: this.props.visible ? 'block' : 'none',
+    display: props.visible ? 'block' : 'none',
     height: '200px',
     backgroundColor: 'red',
   };
