@@ -1,21 +1,31 @@
-const util = {
-  isAppearSupported(props) {
-    return props.transitionName && props.transitionAppear || props.animation.appear;
-  },
-  isEnterSupported(props) {
-    return props.transitionName && props.transitionEnter || props.animation.enter;
-  },
-  isLeaveSupported(props) {
-    return props.transitionName && props.transitionLeave || props.animation.leave;
-  },
-  allowAppearCallback(props) {
-    return props.transitionAppear || props.animation.appear;
-  },
-  allowEnterCallback(props) {
-    return props.transitionEnter || props.animation.enter;
-  },
-  allowLeaveCallback(props) {
-    return props.transitionLeave || props.animation.leave;
-  },
-};
-export default util;
+function checkTransitionSupport() {
+  const dom = document.createElement('span');
+
+  const transitionList = [
+    'WebkitTransition', 'MozTransition', 'OTransition', 'transition',
+  ];
+
+  return transitionList.some(name => name in dom.style);
+}
+
+export const supportTransition = checkTransitionSupport();
+
+export function cloneProps(props, propList) {
+  const newProps = {};
+  propList.forEach((prop) => {
+    if (prop in props) {
+      newProps[prop] = props[prop];
+    }
+  });
+
+  return newProps;
+}
+
+export function getTransitionName(transitionName, transitionType) {
+  if (typeof transitionName === 'object') {
+    return transitionName[transitionType];
+  }
+
+  return `${transitionName}-${transitionType}`;
+}
+

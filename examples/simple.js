@@ -1,10 +1,10 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-import './assets/slow.less';
 import Animate from 'rc-animate';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+import './assets/slow.less';
 
 const Div = (props) => {
   const { style, show, ...restProps } = props;
@@ -43,14 +43,14 @@ class Demo extends Component {
       <div>
         <label><input
           type="checkbox"
-          onChange={this.toggle.bind(this, 'enter')}
+          onChange={() => { this.toggle('enter'); }}
           checked={this.state.enter}
         />
           show</label>
         &nbsp;
         <label><input
           type="checkbox"
-          onChange={this.toggle.bind(this, 'exclusive')}
+          onChange={() => { this.toggle('exclusive'); }}
           checked={this.state.exclusive}
         />
           exclusive</label>

@@ -1,12 +1,12 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
-import Animate from '../';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
-import './index.spec.css';
 import CssAnimation from 'css-animation';
+import Animate from '../';
+import './index.spec.css';
 
 class Todo extends React.Component {
   static propTypes = {
@@ -64,7 +64,7 @@ class TodoList extends React.Component {
       }
 
       return (
-        <Todo key={item} onClick={this.handleRemove.bind(this, i)}>
+        <Todo key={item} onClick={() => { this.handleRemove.bind(this, i); }}>
           {item}
         </Todo>
       );

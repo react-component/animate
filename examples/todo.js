@@ -1,10 +1,10 @@
 /* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
 
-import './assets/index.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
+import './assets/index.less';
 
 class Todo extends React.Component {
   static propTypes = {
@@ -45,7 +45,7 @@ class TodoList extends React.Component {
   }
 
   handleAdd = () => {
-    const items = this.state.items.concat([prompt('Enter some text')]);
+    const items = this.state.items.concat([prompt('Enter some text')]); // eslint-disable-line
     this.setState({ items });
   }
 
@@ -58,7 +58,7 @@ class TodoList extends React.Component {
   render() {
     const items = this.state.items.map((item, i) => {
       return (
-        <Todo key={item} onClick={this.handleRemove.bind(this, i)}>
+        <Todo key={item} onClick={() => { this.handleRemove(i) }}>
           {item}
         </Todo>
       );

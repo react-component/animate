@@ -1,27 +1,25 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-import './assets/index.less';
 import Animate from 'rc-animate';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import velocity from 'velocity-animate';
+import './assets/index.less';
 
-class Box extends React.Component {
-  static propTypes = {
-    visible: PropTypes.bool,
-  }
+const Box = () => {
+  const style = {
+    width: '200px',
+    display: this.props.visible ? 'block' : 'none',
+    height: '200px',
+    backgroundColor: 'red',
+  };
+  return (<div style={style} />);
+};
 
-  render() {
-    const style = {
-      width: '200px',
-      display: this.props.visible ? 'block' : 'none',
-      height: '200px',
-      backgroundColor: 'red',
-    };
-    return (<div style={style}></div>);
-  }
-}
+Box.propTypes = {
+  visible: PropTypes.bool,
+};
 
 class Demo extends React.Component {
   state = {
@@ -108,14 +106,14 @@ class Demo extends React.Component {
       <div>
         <label><input
           type="checkbox"
-          onChange={this.toggle.bind(this, 'visible')}
+          onChange={() => { this.toggle('visible'); }}
           checked={this.state.visible}
         />
           show</label>
         &nbsp;
         <label><input
           type="checkbox"
-          onChange={this.toggle.bind(this, 'exclusive')}
+          onChange={() => { this.toggle('exclusive'); }}
           checked={this.state.exclusive}
         />
           exclusive</label>

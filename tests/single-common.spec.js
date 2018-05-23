@@ -4,8 +4,8 @@ import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils';
-import './index.spec.css';
 import $ from 'jquery';
+import './index.spec.css';
 
 export default function test(createClass, title) {
   function getOpacity(node) {
@@ -51,17 +51,18 @@ export default function test(createClass, title) {
             remove: true,
           });
 
-          const innerInstance = ReactDOM.render(<Component/>, innerDiv);
-          expect(TestUtils.scryRenderedDOMComponentsWithTag(innerInstance,
-            'span')[0]).not.to.be.ok();
-          const child = TestUtils.findRenderedDOMComponentWithTag(innerInstance, 'div');
-          expect(getOpacity(ReactDOM.findDOMNode(child))).not.to.be(1);
-          setTimeout(() => {
-            expect(getOpacity(ReactDOM.findDOMNode(child))).to.be(1);
-            ReactDOM.unmountComponentAtNode(innerDiv);
-            document.body.removeChild(innerDiv);
-            done();
-          }, 900);
+          ReactDOM.render(<Component />, innerDiv, (innerInstance) => {
+            expect(TestUtils.scryRenderedDOMComponentsWithTag(innerInstance,
+              'span')[0]).not.to.be.ok();
+            const child = TestUtils.findRenderedDOMComponentWithTag(innerInstance, 'div');
+            expect(getOpacity(ReactDOM.findDOMNode(child))).not.to.be(1);
+            setTimeout(() => {
+              expect(getOpacity(ReactDOM.findDOMNode(child))).to.be(1);
+              ReactDOM.unmountComponentAtNode(innerDiv);
+              document.body.removeChild(innerDiv);
+              done();
+            }, 900);
+          });
         });
       });
 
@@ -76,7 +77,8 @@ export default function test(createClass, title) {
       describe('when toggle transitionEnter', () => {
         it('should remove children after transition', (done) => {
           if (window.callPhantom) {
-            return done();
+            done();
+            return;
           }
           instance.setState({ transitionEnter: false });
           expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'div')[0]).to.be.ok();
