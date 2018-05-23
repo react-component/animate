@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
+import toArray from 'rc-util/lib/Children/toArray';
 
 import AnimateChild from './AnimateChild';
 import { cloneProps, mergeChildren } from './util';
@@ -59,13 +60,16 @@ class Animate extends React.Component {
     }
 
     processState('children', (children) => {
-      const prevChildren = prevState.children;
-      newState.children = (React.Children.toArray(children) || [])
-        .filter(node => node);
+      const prevChildren = prevState.mergedChildren;
+      const currentChildren = toArray(children).filter(node => node);
 
       // Merge prev children to keep the animation
-      newState.children = mergeChildren(prevChildren, newState.children);
-      console.log('children update:', newState);
+      newState.mergedChildren = mergeChildren(prevChildren, currentChildren);
+      const toKey = ({ key }) => key;
+      console.log('children update - prev:', prevChildren.map(toKey));
+      console.log('children update - current:', currentChildren.map(toKey));
+      console.log('children update - merge:', newState.mergedChildren.map(toKey));
+      console.log('-----------------------');
     });
 
     return newState;
@@ -73,30 +77,51 @@ class Animate extends React.Component {
 
   state = {
     appeared: true,
-    children: [],
+    mergedChildren: [],
   };
 
   componentDidMount() {
-    // Next animation update will not rigger appear
-    setTimeout(() => {
-      this.setState({ appeared: false });
-    });
+    // No need to re-render
+    this.state.appeared = false;
   }
 
+  onChildLeaved = (key) => {
+    // Remove child which not exist anymore
+    if (!this.hasChild(key)) {
+      const { mergedChildren } = this.state;
+      this.setState({
+        mergedChildren: mergedChildren.filter(node => node.key !== key),
+      });
+    }
+  };
+
+  hasChild = (key) => {
+    const { children } = this.props;
+
+    return toArray(children).some(node => node.key === key);
+  };
+
   render() {
-    const { appeared, children } = this.state;
+    const { appeared, mergedChildren } = this.state;
     const {
       component: Component, componentProps,
       className, style, showProp,
     } = this.props;
 
 
-    const $children = children.map((node) => {
-      if (children.length > 1 && !node.key) {
+    const $children = mergedChildren.map((node) => {
+      if (mergedChildren.length > 1 && !node.key) {
         throw new Error('must set key for <rc-animate> children');
       }
 
-      const show = showProp ? node.props[showProp] : true;
+      let show = true;
+      if (showProp) {
+        show = node.props[showProp];
+      } else if (!this.hasChild(node.key)) {
+        show = false;
+      }
+
+      const key = node.key || defaultKey;
 
       return (
         <AnimateChild
@@ -105,7 +130,10 @@ class Animate extends React.Component {
           show={show}
           className={node.props.className}
           style={node.props.style}
-          key={node.key || defaultKey}
+          key={key}
+
+          animateKey={key}
+          onChildLeaved={this.onChildLeaved}
         >
           {node}
         </AnimateChild>

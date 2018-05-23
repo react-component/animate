@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 import classNames from 'classnames';
+import classes from 'component-classes';
 
-import { cloneProps, getTransitionName, supportTransition } from './util';
+import {
+  cloneProps, getTransitionName,
+  supportTransition, animationEndName, transitionEndName,
+} from './util';
 
 const clonePropList = [
   'appeared',
@@ -29,6 +33,9 @@ class AnimateChild extends React.Component {
     exclusive: PropTypes.bool,
     appeared: PropTypes.bool,
     showProp: PropTypes.string,
+
+    animateKey: PropTypes.any,
+    onChildLeaved: PropTypes.func,
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -53,6 +60,8 @@ class AnimateChild extends React.Component {
     }
 
     function pushTransition(transition) {
+      if (!supportTransition) return;
+
       newState.transitionQueue = newState.transitionQueue || prevState.transitionQueue;
       if (exclusive) {
         newState.transitionQueue = [transition];
@@ -70,6 +79,7 @@ class AnimateChild extends React.Component {
     processState('appeared', (isAppeared) => {
       if (isAppeared && transitionAppear) {
         pushTransition({
+          type: 'appear',
           basic: getTransitionName(transitionName, 'appear'),
           active: getTransitionName(transitionName, 'appear-active'),
         });
@@ -80,20 +90,27 @@ class AnimateChild extends React.Component {
     processState('show', (show) => {
       if (!appeared && show && transitionEnter) {
         pushTransition({
+          type: 'enter',
           basic: getTransitionName(transitionName, 'enter'),
           active: getTransitionName(transitionName, 'enter-active'),
         });
       } else if (!appeared && !show && transitionLeave) {
-        pushTransition({
-          basic: getTransitionName(transitionName, 'leave'),
-          active: getTransitionName(transitionName, 'leave-active'),
-        });
+        if (!supportTransition || !transitionLeave) {
+          // Call leave directly if not support or not set leave
+          nextProps.onChildLeaved(nextProps.animateKey);
+        } else {
+          pushTransition({
+            type: 'leave',
+            basic: getTransitionName(transitionName, 'leave'),
+            active: getTransitionName(transitionName, 'leave-active'),
+          });
+        }
       }
     });
 
     // exclusive
     processState('exclusive', (isExclusive) => {
-      if (isExclusive) {
+      if (supportTransition && isExclusive) {
         const transitionQueue = newState.transitionQueue || prevState.transitionQueue;
         newState.transitionQueue = transitionQueue.slice(-1);
         if (transitionQueue.length !== 1) {
@@ -103,6 +120,15 @@ class AnimateChild extends React.Component {
     });
 
     return newState;
+  }
+
+  constructor() {
+    super();
+
+    // [Legacy] Since old code addListener on the element.
+    // To avoid break the behaviour that component not handle animation/transition
+    // also can handle the animate, let keep the logic.
+    this.$prevEle = null;
   }
 
   state = {
@@ -119,10 +145,37 @@ class AnimateChild extends React.Component {
     this.onDomUpdated();
   }
 
+  componentWillUnmount() {
+    this.cleanDomEvent();
+  }
+
   onDomUpdated = () => {
     const { transitionQueue, transitionActive } = this.state;
     const transition = transitionQueue[0];
 
+    // [Legacy] Since origin code use js to set `className`.
+    // This caused that any component without support `className` can be forced set.
+    // Let's keep the logic.
+    const $ele = ReactDOM.findDOMNode(this);
+    if (transition && $ele) {
+      const nodeClasses = classes($ele);
+      nodeClasses.add(transition.basic);
+
+      if (transitionActive) {
+        nodeClasses.add(transition.active);
+      }
+    }
+
+    // [Legacy] Add animation/transition event by dom level
+    if (supportTransition && this.$prevEle !== $ele) {
+      this.cleanDomEvent();
+
+      this.$prevEle = $ele;
+      this.$prevEle.addEventListener(animationEndName, this.onMotionEnd);
+      this.$prevEle.addEventListener(transitionEndName, this.onMotionEnd);
+    }
+
+    // Update transition active class
     if (transition && !transitionActive) {
       // requestAnimationFrame not support in IE 9-
       // Use setTimeout instead
@@ -138,17 +191,39 @@ class AnimateChild extends React.Component {
 
     const $ele = ReactDOM.findDOMNode(this);
     if ($ele === target) {
+      const { onChildLeaved, animateKey } = this.props;
+      const transition = transitionQueue[0];
+
+      // Update transition queue
       this.setState({
         transitionQueue: transitionQueue.slice(1),
       });
+
+      // [Legacy] Same as above, we need call js to remove the class
+      if (transition) {
+        const nodeClasses = classes($ele);
+        nodeClasses.remove(transition.basic);
+        nodeClasses.remove(transition.active);
+      }
+
+      // Trigger parent event
+      if (transition.type === 'leave') {
+        onChildLeaved(animateKey);
+      }
     }
   }
 
+  cleanDomEvent = () => {
+    if (this.$prevEle && supportTransition) {
+      this.$prevEle.removeEventListener(animationEndName, this.onMotionEnd);
+      this.$prevEle.removeEventListener(transitionEndName, this.onMotionEnd);
+    }
+  };
 
   render() {
     const { child, transitionQueue, transitionActive } = this.state;
     const { showProp } = this.props;
-    const { className, onTransitionEnd, onAnimationEnd } = child.props || {};
+    const { className } = child.props || {};
 
     // Class name
     const transition = transitionQueue[0];
@@ -166,23 +241,15 @@ class AnimateChild extends React.Component {
     }
 
     // Clone child
-    return React.cloneElement(child, {
+    const newChildProps = {
       className: connectClassName,
-      [showProp]: show,
+    };
 
-      onTransitionEnd: (...args) => {
-        this.onMotionEnd(...args);
-        if (onTransitionEnd) {
-          onTransitionEnd(...args);
-        }
-      },
-      onAnimationEnd: (...args) => {
-        this.onMotionEnd(...args);
-        if (onAnimationEnd) {
-          onAnimationEnd(...args);
-        }
-      },
-    });
+    if (showProp) {
+      newChildProps[showProp] = show;
+    }
+
+    return React.cloneElement(child, newChildProps);
   }
 }
 

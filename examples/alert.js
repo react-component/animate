@@ -18,8 +18,7 @@ class Alert extends React.Component {
 
   static defaultProps = {
     onEnd() {},
-    // time: 2000,
-    time: 2000000,
+    time: 2000,
     type: 'success',
   }
 
@@ -123,8 +122,7 @@ function alertFn(i) {
 }
 
 function onClick() {
-  // for (let i = 0; i < 4; i++) {
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 4; i++) {
     setTimeout(alertFn(i), 1000 * i);
   }
 }

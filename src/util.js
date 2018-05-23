@@ -1,23 +1,62 @@
-import React from 'react';
+import toArray from 'rc-util/lib/Children/toArray';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
-// ================== Browser ==================
-function checkTransitionSupport() {
-  if (typeof document === 'undefined') {
-    return false;
-  }
+// ================= Transition =================
+// Event wrapper. Copy from react source code
+function makePrefixMap(styleProp, eventName) {
+  const prefixes = {};
 
-  const dom = document.createElement('span');
+  prefixes[styleProp.toLowerCase()] = eventName.toLowerCase();
+  prefixes[`Webkit${styleProp}`] = `webkit${eventName}`;
+  prefixes[`Moz${styleProp}`] = `moz${eventName}`;
+  prefixes[`ms${styleProp}`] = `MS${eventName}`;
+  prefixes[`O${styleProp}`] = `o${eventName.toLowerCase()}`;
 
-  const transitionList = [
-    'WebkitTransition', 'MozTransition', 'OTransition', 'transition',
-  ];
-
-  return transitionList.some(name => name in dom.style);
+  return prefixes;
 }
 
-export const supportTransition = checkTransitionSupport();
+const vendorPrefixes = {
+  animationend: makePrefixMap('Animation', 'AnimationEnd'),
+  transitionend: makePrefixMap('Transition', 'TransitionEnd'),
+};
 
-// =================== Node ====================
+let style = {};
+
+if (canUseDOM) {
+  style = document.createElement('div').style;
+
+  if (!('AnimationEvent' in window)) {
+    delete vendorPrefixes.animationend.animation;
+  }
+
+  if (!('TransitionEvent' in window)) {
+    delete vendorPrefixes.transitionend.transition;
+  }
+}
+
+const prefixedEventNames = {};
+
+function getVendorPrefixedEventName(eventName) {
+  const prefixMap = vendorPrefixes[eventName];
+
+  const stylePropList = Object.keys(prefixMap);
+  const len = stylePropList.length;
+  for (let i = 0; i < len; i += 1) {
+    const styleProp = stylePropList[i];
+    if (Object.prototype.hasOwnProperty.call(prefixMap, styleProp) && styleProp in style) {
+      prefixedEventNames[eventName] = prefixMap[styleProp];
+      return prefixedEventNames[eventName];
+    }
+  }
+
+  return '';
+}
+
+export const animationEndName = getVendorPrefixedEventName('animationend');
+export const transitionEndName = getVendorPrefixedEventName('transitionend');
+export const supportTransition = !!(animationEndName && transitionEndName);
+
+// ==================== Node ====================
 /**
  * [Legacy] Find the same children in both prev & next list.
  * Insert not find one before the find one, otherwise in the end. For example:
@@ -26,8 +65,17 @@ export const supportTransition = checkTransitionSupport();
  * -> [1,2,4,3]
  */
 export function mergeChildren(prev, next) {
-  const prevList = React.Children.toArray(prev) || [];
-  const nextList = React.Children.toArray(next) || [];
+  const prevList = toArray(prev);
+  const nextList = toArray(next);
+
+  // Skip if is single children
+  if (
+    prevList.length === 1 && nextList.length === 1 &&
+    prevList[0].key === nextList[0].key
+  ) {
+    return nextList;
+  }
+
   let mergeList = [];
   const nextChildrenMap = {};
   let missMatchChildrenList = [];
@@ -38,9 +86,9 @@ export function mergeChildren(prev, next) {
       if (missMatchChildrenList.length) {
         nextChildrenMap[prevNode.key] = missMatchChildrenList;
         missMatchChildrenList = [];
-      } else {
-        missMatchChildrenList.push(prevNode);
       }
+    } else {
+      missMatchChildrenList.push(prevNode);
     }
   });
 
