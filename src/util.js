@@ -1,4 +1,8 @@
 function checkTransitionSupport() {
+  if (typeof document === 'undefined') {
+    return false;
+  }
+
   const dom = document.createElement('span');
 
   const transitionList = [

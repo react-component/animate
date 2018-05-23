@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 import classNames from 'classnames';
@@ -7,6 +8,7 @@ import { cloneProps, getTransitionName, supportTransition } from './util';
 
 const clonePropList = [
   'show',
+  'exclusive',
   'children',
 ];
 
@@ -87,6 +89,17 @@ class AnimateChild extends React.Component {
       }
     });
 
+    // exclusive
+    processState('exclusive', (isExclusive) => {
+      if (isExclusive) {
+        const transitionQueue = newState.transitionQueue || prevState.transitionQueue;
+        newState.transitionQueue = transitionQueue.slice(-1);
+        if (transitionQueue.length !== 1) {
+          newState.transitionActive = false;
+        }
+      }
+    });
+
     return newState;
   }
 
@@ -117,7 +130,6 @@ class AnimateChild extends React.Component {
   }
 
   onDomUpdated = () => {
-    console.log('did update!!!', this.state);
     const { transitionQueue, transitionActive } = this.state;
     const transition = transitionQueue[0];
 
@@ -130,9 +142,18 @@ class AnimateChild extends React.Component {
     }
   };
 
-  onMotionEnd = () => {
-    console.log('onMotionEnd');
+  onMotionEnd = ({ target }) => {
+    const { transitionQueue } = this.state;
+    if (!transitionQueue.length) return;
+
+    const $ele = ReactDOM.findDOMNode(this);
+    if ($ele === target) {
+      this.setState({
+        transitionQueue: transitionQueue.slice(1),
+      });
+    }
   }
+
 
   render() {
     const { child, transitionQueue, transitionActive } = this.state;
@@ -147,10 +168,17 @@ class AnimateChild extends React.Component {
       transitionActive && transition.active,
     ) : className;
 
+    let show = true;
+    if (supportTransition && transition) {
+      show = true;
+    } else {
+      show = child.props[showProp];
+    }
+
     // Clone child
     return React.cloneElement(child, {
       className: connectClassName,
-      [showProp]: supportTransition ? !!transition : child.props[showProp],
+      [showProp]: show,
 
       onTransitionEnd: (...args) => {
         this.onMotionEnd(...args);
