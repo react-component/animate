@@ -30,10 +30,7 @@ class AnimateChild extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {
-      appear, enter, leave,
-      prevProps = {},
-    } = prevState;
+    const { appeared, prevProps = {} } = prevState;
     const {
       transitionName, transitionAppear, transitionEnter, transitionLeave,
       exclusive,
@@ -71,17 +68,20 @@ class AnimateChild extends React.Component {
         }
       }
 
-      if (show && !appear && transitionAppear) {
-        pushTransition({
-          basic: getTransitionName(transitionName, 'appear'),
-          active: getTransitionName(transitionName, 'appear-active'),
-        });
-      } else if (show && !enter && transitionEnter) {
+      if (!appeared && show) {
+        newState.appeared = true;
+        if (transitionAppear) {
+          pushTransition({
+            basic: getTransitionName(transitionName, 'appear'),
+            active: getTransitionName(transitionName, 'appear-active'),
+          });
+        }
+      } else if (appeared && show && transitionEnter) {
         pushTransition({
           basic: getTransitionName(transitionName, 'enter'),
           active: getTransitionName(transitionName, 'enter-active'),
         });
-      } else if (!show && !leave && transitionLeave) {
+      } else if (appeared && !show && transitionLeave) {
         pushTransition({
           basic: getTransitionName(transitionName, 'leave'),
           active: getTransitionName(transitionName, 'leave-active'),
@@ -103,22 +103,12 @@ class AnimateChild extends React.Component {
     return newState;
   }
 
-  constructor() {
-    super();
-
-    // Since React 16.3+ use static getDerivedStateFromProps. We need cache ourselves.
-    this._prevChild = null;
-    this._cachedChild = null;
-  }
-
   state = {
     child: null,
     transitionQueue: [],
     transitionActive: false,
 
-    appear: false, // TODO: handle this
-    enter: false,
-    leave: false,
+    appeared: false,
   }
 
   componentDidMount() {
