@@ -162,7 +162,7 @@ class AnimateChild extends React.Component {
 
     // Class name
     const transition = transitionQueue[0];
-    const connectClassName = transition ? classNames(
+    const connectClassName = (supportTransition && transition) ? classNames(
       className,
       transition.basic,
       transitionActive && transition.active,
