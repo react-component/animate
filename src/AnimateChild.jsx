@@ -69,6 +69,12 @@ class AnimateChild extends React.Component {
       if (exclusive) {
         newState.transitionQueue = [transition];
         newState.transitionActive = false;
+
+        // Remove the handler
+        if (prevState.currentTransitionHandler && prevState.currentTransitionHandler.stop) {
+          prevState.currentTransitionHandler.stop();
+        }
+        newState.currentTransitionHandler = null
       } else {
         newState.transitionQueue.push(transition);
       }
@@ -135,14 +141,15 @@ class AnimateChild extends React.Component {
 
     // Keep the current transition
     this.currentTransition = null;
-    // Keep external handler
-    this.currentTransitionHanlder = null;
   }
 
   state = {
     child: null,
     transitionQueue: [],
     transitionActive: false,
+
+    // Customize animation handler
+    currentTransitionHandler: null,
   }
 
   componentDidMount() {
@@ -186,6 +193,7 @@ class AnimateChild extends React.Component {
       }
 
       // Check if transition update
+      let hasHandler = false;
       if (this.currentTransition !== transition) {
         this.currentTransition = transition;
 
@@ -196,7 +204,10 @@ class AnimateChild extends React.Component {
               this.onMotionEnd({ target: $ele });
             });
             if (handler) {
-              this.currentTransitionHanlder = handler;
+              this.setState({
+                currentTransitionHandler: handler,
+              });
+              hasHandler = true;
             }
           }
         };
@@ -216,30 +227,30 @@ class AnimateChild extends React.Component {
       }
 
       // Call onMotionEnd directly
-      if (!supportTransition && !this.currentTransitionHanlder) {
+      if (!supportTransition && !hasHandler) {
         this.onMotionEnd({ target: $ele });
       }
     }
   };
 
   onMotionEnd = ({ target }) => {
-    const { transitionQueue } = this.state;
+    const { transitionQueue, currentTransitionHandler } = this.state;
     if (!transitionQueue.length) return;
-
-    // Remove the handler
-    if (this.currentTransitionHanlder && this.currentTransitionHanlder.stop) {
-      this.currentTransitionHanlder.stop();
-    }
-    this.currentTransitionHanlder = null;
 
     const $ele = ReactDOM.findDOMNode(this);
     if ($ele === target) {
       const { onChildLeaved, animateKey } = this.props;
       const transition = transitionQueue[0];
 
+      // Remove the handler
+      if (currentTransitionHandler && currentTransitionHandler.stop) {
+        currentTransitionHandler.stop();
+      }
+
       // Update transition queue
       this.setState({
         transitionQueue: transitionQueue.slice(1),
+        currentTransitionHandler: null,
       });
 
       // [Legacy] Same as above, we need call js to remove the class
