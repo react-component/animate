@@ -133,8 +133,10 @@ class AnimateChild extends React.Component {
     // also can handle the animate, let keep the logic.
     this.$prevEle = null;
 
-    // Check if transition first come
+    // Keep the current transition
     this.currentTransition = null;
+    // Keep external handler
+    this.currentTransitionHanlder = null;
   }
 
   state = {
@@ -187,13 +189,21 @@ class AnimateChild extends React.Component {
       if (this.currentTransition !== transition) {
         this.currentTransition = transition;
 
-        if (transition.type === 'appear' && onChildAppear) {
-          onChildAppear(animateKey, $ele);
-        } else if (transition.type === 'enter' && onChildEnter) {
-          onChildEnter(animateKey, $ele);
-        } else if (transition.type === 'leave' && onChildLeave) {
-          onChildLeave(animateKey, $ele);
-        }
+        // Trigger customize animation
+        const mapAnimation = (type, func) => {
+          if (transition.type === type && func) {
+            const handler = func(animateKey, $ele, () => {
+              this.onMotionEnd({ target: $ele });
+            });
+            if (handler) {
+              this.currentTransitionHanlder = handler;
+            }
+          }
+        };
+
+        mapAnimation('appear', onChildAppear);
+        mapAnimation('enter', onChildEnter);
+        mapAnimation('leave', onChildLeave);
       }
 
       // Update transition active class
@@ -206,7 +216,7 @@ class AnimateChild extends React.Component {
       }
 
       // Call onMotionEnd directly
-      if (!supportTransition) {
+      if (!supportTransition && !this.currentTransitionHanlder) {
         this.onMotionEnd({ target: $ele });
       }
     }
@@ -215,6 +225,12 @@ class AnimateChild extends React.Component {
   onMotionEnd = ({ target }) => {
     const { transitionQueue } = this.state;
     if (!transitionQueue.length) return;
+
+    // Remove the handler
+    if (this.currentTransitionHanlder && this.currentTransitionHanlder.stop) {
+      this.currentTransitionHanlder.stop();
+    }
+    this.currentTransitionHanlder = null;
 
     const $ele = ReactDOM.findDOMNode(this);
     if ($ele === target) {

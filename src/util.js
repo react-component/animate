@@ -116,7 +116,7 @@ export function cloneProps(props, propList) {
   return newProps;
 }
 
-export function getTransitionName(transitionName, transitionType) {
+export function getTransitionName(transitionName = '', transitionType) {
   if (typeof transitionName === 'object') {
     return transitionName[transitionType];
   }

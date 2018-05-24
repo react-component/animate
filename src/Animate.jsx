@@ -95,6 +95,27 @@ class Animate extends React.Component {
     }
   };
 
+  onAnimationAction = (func, $ele, childCallback) => {
+    if (func) {
+      const animation = func($ele, childCallback);
+      return animation || {};
+    }
+    return null;
+  };
+
+  onChildAppear = (key, $ele, childCallback) => {
+    const { appear } = this.props.animation;
+    return this.onAnimationAction(appear, $ele, childCallback);
+  };
+  onChildEnter = (key, $ele, childCallback) => {
+    const { enter } = this.props.animation;
+    return this.onAnimationAction(enter, $ele, childCallback);
+  };
+  onChildLeave = (key, $ele, childCallback) => {
+    const { leave } = this.props.animation;
+    return this.onAnimationAction(leave, $ele, childCallback);
+  };
+
   hasChild = (key) => {
     const { children } = this.props;
 
@@ -134,6 +155,10 @@ class Animate extends React.Component {
 
           animateKey={key}
           onChildLeaved={this.onChildLeaved}
+
+          onChildAppear={this.onChildAppear}
+          onChildEnter={this.onChildEnter}
+          onChildLeave={this.onChildLeave}
         >
           {node}
         </AnimateChild>
