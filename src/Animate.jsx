@@ -154,7 +154,7 @@ class Animate extends React.Component {
           style={node.props.style}
           key={key}
 
-          animateKey={key}
+          animateKey={node.key} // Keep trans origin key
           onChildLeaved={this.onChildLeaved}
 
           onChildAppear={this.onChildAppear}

@@ -99,7 +99,7 @@ class AnimateChild extends React.Component {
           basic: getTransitionName(transitionName, 'enter'),
           active: getTransitionName(transitionName, 'enter-active'),
         });
-      } else if (!appeared && !show && transitionLeave) {
+      } else if (!appeared && !show) {
         if (!supportTransition || !transitionLeave) {
           // Call leave directly if not support or not set leave
           nextProps.onChildLeaved(nextProps.animateKey);

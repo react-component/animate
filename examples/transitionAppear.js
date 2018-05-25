@@ -6,16 +6,16 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import './assets/slow.less';
 
-const Box = () => {
-  console.log('render', this.props.visible);
+const Box = (props) => {
+  console.log('render', props.visible);
   const style = {
-    display: this.props.visible ? 'block' : 'none',
+    display: props.visible ? 'block' : 'none',
     marginTop: '20px',
     width: '200px',
     height: '200px',
     backgroundColor: 'red',
   };
-  return (<div style={style}/>);
+  return (<div style={style} />);
 };
 
 Box.propTypes = {
