@@ -70,10 +70,6 @@ class AnimateChild extends React.Component {
         newState.transitionQueue = [transition];
         newState.transitionActive = false;
 
-        // Remove the handler
-        if (prevState.currentTransitionHandler && prevState.currentTransitionHandler.stop) {
-          prevState.currentTransitionHandler.stop();
-        }
         newState.currentTransitionHandler = null
       } else {
         newState.transitionQueue.push(transition);
@@ -153,24 +149,32 @@ class AnimateChild extends React.Component {
   }
 
   componentDidMount() {
-    this.onDomUpdated();
+    this.onDomUpdated({}, {});
   }
 
-  componentDidUpdate() {
-    this.onDomUpdated();
+  componentDidUpdate(prevProps, prevState) {
+    this.onDomUpdated(prevProps, prevState);
   }
 
   componentWillUnmount() {
     this.cleanDomEvent();
   }
 
-  onDomUpdated = () => {
-    const { transitionQueue, transitionActive } = this.state;
+  onDomUpdated = (prevProps, prevState) => {
+    const { transitionQueue, transitionActive, currentTransitionHandler } = this.state;
     const { animateKey, onChildAppear, onChildEnter, onChildLeave } = this.props;
 
     const transition = transitionQueue[0];
 
     const $ele = ReactDOM.findDOMNode(this);
+
+    // Clean up if currentTransitionHandler set to null
+    if (
+      prevState.currentTransitionHandler &&
+      prevState.currentTransitionHandler !== currentTransitionHandler
+    ) {
+      prevState.currentTransitionHandler.stop();
+    }
 
     if (transition && $ele) {
       // [Legacy] Since origin code use js to set `className`.
@@ -234,18 +238,13 @@ class AnimateChild extends React.Component {
   };
 
   onMotionEnd = ({ target }) => {
-    const { transitionQueue, currentTransitionHandler } = this.state;
+    const { transitionQueue } = this.state;
     if (!transitionQueue.length) return;
 
     const $ele = ReactDOM.findDOMNode(this);
     if ($ele === target) {
       const { onChildLeaved, animateKey } = this.props;
       const transition = transitionQueue[0];
-
-      // Remove the handler
-      if (currentTransitionHandler && currentTransitionHandler.stop) {
-        currentTransitionHandler.stop();
-      }
 
       // Update transition queue
       this.setState({
