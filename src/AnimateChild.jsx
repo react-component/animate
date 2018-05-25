@@ -224,20 +224,20 @@ class AnimateChild extends React.Component {
         mapAnimation('appear', onChildAppear);
         mapAnimation('enter', onChildEnter);
         mapAnimation('leave', onChildLeave);
-      }
 
-      // Update transition active class
-      if (!transitionActive) {
-        // requestAnimationFrame not support in IE 9-
-        // Use setTimeout instead
-        setTimeout(() => {
-          this.setState({transitionActive: true});
-        }, 0);
-      }
+        // Update transition active class
+        if (!transitionActive) {
+          // requestAnimationFrame not support in IE 9-
+          // Use setTimeout instead
+          setTimeout(() => {
+            this.setState({transitionActive: true});
+          }, 0);
+        }
 
-      // Call onMotionEnd directly
-      if (!supportTransition && !hasHandler) {
-        this.onMotionEnd({ target: $ele });
+        // Call onMotionEnd directly
+        if (!supportTransition && !hasHandler) {
+          this.onMotionEnd({ target: $ele });
+        }
       }
     }
   };
