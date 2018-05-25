@@ -34,14 +34,14 @@ export default function test(createClass, title) {
         }
       });
 
-      describe('when transitionAppear', () => {
+      describe.only('when transitionAppear', () => {
         it('should render children', () => {
           expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'span')[0]).not.to.be.ok();
           const child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
           expect(getOpacity(ReactDOM.findDOMNode(child))).to.be(1);
         });
 
-        it('should anim children', (done) => {
+        it.only('should anim children', (done) => {
           const innerDiv = document.createElement('div');
           document.body.appendChild(innerDiv);
           const Component = createClass({
@@ -52,6 +52,7 @@ export default function test(createClass, title) {
           });
 
           ReactDOM.render(<Component />, innerDiv, (innerInstance) => {
+            console.log('>>>', innerInstance);
             expect(TestUtils.scryRenderedDOMComponentsWithTag(innerInstance,
               'span')[0]).not.to.be.ok();
             const child = TestUtils.findRenderedDOMComponentWithTag(innerInstance, 'div');

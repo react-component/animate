@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
-import CssAnimation from 'css-animation';
 import Animate from '../';
+import { supportTransition } from '../src/util';
 import './index.spec.css';
 
 class Todo extends React.Component {
@@ -104,7 +104,7 @@ describe('Animate', () => {
     expect(TestUtils.scryRenderedDOMComponentsWithClass(list, 'item').length).to.be(4);
   });
 
-  if (!CssAnimation.isCssAnimationSupported) {
+  if (!supportTransition) {
     return;
   }
 

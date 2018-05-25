@@ -50,6 +50,7 @@ class Animate extends React.Component {
     const newState = {
       prevProps: cloneProps(nextProps, clonePropList),
     };
+    const { showProp } = nextProps;
 
     function processState(propName, updater) {
       if (prevProps[propName] !== nextProps[propName]) {
@@ -60,8 +61,17 @@ class Animate extends React.Component {
     }
 
     processState('children', (children) => {
-      const prevChildren = prevState.mergedChildren;
       const currentChildren = toArray(children).filter(node => node);
+      const prevChildren = prevState.mergedChildren.filter((node) => {
+        // Remove prev child if not show anymore
+        if (
+          currentChildren.every(({ key }) => key !== node.key) &&
+          showProp && !node.props[showProp]
+        ) {
+          return false;
+        }
+        return true;
+      });
 
       // Merge prev children to keep the animation
       newState.mergedChildren = mergeChildren(prevChildren, currentChildren);

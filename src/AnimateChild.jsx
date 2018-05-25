@@ -100,7 +100,7 @@ class AnimateChild extends React.Component {
           active: getTransitionName(transitionName, 'enter-active'),
         });
       } else if (!appeared && !show) {
-        if (!supportTransition || !transitionLeave) {
+        if (!transitionLeave) {
           // Call leave directly if not support or not set leave
           nextProps.onChildLeaved(nextProps.animateKey);
         } else {
@@ -108,6 +108,9 @@ class AnimateChild extends React.Component {
             type: 'leave',
             basic: getTransitionName(transitionName, 'leave'),
             active: getTransitionName(transitionName, 'leave-active'),
+            postAction: () => {
+              nextProps.onChildLeaved(nextProps.animateKey);
+            },
           });
         }
       }
@@ -115,7 +118,7 @@ class AnimateChild extends React.Component {
 
     // exclusive
     processState('exclusive', (isExclusive) => {
-      if (supportTransition && isExclusive) {
+      if (isExclusive) {
         const transitionQueue = newState.transitionQueue || prevState.transitionQueue;
         newState.transitionQueue = transitionQueue.slice(-1);
         if (transitionQueue.length !== 1) {
@@ -157,6 +160,7 @@ class AnimateChild extends React.Component {
   }
 
   componentWillUnmount() {
+    this._destroy = true;
     this.cleanDomEvent();
   }
 
@@ -255,10 +259,12 @@ class AnimateChild extends React.Component {
       const transition = transitionQueue[0];
 
       // Update transition queue
-      this.setState({
-        transitionQueue: transitionQueue.slice(1),
-        currentTransitionHandler: null,
-      });
+      if (!this._destroy) {
+        this.setState({
+          transitionQueue: transitionQueue.slice(1),
+          currentTransitionHandler: null,
+        });
+      }
 
       // [Legacy] Same as above, we need call js to remove the class
       if (transition) {

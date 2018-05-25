@@ -1,8 +1,8 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
 import React from 'react';
-import CssAnimation from 'css-animation';
 import Animate from '../index';
+import { supportTransition } from '../src/util';
 
 import './index.spec.css';
 
@@ -16,6 +16,7 @@ function createClass(options) {
     }
 
     render() {
+      console.log('!!!!!!!!!!!', options.remove && !this.state.transitionEnter);
       return (
         <Animate
           transitionAppear={!!this.state.transitionAppear}
@@ -28,6 +29,7 @@ function createClass(options) {
     }
   };
 }
-if (CssAnimation.isCssAnimationSupported) {
+
+if (supportTransition) {
   single(createClass, 'transition');
 }
