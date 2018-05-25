@@ -282,7 +282,7 @@ class AnimateChild extends React.Component {
   };
 
   render() {
-    const { child, transitionQueue, transitionActive } = this.state;
+    const { child, transitionQueue, transitionActive, currentTransitionHandler } = this.state;
     const { showProp } = this.props;
     const { className } = child.props || {};
 
@@ -295,12 +295,16 @@ class AnimateChild extends React.Component {
     ) : className;
 
     let show = true;
-    if (supportTransition && transition) {
+
+    // Keep show when is in transition or has customize animate
+    if (
+      (supportTransition && transition) ||
+      currentTransitionHandler
+    ) {
       show = true;
     } else {
       show = child.props[showProp];
     }
-    console.log('[Child]', !!supportTransition, !!transition);
 
     // Clone child
     const newChildProps = {

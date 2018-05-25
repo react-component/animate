@@ -52,7 +52,6 @@ class Demo extends React.Component {
     });
     return {
       stop() {
-        console.error('enter stop!');
         velocity(node, 'finish');
         // velocity complete is async
         complete();
@@ -78,7 +77,6 @@ class Demo extends React.Component {
     });
     return {
       stop() {
-        console.error('leave stop!');
         velocity(node, 'finish');
         // velocity complete is async
         complete();
