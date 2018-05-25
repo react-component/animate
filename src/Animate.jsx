@@ -136,10 +136,11 @@ class Animate extends React.Component {
       }
 
       let show = true;
-      if (showProp) {
-        show = node.props[showProp];
-      } else if (!this.hasChild(node.key)) {
+
+      if (!this.hasChild(node.key)) {
         show = false;
+      } else if (showProp) {
+        show = node.props[showProp];
       }
 
       const key = node.key || defaultKey;
