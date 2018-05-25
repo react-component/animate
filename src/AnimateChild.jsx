@@ -171,7 +171,8 @@ class AnimateChild extends React.Component {
     // Clean up if currentTransitionHandler set to null
     if (
       prevState.currentTransitionHandler &&
-      prevState.currentTransitionHandler !== currentTransitionHandler
+      prevState.currentTransitionHandler !== currentTransitionHandler &&
+      !currentTransitionHandler
     ) {
       prevState.currentTransitionHandler.stop();
     }
@@ -181,10 +182,10 @@ class AnimateChild extends React.Component {
       // This caused that any component without support `className` can be forced set.
       // Let's keep the logic.
       const nodeClasses = classes($ele);
-      nodeClasses.add(transition.basic);
+      if (transition.basic) nodeClasses.add(transition.basic);
 
       if (transitionActive) {
-        nodeClasses.add(transition.active);
+        if (transition.active) nodeClasses.add(transition.active);
       }
 
       // [Legacy] Add animation/transition event by dom level
@@ -238,8 +239,15 @@ class AnimateChild extends React.Component {
   };
 
   onMotionEnd = ({ target }) => {
-    const { transitionQueue } = this.state;
-    if (!transitionQueue.length) return;
+    const { transitionQueue, currentTransitionHandler } = this.state;
+    if (!transitionQueue.length) {
+      if (currentTransitionHandler) {
+        this.setState({
+          currentTransitionHandler: null,
+        });
+      }
+      return;
+    }
 
     const $ele = ReactDOM.findDOMNode(this);
     if ($ele === target) {
@@ -255,8 +263,8 @@ class AnimateChild extends React.Component {
       // [Legacy] Same as above, we need call js to remove the class
       if (transition) {
         const nodeClasses = classes($ele);
-        nodeClasses.remove(transition.basic);
-        nodeClasses.remove(transition.active);
+        if (transition.basic) nodeClasses.remove(transition.basic);
+        if (transition.active) nodeClasses.remove(transition.active);
       }
 
       // Trigger parent event
@@ -292,6 +300,7 @@ class AnimateChild extends React.Component {
     } else {
       show = child.props[showProp];
     }
+    console.log('[Child]', !!supportTransition, !!transition);
 
     // Clone child
     const newChildProps = {
