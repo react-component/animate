@@ -60,6 +60,7 @@
     "component-classes": "^1.2.6",
     "fbjs": "^0.8.16",
     "prop-types": "15.x",
+    "raf": "^3.4.0",
     "rc-util": "^4.5.0",
     "react-lifecycles-compat": "^3.0.4"
   }

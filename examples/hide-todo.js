@@ -49,7 +49,8 @@ class TodoList extends React.Component {
       { content: 'hello', visible: true },
       { content: 'world', visible: true },
       { content: 'click', visible: true },
-      { content: 'me', visible: true }],
+      { content: 'me', visible: true },
+    ],
   }
 
   handleHide = (i, item) => {

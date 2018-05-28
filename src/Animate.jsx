@@ -105,27 +105,6 @@ class Animate extends React.Component {
     }
   };
 
-  onAnimationAction = (func, $ele, animateDone) => {
-    if (func) {
-      const animation = func($ele, animateDone);
-      return animation || {};
-    }
-    return null;
-  };
-
-  onChildAppear = (key, $ele, animateDone) => {
-    const { appear } = this.props.animation;
-    return this.onAnimationAction(appear, $ele, animateDone);
-  };
-  onChildEnter = (key, $ele, animateDone) => {
-    const { enter } = this.props.animation;
-    return this.onAnimationAction(enter, $ele, animateDone);
-  };
-  onChildLeave = (key, $ele, animateDone) => {
-    const { leave } = this.props.animation;
-    return this.onAnimationAction(leave, $ele, animateDone);
-  };
-
   hasChild = (key) => {
     const { children } = this.props;
 
@@ -136,7 +115,7 @@ class Animate extends React.Component {
     const { appeared, mergedChildren } = this.state;
     const {
       component: Component, componentProps,
-      className, style, showProp,
+      className, style, showProp, animation,
     } = this.props;
 
 
@@ -165,11 +144,8 @@ class Animate extends React.Component {
           key={key}
 
           animateKey={node.key} // Keep trans origin key
+          animation={animation}
           onChildLeaved={this.onChildLeaved}
-
-          onChildAppear={this.onChildAppear}
-          onChildEnter={this.onChildEnter}
-          onChildLeave={this.onChildLeave}
         >
           {node}
         </AnimateChild>

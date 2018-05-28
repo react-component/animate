@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 import classNames from 'classnames';
 import classes from 'component-classes';
+import raf from 'raf';
 
 import {
   cloneProps, getTransitionName,
@@ -15,6 +16,7 @@ const clonePropList = [
   'show',
   'exclusive',
   'children',
+  'animation',
 ];
 
 /**
@@ -35,20 +37,13 @@ class AnimateChild extends React.Component {
     showProp: PropTypes.string,
 
     animateKey: PropTypes.any,
+    animation: PropTypes.object,
     onChildLeaved: PropTypes.func,
-
-    // Customize event handler
-    onChildAppear: PropTypes.func,
-    onChildEnter: PropTypes.func,
-    onChildLeave: PropTypes.func,
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { prevProps = {} } = prevState;
-    const {
-      transitionName, transitionAppear, transitionEnter, transitionLeave,
-      exclusive, appeared,
-    } = nextProps;
+    const { appeared } = nextProps;
 
     const newState = {
       prevProps: cloneProps(nextProps, clonePropList),
@@ -64,16 +59,9 @@ class AnimateChild extends React.Component {
       return false;
     }
 
-    function pushTransition(transition) {
-      newState.transitionQueue = newState.transitionQueue || prevState.transitionQueue;
-      if (exclusive) {
-        newState.transitionQueue = [transition];
-        newState.transitionActive = false;
-
-        newState.currentTransitionHandler = null
-      } else {
-        newState.transitionQueue.push(transition);
-      }
+    function pushEvent(eventType) {
+      newState.eventQueue = newState.eventQueue || prevState.eventQueue;
+      newState.eventQueue.push(eventType);
     }
 
     // Child update. Only set child.
@@ -82,36 +70,18 @@ class AnimateChild extends React.Component {
     });
 
     processState('appeared', (isAppeared) => {
-      if (isAppeared && transitionAppear) {
-        pushTransition({
-          type: 'appear',
-          basic: getTransitionName(transitionName, 'appear'),
-          active: getTransitionName(transitionName, 'appear-active'),
-        });
+      if (isAppeared) {
+        pushEvent('appear');
       }
     });
 
     // Show update
     processState('show', (show) => {
-      if (!appeared && show && transitionEnter) {
-        pushTransition({
-          type: 'enter',
-          basic: getTransitionName(transitionName, 'enter'),
-          active: getTransitionName(transitionName, 'enter-active'),
-        });
-      } else if (!appeared && !show) {
-        if (!transitionLeave) {
-          // Call leave directly if not support or not set leave
-          nextProps.onChildLeaved(nextProps.animateKey);
+      if (!appeared) {
+        if (show) {
+          pushEvent('enter');
         } else {
-          pushTransition({
-            type: 'leave',
-            basic: getTransitionName(transitionName, 'leave'),
-            active: getTransitionName(transitionName, 'leave-active'),
-            postAction: () => {
-              nextProps.onChildLeaved(nextProps.animateKey);
-            },
-          });
+          pushEvent('leave');
         }
       }
     });
@@ -119,11 +89,7 @@ class AnimateChild extends React.Component {
     // exclusive
     processState('exclusive', (isExclusive) => {
       if (isExclusive) {
-        const transitionQueue = newState.transitionQueue || prevState.transitionQueue;
-        newState.transitionQueue = transitionQueue.slice(-1);
-        if (transitionQueue.length !== 1) {
-          newState.transitionActive = false;
-        }
+        // TODO: clean the queue
       }
     });
 
@@ -138,17 +104,14 @@ class AnimateChild extends React.Component {
     // also can handle the animate, let keep the logic.
     this.$prevEle = null;
 
-    // Keep the current transition
-    this.currentTransition = null;
+    this.currentEvent = null;
   }
 
   state = {
     child: null,
-    transitionQueue: [],
-    transitionActive: false,
 
-    // Customize animation handler
-    currentTransitionHandler: null,
+    eventQueue: [],
+    eventActive: false,
   }
 
   componentDidMount() {
@@ -164,121 +127,168 @@ class AnimateChild extends React.Component {
     this.cleanDomEvent();
   }
 
-  onDomUpdated = (prevProps, prevState) => {
-    const { transitionQueue, transitionActive, currentTransitionHandler } = this.state;
-    const { animateKey, onChildAppear, onChildEnter, onChildLeave } = this.props;
-
-    const transition = transitionQueue[0];
+  onDomUpdated = () => {
+    const { eventActive } = this.state;
+    const {
+      transitionName, animation,
+    } = this.props;
 
     const $ele = ReactDOM.findDOMNode(this);
 
-    // Clean up if currentTransitionHandler set to null
-    if (
-      prevState.currentTransitionHandler &&
-      prevState.currentTransitionHandler !== currentTransitionHandler &&
-      !currentTransitionHandler
-    ) {
-      prevState.currentTransitionHandler.stop();
+    // Skip if dom element not ready
+    if (!$ele) return;
+
+    // [Legacy] Add animation/transition event by dom level
+    if (supportTransition && this.$prevEle !== $ele) {
+      this.cleanDomEvent();
+
+      this.$prevEle = $ele;
+      this.$prevEle.addEventListener(animationEndName, this.onMotionEnd);
+      this.$prevEle.addEventListener(transitionEndName, this.onMotionEnd);
     }
 
-    if (transition && $ele) {
-      // [Legacy] Since origin code use js to set `className`.
-      // This caused that any component without support `className` can be forced set.
-      // Let's keep the logic.
+    const currentEvent = this.getCurrentEvent();
+    if (!currentEvent) return;
+
+    const { eventType } = currentEvent;
+
+    // [Legacy] Since origin code use js to set `className`.
+    // This caused that any component without support `className` can be forced set.
+    // Let's keep the logic.
+    function legacyAppendClass() {
+      if (!supportTransition) return;
+
       const nodeClasses = classes($ele);
-      if (transition.basic) nodeClasses.add(transition.basic);
+      const basicClassName = getTransitionName(transitionName, eventType);
+      if (basicClassName) nodeClasses.add(basicClassName);
 
-      if (transitionActive) {
-        if (transition.active) nodeClasses.add(transition.active);
+      if (eventActive) {
+        const activeClassName = getTransitionName(transitionName, `${eventType}-active`);
+        if (activeClassName) nodeClasses.add(activeClassName);
       }
 
-      // [Legacy] Add animation/transition event by dom level
-      if (supportTransition && this.$prevEle !== $ele) {
-        this.cleanDomEvent();
-
-        this.$prevEle = $ele;
-        this.$prevEle.addEventListener(animationEndName, this.onMotionEnd);
-        this.$prevEle.addEventListener(transitionEndName, this.onMotionEnd);
-      }
-
-      // Check if transition update
-      let hasHandler = false;
-      if (this.currentTransition !== transition) {
-        this.currentTransition = transition;
-
-        // Trigger customize animation
-        const mapAnimation = (type, func) => {
-          if (transition.type === type && func) {
-            const handler = func(animateKey, $ele, () => {
-              this.onMotionEnd({ target: $ele });
-            });
-            if (handler) {
-              this.setState({
-                currentTransitionHandler: handler,
-              });
-              hasHandler = true;
-            }
-          }
-        };
-
-        mapAnimation('appear', onChildAppear);
-        mapAnimation('enter', onChildEnter);
-        mapAnimation('leave', onChildLeave);
-
-        // Update transition active class
-        if (!transitionActive) {
-          // requestAnimationFrame not support in IE 9-
-          // Use setTimeout instead
-          setTimeout(() => {
-            this.setState({transitionActive: true});
-          }, 0);
-        }
-
-        // Call onMotionEnd directly
-        if (!supportTransition && !hasHandler) {
-          this.onMotionEnd({ target: $ele });
-        }
-      }
     }
-  };
 
-  onMotionEnd = ({ target }) => {
-    const { transitionQueue, currentTransitionHandler } = this.state;
-    if (!transitionQueue.length) {
-      if (currentTransitionHandler) {
-        this.setState({
-          currentTransitionHandler: null,
-        });
-      }
+    if (this.currentEvent && this.currentEvent.type === eventType) {
+      legacyAppendClass();
       return;
     }
 
-    const $ele = ReactDOM.findDOMNode(this);
-    if ($ele === target) {
-      const { onChildLeaved, animateKey } = this.props;
-      const transition = transitionQueue[0];
+    // Clean up last event environment
+    if (this.currentEvent && this.currentEvent.animateObj && this.currentEvent.animateObj.stop) {
+      this.currentEvent.animateObj.stop();
+    }
 
-      // Update transition queue
-      if (!this._destroy) {
-        this.setState({
-          transitionQueue: transitionQueue.slice(1),
-          currentTransitionHandler: null,
+    // New event come
+    this.currentEvent = {
+      type: eventType,
+    };
+
+    const animationHandler = (animation || {})[eventType];
+    // =============== Check if has customize animation ===============
+    if (animationHandler) {
+      this.currentEvent.animateObj = animationHandler($ele, () => {
+        this.onMotionEnd({ target: $ele });
+      });
+
+    // ==================== Use transition instead ====================
+    } else if (supportTransition) {
+      legacyAppendClass();
+      if (!eventActive) {
+        // Trigger `eventActive` in next frame
+        raf(() => {
+          if (this.currentEvent && this.currentEvent.type === eventType) {
+            this.setState({ eventActive: true });
+          }
         });
       }
 
-      // [Legacy] Same as above, we need call js to remove the class
-      if (transition) {
-        const nodeClasses = classes($ele);
-        if (transition.basic) nodeClasses.remove(transition.basic);
-        if (transition.active) nodeClasses.remove(transition.active);
-      }
-
-      // Trigger parent event
-      if (transition.type === 'leave') {
-        onChildLeaved(animateKey);
-      }
+    // ======================= Just next action =======================
+    } else {
+      this.onMotionEnd({ target: $ele });
     }
   }
+
+  onMotionEnd = ({ target }) => {
+    const { transitionName, onChildLeaved, animateKey } = this.props;
+    const currentEvent = this.getCurrentEvent();
+    if (!currentEvent) return;
+
+    const { restQueue } = currentEvent;
+
+    const $ele = ReactDOM.findDOMNode(this);
+    if (!this.currentEvent || $ele !== target) return;
+
+    if (this.currentEvent.animateObj && this.currentEvent.animateObj.stop) {
+      this.currentEvent.animateObj.stop();
+    }
+
+    // [Legacy] Same as above, we need call js to remove the class
+    if (supportTransition) {
+      const basicClassName = getTransitionName(transitionName, this.currentEvent.type);
+      const activeClassName = getTransitionName(transitionName, `${this.currentEvent.type}-active`);
+
+      const nodeClasses = classes($ele);
+      if (basicClassName) nodeClasses.remove(basicClassName);
+      if (activeClassName) nodeClasses.remove(activeClassName);
+    }
+
+    // Additional process the leave event
+    if (this.currentEvent.type === 'leave') {
+      onChildLeaved(animateKey);
+    }
+
+    this.currentEvent = null;
+
+    // Next queue
+    if (!this._destroy) {
+      this.setState({
+        eventQueue: restQueue,
+        eventActive: false,
+      });
+    }
+  };
+
+  getCurrentEvent = () => {
+    const { eventQueue = [] } = this.state;
+    const {
+      animation, exclusive,
+      transitionAppear, transitionEnter, transitionLeave,
+    } = this.props;
+
+    function hasEventHandler(eventType) {
+      return (eventType === 'appear' && (transitionAppear || animation.appear)) ||
+        (eventType === 'enter' && (transitionEnter || animation.enter)) ||
+        (eventType === 'leave' && (transitionLeave || animation.leave));
+    }
+
+    // If is exclusive, only check the last event
+    if (exclusive) {
+      const eventType = eventQueue[eventQueue.length - 1];
+      if (hasEventHandler(eventType)) {
+        return {
+          eventType,
+          restQueue: [],
+        };
+      }
+      return null;
+    }
+
+    // Loop check the queue until find match
+    let cloneQueue = eventQueue.slice();
+    while (cloneQueue.length) {
+      const [eventType, ...restQueue] = cloneQueue;
+      if (hasEventHandler(eventType)) {
+        return {
+          eventType,
+          restQueue,
+        }
+      }
+      cloneQueue = restQueue;
+    }
+
+    return null;
+  };
 
   cleanDomEvent = () => {
     if (this.$prevEle && supportTransition) {
@@ -288,25 +298,21 @@ class AnimateChild extends React.Component {
   };
 
   render() {
-    const { child, transitionQueue, transitionActive, currentTransitionHandler } = this.state;
-    const { showProp } = this.props;
+    const { child, eventActive } = this.state;
+    const { showProp, transitionName } = this.props;
     const { className } = child.props || {};
 
     // Class name
-    const transition = transitionQueue[0];
-    const connectClassName = (supportTransition && transition) ? classNames(
+    const connectClassName = (supportTransition && this.currentEvent) ? classNames(
       className,
-      transition.basic,
-      transitionActive && transition.active,
+      getTransitionName(transitionName, this.currentEvent.type),
+      eventActive && getTransitionName(transitionName, `${this.currentEvent.type}-active`),
     ) : className;
 
     let show = true;
 
     // Keep show when is in transition or has customize animate
-    if (
-      (supportTransition && transition) ||
-      currentTransitionHandler
-    ) {
+    if (supportTransition && this.currentEvent) {
       show = true;
     } else {
       show = child.props[showProp];
