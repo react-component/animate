@@ -65,8 +65,16 @@ class AnimateChild extends React.Component {
     }
 
     function pushEvent(eventType) {
-      newState.eventQueue = newState.eventQueue || prevState.eventQueue;
-      newState.eventQueue.push(eventType);
+      let eventQueue = newState.eventQueue || prevState.eventQueue.slice();
+      const matchIndex = eventQueue.findIndex(type => type === eventType);
+
+      // Clean the rest event if eventType match
+      if (matchIndex !== -1) {
+        eventQueue = eventQueue.slice(0, matchIndex);
+      }
+
+      eventQueue.push(eventType);
+      newState.eventQueue = eventQueue;
     }
 
     // Child update. Only set child.
@@ -88,13 +96,6 @@ class AnimateChild extends React.Component {
         } else {
           pushEvent('leave');
         }
-      }
-    });
-
-    // exclusive
-    processState('exclusive', (isExclusive) => {
-      if (isExclusive) {
-        // TODO: clean the queue
       }
     });
 
