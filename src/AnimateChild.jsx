@@ -135,7 +135,7 @@ class AnimateChild extends React.Component {
   onDomUpdated = () => {
     const { eventActive } = this.state;
     const {
-      transitionName, animation,
+      transitionName, animation, onChildLeaved, animateKey,
     } = this.props;
 
     const $ele = ReactDOM.findDOMNode(this);
@@ -153,7 +153,13 @@ class AnimateChild extends React.Component {
     }
 
     const currentEvent = this.getCurrentEvent();
-    if (!currentEvent) return;
+    if (currentEvent.empty) {
+      // Additional process the leave event
+      if (currentEvent.lastEventType === 'leave') {
+        onChildLeaved(animateKey);
+      }
+      return;
+    }
 
     const { eventType } = currentEvent;
 
@@ -220,7 +226,7 @@ class AnimateChild extends React.Component {
       onAppear, onEnter, onLeave, onEnd,
     } = this.props;
     const currentEvent = this.getCurrentEvent();
-    if (!currentEvent) return;
+    if (currentEvent.empty) return;
 
     const { restQueue } = currentEvent;
 
@@ -286,32 +292,40 @@ class AnimateChild extends React.Component {
         (eventType === 'leave' && (transitionLeave || animation.leave));
     }
 
+    let event = null;
     // If is exclusive, only check the last event
     if (exclusive) {
       const eventType = eventQueue[eventQueue.length - 1];
       if (hasEventHandler(eventType)) {
-        return {
+        event = {
           eventType,
           restQueue: [],
         };
       }
-      return null;
-    }
-
-    // Loop check the queue until find match
-    let cloneQueue = eventQueue.slice();
-    while (cloneQueue.length) {
-      const [eventType, ...restQueue] = cloneQueue;
-      if (hasEventHandler(eventType)) {
-        return {
-          eventType,
-          restQueue,
+    } else {
+      // Loop check the queue until find match
+      let cloneQueue = eventQueue.slice();
+      while (cloneQueue.length) {
+        const [eventType, ...restQueue] = cloneQueue;
+        if (hasEventHandler(eventType)) {
+          event = {
+            eventType,
+            restQueue,
+          };
+          break;
         }
+        cloneQueue = restQueue;
       }
-      cloneQueue = restQueue;
     }
 
-    return null;
+    if (!event) {
+      event = {
+        empty: true,
+        lastEventType: eventQueue[eventQueue.length - 1],
+      };
+    }
+
+    return event;
   };
 
   cleanDomEvent = () => {
