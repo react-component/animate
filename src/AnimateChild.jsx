@@ -39,6 +39,11 @@ class AnimateChild extends React.Component {
     animateKey: PropTypes.any,
     animation: PropTypes.object,
     onChildLeaved: PropTypes.func,
+
+    onEnd: PropTypes.func,
+    onAppear: PropTypes.func,
+    onEnter: PropTypes.func,
+    onLeave: PropTypes.func,
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -210,7 +215,10 @@ class AnimateChild extends React.Component {
   }
 
   onMotionEnd = ({ target }) => {
-    const { transitionName, onChildLeaved, animateKey } = this.props;
+    const {
+      transitionName, onChildLeaved, animateKey,
+      onAppear, onEnter, onLeave, onEnd,
+    } = this.props;
     const currentEvent = this.getCurrentEvent();
     if (!currentEvent) return;
 
@@ -236,6 +244,22 @@ class AnimateChild extends React.Component {
     // Additional process the leave event
     if (this.currentEvent.type === 'leave') {
       onChildLeaved(animateKey);
+    }
+
+    // [Legacy] Trigger on event when it's last event
+    if (!restQueue.length) {
+      if (this.currentEvent.type === 'appear' && onAppear) {
+        onAppear(animateKey);
+      } else if (this.currentEvent.type === 'enter' && onEnd) {
+        onEnter(animateKey);
+      } else if (this.currentEvent.type === 'leave' && onLeave) {
+        onLeave(animateKey);
+      }
+
+      if (onEnd) {
+        // OnEnd(key, isShow)
+        onEnd(animateKey, this.currentEvent.type !== 'leave');
+      }
     }
 
     this.currentEvent = null;

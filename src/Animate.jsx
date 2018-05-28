@@ -115,7 +115,7 @@ class Animate extends React.Component {
     const { appeared, mergedChildren } = this.state;
     const {
       component: Component, componentProps,
-      className, style, showProp, animation,
+      className, style, showProp,
     } = this.props;
 
 
@@ -144,7 +144,6 @@ class Animate extends React.Component {
           key={key}
 
           animateKey={node.key} // Keep trans origin key
-          animation={animation}
           onChildLeaved={this.onChildLeaved}
         >
           {node}
