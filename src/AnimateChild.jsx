@@ -162,6 +162,7 @@ class AnimateChild extends React.Component {
     }
 
     const { eventType } = currentEvent;
+    const nodeClasses = classes($ele);
 
     // [Legacy] Since origin code use js to set `className`.
     // This caused that any component without support `className` can be forced set.
@@ -169,8 +170,7 @@ class AnimateChild extends React.Component {
     function legacyAppendClass() {
       if (!supportTransition) return;
 
-      const nodeClasses = classes($ele);
-      const basicClassName = getTransitionName(transitionName, eventType);
+      const basicClassName = getTransitionName(transitionName, `${eventType}`);
       if (basicClassName) nodeClasses.add(basicClassName);
 
       if (eventActive) {
@@ -188,6 +188,14 @@ class AnimateChild extends React.Component {
     // Clean up last event environment
     if (this.currentEvent && this.currentEvent.animateObj && this.currentEvent.animateObj.stop) {
       this.currentEvent.animateObj.stop();
+    }
+
+    // Clean up last transition class
+    if (this.currentEvent) {
+      const basicClassName = getTransitionName(transitionName, `${this.currentEvent.type}`);
+      const activeClassName = getTransitionName(transitionName, `${this.currentEvent.type}-active`);
+      if (basicClassName) nodeClasses.remove(basicClassName);
+      if (activeClassName) nodeClasses.remove(activeClassName);
     }
 
     // New event come
