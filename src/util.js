@@ -1,6 +1,26 @@
 import toArray from 'rc-util/lib/Children/toArray';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
+// =================== Style ====================
+const stylePrefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
+
+export function getStyleProperty(node, name) {
+  // old ff need null, https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
+  const style = window.getComputedStyle(node, null);
+  let ret = '';
+  for (let i = 0; i < stylePrefixes.length; i++) {
+    ret = style.getPropertyValue(stylePrefixes[i] + name);
+    if (ret) {
+      break;
+    }
+  }
+  return ret;
+}
+
+export function getStyleValue(node, name) {
+  return parseFloat(getStyleProperty(node, name));
+}
+
 // ================= Transition =================
 // Event wrapper. Copy from react source code
 function makePrefixMap(styleProp, eventName) {

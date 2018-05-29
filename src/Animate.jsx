@@ -75,11 +75,6 @@ class Animate extends React.Component {
 
       // Merge prev children to keep the animation
       newState.mergedChildren = mergeChildren(prevChildren, currentChildren);
-      // const toKey = ({ key }) => key;
-      // console.log('children update - prev:', prevChildren.map(toKey));
-      // console.log('children update - current:', currentChildren.map(toKey));
-      // console.log('children update - merge:', newState.mergedChildren.map(toKey));
-      // console.log('-----------------------');
     });
 
     return newState;

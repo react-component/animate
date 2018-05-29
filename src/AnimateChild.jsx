@@ -7,6 +7,7 @@ import classes from 'component-classes';
 import raf from 'raf';
 
 import {
+  getStyleValue,
   cloneProps, getTransitionName,
   supportTransition, animationEndName, transitionEndName,
 } from './util';
@@ -111,6 +112,7 @@ class AnimateChild extends React.Component {
     this.$prevEle = null;
 
     this.currentEvent = null;
+    this.timeout = null;
   }
 
   state = {
@@ -129,6 +131,7 @@ class AnimateChild extends React.Component {
   }
 
   componentWillUnmount() {
+    clearTimeout(this.timeout);
     this._destroy = true;
     this.cleanDomEvent();
   }
@@ -186,6 +189,9 @@ class AnimateChild extends React.Component {
       return;
     }
 
+    // Clear timeout for legacy check
+    clearTimeout(this.timeout);
+
     // Clean up last event environment
     if (this.currentEvent && this.currentEvent.animateObj && this.currentEvent.animateObj.stop) {
       this.currentEvent.animateObj.stop();
@@ -218,7 +224,23 @@ class AnimateChild extends React.Component {
         // Trigger `eventActive` in next frame
         raf(() => {
           if (this.currentEvent && this.currentEvent.type === eventType) {
-            this.setState({ eventActive: true });
+            this.setState({ eventActive: true }, () => {
+              // [Legacy] Handle timeout if browser transition event not handle
+              const transitionDelay = getStyleValue($ele, 'transition-delay') || 0;
+              const transitionDuration = getStyleValue($ele, 'transition-duration') || 0;
+              const animationDelay = getStyleValue($ele, 'animation-delay') || 0;
+              const animationDuration = getStyleValue($ele, 'animation-duration') || 0;
+              const totalTime = Math.max(
+                transitionDuration + transitionDelay,
+                animationDuration + animationDelay
+              );
+
+              if (totalTime) {
+                this.timeout = setTimeout(() => {
+                  this.onMotionEnd({ target: $ele });
+                }, totalTime * 1000);
+              }
+            });
           }
         });
       }
@@ -236,6 +258,9 @@ class AnimateChild extends React.Component {
     } = this.props;
     const currentEvent = this.getCurrentEvent();
     if (currentEvent.empty) return;
+
+    // Clear timeout for legacy check
+    clearTimeout(this.timeout);
 
     const { restQueue } = currentEvent;
 
