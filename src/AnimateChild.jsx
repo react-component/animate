@@ -66,7 +66,7 @@ class AnimateChild extends React.Component {
 
     function pushEvent(eventType) {
       let eventQueue = newState.eventQueue || prevState.eventQueue.slice();
-      const matchIndex = eventQueue.findIndex(type => type === eventType);
+      const matchIndex = eventQueue.indexOf(eventType);
 
       // Clean the rest event if eventType match
       if (matchIndex !== -1) {

@@ -108,7 +108,7 @@ class Animate extends React.Component {
   hasChild = (key) => {
     const { children } = this.props;
 
-    return toArray(children).some(node => node.key === key);
+    return toArray(children).some(node => node && node.key === key);
   };
 
   render() {
