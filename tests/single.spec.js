@@ -3,10 +3,9 @@
 import React from 'react';
 import Animate from '../index';
 import { supportTransition } from '../src/util';
+import single from './single-common.spec';
 
 import './index.spec.css';
-
-import single from './single-common.spec';
 
 function createClass(options) {
   return class extends React.Component {
@@ -16,9 +15,9 @@ function createClass(options) {
     }
 
     render() {
-      console.log('!!!!!!!!!!!', options.remove && !this.state.transitionEnter);
       return (
         <Animate
+          // ref="anim"
           transitionAppear={!!this.state.transitionAppear}
           transitionName="example"
           component={options.component}

@@ -1,4 +1,4 @@
-/* eslint no-console:0, react/no-multi-comp:0 */
+/* eslint no-console:0, react/no-multi-comp:0, react/no-render-return-value:0 */
 
 import expect from 'expect.js';
 import React from 'react';
@@ -34,14 +34,14 @@ export default function test(createClass, title) {
         }
       });
 
-      describe.only('when transitionAppear', () => {
+      describe('when transitionAppear', () => {
         it('should render children', () => {
           expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'span')[0]).not.to.be.ok();
           const child = TestUtils.findRenderedDOMComponentWithTag(instance, 'div');
           expect(getOpacity(ReactDOM.findDOMNode(child))).to.be(1);
         });
 
-        it.only('should anim children', (done) => {
+        it('should anim children', (done) => {
           const innerDiv = document.createElement('div');
           document.body.appendChild(innerDiv);
           const Component = createClass({
@@ -51,19 +51,17 @@ export default function test(createClass, title) {
             remove: true,
           });
 
-          ReactDOM.render(<Component />, innerDiv, (innerInstance) => {
-            console.log('>>>', innerInstance);
-            expect(TestUtils.scryRenderedDOMComponentsWithTag(innerInstance,
-              'span')[0]).not.to.be.ok();
-            const child = TestUtils.findRenderedDOMComponentWithTag(innerInstance, 'div');
-            expect(getOpacity(ReactDOM.findDOMNode(child))).not.to.be(1);
-            setTimeout(() => {
-              expect(getOpacity(ReactDOM.findDOMNode(child))).to.be(1);
-              ReactDOM.unmountComponentAtNode(innerDiv);
-              document.body.removeChild(innerDiv);
-              done();
-            }, 900);
-          });
+          const innerInstance = ReactDOM.render(<Component/>, innerDiv);
+          expect(TestUtils.scryRenderedDOMComponentsWithTag(innerInstance,
+            'span')[0]).not.to.be.ok();
+          const child = TestUtils.findRenderedDOMComponentWithTag(innerInstance, 'div');
+          expect(getOpacity(ReactDOM.findDOMNode(child))).not.to.be(1);
+          setTimeout(() => {
+            expect(getOpacity(ReactDOM.findDOMNode(child))).to.be(1);
+            ReactDOM.unmountComponentAtNode(innerDiv);
+            document.body.removeChild(innerDiv);
+            done();
+          }, 900);
         });
       });
 

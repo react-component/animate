@@ -3,9 +3,8 @@
 import React from 'react';
 import $ from 'jquery';
 import Animate from '../index';
-import './index.spec.css';
-
 import single from './single-common.spec';
+import './index.spec.css';
 
 function createClass(options) {
   return class extends React.Component {
@@ -44,5 +43,6 @@ function createClass(options) {
     }
   };
 }
+
 
 single(createClass, 'animation');
