@@ -172,6 +172,25 @@ describe('basic', () => {
       });
     });
   });
+
+  it('remove child when transitionLeave is false', () => {
+    class Wrapper extends React.Component {
+      state = { show: true };
+
+      render() {
+        return (
+          <Animate component="" transitionName="test" transitionLeave={false}>
+            {this.state.show && <div />}
+          </Animate>
+        );
+      }
+    }
+
+    const instance = ReactDOM.render(<Wrapper />, div);
+    instance.setState({ show: false });
+
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'li').length).to.be(0);
+  });
 });
 
 describe('util', () => {
