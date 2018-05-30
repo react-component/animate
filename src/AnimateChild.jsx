@@ -235,7 +235,7 @@ class AnimateChild extends React.Component {
                 animationDuration + animationDelay
               );
 
-              if (totalTime) {
+              if (totalTime >= 0) {
                 this.timeout = setTimeout(() => {
                   this.onMotionEnd({ target: $ele });
                 }, totalTime * 1000);
@@ -374,6 +374,8 @@ class AnimateChild extends React.Component {
     const { showProp, transitionName } = this.props;
     const { className } = child.props || {};
 
+    const currentEvent = this.getCurrentEvent();
+
     // Class name
     const connectClassName = (supportTransition && this.currentEvent) ? classNames(
       className,
@@ -384,7 +386,7 @@ class AnimateChild extends React.Component {
     let show = true;
 
     // Keep show when is in transition or has customize animate
-    if (supportTransition && this.currentEvent) {
+    if (supportTransition && !currentEvent.empty) {
       show = true;
     } else {
       show = child.props[showProp];

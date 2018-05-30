@@ -1,7 +1,8 @@
-/* eslint react/no-render-return-value:0 */
+/* eslint react/no-render-return-value:0, react/prefer-stateless-function:0, react/no-multi-comp:0 */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
 import Animate from '../';
@@ -16,7 +17,6 @@ describe('basic', () => {
   afterEach(() => {
     try {
       ReactDOM.unmountComponentAtNode(div);
-      document.body.removeChild(div);
     } catch (e) {
       // Do nothing
     }
@@ -63,6 +63,56 @@ describe('basic', () => {
         .to.contain('trans-appear-active');
       done();
     }, 0);
+  });
+
+  it('clean up when hidden children removed', (done) => {
+    // Stateless component not work for `scryRenderedComponentsWithType`
+    class LI extends React.Component {
+      render() {
+        const {show} = this.props;
+        return (
+          show ? <li/> : null
+        )
+      }
+    }
+
+    LI.propTypes = {
+      show: PropTypes.bool,
+    };
+
+    class Wrapper extends React.Component {
+      state = {
+        show: true,
+        propShow: true,
+      };
+
+      render() {
+        const { show, propShow } = this.state;
+        return (
+          <Animate component="ul" transitionName="basic-test" showProp="show">
+            {show && <LI key={1} show={propShow}/>}
+          </Animate>
+        );
+      }
+    }
+
+    const instance = ReactDOM.render(<Wrapper />, div);
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'li').length).to.be(1);
+
+    instance.setState({ propShow: false });
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'li').length).to.be(1);
+
+    setTimeout(() => {
+      expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'li').length).to.be(0);
+      expect(TestUtils.scryRenderedComponentsWithType(instance, LI).length).to.be(1);
+
+      instance.setState({ show: false });
+      setTimeout(() => {
+        expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'li').length).to.be(0);
+        expect(TestUtils.scryRenderedComponentsWithType(instance, LI).length).to.be(0);
+        done();
+      }, 100);
+    }, 100);
   });
 });
 
