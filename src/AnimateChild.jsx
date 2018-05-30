@@ -388,7 +388,10 @@ export function genAnimateChild(transitionSupport) {
       let show = true;
 
       // Keep show when is in transition or has customize animate
-      if (transitionSupport && !currentEvent.empty) {
+      if (transitionSupport && (
+        !currentEvent.empty ||
+        (this.currentEvent && this.currentEvent.animateObj)
+      )) {
         show = true;
       } else {
         show = child.props[showProp];
