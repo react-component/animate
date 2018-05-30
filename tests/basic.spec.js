@@ -12,6 +12,23 @@ import { getVendorPrefixes, getVendorPrefixedEventName, transitionEndName } from
 import './index.spec.css';
 
 describe('basic', () => {
+  class SimpleWrapper extends React.Component {
+    state = { show: this.props.show || false };
+
+    render() {
+      const { ...props } = this.props;
+      delete props.show;
+      return (
+        <Animate {...props}>
+          {this.state.show && <div />}
+        </Animate>
+      );
+    }
+  }
+  SimpleWrapper.propTypes = {
+    show: PropTypes.bool,
+  };
+
   let div;
   beforeEach(() => {
     div = document.createElement('div');
@@ -83,7 +100,7 @@ describe('basic', () => {
       show: PropTypes.bool,
     };
 
-    class Wrapper extends React.Component {
+    class UL extends React.Component {
       state = {
         show: true,
         propShow: true,
@@ -99,7 +116,7 @@ describe('basic', () => {
       }
     }
 
-    const instance = ReactDOM.render(<Wrapper />, div);
+    const instance = ReactDOM.render(<UL />, div);
     expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'li').length).to.be(1);
 
     instance.setState({ propShow: false });
@@ -119,23 +136,8 @@ describe('basic', () => {
   });
 
   describe('de-dup event', () => {
-    class Wrapper extends React.Component {
-      state = { show: false };
-
-      render() {
-        return (
-          <Animate component="" transitionName="example" exclusive={this.props.exclusive}>
-            {this.state.show && <div />}
-          </Animate>
-        );
-      }
-    }
-    Wrapper.propTypes = {
-      exclusive: PropTypes.bool,
-    };
-
     it('without exclusive', (done) => {
-      const instance = ReactDOM.render(<Wrapper />, div);
+      const instance = ReactDOM.render(<SimpleWrapper component="" transitionName="example" />, div);
 
       instance.setState({ show: true }, () => {
         // Enter
@@ -157,7 +159,7 @@ describe('basic', () => {
     });
 
     it('exclusive', (done) => {
-      const instance = ReactDOM.render(<Wrapper exclusive />, div);
+      const instance = ReactDOM.render(<SimpleWrapper component="" transitionName="example" exclusive />, div);
 
       instance.setState({ show: true }, () => {
         // Enter
@@ -174,22 +176,35 @@ describe('basic', () => {
   });
 
   it('remove child when transitionLeave is false', () => {
-    class Wrapper extends React.Component {
-      state = { show: true };
-
-      render() {
-        return (
-          <Animate component="" transitionName="test" transitionLeave={false}>
-            {this.state.show && <div />}
-          </Animate>
-        );
-      }
-    }
-
-    const instance = ReactDOM.render(<Wrapper />, div);
+    const instance = ReactDOM.render(<SimpleWrapper component="" transitionName="test" transitionLeave={false} show />, div);
     instance.setState({ show: false });
 
     expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'li').length).to.be(0);
+  });
+
+  it('clean up animation when exclusive item remove', (done) => {
+    let stopCalled = false;
+    const animation = {
+      enter() {
+        return {
+          stop() {
+            stopCalled = true;
+          },
+        };
+      },
+    };
+    const instance = ReactDOM.render(
+      <SimpleWrapper
+        component=""
+        animation={animation}
+        exclusive
+      />, div);
+    instance.setState({ show: true }, () => {
+      instance.setState({ show: false }, () => {
+        expect(stopCalled).to.be.ok();
+        done();
+      });
+    });
   });
 });
 
