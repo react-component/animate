@@ -118,34 +118,55 @@ describe('basic', () => {
     }, 100);
   });
 
-  it('de-dup event', (done) => {
+  describe('de-dup event', () => {
     class Wrapper extends React.Component {
+      static propTypes = {
+        exclusive: PropTypes.bool,
+      };
       state = { show: false };
 
       render() {
         return (
-          <Animate component="" transitionName="example">
+          <Animate component="" transitionName="example" exclusive={this.props.exclusive}>
             {this.state.show && <div />}
           </Animate>
         );
       }
     }
 
-    const instance = ReactDOM.render(<Wrapper />, div);
+    it('without exclusive', (done) => {
+      const instance = ReactDOM.render(<Wrapper />, div);
 
-    instance.setState({ show: true }, () => {
-      // Enter
-      const child = TestUtils.findRenderedComponentWithType(instance, AnimateChild);
-      expect(child.state.eventQueue).to.eql(['enter']);
+      instance.setState({ show: true }, () => {
+        // Enter
+        const child = TestUtils.findRenderedComponentWithType(instance, AnimateChild);
+        expect(child.state.eventQueue).to.eql(['enter']);
 
-      instance.setState({ show: false }, () => {
-        // Leave
-        expect(child.state.eventQueue).to.eql(['enter', 'leave']);
+        instance.setState({ show: false }, () => {
+          // Leave
+          expect(child.state.eventQueue).to.eql(['enter', 'leave']);
 
-        instance.setState({ show: true }, () => {
-          // Enter again, clean the leave in queue
-          expect(child.state.eventQueue).to.eql(['enter']);
+          instance.setState({ show: true }, () => {
+            // Enter again, clean the leave in queue
+            expect(child.state.eventQueue).to.eql(['enter']);
 
+            done();
+          });
+        });
+      });
+    });
+
+    it('exclusive', (done) => {
+      const instance = ReactDOM.render(<Wrapper exclusive />, div);
+
+      instance.setState({ show: true }, () => {
+        // Enter
+        const child = TestUtils.findRenderedComponentWithType(instance, AnimateChild);
+
+        instance.setState({ show: false }, () => {
+          // Leave, exclusive only get the latest one
+          const currentEvent = child.getCurrentEvent();
+          expect(currentEvent.eventType).to.eql('leave');
           done();
         });
       });
