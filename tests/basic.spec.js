@@ -120,9 +120,6 @@ describe('basic', () => {
 
   describe('de-dup event', () => {
     class Wrapper extends React.Component {
-      static propTypes = {
-        exclusive: PropTypes.bool,
-      };
       state = { show: false };
 
       render() {
@@ -133,6 +130,9 @@ describe('basic', () => {
         );
       }
     }
+    Wrapper.propTypes = {
+      exclusive: PropTypes.bool,
+    };
 
     it('without exclusive', (done) => {
       const instance = ReactDOM.render(<Wrapper />, div);
