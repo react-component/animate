@@ -6,7 +6,10 @@ import PropTypes from 'prop-types';
 import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
 import Animate from '../';
+import AnimateChild from '../src/AnimateChild';
 import { getVendorPrefixes, getVendorPrefixedEventName, transitionEndName } from '../src/util';
+
+import './index.spec.css';
 
 describe('basic', () => {
   let div;
@@ -113,6 +116,40 @@ describe('basic', () => {
         done();
       }, 100);
     }, 100);
+  });
+
+  it('de-dup event', (done) => {
+    class Wrapper extends React.Component {
+      state = { show: false };
+
+      render() {
+        return (
+          <Animate component="" transitionName="example">
+            {this.state.show && <div />}
+          </Animate>
+        );
+      }
+    }
+
+    const instance = ReactDOM.render(<Wrapper />, div);
+
+    instance.setState({ show: true }, () => {
+      // Enter
+      const child = TestUtils.findRenderedComponentWithType(instance, AnimateChild);
+      expect(child.state.eventQueue).to.eql(['enter']);
+
+      instance.setState({ show: false }, () => {
+        // Leave
+        expect(child.state.eventQueue).to.eql(['enter', 'leave']);
+
+        instance.setState({ show: true }, () => {
+          // Enter again, clean the leave in queue
+          expect(child.state.eventQueue).to.eql(['enter']);
+
+          done();
+        });
+      });
+    });
   });
 });
 

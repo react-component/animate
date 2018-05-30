@@ -223,7 +223,7 @@ class AnimateChild extends React.Component {
       if (!eventActive) {
         // Trigger `eventActive` in next frame
         raf(() => {
-          if (this.currentEvent && this.currentEvent.type === eventType) {
+          if (this.currentEvent && this.currentEvent.type === eventType && !this._destroy) {
             this.setState({ eventActive: true }, () => {
               // [Legacy] Handle timeout if browser transition event not handle
               const transitionDelay = getStyleValue($ele, 'transition-delay') || 0;
