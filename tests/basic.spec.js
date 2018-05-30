@@ -85,6 +85,86 @@ describe('basic', () => {
     }, 0);
   });
 
+  it('transition last callback', (done) => {
+    function createOnCalled(type) {
+      function callback() {
+        callback.times += 1;
+      }
+      callback.type = type;
+      callback.times = 0;
+
+      return callback;
+    }
+
+    const onAppear = createOnCalled('appear');
+    const onEnter = createOnCalled('enter');
+    const onLeave = createOnCalled('leave');
+    const onEnd = createOnCalled('end');
+
+    const instance = ReactDOM.render(<SimpleWrapper
+      onAppear={onAppear}
+      onEnter={onEnter}
+      onLeave={onLeave}
+      onEnd={onEnd}
+      show
+      transitionAppear
+    />, div);
+
+    // What event state change, this will only trigger once when final transition finished
+    setTimeout(() => {
+      expect(onAppear.times).to.be(1);
+      expect(onEnter.times).to.be(0);
+      expect(onLeave.times).to.be(0);
+      expect(onEnd.times).to.be(1);
+
+      instance.setState({ show: false }, () => {
+        expect(onAppear.times).to.be(1);
+        expect(onEnter.times).to.be(0);
+        expect(onLeave.times).to.be(0);
+        expect(onEnd.times).to.be(1);
+
+        setTimeout(() => {
+          expect(onAppear.times).to.be(1);
+          expect(onEnter.times).to.be(0);
+          expect(onLeave.times).to.be(1);
+          expect(onEnd.times).to.be(2);
+
+          instance.setState({ show: true }, () => {
+            const child = TestUtils.findRenderedComponentWithType(instance, AnimateChild);
+
+            instance.setState({ show: false }, () => {
+              expect(child.state.eventQueue).to.eql(['enter', 'leave']);
+
+              instance.setState({ show: true }, () => {
+                expect(onAppear.times).to.be(1);
+                expect(onEnter.times).to.be(0);
+                expect(onLeave.times).to.be(1);
+                expect(onEnd.times).to.be(2);
+
+                expect(child.state.eventQueue).to.eql(['enter']);
+
+                setTimeout(() => {
+                  expect(child.state.eventQueue).to.eql([]);
+
+                  expect(onAppear.times).to.be(1);
+                  expect(onEnter.times).to.be(1);
+                  expect(onLeave.times).to.be(1);
+                  expect(onEnd.times).to.be(3);
+
+                  done();
+                }, 100);
+              });
+            });
+          });
+        }, 100);
+      });
+
+
+    }, 100);
+
+
+  });
+
   it('clean up when hidden children removed', (done) => {
     // Stateless component not work for `scryRenderedComponentsWithType`
     class LI extends React.Component {

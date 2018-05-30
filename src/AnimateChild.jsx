@@ -292,7 +292,7 @@ export function genAnimateChild(transitionSupport) {
       if (!restQueue.length) {
         if (this.currentEvent.type === 'appear' && onAppear) {
           onAppear(animateKey);
-        } else if (this.currentEvent.type === 'enter' && onEnd) {
+        } else if (this.currentEvent.type === 'enter' && onEnter) {
           onEnter(animateKey);
         } else if (this.currentEvent.type === 'leave' && onLeave) {
           onLeave(animateKey);
