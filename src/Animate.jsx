@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 import toArray from 'rc-util/lib/Children/toArray';
+import warning from 'fbjs/lib/warning';
 
 import AnimateChild from './AnimateChild';
 import { cloneProps, mergeChildren } from './util';
@@ -113,10 +114,10 @@ class Animate extends React.Component {
       className, style, showProp,
     } = this.props;
 
-
     const $children = mergedChildren.map((node) => {
       if (mergedChildren.length > 1 && !node.key) {
-        throw new Error('must set key for <rc-animate> children');
+        warning(false, 'must set key for <rc-animate> children');
+        return null;
       }
 
       let show = true;
