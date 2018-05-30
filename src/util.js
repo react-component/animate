@@ -35,37 +35,51 @@ function makePrefixMap(styleProp, eventName) {
   return prefixes;
 }
 
-const vendorPrefixes = {
-  animationend: makePrefixMap('Animation', 'AnimationEnd'),
-  transitionend: makePrefixMap('Transition', 'TransitionEnd'),
-};
+export function getVendorPrefixes(domSupport, win) {
+  const prefixes = {
+    animationend: makePrefixMap('Animation', 'AnimationEnd'),
+    transitionend: makePrefixMap('Transition', 'TransitionEnd'),
+  };
+
+  if (domSupport) {
+    if (!('AnimationEvent' in win)) {
+      delete prefixes.animationend.animation;
+    }
+
+    if (!('TransitionEvent' in win)) {
+      delete prefixes.transitionend.transition;
+    }
+  }
+
+  return prefixes;
+}
+
+const vendorPrefixes = getVendorPrefixes(canUseDOM, window);
 
 let style = {};
 
 if (canUseDOM) {
   style = document.createElement('div').style;
-
-  if (!('AnimationEvent' in window)) {
-    delete vendorPrefixes.animationend.animation;
-  }
-
-  if (!('TransitionEvent' in window)) {
-    delete vendorPrefixes.transitionend.transition;
-  }
 }
 
 const prefixedEventNames = {};
 
-function getVendorPrefixedEventName(eventName) {
+export function getVendorPrefixedEventName(eventName) {
+  if (prefixedEventNames[eventName]) {
+    return prefixedEventNames[eventName];
+  }
+
   const prefixMap = vendorPrefixes[eventName];
 
-  const stylePropList = Object.keys(prefixMap);
-  const len = stylePropList.length;
-  for (let i = 0; i < len; i += 1) {
-    const styleProp = stylePropList[i];
-    if (Object.prototype.hasOwnProperty.call(prefixMap, styleProp) && styleProp in style) {
-      prefixedEventNames[eventName] = prefixMap[styleProp];
-      return prefixedEventNames[eventName];
+  if (prefixMap) {
+    const stylePropList = Object.keys(prefixMap);
+    const len = stylePropList.length;
+    for (let i = 0; i < len; i += 1) {
+      const styleProp = stylePropList[i];
+      if (Object.prototype.hasOwnProperty.call(prefixMap, styleProp) && styleProp in style) {
+        prefixedEventNames[eventName] = prefixMap[styleProp];
+        return prefixedEventNames[eventName];
+      }
     }
   }
 
@@ -140,7 +154,8 @@ export function getTransitionName(transitionName, transitionType) {
   if (!transitionName) return null;
 
   if (typeof transitionName === 'object') {
-    return transitionName[transitionType];
+    const type = transitionType.replace(/-\w/g, (match) => match[1].toUpperCase());
+    return transitionName[type];
   }
 
   return `${transitionName}-${transitionType}`;
