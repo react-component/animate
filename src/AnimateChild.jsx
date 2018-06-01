@@ -274,7 +274,7 @@ export function genAnimateChild(transitionSupport) {
       }
 
       // [Legacy] Same as above, we need call js to remove the class
-      if (transitionSupport) {
+      if (transitionSupport && this.currentEvent) {
         const basicClassName = getTransitionName(transitionName, this.currentEvent.type);
         const activeClassName = getTransitionName(transitionName, `${this.currentEvent.type}-active`);
 
@@ -284,12 +284,12 @@ export function genAnimateChild(transitionSupport) {
       }
 
       // Additional process the leave event
-      if (this.currentEvent.type === 'leave') {
+      if (this.currentEvent && this.currentEvent.type === 'leave') {
         onChildLeaved(animateKey);
       }
 
       // [Legacy] Trigger on event when it's last event
-      if (!restQueue.length) {
+      if (this.currentEvent && !restQueue.length) {
         if (this.currentEvent.type === 'appear' && onAppear) {
           onAppear(animateKey);
         } else if (this.currentEvent.type === 'enter' && onEnter) {

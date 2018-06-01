@@ -5,9 +5,9 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
-import Animate from '../';
+import Animate from '../src/Animate';
 import AnimateChild from '../src/AnimateChild';
-import { getVendorPrefixes, getVendorPrefixedEventName, transitionEndName } from '../src/util';
+import { getVendorPrefixes, getVendorPrefixedEventName, transitionEndName, mergeChildren } from '../src/util';
 
 import './index.spec.css';
 
@@ -301,5 +301,33 @@ describe('util', () => {
 
   it('getVendorPrefixedEventName not exist', () => {
     expect(getVendorPrefixedEventName('NotExist')).to.be('');
+  });
+
+  describe('mergeChildren', () => {
+    const gen = (key) => (
+      <span key={key}>{key}</span>
+    );
+    const flatten = (list) => list.map(p => p.key);
+
+    it('prepend', () => {
+      const prev = [gen(2), gen(4)];
+      const next = [gen(1), gen(2)];
+      const merge = mergeChildren(prev, next);
+      expect(flatten(merge)).to.eql([1, 2, 4]);
+    });
+
+    it('append', () => {
+      const prev = [gen(1), gen(3)];
+      const next = [gen(5), gen(6)];
+      const merge = mergeChildren(prev, next);
+      expect(flatten(merge)).to.eql([5, 6, 1, 3]);
+    });
+
+    it('mixed', () => {
+      const prev = [gen(1), gen(3), gen(5)];
+      const next = [gen(2), gen(3), gen(6)];
+      const merge = mergeChildren(prev, next);
+      expect(flatten(merge)).to.eql([2, 1, 3, 6, 5]);
+    });
   });
 });
