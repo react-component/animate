@@ -144,7 +144,7 @@ export function genAnimateChild(transitionSupport) {
         transitionName, animation, onChildLeaved, animateKey,
       } = this.props;
 
-      const $ele = ReactDOM.findDOMNode(this);
+      const $ele = this.getDomElement();
 
       // Skip if dom element not ready
       if (!$ele) return;
@@ -266,7 +266,7 @@ export function genAnimateChild(transitionSupport) {
 
       const { restQueue } = currentEvent;
 
-      const $ele = ReactDOM.findDOMNode(this);
+      const $ele = this.getDomElement();
       if (!this.currentEvent || $ele !== target) return;
 
       if (this.currentEvent.animateObj && this.currentEvent.animateObj.stop) {
@@ -313,6 +313,11 @@ export function genAnimateChild(transitionSupport) {
           eventActive: false,
         });
       }
+    };
+
+    getDomElement = () => {
+      if (this._destroy) return null;
+      return ReactDOM.findDOMNode(this);
     };
 
     getCurrentEvent = () => {
