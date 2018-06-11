@@ -167,7 +167,7 @@ export function genAnimateChild(transitionSupport) {
         return;
       }
 
-      const { eventType } = currentEvent;
+      const { eventType, restQueue } = currentEvent;
       const nodeClasses = classes($ele);
 
       // [Legacy] Since origin code use js to set `className`.
@@ -218,6 +218,11 @@ export function genAnimateChild(transitionSupport) {
         this.currentEvent.animateObj = animationHandler($ele, () => {
           this.onMotionEnd({ target: $ele });
         });
+
+        // Do next step if not animate object provided
+        if (!this.currentEvent.animateObj) {
+          this.nextEvent(restQueue);
+        }
 
       // ==================== Use transition instead ====================
       } else if (transitionSupport) {
@@ -307,12 +312,7 @@ export function genAnimateChild(transitionSupport) {
       this.currentEvent = null;
 
       // Next queue
-      if (!this._destroy) {
-        this.setState({
-          eventQueue: restQueue,
-          eventActive: false,
-        });
-      }
+      this.nextEvent(restQueue);
     };
 
     getDomElement = () => {
@@ -367,6 +367,16 @@ export function genAnimateChild(transitionSupport) {
       }
 
       return event;
+    };
+
+    nextEvent = (restQueue) => {
+      // Next queue
+      if (!this._destroy) {
+        this.setState({
+          eventQueue: restQueue,
+          eventActive: false,
+        });
+      }
     };
 
     cleanDomEvent = () => {
