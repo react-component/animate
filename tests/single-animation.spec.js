@@ -1,9 +1,10 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-import Animate from '../index';
 import React from 'react';
-import './index.spec.css';
 import $ from 'jquery';
+import Animate from '../index';
+import single from './single-common.spec';
+import './index.spec.css';
 
 function createClass(options) {
   return class extends React.Component {
@@ -43,6 +44,5 @@ function createClass(options) {
   };
 }
 
-import single from './single-common.spec';
 
 single(createClass, 'animation');

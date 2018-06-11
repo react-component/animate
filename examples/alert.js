@@ -1,10 +1,11 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-import './assets/index.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
+import './assets/index.less';
+
 let seed = 0;
 
 class Alert extends React.Component {
@@ -77,13 +78,12 @@ class AlertGroup extends React.Component {
 
   render() {
     const alerts = this.state.alerts;
-    const self = this;
     const children = alerts.map((a) => {
       if (!a.key) {
         seed++;
         a.key = String(seed);
       }
-      return <Alert {...a} onEnd={self.onEnd.bind(self, a.key)}/>;
+      return <Alert {...a} onEnd={() => { this.onEnd(a.key); }} />;
     });
     const style = {
       position: 'fixed',

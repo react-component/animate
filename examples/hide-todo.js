@@ -1,16 +1,17 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-import './assets/index.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
+import './assets/index.less';
 
 class Todo extends React.Component {
   static propTypes = {
     children: PropTypes.any,
     end: PropTypes.func,
     onClick: PropTypes.func,
+    visible: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -48,7 +49,8 @@ class TodoList extends React.Component {
       { content: 'hello', visible: true },
       { content: 'world', visible: true },
       { content: 'click', visible: true },
-      { content: 'me', visible: true }],
+      { content: 'me', visible: true },
+    ],
   }
 
   handleHide = (i, item) => {
@@ -66,7 +68,7 @@ class TodoList extends React.Component {
         <Todo
           key={item.content}
           visible={item.visible}
-          onClick={this.handleHide.bind(this, i, item)}
+          onClick={() => { this.handleHide(i, item); }}
         >
           {item.content}
         </Todo>

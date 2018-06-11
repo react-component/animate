@@ -1,11 +1,11 @@
-/* eslint no-console:0, react/no-multi-comp:0 */
+/* eslint no-console:0, react/no-multi-comp:0, react/no-render-return-value:0 */
 
 import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils';
-import './index.spec.css';
 import $ from 'jquery';
+import './index.spec.css';
 
 export default function test(createClass, title) {
   function getOpacity(node) {
@@ -76,7 +76,8 @@ export default function test(createClass, title) {
       describe('when toggle transitionEnter', () => {
         it('should remove children after transition', (done) => {
           if (window.callPhantom) {
-            return done();
+            done();
+            return;
           }
           instance.setState({ transitionEnter: false });
           expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'div')[0]).to.be.ok();

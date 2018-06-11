@@ -1,9 +1,9 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-import './assets/index.less';
 import Animate from 'rc-animate';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './assets/index.less';
 
 class Demo extends React.Component {
   state = {

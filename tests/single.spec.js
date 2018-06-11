@@ -1,7 +1,9 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
-import Animate from '../index';
 import React from 'react';
+import Animate from '../index';
+import { supportTransition } from '../src/util';
+import single from './single-common.spec';
 
 import './index.spec.css';
 
@@ -15,7 +17,7 @@ function createClass(options) {
     render() {
       return (
         <Animate
-          ref="anim"
+          // ref="anim"
           transitionAppear={!!this.state.transitionAppear}
           transitionName="example"
           component={options.component}
@@ -27,8 +29,6 @@ function createClass(options) {
   };
 }
 
-import CssAnimation from 'css-animation';
-import single from './single-common.spec';
-if (CssAnimation.isCssAnimationSupported) {
+if (supportTransition) {
   single(createClass, 'transition');
 }
