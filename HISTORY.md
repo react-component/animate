@@ -1,6 +1,10 @@
 # History
 ----
 
+## 3.0.0 / 2018-06-11
+
+- refactor realization
+
 ## 2.3.0 / 2016-07-05
 
 - support null/undefined child: https://github.com/react-component/animate/pull/11
