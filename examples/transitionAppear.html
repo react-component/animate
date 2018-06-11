@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>transitionAppear.js - example - rc-animate@2.4.4</title>
+  <title>transitionAppear.js - example - rc-animate@3.0.0-rc.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@2.4.4</h1>
+      <h1>rc-animate@3.0.0-rc.0</h1>
 
       <p>css-transition ui component for react</p>
     </div>
@@ -271,29 +271,27 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
     <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
 
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/slow.less'</span>;
 <span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/slow.less'</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Box</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  static propTypes = {
-    visible: PropTypes.bool,
-  }
+<span class="hljs-keyword">const</span> Box = (props) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'render'</span>, props.visible);
+  <span class="hljs-keyword">const</span> style = {
+    display: props.visible ? <span class="hljs-string">'block'</span> : <span class="hljs-string">'none'</span>,
+    marginTop: <span class="hljs-string">'20px'</span>,
+    width: <span class="hljs-string">'200px'</span>,
+    height: <span class="hljs-string">'200px'</span>,
+    backgroundColor: <span class="hljs-string">'red'</span>,
+  };
+  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span> /&gt;</span>)</span>;
+};
 
-  render() {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'render'</span>, <span class="hljs-keyword">this</span>.props.visible);
-    <span class="hljs-keyword">const</span> style = {
-      display: <span class="hljs-keyword">this</span>.props.visible ? <span class="hljs-string">'block'</span> : <span class="hljs-string">'none'</span>,
-      marginTop: <span class="hljs-string">'20px'</span>,
-      width: <span class="hljs-string">'200px'</span>,
-      height: <span class="hljs-string">'200px'</span>,
-      backgroundColor: <span class="hljs-string">'red'</span>,
-    };
-    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>/&gt;</span>)</span>;
-  }
-}
+Box.propTypes = {
+  visible: PropTypes.bool,
+};
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   state = {
