@@ -52,6 +52,11 @@ export function genAnimate(ChildComponent) {
       transitionAppear: false,
     }
 
+    state = {
+      appeared: true,
+      mergedChildren: [],
+    };
+
     static getDerivedStateFromProps(nextProps, prevState) {
       const { prevProps = {} } = prevState;
       const newState = {
@@ -86,11 +91,6 @@ export function genAnimate(ChildComponent) {
 
       return newState;
     }
-
-    state = {
-      appeared: true,
-      mergedChildren: [],
-    };
 
     componentDidMount() {
       // No need to re-render

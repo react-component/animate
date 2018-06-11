@@ -49,6 +49,25 @@ export function genAnimateChild(transitionSupport) {
       onLeave: PropTypes.func,
     }
 
+    constructor() {
+      super();
+
+      // [Legacy] Since old code addListener on the element.
+      // To avoid break the behaviour that component not handle animation/transition
+      // also can handle the animate, let keep the logic.
+      this.$prevEle = null;
+
+      this.currentEvent = null;
+      this.timeout = null;
+    }
+
+    state = {
+      child: null,
+
+      eventQueue: [],
+      eventActive: false,
+    }
+
     static getDerivedStateFromProps(nextProps, prevState) {
       const { prevProps = {} } = prevState;
       const { appeared } = nextProps;
@@ -105,31 +124,12 @@ export function genAnimateChild(transitionSupport) {
       return newState;
     }
 
-    constructor() {
-      super();
-
-      // [Legacy] Since old code addListener on the element.
-      // To avoid break the behaviour that component not handle animation/transition
-      // also can handle the animate, let keep the logic.
-      this.$prevEle = null;
-
-      this.currentEvent = null;
-      this.timeout = null;
-    }
-
-    state = {
-      child: null,
-
-      eventQueue: [],
-      eventActive: false,
-    }
-
     componentDidMount() {
-      this.onDomUpdated({}, {});
+      this.onDomUpdated();
     }
 
-    componentDidUpdate(prevProps, prevState) {
-      this.onDomUpdated(prevProps, prevState);
+    componentDidUpdate() {
+      this.onDomUpdated();
     }
 
     componentWillUnmount() {
