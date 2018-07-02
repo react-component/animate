@@ -2030,7 +2030,7 @@ function getVendorPrefixes(domSupport, win) {
   return prefixes;
 }
 
-var vendorPrefixes = getVendorPrefixes(__WEBPACK_IMPORTED_MODULE_1_fbjs_lib_ExecutionEnvironment__["canUseDOM"], window);
+var vendorPrefixes = getVendorPrefixes(__WEBPACK_IMPORTED_MODULE_1_fbjs_lib_ExecutionEnvironment__["canUseDOM"], typeof window !== 'undefined' ? window : {});
 
 var style = {};
 
