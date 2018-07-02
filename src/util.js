@@ -54,7 +54,7 @@ export function getVendorPrefixes(domSupport, win) {
   return prefixes;
 }
 
-const vendorPrefixes = getVendorPrefixes(canUseDOM, window);
+const vendorPrefixes = getVendorPrefixes(canUseDOM, typeof window !== 'undefined' ? window : {});
 
 let style = {};
 
