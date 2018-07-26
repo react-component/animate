@@ -3,19 +3,17 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 import classNames from 'classnames';
+import raf from 'raf';
 import {
   getTransitionName,
   animationEndName, transitionEndName,
-  nextFrame,
+  supportTransition,
 } from './util';
 
 const STATUS_NONE = 'none';
 const STATUS_APPEAR = 'appear';
-const STATUS_APPEAR_ACTIVE = 'appear-active';
 const STATUS_ENTER = 'enter';
-const STATUS_ENTER_ACTIVE = 'enter-active';
 const STATUS_LEAVE = 'leave';
-const STATUS_LEAVE_ACTIVE = 'leave-active';
 
 class CSSTransition extends React.Component {
   static propTypes = {
@@ -47,6 +45,7 @@ class CSSTransition extends React.Component {
 
     this.state = {
       status: STATUS_NONE,
+      statusActive: false,
       newStatus: false,
       statusStyle: null,
     };
@@ -54,6 +53,8 @@ class CSSTransition extends React.Component {
   }
 
   static getDerivedStateFromProps(props, { prevProps }) {
+    if (!supportTransition) return {};
+
     const { visible, transitionAppear, transitionEnter, transitionLeave } = props;
     const newState = {
       prevProps: props,
@@ -62,18 +63,21 @@ class CSSTransition extends React.Component {
     // Appear
     if (!prevProps && visible && transitionAppear) {
       newState.status = STATUS_APPEAR;
+      newState.statusActive = false;
       newState.newStatus = true;
     }
 
     // Enter
     if (prevProps && !prevProps.visible && visible && transitionEnter) {
       newState.status = STATUS_ENTER;
+      newState.statusActive = false;
       newState.newStatus = true;
     }
 
     // Leave
     if (prevProps && prevProps.visible && !visible && transitionLeave) {
       newState.status = STATUS_LEAVE;
+      newState.statusActive = false;
       newState.newStatus = true;
     }
 
@@ -100,6 +104,10 @@ class CSSTransition extends React.Component {
       transitionAppear, transitionEnter, transitionLeave,
     } = this.props;
 
+    if (!supportTransition) {
+      return;
+    }
+
     // Event injection
     const $ele = ReactDOM.findDOMNode(this);
     if (this.$ele !== $ele) {
@@ -110,20 +118,17 @@ class CSSTransition extends React.Component {
 
     // Init status
     if (newStatus && status === STATUS_APPEAR && transitionAppear) {
-      this.updateStatus(onAppearStart);
+      this.updateStatus(onAppearStart).then(() => {
+        this.updateActiveStatus(onAppearActive, STATUS_APPEAR);
+      });
     } else if (newStatus && status === STATUS_ENTER && transitionEnter) {
-      this.updateStatus(onEnterStart);
+      this.updateStatus(onEnterStart).then(() => {
+        this.updateActiveStatus(onEnterActive, STATUS_ENTER);
+      });
     } else if (newStatus && status === STATUS_LEAVE && transitionLeave) {
-      this.updateStatus(onLeaveStart);
-    }
-
-    // To be active
-    if (!newStatus && status === STATUS_APPEAR && transitionAppear) {
-      this.asyncUpdateStatus(onAppearActive, STATUS_APPEAR, STATUS_APPEAR_ACTIVE);
-    } else if (!newStatus && status === STATUS_ENTER && transitionEnter) {
-      this.asyncUpdateStatus(onEnterActive, STATUS_ENTER, STATUS_ENTER_ACTIVE);
-    } else if (!newStatus && status === STATUS_LEAVE && transitionLeave) {
-      this.asyncUpdateStatus(onLeaveActive, STATUS_LEAVE, STATUS_LEAVE_ACTIVE);
+      this.updateStatus(onLeaveStart).then(() => {
+        this.updateActiveStatus(onLeaveActive, STATUS_LEAVE);
+      });
     }
   };
 
@@ -136,13 +141,13 @@ class CSSTransition extends React.Component {
   };
 
   onMotionEnd = (event) => {
-    const { status } = this.state;
+    const { status, statusActive } = this.state;
     const { onAppearEnd, onEnterEnd, onLeaveEnd } = this.props;
-    if (status === STATUS_APPEAR_ACTIVE) {
+    if (status === STATUS_APPEAR && statusActive) {
       this.updateStatus(onAppearEnd, { status: STATUS_NONE }, event);
-    } else if (status === STATUS_ENTER_ACTIVE) {
+    } else if (status === STATUS_ENTER && statusActive) {
       this.updateStatus(onEnterEnd, { status: STATUS_NONE }, event);
-    } else if (status === STATUS_LEAVE_ACTIVE) {
+    } else if (status === STATUS_LEAVE && statusActive) {
       this.updateStatus(onLeaveEnd, { status: STATUS_NONE }, event);
     }
   };
@@ -160,42 +165,45 @@ class CSSTransition extends React.Component {
     $ele.removeEventListener(animationEndName, this.onAnimationEnd);
   };
 
-  updateStatus = (styleFunc, additionalState, event) => {
-    const statusStyle = styleFunc ? styleFunc(ReactDOM.findDOMNode(this), event) : null;
+  updateStatus = (styleFunc, additionalState, event) => (
+    new Promise((resolve) => {
+      const statusStyle = styleFunc ? styleFunc(ReactDOM.findDOMNode(this), event) : null;
 
-    if (statusStyle === false) return;
+      if (statusStyle === false) return;
 
-    this.setState({
-      statusStyle,
-      newStatus: false,
-      ...additionalState,
+      this.setState({
+        statusStyle,
+        newStatus: false,
+        ...additionalState,
+      }, resolve); // Trigger before next frame & after `componentDidMount`
+    })
+  );
+
+  updateActiveStatus = (styleFunc, currentStatus) => {
+    // `setState` use `postMessage` to trigger at the end of frame.
+    // Let's use requestAnimationFrame to update new state in next frame.
+    raf(() => {
+      const { status } = this.state;
+      if (status !== currentStatus) return;
+
+      this.updateStatus(styleFunc, { statusActive: true });
     });
   };
 
-  asyncUpdateStatus = (styleFunc, fromStatus, toStatus) => {
-    // React use `postMessage` to do the UI render which may cause status update in one frame.
-    // Let's delay 2 frame to avoid this.
-    nextFrame(() => {
-      const { status } = this.state;
-      if (status !== fromStatus) return;
-
-      this.updateStatus(styleFunc, { status: toStatus });
-    }, 2);
-  };
-
   render() {
-    const { status, statusStyle } = this.state;
+    const { status, statusActive, statusStyle } = this.state;
     const { children, transitionName, visible } = this.props;
 
     if (!children) return null;
 
-    if (status === STATUS_NONE) {
+    if (status === STATUS_NONE || !supportTransition) {
       return visible ? children({}) : null;
     }
 
     return children({
       className: classNames({
         [getTransitionName(transitionName, status)]: status !== STATUS_NONE,
+        [getTransitionName(transitionName, `${status}-active`)]: status !== STATUS_NONE && statusActive,
         [transitionName]: typeof transitionName === 'string',
       }),
       style: statusStyle,

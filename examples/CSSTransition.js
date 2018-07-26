@@ -20,6 +20,19 @@ class Demo extends React.Component {
 
   onCollapse = () => ({ height: 0 });
 
+  skipColorTransition = (_, event) => {
+    // CSSTransition support multiple transition.
+    // You can return false to prevent motion end when fast transition finished.
+    if (event.propertyName === 'background-color') {
+      return false;
+    }
+    return true;
+  };
+
+  styleGreen = () => ({
+    background: 'green',
+  });
+
   render() {
     const { show } = this.state;
 
@@ -30,27 +43,45 @@ class Demo extends React.Component {
           {' '}
           Show Component
         </label>
-        <CSSTransition
-          visible={show}
-          transitionName="transition"
-          onAppearStart={this.onCollapse}
-          onEnterStart={this.onCollapse}
-          onLeaveActive={this.onCollapse}
-        >
-          {({ style, className }) => {
-            return (
-              <div
-                className={classNames('demo-block', className)}
-                style={style}
-              >
-                666
-              </div>
-            );
-          }}
-        </CSSTransition>
+        <div className="grid">
+          <div>
+            <h2>With Transition Class</h2>
+            <CSSTransition
+              visible={show}
+              transitionName="transition"
+              onAppearStart={this.onCollapse}
+              onEnterStart={this.onCollapse}
+              onLeaveActive={this.onCollapse}
+
+              onEnterEnd={this.skipColorTransition}
+              onLeaveEnd={this.skipColorTransition}
+            >
+              {({ style, className }) => (
+                <div className={classNames('demo-block', className)} style={style} />
+              )}
+            </CSSTransition>
+          </div>
+
+          <div>
+            <h2>With Animation Class</h2>
+            <CSSTransition
+              visible={show}
+              transitionName="animation"
+              onLeaveActive={this.styleGreen}
+            >
+              {({ style, className }) => (
+                <div className={classNames('demo-block', className)} style={style} />
+              )}
+            </CSSTransition>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+
+// Remove for IE9 test
+const aaa = document.getElementsByClassName('navbar')[0];
+aaa.parentNode.removeChild(aaa);
