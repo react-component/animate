@@ -18,9 +18,7 @@ class Demo extends React.Component {
     });
   };
 
-  onAppearStart = () => ({ height: 0 });
-
-  onLeaveActive = () => ({ height: 0 });
+  onCollapse = () => ({ height: 0 });
 
   render() {
     const { show } = this.state;
@@ -35,12 +33,16 @@ class Demo extends React.Component {
         <CSSTransition
           visible={show}
           transitionName="transition"
-          onAppearStart={this.onAppearStart}
-          onLeaveActive={this.onLeaveActive}
+          onAppearStart={this.onCollapse}
+          onEnterStart={this.onCollapse}
+          onLeaveActive={this.onCollapse}
         >
           {({ style, className }) => {
             return (
-              <div className={classNames('demo-block', className)} style={style}>
+              <div
+                className={classNames('demo-block', className)}
+                style={style}
+              >
                 666
               </div>
             );
