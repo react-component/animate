@@ -1,0 +1,26 @@
+.demo-block {
+  display: block;
+  height: 300px;
+  width: 300px;
+  background: red;
+}
+
+.transition {
+  transition: all 1s;
+
+  &.transition-appear {
+    opacity: 0;
+  }
+
+  &.transition-appear-active {
+    opacity: 1;
+  }
+
+  &.transition-leave-active {
+    opacity: 1;
+  }
+
+  &.transition-leave {
+    opacity: 0;
+  }
+}

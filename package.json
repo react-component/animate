@@ -41,6 +41,7 @@
     "prepublish": "rc-tools run guard"
   },
   "devDependencies": {
+    "babel-runtime": "6.x",
     "core-js": "^2.5.1",
     "expect.js": "0.3.x",
     "jquery": "^3.3.1",
@@ -55,7 +56,6 @@
     "lint"
   ],
   "dependencies": {
-    "babel-runtime": "6.x",
     "classnames": "^2.2.5",
     "component-classes": "^1.2.6",
     "fbjs": "^0.8.16",
