@@ -128,39 +128,45 @@ class CSSTransition extends React.Component {
   };
 
   onAnimationEnd = (event) => {
-    console.log('Animate End >', event);
+    this.onMotionEnd(event);
   };
+
   onTransitionEnd = (event) => {
+    this.onMotionEnd(event);
+  };
+
+  onMotionEnd = (event) => {
     const { status } = this.state;
     const { onAppearEnd, onEnterEnd, onLeaveEnd } = this.props;
     if (status === STATUS_APPEAR_ACTIVE) {
-      this.updateStatus(onAppearEnd, { status: STATUS_NONE });
+      this.updateStatus(onAppearEnd, { status: STATUS_NONE }, event);
     } else if (status === STATUS_ENTER_ACTIVE) {
-      this.updateStatus(onEnterEnd, { status: STATUS_NONE });
+      this.updateStatus(onEnterEnd, { status: STATUS_NONE }, event);
     } else if (status === STATUS_LEAVE_ACTIVE) {
-      this.updateStatus(onLeaveEnd, { status: STATUS_NONE });
+      this.updateStatus(onLeaveEnd, { status: STATUS_NONE }, event);
     }
-    console.log('Trans End >', event);
   };
 
   addEventListener = ($ele) => {
     if (!$ele) return;
 
-    console.log('ADD EVENT');
     $ele.addEventListener(transitionEndName, this.onTransitionEnd);
     $ele.addEventListener(animationEndName, this.onAnimationEnd);
   };
   removeEventListener = ($ele) => {
     if (!$ele) return;
 
-    console.log('REMOVE EVENT');
     $ele.removeEventListener(transitionEndName, this.onTransitionEnd);
     $ele.removeEventListener(animationEndName, this.onAnimationEnd);
   };
 
-  updateStatus = (styleFunc, additionalState) => {
+  updateStatus = (styleFunc, additionalState, event) => {
+    const statusStyle = styleFunc ? styleFunc(ReactDOM.findDOMNode(this), event) : null;
+
+    if (statusStyle === false) return;
+
     this.setState({
-      statusStyle: styleFunc ? styleFunc(ReactDOM.findDOMNode(this)) : null,
+      statusStyle,
       newStatus: false,
       ...additionalState,
     });
@@ -178,8 +184,6 @@ class CSSTransition extends React.Component {
   render() {
     const { status, statusStyle } = this.state;
     const { children, transitionName, visible } = this.props;
-
-    console.log('>', status, statusStyle);
 
     if (!children) return null;
 
