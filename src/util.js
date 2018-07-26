@@ -1,5 +1,6 @@
 import toArray from 'rc-util/lib/Children/toArray';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import raf from 'raf';
 
 // =================== Style ====================
 const stylePrefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
@@ -161,3 +162,12 @@ export function getTransitionName(transitionName, transitionType) {
   return `${transitionName}-${transitionType}`;
 }
 
+export function nextFrame(callback, frames = 1) {
+  raf(() => {
+    if (frames <=0) {
+      callback();
+    } else {
+      nextFrame(callback, frames - 1);
+    }
+  });
+}

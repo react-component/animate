@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 import classNames from 'classnames';
-import raf from 'raf';
 import {
   getTransitionName,
   animationEndName, transitionEndName,
+  nextFrame,
 } from './util';
 
 const STATUS_NONE = 'none';
@@ -173,12 +173,14 @@ class CSSTransition extends React.Component {
   };
 
   asyncUpdateStatus = (styleFunc, fromStatus, toStatus) => {
-    raf(() => {
+    // React use `postMessage` to do the UI render which may cause status update in one frame.
+    // Let's delay 2 frame to avoid this.
+    nextFrame(() => {
       const { status } = this.state;
       if (status !== fromStatus) return;
 
       this.updateStatus(styleFunc, { status: toStatus });
-    });
+    }, 2);
   };
 
   render() {
