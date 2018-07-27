@@ -15,14 +15,14 @@ const STATUS_APPEAR = 'appear';
 const STATUS_ENTER = 'enter';
 const STATUS_LEAVE = 'leave';
 
-class CSSTransition extends React.Component {
+class CSSMotion extends React.Component {
   static propTypes = {
     visible: PropTypes.bool,
     children: PropTypes.func,
-    transitionName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    transitionAppear: PropTypes.bool,
-    transitionEnter: PropTypes.bool,
-    transitionLeave: PropTypes.bool,
+    motionName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    motionAppear: PropTypes.bool,
+    motionEnter: PropTypes.bool,
+    motionLeave: PropTypes.bool,
     onAppearStart: PropTypes.func,
     onAppearActive: PropTypes.func,
     onAppearEnd: PropTypes.func,
@@ -35,9 +35,9 @@ class CSSTransition extends React.Component {
   };
 
   static defaultProps = {
-    transitionEnter: true,
-    transitionAppear: true,
-    transitionLeave: true,
+    motionEnter: true,
+    motionAppear: true,
+    motionLeave: true,
   };
 
   constructor() {
@@ -55,27 +55,27 @@ class CSSTransition extends React.Component {
   static getDerivedStateFromProps(props, { prevProps }) {
     if (!supportTransition) return {};
 
-    const { visible, transitionAppear, transitionEnter, transitionLeave } = props;
+    const { visible, motionAppear, motionEnter, motionLeave } = props;
     const newState = {
       prevProps: props,
     };
 
     // Appear
-    if (!prevProps && visible && transitionAppear) {
+    if (!prevProps && visible && motionAppear) {
       newState.status = STATUS_APPEAR;
       newState.statusActive = false;
       newState.newStatus = true;
     }
 
     // Enter
-    if (prevProps && !prevProps.visible && visible && transitionEnter) {
+    if (prevProps && !prevProps.visible && visible && motionEnter) {
       newState.status = STATUS_ENTER;
       newState.statusActive = false;
       newState.newStatus = true;
     }
 
     // Leave
-    if (prevProps && prevProps.visible && !visible && transitionLeave) {
+    if (prevProps && prevProps.visible && !visible && motionLeave) {
       newState.status = STATUS_LEAVE;
       newState.statusActive = false;
       newState.newStatus = true;
@@ -101,7 +101,7 @@ class CSSTransition extends React.Component {
     const {
       onAppearStart, onEnterStart, onLeaveStart,
       onAppearActive, onEnterActive, onLeaveActive,
-      transitionAppear, transitionEnter, transitionLeave,
+      motionAppear, motionEnter, motionLeave,
     } = this.props;
 
     if (!supportTransition) {
@@ -117,15 +117,15 @@ class CSSTransition extends React.Component {
     }
 
     // Init status
-    if (newStatus && status === STATUS_APPEAR && transitionAppear) {
+    if (newStatus && status === STATUS_APPEAR && motionAppear) {
       this.updateStatus(onAppearStart).then(() => {
         this.updateActiveStatus(onAppearActive, STATUS_APPEAR);
       });
-    } else if (newStatus && status === STATUS_ENTER && transitionEnter) {
+    } else if (newStatus && status === STATUS_ENTER && motionEnter) {
       this.updateStatus(onEnterStart).then(() => {
         this.updateActiveStatus(onEnterActive, STATUS_ENTER);
       });
-    } else if (newStatus && status === STATUS_LEAVE && transitionLeave) {
+    } else if (newStatus && status === STATUS_LEAVE && motionLeave) {
       this.updateStatus(onLeaveStart).then(() => {
         this.updateActiveStatus(onLeaveActive, STATUS_LEAVE);
       });
@@ -192,7 +192,7 @@ class CSSTransition extends React.Component {
 
   render() {
     const { status, statusActive, statusStyle } = this.state;
-    const { children, transitionName, visible } = this.props;
+    const { children, motionName, visible } = this.props;
 
     if (!children) return null;
 
@@ -202,15 +202,15 @@ class CSSTransition extends React.Component {
 
     return children({
       className: classNames({
-        [getTransitionName(transitionName, status)]: status !== STATUS_NONE,
-        [getTransitionName(transitionName, `${status}-active`)]: status !== STATUS_NONE && statusActive,
-        [transitionName]: typeof transitionName === 'string',
+        [getTransitionName(motionName, status)]: status !== STATUS_NONE,
+        [getTransitionName(motionName, `${status}-active`)]: status !== STATUS_NONE && statusActive,
+        [motionName]: typeof motionName === 'string',
       }),
       style: statusStyle,
     });
   }
 }
 
-polyfill(CSSTransition);
+polyfill(CSSMotion);
 
-export default CSSTransition;
+export default CSSMotion;

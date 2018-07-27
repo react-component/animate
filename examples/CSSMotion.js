@@ -3,9 +3,9 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import { CSSTransition } from 'rc-animate';
+import { CSSMotion } from 'rc-animate';
 import classNames from 'classnames';
-import './CSSTransition.less';
+import './CSSMotion.less';
 
 class Demo extends React.Component {
   state = {
@@ -21,7 +21,7 @@ class Demo extends React.Component {
   onCollapse = () => ({ height: 0 });
 
   skipColorTransition = (_, event) => {
-    // CSSTransition support multiple transition.
+    // CSSMotion support multiple transition.
     // You can return false to prevent motion end when fast transition finished.
     if (event.propertyName === 'background-color') {
       return false;
@@ -46,9 +46,9 @@ class Demo extends React.Component {
         <div className="grid">
           <div>
             <h2>With Transition Class</h2>
-            <CSSTransition
+            <CSSMotion
               visible={show}
-              transitionName="transition"
+              motionName="transition"
               onAppearStart={this.onCollapse}
               onEnterStart={this.onCollapse}
               onLeaveActive={this.onCollapse}
@@ -59,20 +59,20 @@ class Demo extends React.Component {
               {({ style, className }) => (
                 <div className={classNames('demo-block', className)} style={style} />
               )}
-            </CSSTransition>
+            </CSSMotion>
           </div>
 
           <div>
             <h2>With Animation Class</h2>
-            <CSSTransition
+            <CSSMotion
               visible={show}
-              transitionName="animation"
+              motionName="animation"
               onLeaveActive={this.styleGreen}
             >
               {({ style, className }) => (
                 <div className={classNames('demo-block', className)} style={style} />
               )}
-            </CSSTransition>
+            </CSSMotion>
           </div>
         </div>
       </div>
