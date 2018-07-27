@@ -51,7 +51,7 @@ ReactDOM.render(
 
 | Property | Type | Default | Description|
 | -------- | ---- | ------- | ---------- |
-| visible | boolean | | Display child content or not |
+| visible | boolean | true | Display child content or not |
 | children | function | | Render props of children content. Example [see below](#sample usage) |
 | motionName | string \| [motionNameObjProps](#motionNameObjProps) | | Set the className when motion start |
 | motionAppear | boolean | true | Support motion on appear |
