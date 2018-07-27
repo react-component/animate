@@ -83,5 +83,5 @@ class Demo extends React.Component {
 ReactDOM.render(<Demo />, document.getElementById('__react-content'));
 
 // Remove for IE9 test
-const aaa = document.getElementsByClassName('navbar')[0];
-aaa.parentNode.removeChild(aaa);
+// const aaa = document.getElementsByClassName('navbar')[0];
+// aaa.parentNode.removeChild(aaa);

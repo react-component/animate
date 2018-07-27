@@ -172,7 +172,7 @@ class CSSTransition extends React.Component {
       if (statusStyle === false) return;
 
       this.setState({
-        statusStyle,
+        statusStyle: typeof statusStyle === 'object' ? statusStyle : null,
         newStatus: false,
         ...additionalState,
       }, resolve); // Trigger before next frame & after `componentDidMount`
