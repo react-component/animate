@@ -124,15 +124,15 @@ export function genCSSMotion(transitionSupport) {
 
       // Init status
       if (newStatus && status === STATUS_APPEAR && motionAppear) {
-        this.updateStatus(onAppearStart).then(() => {
+        this.updateStatus(onAppearStart, null, null, () => {
           this.updateActiveStatus(onAppearActive, STATUS_APPEAR);
         });
       } else if (newStatus && status === STATUS_ENTER && motionEnter) {
-        this.updateStatus(onEnterStart).then(() => {
+        this.updateStatus(onEnterStart, null, null, () => {
           this.updateActiveStatus(onEnterActive, STATUS_ENTER);
         });
       } else if (newStatus && status === STATUS_LEAVE && motionLeave) {
-        this.updateStatus(onLeaveStart).then(() => {
+        this.updateStatus(onLeaveStart, null, null, () => {
           this.updateActiveStatus(onLeaveActive, STATUS_LEAVE);
         });
       }
@@ -163,19 +163,24 @@ export function genCSSMotion(transitionSupport) {
       $ele.removeEventListener(animationEndName, this.onMotionEnd);
     };
 
-    updateStatus = (styleFunc, additionalState, event) => (
-      new Promise((resolve) => {
-        const statusStyle = styleFunc ? styleFunc(ReactDOM.findDOMNode(this), event) : null;
+    updateStatus = (styleFunc, additionalState, event, callback) => {
+      const statusStyle = styleFunc ? styleFunc(ReactDOM.findDOMNode(this), event) : null;
 
-        if (statusStyle === false) return;
+      if (statusStyle === false) return;
 
-        this.setState({
-          statusStyle: typeof statusStyle === 'object' ? statusStyle : null,
-          newStatus: false,
-          ...additionalState,
-        }, resolve); // Trigger before next frame & after `componentDidMount`
-      })
-    );
+      let nextStep;
+      if (callback) {
+        nextStep = () => {
+          raf(callback);
+        };
+      }
+
+      this.setState({
+        statusStyle: typeof statusStyle === 'object' ? statusStyle : null,
+        newStatus: false,
+        ...additionalState,
+      }, nextStep); // Trigger before next frame & after `componentDidMount`
+    };
 
     updateActiveStatus = (styleFunc, currentStatus) => {
       // `setState` use `postMessage` to trigger at the end of frame.

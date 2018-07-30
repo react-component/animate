@@ -89,23 +89,23 @@ describe('motion', () => {
 
           const doStartTest = () => {
             const $ele = $(div).find('.motion-box');
-    
+
             const basicClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
             expect(basicClassName).to.contain('transition');
             expect(basicClassName).to.contain(`transition-${name}`);
             expect(basicClassName).to.not.contain(`transition-${name}-active`);
-      
+
             raf(() => {
               // After first dom render, merge the style into element
               expect($ele.height()).to.be(oriHeight);
               expect(Number($ele.css('opacity'))).to.be(oriOpacity);
-              
+
               setTimeout(() => {
                 const activeClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
                 expect(activeClassName).to.contain('transition');
                 expect(activeClassName).to.contain(`transition-${name}`);
                 expect(activeClassName).to.contain(`transition-${name}-active`);
-      
+
                 setTimeout(() => {
                   if (nextVisible === false) {
                     expect(
@@ -124,7 +124,7 @@ describe('motion', () => {
                 }, 300);
               }, 100);
             });
-          }
+          };
 
           // Delay for the visible finished
           if (nextVisible !== undefined) {
@@ -200,7 +200,7 @@ describe('motion', () => {
               expect(activeClassName).to.contain('animation');
               expect(activeClassName).to.contain(`animation-${name}`);
               expect(activeClassName).to.contain(`animation-${name}-active`);
-            
+
               // Simulation browser env not support animation. Not check end event
               done();
             });
