@@ -203,7 +203,7 @@ describe('motion', () => {
 
               // Simulation browser env not support animation. Not check end event
               done();
-            });
+            }, 100);
           };
 
           // Delay for the visible finished
