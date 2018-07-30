@@ -56,6 +56,7 @@ export function genCSSMotion(transitionSupport) {
         statusStyle: null,
       };
       this.$ele = null;
+      this.raf = null;
     }
 
     static getDerivedStateFromProps(props, { prevProps }) {
@@ -100,7 +101,7 @@ export function genCSSMotion(transitionSupport) {
 
     componentWillUnmount() {
       this.removeEventListener(this.$ele);
-      this._destroyed = true;
+      this.cancelNextFrame();
     }
 
     onDomUpdate = () => {
@@ -167,12 +168,12 @@ export function genCSSMotion(transitionSupport) {
     updateStatus = (styleFunc, additionalState, event, callback) => {
       const statusStyle = styleFunc ? styleFunc(ReactDOM.findDOMNode(this), event) : null;
 
-      if (statusStyle === false || this._destroyed) return;
+      if (statusStyle === false) return;
 
       let nextStep;
       if (callback) {
         nextStep = () => {
-          raf(callback);
+          this.nextFrame(callback);
         };
       }
 
@@ -186,12 +187,24 @@ export function genCSSMotion(transitionSupport) {
     updateActiveStatus = (styleFunc, currentStatus) => {
       // `setState` use `postMessage` to trigger at the end of frame.
       // Let's use requestAnimationFrame to update new state in next frame.
-      raf(() => {
+      this.nextFrame(() => {
         const { status } = this.state;
         if (status !== currentStatus) return;
 
         this.updateStatus(styleFunc, { statusActive: true });
       });
+    };
+
+    nextFrame = (func) => {
+      this.cancelNextFrame();
+      this.raf = raf(func);
+    };
+
+    cancelNextFrame = () => {
+      if (this.raf) {
+        raf.cancel(this.raf);
+        this.raf = null;
+      }
     };
 
     render() {
