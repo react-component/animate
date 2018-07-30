@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>rc-animate@3.0.0-rc.1 - css-transition ui component for react</title>
+  <title>rc-animate@3.0.0-rc.2 - css-transition ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,12 +737,14 @@
 
 <body>
 <div class="header">
-  <h1>rc-animate@3.0.0-rc.1</h1>
+  <h1>rc-animate@3.0.0-rc.2</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
   <div class="examples-body">
     <ul>
+      
+      <li><a href="examples/CSSMotion.html">CSSMotion</a></li>
       
       <li><a href="examples/alert.html">alert</a></li>
       
@@ -787,7 +789,155 @@ ReactDOM.render(
     <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"1"</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"2"</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
-, mountNode);</code></pre></div><h2>API<a id="user-content-api" name="api" class="anchor" aria-hidden="true" href="#api"><span class="octicon octicon-link"></span></a></h2><h3>props<a id="user-content-props" name="props" class="anchor" aria-hidden="true" href="#props"><span class="octicon octicon-link"></span></a></h3><table class="table table-bordered table-striped">
+, mountNode);</code></pre></div><h2>CSSMotion<a id="user-content-cssmotion" name="cssmotion" class="anchor" aria-hidden="true" href="#cssmotion"><span class="octicon octicon-link"></span></a></h2><h3>props<a id="user-content-props" name="props" class="anchor" aria-hidden="true" href="#props"><span class="octicon octicon-link"></span></a></h3><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>visible</td>
+<td>boolean</td>
+<td>true</td>
+<td>Display child content or not</td>
+</tr>
+<tr>
+<td>children</td>
+<td>function</td>
+<td></td>
+<td>Render props of children content. Example <a href="#sample usage" title="see below">see below</a></td>
+</tr>
+<tr>
+<td>motionName</td>
+<td>string \</td>
+<td><a href="#motionNameObjProps" title="motionNameObjProps">motionNameObjProps</a></td>
+<td></td>
+<td>Set the className when motion start</td>
+</tr>
+<tr>
+<td>motionAppear</td>
+<td>boolean</td>
+<td>true</td>
+<td>Support motion on appear</td>
+</tr>
+<tr>
+<td>motionEnter</td>
+<td>boolean</td>
+<td>true</td>
+<td>Support motion on enter</td>
+</tr>
+<tr>
+<td>motionLeave</td>
+<td>boolean</td>
+<td>true</td>
+<td>Support motion on leave</td>
+</tr>
+<tr>
+<td>onAppearStart</td>
+<td>function</td>
+<td></td>
+<td>Trigger when appear start</td>
+</tr>
+<tr>
+<td>onAppearActive</td>
+<td>function</td>
+<td></td>
+<td>Trigger when appear active</td>
+</tr>
+<tr>
+<td>onAppearEnd</td>
+<td>function</td>
+<td></td>
+<td>Trigger when appear end</td>
+</tr>
+<tr>
+<td>onEnterStart</td>
+<td>function</td>
+<td></td>
+<td>Trigger when enter start</td>
+</tr>
+<tr>
+<td>onEnterActive</td>
+<td>function</td>
+<td></td>
+<td>Trigger when enter active</td>
+</tr>
+<tr>
+<td>onEnterEnd</td>
+<td>function</td>
+<td></td>
+<td>Trigger when enter end</td>
+</tr>
+<tr>
+<td>onLeaveStart</td>
+<td>function</td>
+<td></td>
+<td>Trigger when leave start</td>
+</tr>
+<tr>
+<td>onLeaveActive</td>
+<td>function</td>
+<td></td>
+<td>Trigger when leave active</td>
+</tr>
+<tr>
+<td>onLeaveEnd</td>
+<td>function</td>
+<td></td>
+<td>Trigger when leave end</td>
+</tr>
+</tbody>
+</table>
+<h4>motionNameObjProps<a id="user-content-motionnameobjprops" name="motionnameobjprops" class="anchor" aria-hidden="true" href="#motionnameobjprops"><span class="octicon octicon-link"></span></a></h4><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>appear</td>
+<td>string</td>
+</tr>
+<tr>
+<td>appearActive</td>
+<td>string</td>
+</tr>
+<tr>
+<td>enter</td>
+<td>string</td>
+</tr>
+<tr>
+<td>enterActive</td>
+<td>string</td>
+</tr>
+<tr>
+<td>leave</td>
+<td>string</td>
+</tr>
+<tr>
+<td>leaveActive</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+<h3>sample usage<a id="user-content-sample-usage" name="sample-usage" class="anchor" aria-hidden="true" href="#sample-usage"><span class="octicon octicon-link"></span></a></h3><div class="highlight"><pre><code language="xml">// Return customize style
+const onAppearStart = (ele) =&gt; ({ height: 0 });
+
+<span class="hljs-tag">&lt;<span class="hljs-title">CSSMotion</span>
+  <span class="hljs-attribute">visible</span>=<span class="hljs-value">{show}</span>
+  <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"transition"</span>
+  <span class="hljs-attribute">onAppearStart</span>=<span class="hljs-value">{onAppearStart}</span>
+&gt;</span>
+  {({ style, className }) =&gt; (
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">className</span>=<span class="hljs-value">{className}</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span> /&gt;</span>
+  )}
+<span class="hljs-tag">&lt;/<span class="hljs-title">CSSMotion</span>&gt;</span></code></pre></div><h2>Animate (Deprecated)<a id="user-content-animate-(deprecated)" name="animate-(deprecated)" class="anchor" aria-hidden="true" href="#animate-(deprecated)"><span class="octicon octicon-link"></span></a></h2><h3>props<a id="user-content-props" name="props" class="anchor" aria-hidden="true" href="#props"><span class="octicon octicon-link"></span></a></h3><table class="table table-bordered table-striped">
     <thead>
     <tr>
         <th style="width: 100px;">name</th>

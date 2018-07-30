@@ -1,42 +1,41 @@
 webpackJsonp([0],{
 
-/***/ 1:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 135:
+/***/ 154:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(136);
+module.exports = __webpack_require__(155);
 
 
 /***/ }),
 
-/***/ 136:
+/***/ 155:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_animate__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_velocity_animate__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_velocity_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_velocity_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__assets_index_less__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__assets_index_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_animate__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_velocity_animate__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_velocity_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_velocity_animate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__assets_index_less__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__assets_index_less__);
+
+
 
 
 
@@ -50,60 +49,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var Todo = function (_React$Component) {
-  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default()(Todo, _React$Component);
+  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Todo, _React$Component);
 
   function Todo() {
-    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, Todo);
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Todo);
 
-    return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.apply(this, arguments));
+    return __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Todo.__proto__ || Object.getPrototypeOf(Todo)).apply(this, arguments));
   }
 
-  Todo.prototype.componentWillUnmount = function componentWillUnmount() {
-    console.log('componentWillUnmount');
-    console.log(this.props.children);
-    this.props.end();
-  };
-
-  Todo.prototype.render = function render() {
-    var props = this.props;
-    var style = {
-      width: 100,
-      border: '1px solid red',
-      padding: 10,
-      margin: 10
-    };
-    return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-      'div',
-      { onClick: this.props.onClick, style: style },
-      props.children
-    );
-  };
+  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Todo, [{
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      console.log('componentWillUnmount');
+      console.log(this.props.children);
+      this.props.end();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var props = this.props;
+      var style = {
+        width: 100,
+        border: '1px solid red',
+        padding: 10,
+        margin: 10
+      };
+      return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+        'div',
+        { onClick: this.props.onClick, style: style },
+        props.children
+      );
+    }
+  }]);
 
   return Todo;
-}(__WEBPACK_IMPORTED_MODULE_3_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
 
 Todo.propTypes = {
-  children: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.any,
-  end: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func,
-  onClick: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func
+  children: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.any,
+  end: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
+  onClick: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
 };
 Todo.defaultProps = {
   end: function end() {}
 };
 
 var TodoList = function (_React$Component2) {
-  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default()(TodoList, _React$Component2);
+  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(TodoList, _React$Component2);
 
   function TodoList() {
+    var _ref;
+
     var _temp, _this2, _ret;
 
-    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, TodoList);
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, TodoList);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this2 = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component2.call.apply(_React$Component2, [this].concat(args))), _this2), _this2.state = {
+    return _ret = (_temp = (_this2 = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = TodoList.__proto__ || Object.getPrototypeOf(TodoList)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
       exclusive: false,
       items: ['hello', 'world', 'click', 'me']
     }, _this2.animateEnter = function (node, done) {
@@ -116,13 +121,13 @@ var TodoList = function (_React$Component2) {
         }
       }
 
-      __WEBPACK_IMPORTED_MODULE_7_velocity_animate___default()(node, 'slideDown', {
+      __WEBPACK_IMPORTED_MODULE_9_velocity_animate___default()(node, 'slideDown', {
         duration: 1000,
         complete: complete
       });
       return {
         stop: function stop() {
-          __WEBPACK_IMPORTED_MODULE_7_velocity_animate___default()(node, 'finish');
+          __WEBPACK_IMPORTED_MODULE_9_velocity_animate___default()(node, 'finish');
           // velocity complete is async
           complete();
         }
@@ -137,13 +142,13 @@ var TodoList = function (_React$Component2) {
         }
       }
 
-      __WEBPACK_IMPORTED_MODULE_7_velocity_animate___default()(node, 'slideUp', {
+      __WEBPACK_IMPORTED_MODULE_9_velocity_animate___default()(node, 'slideUp', {
         duration: 1000,
         complete: complete
       });
       return {
         stop: function stop() {
-          __WEBPACK_IMPORTED_MODULE_7_velocity_animate___default()(node, 'finish');
+          __WEBPACK_IMPORTED_MODULE_9_velocity_animate___default()(node, 'finish');
           // velocity complete is async
           complete();
         }
@@ -156,79 +161,87 @@ var TodoList = function (_React$Component2) {
       newItems.splice(i, 1);
       _this2.setState({ items: newItems });
     }, _this2.toggle = function (field) {
-      var _this2$setState;
-
-      _this2.setState((_this2$setState = {}, _this2$setState[field] = !_this2.state[field], _this2$setState));
-    }, _temp), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(_this2, _ret);
+      _this2.setState(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()({}, field, !_this2.state[field]));
+    }, _temp), __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(_this2, _ret);
   }
 
-  TodoList.prototype.render = function render() {
-    var _this3 = this;
+  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(TodoList, [{
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
 
-    var items = this.state.items.map(function (item, i) {
-      return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-        Todo,
-        { key: item, onClick: function onClick() {
-            _this3.handleRemove(i);
-          } },
-        item
-      );
-    });
-    var anim = {
-      enter: this.animateEnter,
-      leave: this.animateLeave
-    };
-    return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-      'div',
-      null,
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-        'button',
-        { onClick: this.handleAdd },
-        'Add Item'
-      ),
-      '\xA0',
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-        'label',
+      var items = this.state.items.map(function (item, i) {
+        return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+          Todo,
+          { key: item, onClick: function onClick() {
+              _this3.handleRemove(i);
+            } },
+          item
+        );
+      });
+      var anim = {
+        enter: this.animateEnter,
+        leave: this.animateLeave
+      };
+      return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+        'div',
         null,
-        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('input', {
-          type: 'checkbox',
-          onChange: function onChange() {
-            _this3.toggle('exclusive');
+        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+          'button',
+          { onClick: this.handleAdd },
+          'Add Item'
+        ),
+        '\xA0',
+        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+          'label',
+          null,
+          __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('input', {
+            type: 'checkbox',
+            onChange: function onChange() {
+              _this3.toggle('exclusive');
+            },
+            checked: this.state.exclusive
+          }),
+          'exclusive'
+        ),
+        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('br', null),
+        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('br', null),
+        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_8_rc_animate__["b" /* default */],
+          {
+            exclusive: this.state.exclusive,
+            animation: anim
           },
-          checked: this.state.exclusive
-        }),
-        'exclusive'
-      ),
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('br', null),
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('br', null),
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_6_rc_animate__["a" /* default */],
-        {
-          exclusive: this.state.exclusive,
-          animation: anim
-        },
-        items
-      )
-    );
-  };
+          items
+        )
+      );
+    }
+  }]);
 
   return TodoList;
-}(__WEBPACK_IMPORTED_MODULE_3_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
 
-__WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+__WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
   'div',
   null,
-  __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+  __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
     'h2',
     null,
     'Todo'
   ),
-  __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(TodoList, null)
+  __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(TodoList, null)
 ), document.getElementById('__react-content'));
 
 /***/ }),
 
-/***/ 47:
+/***/ 5:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
@@ -4124,5 +4137,5 @@ will produce an inaccurate conversion value. The same issue exists with the cx/c
 
 /***/ })
 
-},[135]);
+},[154]);
 //# sourceMappingURL=todo-animation.js.map

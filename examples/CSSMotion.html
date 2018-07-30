@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>hide-todo.js - example - rc-animate@3.0.0-rc.2</title>
+  <title>CSSMotion.js - example - rc-animate@3.0.0-rc.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
   }
   </script>
-  <link rel="stylesheet" href="hide-todo.css" />
+  <link rel="stylesheet" href="CSSMotion.css" />
 </head>
 
 <body>
@@ -269,103 +269,94 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     </div>
     <div class="example" id="__react-content"></div>
 
-    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
+    <div class="highlight"><pre><code language="undefined">/* eslint no-console:0, react/no-multi-comp:0 */
 
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
-<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
+import React from 'react';
+// import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
+import { CSSMotion } from 'rc-animate';
+import classNames from 'classnames';
+import './CSSMotion.less';
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Todo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  static propTypes = {
-    children: PropTypes.any,
-    end: PropTypes.func,
-    onClick: PropTypes.func,
-    visible: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    visible: <span class="hljs-literal">true</span>,
-    end() {},
-  }
-
-  componentWillUnmount() {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'componentWillUnmount'</span>);
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.props.children);
-    <span class="hljs-keyword">this</span>.props.end();
-  }
-
-  render() {
-    <span class="hljs-keyword">const</span> props = <span class="hljs-keyword">this</span>.props;
-    <span class="hljs-keyword">const</span> style = {
-      display: props.visible ? <span class="hljs-string">'block'</span> : <span class="hljs-string">'none'</span>,
-      width: <span class="hljs-number">100</span>,
-      border: <span class="hljs-string">'1px solid red'</span>,
-      padding: <span class="hljs-number">10</span>,
-      margin: <span class="hljs-number">10</span>,
-    };
-    <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>
-      <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.props.onClick}</span>
-      <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>
-    &gt;</span>
-      {props.children}
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
-  }
-}
-
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TodoList</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+class Demo extends React.Component {
   state = {
-    items: [
-      { content: <span class="hljs-string">'hello'</span>, visible: <span class="hljs-literal">true</span> },
-      { content: <span class="hljs-string">'world'</span>, visible: <span class="hljs-literal">true</span> },
-      { content: <span class="hljs-string">'click'</span>, visible: <span class="hljs-literal">true</span> },
-      { content: <span class="hljs-string">'me'</span>, visible: <span class="hljs-literal">true</span> },
-    ],
-  }
+    show: true,
+  };
 
-  handleHide = (i, item) =&gt; {
-    <span class="hljs-keyword">const</span> newItems = <span class="hljs-keyword">this</span>.state.items.concat([]);
-    newItems.forEach((n, index) =&gt; {
-      newItems[index] = { ...n, visible: <span class="hljs-literal">true</span> };
+  onTrigger = () =&gt; {
+    this.setState({
+      show: !this.state.show,
     });
-    newItems[i] = { ...item, visible: <span class="hljs-literal">false</span> };
-    <span class="hljs-keyword">this</span>.setState({ items: newItems });
-  }
+  };
+
+  onCollapse = () =&gt; ({ height: 0 });
+
+  skipColorTransition = (_, event) =&gt; {
+    // CSSMotion support multiple transition.
+    // You can return false to prevent motion end when fast transition finished.
+    if (event.propertyName === 'background-color') {
+      return false;
+    }
+    return true;
+  };
+
+  styleGreen = () =&gt; ({
+    background: 'green',
+  });
 
   render() {
-    <span class="hljs-keyword">const</span> items = <span class="hljs-keyword">this</span>.state.items.map((item, i) =&gt; {
-      <span class="hljs-keyword">return</span> (
-        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Todo</span>
-          <span class="hljs-attribute">key</span>=<span class="hljs-value">{item.content}</span>
-          <span class="hljs-attribute">visible</span>=<span class="hljs-value">{item.visible}</span>
-          <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> { this.handleHide(i, item); }}
-        &gt;
-          {item.content}
-        <span class="hljs-tag">&lt;/<span class="hljs-title">Todo</span>&gt;</span>
-      )</span>;
-    });
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span>
-          <span class="hljs-attribute">showProp</span>=<span class="hljs-value">"visible"</span>
-          <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>
-        &gt;</span>
-          {items}
-        <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>;
+    const { show } = this.state;
+
+    return (
+      &lt;div&gt;
+        &lt;label&gt;
+          &lt;input type="checkbox" onChange={this.onTrigger} checked={show} /&gt;
+          {' '}
+          Show Component
+        &lt;/label&gt;
+        &lt;div className="grid"&gt;
+          &lt;div&gt;
+            &lt;h2&gt;With Transition Class&lt;/h2&gt;
+            &lt;CSSMotion
+              visible={show}
+              motionName="transition"
+              onAppearStart={this.onCollapse}
+              onEnterStart={this.onCollapse}
+              onLeaveActive={this.onCollapse}
+
+              onEnterEnd={this.skipColorTransition}
+              onLeaveEnd={this.skipColorTransition}
+            &gt;
+              {({ style, className }) =&gt; (
+                &lt;div className={classNames('demo-block', className)} style={style} /&gt;
+              )}
+            &lt;/CSSMotion&gt;
+          &lt;/div&gt;
+
+          &lt;div&gt;
+            &lt;h2&gt;With Animation Class&lt;/h2&gt;
+            &lt;CSSMotion
+              visible={show}
+              motionName="animation"
+              onLeaveActive={this.styleGreen}
+            &gt;
+              {({ style, className }) =&gt; (
+                &lt;div className={classNames('demo-block', className)} style={style} /&gt;
+              )}
+            &lt;/CSSMotion&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    );
   }
 }
 
-ReactDOM.render(
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Hide Todo<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">TodoList</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>,
-  document.getElementById('__react-content')
-);
-</span></code></pre></div>
+ReactDOM.render(&lt;Demo /&gt;, document.getElementById('__react-content'));
+
+// Remove for IE9 test
+// const aaa = document.getElementsByClassName('navbar')[0];
+// aaa.parentNode.removeChild(aaa);
+</code></pre></div>
   </div>
   <a href="https://github.com/react-component/animate">
     <img style="position: absolute; top: 0; right: 0; border: 0;"
@@ -375,7 +366,7 @@ ReactDOM.render(
   </a>
   <script>FastClick.attach(document.body);</script>
   <script src="../common.js?nowrap"></script>
-  <script src="hide-todo.js?nowrap"></script>
+  <script src="CSSMotion.js?nowrap"></script>
 </body>
 
 </html>
