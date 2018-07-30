@@ -160,4 +160,3 @@ export function getTransitionName(transitionName, transitionType) {
 
   return `${transitionName}-${transitionType}`;
 }
-

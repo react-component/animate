@@ -44,7 +44,57 @@ ReactDOM.render(
 , mountNode);
 ```
 
-## API
+
+## CSSMotion
+
+### props
+
+| Property | Type | Default | Description|
+| -------- | ---- | ------- | ---------- |
+| visible | boolean | true | Display child content or not |
+| children | function | | Render props of children content. Example [see below](#sample usage) |
+| motionName | string \| [motionNameObjProps](#motionNameObjProps) | | Set the className when motion start |
+| motionAppear | boolean | true | Support motion on appear |
+| motionEnter | boolean | true | Support motion on enter |
+| motionLeave | boolean | true | Support motion on leave |
+| onAppearStart | function | | Trigger when appear start |
+| onAppearActive | function | | Trigger when appear active |
+| onAppearEnd | function | | Trigger when appear end |
+| onEnterStart | function | | Trigger when enter start |
+| onEnterActive | function | | Trigger when enter active |
+| onEnterEnd | function | | Trigger when enter end |
+| onLeaveStart | function | | Trigger when leave start |
+| onLeaveActive | function | | Trigger when leave active |
+| onLeaveEnd | function | | Trigger when leave end |
+
+#### motionNameObjProps
+| Property | Type |
+| -------- | ---- |
+| appear | string |
+| appearActive | string |
+| enter | string |
+| enterActive | string |
+| leave | string |
+| leaveActive | string |
+
+### sample usage
+
+```jsx
+// Return customize style
+const onAppearStart = (ele) => ({ height: 0 });
+
+<CSSMotion
+  visible={show}
+  transitionName="transition"
+  onAppearStart={onAppearStart}
+>
+  {({ style, className }) => (
+    <div className={className} style={style} />
+  )}
+</CSSMotion>
+```
+
+## Animate (Deprecated)
 
 ### props
 

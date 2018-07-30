@@ -5,3 +5,4 @@ import './single.spec';
 import './single-animation.spec';
 import './multiple.spec';
 import './no.transition.spec';
+import './CSSMotion.spec';
