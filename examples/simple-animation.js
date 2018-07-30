@@ -1,14 +1,14 @@
 webpackJsonp([2],{
 
-/***/ 147:
+/***/ 148:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(148);
+module.exports = __webpack_require__(149);
 
 
 /***/ }),
 
-/***/ 148:
+/***/ 149:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24,6 +24,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_animate__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types__ = __webpack_require__(11);
@@ -186,7 +187,7 @@ var Demo = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('br', null),
         __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('br', null),
         __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_5_rc_animate__["b" /* default */],
+          __WEBPACK_IMPORTED_MODULE_5_rc_animate___default.a,
           {
             component: '',
             exclusive: this.state.exclusive,
@@ -4109,5 +4110,5 @@ will produce an inaccurate conversion value. The same issue exists with the cx/c
 
 /***/ })
 
-},[147]);
+},[148]);
 //# sourceMappingURL=simple-animation.js.map
