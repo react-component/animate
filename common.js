@@ -24617,7 +24617,7 @@ function genCSSMotion(transitionSupport) {
       _this.updateStatus = function (styleFunc, additionalState, event, callback) {
         var statusStyle = styleFunc ? styleFunc(__WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.findDOMNode(_this), event) : null;
 
-        if (statusStyle === false) return;
+        if (statusStyle === false || _this._destroyed) return;
 
         var nextStep = void 0;
         if (callback) {
@@ -24680,6 +24680,7 @@ function genCSSMotion(transitionSupport) {
     }, {
       key: 'componentWillUnmount',
       value: function componentWillUnmount() {
+        this._destroyed = true;
         this.removeEventListener(this.$ele);
         this.cancelNextFrame();
       }
