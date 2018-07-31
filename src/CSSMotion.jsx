@@ -100,6 +100,7 @@ export function genCSSMotion(transitionSupport) {
     }
 
     componentWillUnmount() {
+      this._destroyed = true;
       this.removeEventListener(this.$ele);
       this.cancelNextFrame();
     }
@@ -168,7 +169,7 @@ export function genCSSMotion(transitionSupport) {
     updateStatus = (styleFunc, additionalState, event, callback) => {
       const statusStyle = styleFunc ? styleFunc(ReactDOM.findDOMNode(this), event) : null;
 
-      if (statusStyle === false) return;
+      if (statusStyle === false || this._destroyed) return;
 
       let nextStep;
       if (callback) {
