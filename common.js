@@ -2479,7 +2479,7 @@ function genAnimateChild(transitionSupport) {
           });
 
           // Do next step if not animate object provided
-          if (!_this.currentEvent.animateObj) {
+          if (!_this.currentEvent || !_this.currentEvent.animateObj) {
             _this.nextEvent(restQueue);
           }
 
