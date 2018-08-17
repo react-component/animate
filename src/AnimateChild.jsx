@@ -220,7 +220,7 @@ export function genAnimateChild(transitionSupport) {
         });
 
         // Do next step if not animate object provided
-        if (!this.currentEvent.animateObj) {
+        if (!this.currentEvent || !this.currentEvent.animateObj) {
           this.nextEvent(restQueue);
         }
 
