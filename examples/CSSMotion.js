@@ -10,6 +10,7 @@ import './CSSMotion.less';
 class Demo extends React.Component {
   state = {
     show: true,
+    motionLeaveImmediately: false,
   };
 
   onTrigger = () => {
@@ -19,6 +20,12 @@ class Demo extends React.Component {
   };
 
   onCollapse = () => ({ height: 0 });
+
+  onMotionLeaveImmediately = () => {
+    this.setState({
+      motionLeaveImmediately: !this.state.motionLeaveImmediately,
+    });
+  };
 
   skipColorTransition = (_, event) => {
     // CSSMotion support multiple transition.
@@ -34,7 +41,7 @@ class Demo extends React.Component {
   });
 
   render() {
-    const { show } = this.state;
+    const { show, motionLeaveImmediately } = this.state;
 
     return (
       <div>
@@ -43,6 +50,7 @@ class Demo extends React.Component {
           {' '}
           Show Component
         </label>
+
         <div className="grid">
           <div>
             <h2>With Transition Class</h2>
@@ -73,6 +81,30 @@ class Demo extends React.Component {
                 <div className={classNames('demo-block', className)} style={style} />
               )}
             </CSSMotion>
+          </div>
+        </div>
+
+        <div>
+          <button onClick={this.onMotionLeaveImmediately}>
+            motionLeaveImmediately
+          </button>
+
+          <div>
+            {
+              motionLeaveImmediately &&
+              <CSSMotion
+                visible={false}
+                motionName="transition"
+                onLeaveActive={this.onCollapse}
+                motionLeaveImmediately
+
+                onLeaveEnd={this.skipColorTransition}
+              >
+                {({ style, className }) => (
+                  <div className={classNames('demo-block', className)} style={style} />
+                )}
+              </CSSMotion>
+            }
           </div>
         </div>
       </div>

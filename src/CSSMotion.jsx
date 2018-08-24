@@ -28,6 +28,7 @@ export function genCSSMotion(transitionSupport) {
       motionAppear: PropTypes.bool,
       motionEnter: PropTypes.bool,
       motionLeave: PropTypes.bool,
+      motionLeaveImmediately: PropTypes.bool, // Trigger leave motion immediately
       onAppearStart: PropTypes.func,
       onAppearActive: PropTypes.func,
       onAppearEnd: PropTypes.func,
@@ -62,7 +63,10 @@ export function genCSSMotion(transitionSupport) {
     static getDerivedStateFromProps(props, { prevProps }) {
       if (!transitionSupport) return {};
 
-      const { visible, motionAppear, motionEnter, motionLeave } = props;
+      const {
+        visible, motionAppear, motionEnter, motionLeave,
+        motionLeaveImmediately,
+      } = props;
       const newState = {
         prevProps: props,
       };
@@ -82,7 +86,10 @@ export function genCSSMotion(transitionSupport) {
       }
 
       // Leave
-      if (prevProps && prevProps.visible && !visible && motionLeave) {
+      if (
+        (prevProps && prevProps.visible && !visible && motionLeave) ||
+        (!prevProps && motionLeaveImmediately && !visible)
+      ) {
         newState.status = STATUS_LEAVE;
         newState.statusActive = false;
         newState.newStatus = true;
