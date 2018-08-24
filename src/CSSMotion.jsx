@@ -88,7 +88,7 @@ export function genCSSMotion(transitionSupport) {
       // Leave
       if (
         (prevProps && prevProps.visible && !visible && motionLeave) ||
-        (!prevProps && motionLeaveImmediately && !visible)
+        (!prevProps && motionLeaveImmediately && !visible && motionLeave)
       ) {
         newState.status = STATUS_LEAVE;
         newState.statusActive = false;

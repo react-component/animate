@@ -57,6 +57,7 @@ ReactDOM.render(
 | motionAppear | boolean | true | Support motion on appear |
 | motionEnter | boolean | true | Support motion on enter |
 | motionLeave | boolean | true | Support motion on leave |
+| motionLeaveImmediately | boolean | | Trigger motionLeave immediately if visible to be false (even if it's first time append to the view) |
 | onAppearStart | function | | Trigger when appear start |
 | onAppearActive | function | | Trigger when appear active |
 | onAppearEnd | function | | Trigger when appear end |

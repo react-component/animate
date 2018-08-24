@@ -221,6 +221,40 @@ describe('motion', () => {
     });
   });
 
+  describe('immediately', () => {
+    it('motionLeaveImmediately', (done) => {
+      ReactDOM.render(
+        <CSSMotion
+          motionName="transition"
+          motionLeaveImmediately
+          visible={false}
+        >
+          {({ style, className }) => (
+            <div style={style} className={classNames('motion-box', className)} />
+          )}
+        </CSSMotion>,
+        div,
+        function init() {
+          const instance = this;
+
+          const basicClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
+          expect(basicClassName).to.contain('transition');
+          expect(basicClassName).to.contain('transition-leave');
+          expect(basicClassName).to.not.contain('transition-leave-active');
+
+          setTimeout(() => {
+            const activeClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
+            expect(activeClassName).to.contain('transition');
+            expect(activeClassName).to.contain('transition-leave');
+            expect(activeClassName).to.contain('transition-leave-active');
+
+            done();
+          }, 100);
+        },
+      );
+    });
+  });
+
   it('no transition', (done) => {
     const NoCSSTransition = genCSSMotion(false);
 
