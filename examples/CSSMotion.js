@@ -66,13 +66,18 @@ var Demo = function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      show: true
+      show: true,
+      motionLeaveImmediately: false
     }, _this.onTrigger = function () {
       _this.setState({
         show: !_this.state.show
       });
     }, _this.onCollapse = function () {
       return { height: 0 };
+    }, _this.onMotionLeaveImmediately = function () {
+      _this.setState({
+        motionLeaveImmediately: !_this.state.motionLeaveImmediately
+      });
     }, _this.skipColorTransition = function (_, event) {
       // CSSMotion support multiple transition.
       // You can return false to prevent motion end when fast transition finished.
@@ -90,7 +95,9 @@ var Demo = function (_React$Component) {
   __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(Demo, [{
     key: 'render',
     value: function render() {
-      var show = this.state.show;
+      var _state = this.state,
+          show = _state.show,
+          motionLeaveImmediately = _state.motionLeaveImmediately;
 
 
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
@@ -151,6 +158,35 @@ var Demo = function (_React$Component) {
               function (_ref3) {
                 var style = _ref3.style,
                     className = _ref3.className;
+                return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('div', { className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()('demo-block', className), style: style });
+              }
+            )
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+            'button',
+            { onClick: this.onMotionLeaveImmediately },
+            'motionLeaveImmediately'
+          ),
+          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+            'div',
+            null,
+            motionLeaveImmediately && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_6_rc_animate__["CSSMotion"],
+              {
+                visible: false,
+                motionName: 'transition',
+                onLeaveActive: this.onCollapse,
+                motionLeaveImmediately: true,
+
+                onLeaveEnd: this.skipColorTransition
+              },
+              function (_ref4) {
+                var style = _ref4.style,
+                    className = _ref4.className;
                 return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('div', { className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()('demo-block', className), style: style });
               }
             )

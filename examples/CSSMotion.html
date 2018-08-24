@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>CSSMotion.js - example - rc-animate@3.0.0-rc.5</title>
+  <title>CSSMotion.js - example - rc-animate@3.0.0-rc.6</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@3.0.0-rc.5</h1>
+      <h1>rc-animate@3.0.0-rc.6</h1>
 
       <p>css-transition ui component for react</p>
     </div>
@@ -281,6 +281,7 @@ import './CSSMotion.less';
 class Demo extends React.Component {
   state = {
     show: true,
+    motionLeaveImmediately: false,
   };
 
   onTrigger = () =&gt; {
@@ -290,6 +291,12 @@ class Demo extends React.Component {
   };
 
   onCollapse = () =&gt; ({ height: 0 });
+
+  onMotionLeaveImmediately = () =&gt; {
+    this.setState({
+      motionLeaveImmediately: !this.state.motionLeaveImmediately,
+    });
+  };
 
   skipColorTransition = (_, event) =&gt; {
     // CSSMotion support multiple transition.
@@ -305,7 +312,7 @@ class Demo extends React.Component {
   });
 
   render() {
-    const { show } = this.state;
+    const { show, motionLeaveImmediately } = this.state;
 
     return (
       &lt;div&gt;
@@ -314,6 +321,7 @@ class Demo extends React.Component {
           {' '}
           Show Component
         &lt;/label&gt;
+
         &lt;div className="grid"&gt;
           &lt;div&gt;
             &lt;h2&gt;With Transition Class&lt;/h2&gt;
@@ -344,6 +352,30 @@ class Demo extends React.Component {
                 &lt;div className={classNames('demo-block', className)} style={style} /&gt;
               )}
             &lt;/CSSMotion&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div&gt;
+          &lt;button onClick={this.onMotionLeaveImmediately}&gt;
+            motionLeaveImmediately
+          &lt;/button&gt;
+
+          &lt;div&gt;
+            {
+              motionLeaveImmediately &amp;&amp;
+              &lt;CSSMotion
+                visible={false}
+                motionName="transition"
+                onLeaveActive={this.onCollapse}
+                motionLeaveImmediately
+
+                onLeaveEnd={this.skipColorTransition}
+              &gt;
+                {({ style, className }) =&gt; (
+                  &lt;div className={classNames('demo-block', className)} style={style} /&gt;
+                )}
+              &lt;/CSSMotion&gt;
+            }
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
