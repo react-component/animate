@@ -8,6 +8,7 @@ import {
   isSameChildren,
 } from './ChildrenUtils';
 import AnimateChild from './AnimateChild';
+import CSSMotion from './CSSMotion';
 import animUtil from './util/animate';
 
 const defaultKey = `rc_animate_${Date.now()}`;
@@ -27,8 +28,12 @@ function getChildrenFromProps(props) {
 function noop() {
 }
 
+export { CSSMotion };
+
 export default class Animate extends React.Component {
   static isAnimate = true; // eslint-disable-line
+  
+  static CSSMotion = CSSMotion;
 
   static propTypes = {
     component: PropTypes.any,
