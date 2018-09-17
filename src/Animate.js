@@ -8,8 +8,9 @@ import {
   isSameChildren,
 } from './ChildrenUtils';
 import AnimateChild from './AnimateChild';
+import animUtil from './util/animate';
+
 const defaultKey = `rc_animate_${Date.now()}`;
-import animUtil from './util';
 
 function getChildrenFromProps(props) {
   const children = props.children;
@@ -223,18 +224,14 @@ export default class Animate extends React.Component {
     if (!this.isValidChildByKey(currentChildren, key)) {
       // exclusive will not need this
       this.performLeave(key);
-    } else {
-      if (type === 'appear') {
-        if (animUtil.allowAppearCallback(props)) {
-          props.onAppear(key);
-          props.onEnd(key, true);
-        }
-      } else {
-        if (animUtil.allowEnterCallback(props)) {
-          props.onEnter(key);
-          props.onEnd(key, true);
-        }
+    } else if (type === 'appear') {
+      if (animUtil.allowAppearCallback(props)) {
+        props.onAppear(key);
+        props.onEnd(key, true);
       }
+    } else if (animUtil.allowEnterCallback(props)) {
+      props.onEnter(key);
+      props.onEnd(key, true);
     }
   }
 
@@ -265,7 +262,7 @@ export default class Animate extends React.Component {
         }
       };
       if (!isSameChildren(this.state.children,
-          currentChildren, props.showProp)) {
+        currentChildren, props.showProp)) {
         this.setState({
           children: currentChildren,
         }, end);
@@ -307,7 +304,7 @@ export default class Animate extends React.Component {
         return (
           <AnimateChild
             key={child.key}
-            ref={node => this.childrenRefs[child.key] = node}
+            ref={node => { this.childrenRefs[child.key] = node }}
             animation={props.animation}
             transitionName={props.transitionName}
             transitionEnter={props.transitionEnter}

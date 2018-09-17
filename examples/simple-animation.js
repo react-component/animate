@@ -1,26 +1,25 @@
-/* eslint no-console:0, react/no-multi-comp:0 */
+/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
 
-import './assets/index.less';
 import Animate from 'rc-animate';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import velocity from 'velocity-animate';
 
-class Box extends React.Component {
-  static propTypes = {
-    visible: PropTypes.bool,
-  }
+import './assets/index.less';
 
-  render() {
-    const style = {
-      width: '200px',
-      display: this.props.visible ? 'block' : 'none',
-      height: '200px',
-      backgroundColor: 'red',
-    };
-    return (<div style={style}></div>);
-  }
+const Box = props => {
+  const style = {
+    width: '200px',
+    display: props.visible ? 'block' : 'none',
+    height: '200px',
+    backgroundColor: 'red',
+  };
+  return (<div style={style} />);
+};
+
+Box.propTypes = {
+  visible: PropTypes.bool,
 }
 
 class Demo extends React.Component {

@@ -1,10 +1,11 @@
-/* eslint no-console:0, react/no-multi-comp:0 */
+/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
 
-import './assets/slow.less';
 import Animate from 'rc-animate';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+
+import './assets/slow.less';
 
 const Div = (props) => {
   const { style, show, ...restProps } = props;

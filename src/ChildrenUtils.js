@@ -89,7 +89,7 @@ export function mergeChildren(prev, next) {
   });
 
   next.forEach((child) => {
-    if (child && nextChildrenPending.hasOwnProperty(child.key)) {
+    if (child && Object.prototype.hasOwnProperty.call(nextChildrenPending, child.key)) {
       ret = ret.concat(nextChildrenPending[child.key]);
     }
     ret.push(child);

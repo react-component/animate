@@ -1,0 +1,71 @@
+.motion-box {
+  width: 100px;
+  height: 100px;
+}
+
+/* Transition */
+.motion-box.transition {
+  transition: all .3s;
+}
+
+.motion-box.transition-appear,
+.motion-box.transition-enter {
+  opacity: 0;
+}
+
+.motion-box.transition-appear-active,
+.motion-box.transition-enter-active {
+  opacity: 1;
+}
+
+/* Animation */
+.motion-box.animation {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+}
+
+.motion-box.animation-appear,
+.motion-box.animation-enter {
+  animation-name: enter;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+
+.motion-box.animation-appear-active,
+.motion-box.animation-enter-active {
+  animation-name: enter;
+  animation-play-state: running;
+}
+
+.motion-box.animation-leave {
+  animation-name: leave;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+
+.motion-box.animation-leave-active {
+  animation-name: leave;
+  animation-play-state: running;
+}
+
+@keyframes enter {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes leave {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
+}

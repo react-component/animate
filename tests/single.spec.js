@@ -1,7 +1,9 @@
-/* eslint no-console:0, react/no-multi-comp:0 */
+/* eslint no-console:0, react/no-multi-comp:0, react/no-string-refs:0 */
 
-import Animate from '../index';
 import React from 'react';
+import CssAnimation from 'css-animation';
+import Animate from '../index';
+import single from './single-common.spec';
 
 import './index.spec.css';
 
@@ -27,8 +29,6 @@ function createClass(options) {
   };
 }
 
-import CssAnimation from 'css-animation';
-import single from './single-common.spec';
 if (CssAnimation.isCssAnimationSupported) {
   single(createClass, 'transition');
 }
