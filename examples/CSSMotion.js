@@ -66,10 +66,15 @@ var Demo = function (_React$Component) {
 
     return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       show: true,
-      motionLeaveImmediately: false
+      motionLeaveImmediately: false,
+      removeOnLeave: true
     }, _this.onTrigger = function () {
       _this.setState({
         show: !_this.state.show
+      });
+    }, _this.onRemoveOnLeave = function () {
+      _this.setState({
+        removeOnLeave: !_this.state.removeOnLeave
       });
     }, _this.onCollapse = function () {
       return { height: 0 };
@@ -96,7 +101,8 @@ var Demo = function (_React$Component) {
     value: function render() {
       var _state = this.state,
           show = _state.show,
-          motionLeaveImmediately = _state.motionLeaveImmediately;
+          motionLeaveImmediately = _state.motionLeaveImmediately,
+          removeOnLeave = _state.removeOnLeave;
 
 
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
@@ -108,6 +114,13 @@ var Demo = function (_React$Component) {
           __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onTrigger, checked: show }),
           ' ',
           'Show Component'
+        ),
+        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+          'label',
+          null,
+          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onRemoveOnLeave, checked: removeOnLeave }),
+          ' ',
+          'removeOnLeave'
         ),
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           'div',
@@ -125,6 +138,7 @@ var Demo = function (_React$Component) {
               {
                 visible: show,
                 motionName: 'transition',
+                removeOnLeave: removeOnLeave,
                 onAppearStart: this.onCollapse,
                 onEnterStart: this.onCollapse,
                 onLeaveActive: this.onCollapse,

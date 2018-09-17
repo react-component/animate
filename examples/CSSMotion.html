@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>CSSMotion.js - example - rc-animate@2.5.1</title>
+  <title>CSSMotion.js - example - rc-animate@2.5.2</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@2.5.1</h1>
+      <h1>rc-animate@2.5.2</h1>
 
       <p>css-transition ui component for react</p>
     </div>
@@ -282,11 +282,18 @@ class Demo extends React.Component {
   state = {
     show: true,
     motionLeaveImmediately: false,
+    removeOnLeave: true,
   };
 
   onTrigger = () =&gt; {
     this.setState({
       show: !this.state.show,
+    });
+  };
+
+  onRemoveOnLeave = () =&gt; {
+    this.setState({
+      removeOnLeave: !this.state.removeOnLeave,
     });
   };
 
@@ -312,7 +319,7 @@ class Demo extends React.Component {
   });
 
   render() {
-    const { show, motionLeaveImmediately } = this.state;
+    const { show, motionLeaveImmediately, removeOnLeave } = this.state;
 
     return (
       &lt;div&gt;
@@ -322,12 +329,19 @@ class Demo extends React.Component {
           Show Component
         &lt;/label&gt;
 
+        &lt;label&gt;
+          &lt;input type="checkbox" onChange={this.onRemoveOnLeave} checked={removeOnLeave} /&gt;
+          {' '}
+          removeOnLeave
+        &lt;/label&gt;
+
         &lt;div className="grid"&gt;
           &lt;div&gt;
             &lt;h2&gt;With Transition Class&lt;/h2&gt;
             &lt;CSSMotion
               visible={show}
               motionName="transition"
+              removeOnLeave={removeOnLeave}
               onAppearStart={this.onCollapse}
               onEnterStart={this.onCollapse}
               onLeaveActive={this.onCollapse}
