@@ -1,19 +1,19 @@
 webpackJsonp([0],{
 
-/***/ 155:
+/***/ 139:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(156);
+module.exports = __webpack_require__(140);
 
 
 /***/ }),
 
-/***/ 156:
+/***/ 140:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
@@ -25,13 +25,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_animate__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rc_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_velocity_animate__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_animate__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_velocity_animate__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_velocity_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_velocity_animate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__assets_index_less__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__assets_index_less__);
@@ -40,7 +39,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-/* eslint no-console:0, react/no-multi-comp:0, no-alert:0 */
+/* eslint no-console:0, react/no-multi-comp:0, no-alert:0, no-undef:0, react/jsx-no-bind:0 */
+
 
 
 
@@ -155,7 +155,7 @@ var TodoList = function (_React$Component2) {
         }
       };
     }, _this2.handleAdd = function () {
-      var newItems = _this2.state.items.concat([prompt('Enter some text')]); // eslint-disable-line
+      var newItems = _this2.state.items.concat([prompt('Enter some text')]);
       _this2.setState({ items: newItems });
     }, _this2.handleRemove = function (i) {
       var newItems = _this2.state.items;
@@ -174,9 +174,7 @@ var TodoList = function (_React$Component2) {
       var items = this.state.items.map(function (item, i) {
         return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
           Todo,
-          { key: item, onClick: function onClick() {
-              _this3.handleRemove(i);
-            } },
+          { key: item, onClick: _this3.handleRemove.bind(_this3, i) },
           item
         );
       });
@@ -198,9 +196,7 @@ var TodoList = function (_React$Component2) {
           null,
           __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('input', {
             type: 'checkbox',
-            onChange: function onChange() {
-              _this3.toggle('exclusive');
-            },
+            onChange: this.toggle.bind(this, 'exclusive'),
             checked: this.state.exclusive
           }),
           'exclusive'
@@ -208,7 +204,7 @@ var TodoList = function (_React$Component2) {
         __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('br', null),
         __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement('br', null),
         __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_8_rc_animate___default.a,
+          __WEBPACK_IMPORTED_MODULE_8_rc_animate__["b" /* default */],
           {
             exclusive: this.state.exclusive,
             animation: anim
@@ -235,14 +231,7 @@ __WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ }),
 
-/***/ 5:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 55:
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! VelocityJS.org (1.2.3). (C) 2014 Julian Shapiro. MIT @license: en.wikipedia.org/wiki/MIT_License */
@@ -4136,7 +4125,14 @@ return function (global, window, document, undefined) {
 Velocity, however, doesn't make this distinction. Thus, converting to or from the % unit with these subproperties
 will produce an inaccurate conversion value. The same issue exists with the cx/cy attributes of SVG circles and ellipses. */
 
+/***/ }),
+
+/***/ 5:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
 /***/ })
 
-},[155]);
+},[139]);
 //# sourceMappingURL=todo-animation.js.map

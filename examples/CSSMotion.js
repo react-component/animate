@@ -1,21 +1,21 @@
 webpackJsonp([9],{
 
-/***/ 143:
+/***/ 127:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 76:
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(77);
+module.exports = __webpack_require__(64);
 
 
 /***/ }),
 
-/***/ 77:
+/***/ 64:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30,13 +30,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_animate__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_animate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rc_animate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_animate__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__CSSMotion_less__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__CSSMotion_less__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__CSSMotion_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__CSSMotion_less__);
 
 
@@ -122,7 +121,7 @@ var Demo = function (_React$Component) {
               'With Transition Class'
             ),
             __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_6_rc_animate__["CSSMotion"],
+              __WEBPACK_IMPORTED_MODULE_6_rc_animate__["a" /* CSSMotion */],
               {
                 visible: show,
                 motionName: 'transition',
@@ -149,7 +148,7 @@ var Demo = function (_React$Component) {
               'With Animation Class'
             ),
             __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_6_rc_animate__["CSSMotion"],
+              __WEBPACK_IMPORTED_MODULE_6_rc_animate__["a" /* CSSMotion */],
               {
                 visible: show,
                 motionName: 'animation',
@@ -175,7 +174,7 @@ var Demo = function (_React$Component) {
             'div',
             null,
             motionLeaveImmediately && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_6_rc_animate__["CSSMotion"],
+              __WEBPACK_IMPORTED_MODULE_6_rc_animate__["a" /* CSSMotion */],
               {
                 visible: false,
                 motionName: 'transition',
@@ -207,5 +206,5 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[76]);
+},[63]);
 //# sourceMappingURL=CSSMotion.js.map

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>alert.js - example - rc-animate@3.0.0-rc.6</title>
+  <title>alert.js - example - rc-animate@2.5.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,18 +263,19 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@3.0.0-rc.6</h1>
+      <h1>rc-animate@2.5.0</h1>
 
       <p>css-transition ui component for react</p>
     </div>
     <div class="example" id="__react-content"></div>
 
-    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
+    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */</span>
 
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
+
 <span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
 
 <span class="hljs-keyword">let</span> seed = <span class="hljs-number">0</span>;
@@ -349,12 +350,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
   render() {
     <span class="hljs-keyword">const</span> alerts = <span class="hljs-keyword">this</span>.state.alerts;
+    <span class="hljs-keyword">const</span> self = <span class="hljs-keyword">this</span>;
     <span class="hljs-keyword">const</span> children = alerts.map((a) =&gt; {
       <span class="hljs-keyword">if</span> (!a.key) {
         seed++;
         a.key = <span class="hljs-built_in">String</span>(seed);
       }
-      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Alert</span> {<span class="hljs-attribute">...a</span>} <span class="hljs-attribute">onEnd</span>=<span class="hljs-value">{()</span> =&gt;</span> { this.onEnd(a.key); }} /&gt;;</span>
+      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Alert</span> {<span class="hljs-attribute">...a</span>} <span class="hljs-attribute">onEnd</span>=<span class="hljs-value">{self.onEnd.bind(self,</span> <span class="hljs-attribute">a.key</span>)}/&gt;</span>;</span>
     });
     <span class="hljs-keyword">const</span> style = {
       position: <span class="hljs-string">'fixed'</span>,

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>simple-animation.js - example - rc-animate@3.0.0-rc.6</title>
+  <title>simple-animation.js - example - rc-animate@2.5.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,22 +263,23 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@3.0.0-rc.6</h1>
+      <h1>rc-animate@2.5.0</h1>
 
       <p>css-transition ui component for react</p>
     </div>
     <div class="example" id="__react-content"></div>
 
-    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
+    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */</span>
 
 <span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
 <span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
 <span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
 <span class="hljs-keyword">import</span> velocity <span class="hljs-keyword">from</span> <span class="hljs-string">'velocity-animate'</span>;
+
 <span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/index.less'</span>;
 
-<span class="hljs-keyword">const</span> Box = (props) =&gt; {
+<span class="hljs-keyword">const</span> Box = props =&gt; {
   <span class="hljs-keyword">const</span> style = {
     width: <span class="hljs-string">'200px'</span>,
     display: props.visible ? <span class="hljs-string">'block'</span> : <span class="hljs-string">'none'</span>,
@@ -290,7 +291,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
 Box.propTypes = {
   visible: PropTypes.bool,
-};
+}
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   state = {
@@ -377,16 +378,16 @@ Box.propTypes = {
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span>
           <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span>
-          <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{()</span> =&gt;</span> { this.toggle('visible'); }}
-          checked={this.state.visible}
-        /&gt;
+          <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,</span> '<span class="hljs-attribute">visible</span>')}
+          <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.visible}</span>
+        /&gt;</span>
           show<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         &amp;nbsp;
         <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span>
           <span class="hljs-attribute">type</span>=<span class="hljs-value">"checkbox"</span>
-          <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{()</span> =&gt;</span> { this.toggle('exclusive'); }}
-          checked={this.state.exclusive}
-        /&gt;
+          <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.toggle.bind(this,</span> '<span class="hljs-attribute">exclusive</span>')}
+          <span class="hljs-attribute">checked</span>=<span class="hljs-value">{this.state.exclusive}</span>
+        /&gt;</span>
           exclusive<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
         &amp;nbsp;
         <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.destroy}</span>&gt;</span>destroy<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
