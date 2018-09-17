@@ -11,11 +11,18 @@ class Demo extends React.Component {
   state = {
     show: true,
     motionLeaveImmediately: false,
+    removeOnLeave: true,
   };
 
   onTrigger = () => {
     this.setState({
       show: !this.state.show,
+    });
+  };
+
+  onRemoveOnLeave = () => {
+    this.setState({
+      removeOnLeave: !this.state.removeOnLeave,
     });
   };
 
@@ -41,7 +48,7 @@ class Demo extends React.Component {
   });
 
   render() {
-    const { show, motionLeaveImmediately } = this.state;
+    const { show, motionLeaveImmediately, removeOnLeave } = this.state;
 
     return (
       <div>
@@ -51,12 +58,19 @@ class Demo extends React.Component {
           Show Component
         </label>
 
+        <label>
+          <input type="checkbox" onChange={this.onRemoveOnLeave} checked={removeOnLeave} />
+          {' '}
+          removeOnLeave
+        </label>
+
         <div className="grid">
           <div>
             <h2>With Transition Class</h2>
             <CSSMotion
               visible={show}
               motionName="transition"
+              removeOnLeave={removeOnLeave}
               onAppearStart={this.onCollapse}
               onEnterStart={this.onCollapse}
               onLeaveActive={this.onCollapse}

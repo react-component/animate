@@ -29,6 +29,7 @@ export function genCSSMotion(transitionSupport) {
       motionEnter: PropTypes.bool,
       motionLeave: PropTypes.bool,
       motionLeaveImmediately: PropTypes.bool, // Trigger leave motion immediately
+      removeOnLeave: PropTypes.bool,
       onAppearStart: PropTypes.func,
       onAppearActive: PropTypes.func,
       onAppearEnd: PropTypes.func,
@@ -45,6 +46,7 @@ export function genCSSMotion(transitionSupport) {
       motionEnter: true,
       motionAppear: true,
       motionLeave: true,
+      removeOnLeave: true,
     };
 
     constructor() {
@@ -217,12 +219,12 @@ export function genCSSMotion(transitionSupport) {
 
     render() {
       const { status, statusActive, statusStyle } = this.state;
-      const { children, motionName, visible } = this.props;
+      const { children, motionName, visible, removeOnLeave } = this.props;
 
       if (!children) return null;
 
       if (status === STATUS_NONE || !transitionSupport) {
-        return visible ? children({}) : null;
+        return (visible || !removeOnLeave) ? children({}) : null;
       }
 
       return children({
