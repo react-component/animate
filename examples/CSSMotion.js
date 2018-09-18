@@ -66,15 +66,17 @@ class Demo extends React.Component {
         </label>
 
         <label>
-          <input type="checkbox" onChange={this.onRemoveOnLeave} checked={removeOnLeave} />
-          {' '}
-          removeOnLeave
-        </label>
-
-        <label>
           <input type="checkbox" onChange={this.onTriggerClassName} checked={hasMotionClassName} />
           {' '}
           hasMotionClassName
+        </label>
+
+        <label>
+          <input type="checkbox" onChange={this.onRemoveOnLeave} checked={removeOnLeave} />
+          {' '}
+          removeOnLeave
+
+          {removeOnLeave ? '' : ' (use leavedClassName)'}
         </label>
 
         <div className="grid">
@@ -84,6 +86,7 @@ class Demo extends React.Component {
               visible={show}
               motionName={hasMotionClassName ? 'transition' : null}
               removeOnLeave={removeOnLeave}
+              leavedClassName="hidden"
               onAppearStart={this.onCollapse}
               onEnterStart={this.onCollapse}
               onLeaveActive={this.onCollapse}
@@ -102,6 +105,8 @@ class Demo extends React.Component {
             <CSSMotion
               visible={show}
               motionName={hasMotionClassName ? 'animation' : null}
+              removeOnLeave={removeOnLeave}
+              leavedClassName="hidden"
               onLeaveActive={this.styleGreen}
             >
               {({ style, className }) => (
@@ -123,6 +128,7 @@ class Demo extends React.Component {
                 visible={false}
                 motionName={hasMotionClassName ? 'transition' : null}
                 removeOnLeave={removeOnLeave}
+                leavedClassName="hidden"
                 onLeaveActive={this.onCollapse}
                 motionLeaveImmediately
 
