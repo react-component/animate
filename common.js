@@ -1584,6 +1584,10 @@ var STATUS_LEAVE = 'leave';
  * Default we use browser transition event support check.
  */
 function genCSSMotion(transitionSupport) {
+  function isSupportTransition(props) {
+    return !!(props.motionName && transitionSupport);
+  }
+
   var CSSMotion = function (_React$Component) {
     __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(CSSMotion, _React$Component);
 
@@ -1608,7 +1612,7 @@ function genCSSMotion(transitionSupport) {
             motionLeave = _this$props.motionLeave;
 
 
-        if (!transitionSupport) {
+        if (!isSupportTransition(_this.props)) {
           return;
         }
 
@@ -1756,7 +1760,7 @@ function genCSSMotion(transitionSupport) {
 
         if (!children) return null;
 
-        if (status === STATUS_NONE || !transitionSupport) {
+        if (status === STATUS_NONE || !isSupportTransition(this.props)) {
           return visible || !removeOnLeave ? children({}) : null;
         }
 
@@ -1770,7 +1774,7 @@ function genCSSMotion(transitionSupport) {
       value: function getDerivedStateFromProps(props, _ref) {
         var prevProps = _ref.prevProps;
 
-        if (!transitionSupport) return {};
+        if (!isSupportTransition(props)) return {};
 
         var visible = props.visible,
             motionAppear = props.motionAppear,

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>CSSMotion.js - example - rc-animate@2.5.2</title>
+  <title>CSSMotion.js - example - rc-animate@2.5.3</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@2.5.2</h1>
+      <h1>rc-animate@2.5.3</h1>
 
       <p>css-transition ui component for react</p>
     </div>
@@ -283,6 +283,7 @@ class Demo extends React.Component {
     show: true,
     motionLeaveImmediately: false,
     removeOnLeave: true,
+    hasMotionClassName: true,
   };
 
   onTrigger = () =&gt; {
@@ -294,6 +295,12 @@ class Demo extends React.Component {
   onRemoveOnLeave = () =&gt; {
     this.setState({
       removeOnLeave: !this.state.removeOnLeave,
+    });
+  };
+
+  onTriggerClassName = () =&gt; {
+    this.setState({
+      hasMotionClassName: !this.state.hasMotionClassName,
     });
   };
 
@@ -319,7 +326,7 @@ class Demo extends React.Component {
   });
 
   render() {
-    const { show, motionLeaveImmediately, removeOnLeave } = this.state;
+    const { show, motionLeaveImmediately, removeOnLeave, hasMotionClassName } = this.state;
 
     return (
       &lt;div&gt;
@@ -335,12 +342,18 @@ class Demo extends React.Component {
           removeOnLeave
         &lt;/label&gt;
 
+        &lt;label&gt;
+          &lt;input type="checkbox" onChange={this.onTriggerClassName} checked={hasMotionClassName} /&gt;
+          {' '}
+          hasMotionClassName
+        &lt;/label&gt;
+
         &lt;div className="grid"&gt;
           &lt;div&gt;
             &lt;h2&gt;With Transition Class&lt;/h2&gt;
             &lt;CSSMotion
               visible={show}
-              motionName="transition"
+              motionName={hasMotionClassName ? 'transition' : null}
               removeOnLeave={removeOnLeave}
               onAppearStart={this.onCollapse}
               onEnterStart={this.onCollapse}
@@ -359,7 +372,7 @@ class Demo extends React.Component {
             &lt;h2&gt;With Animation Class&lt;/h2&gt;
             &lt;CSSMotion
               visible={show}
-              motionName="animation"
+              motionName={hasMotionClassName ? 'animation' : null}
               onLeaveActive={this.styleGreen}
             &gt;
               {({ style, className }) =&gt; (
@@ -379,7 +392,7 @@ class Demo extends React.Component {
               motionLeaveImmediately &amp;&amp;
               &lt;CSSMotion
                 visible={false}
-                motionName="transition"
+                motionName={hasMotionClassName ? 'transition' : null}
                 onLeaveActive={this.onCollapse}
                 motionLeaveImmediately
 

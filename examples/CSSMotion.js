@@ -67,7 +67,8 @@ var Demo = function (_React$Component) {
     return _ret = (_temp = (_this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       show: true,
       motionLeaveImmediately: false,
-      removeOnLeave: true
+      removeOnLeave: true,
+      hasMotionClassName: true
     }, _this.onTrigger = function () {
       _this.setState({
         show: !_this.state.show
@@ -75,6 +76,10 @@ var Demo = function (_React$Component) {
     }, _this.onRemoveOnLeave = function () {
       _this.setState({
         removeOnLeave: !_this.state.removeOnLeave
+      });
+    }, _this.onTriggerClassName = function () {
+      _this.setState({
+        hasMotionClassName: !_this.state.hasMotionClassName
       });
     }, _this.onCollapse = function () {
       return { height: 0 };
@@ -102,7 +107,8 @@ var Demo = function (_React$Component) {
       var _state = this.state,
           show = _state.show,
           motionLeaveImmediately = _state.motionLeaveImmediately,
-          removeOnLeave = _state.removeOnLeave;
+          removeOnLeave = _state.removeOnLeave,
+          hasMotionClassName = _state.hasMotionClassName;
 
 
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
@@ -123,6 +129,13 @@ var Demo = function (_React$Component) {
           'removeOnLeave'
         ),
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+          'label',
+          null,
+          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onTriggerClassName, checked: hasMotionClassName }),
+          ' ',
+          'hasMotionClassName'
+        ),
+        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           'div',
           { className: 'grid' },
           __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
@@ -137,7 +150,7 @@ var Demo = function (_React$Component) {
               __WEBPACK_IMPORTED_MODULE_6_rc_animate__["a" /* CSSMotion */],
               {
                 visible: show,
-                motionName: 'transition',
+                motionName: hasMotionClassName ? 'transition' : null,
                 removeOnLeave: removeOnLeave,
                 onAppearStart: this.onCollapse,
                 onEnterStart: this.onCollapse,
@@ -165,7 +178,7 @@ var Demo = function (_React$Component) {
               __WEBPACK_IMPORTED_MODULE_6_rc_animate__["a" /* CSSMotion */],
               {
                 visible: show,
-                motionName: 'animation',
+                motionName: hasMotionClassName ? 'animation' : null,
                 onLeaveActive: this.styleGreen
               },
               function (_ref3) {
@@ -191,7 +204,7 @@ var Demo = function (_React$Component) {
               __WEBPACK_IMPORTED_MODULE_6_rc_animate__["a" /* CSSMotion */],
               {
                 visible: false,
-                motionName: 'transition',
+                motionName: hasMotionClassName ? 'transition' : null,
                 onLeaveActive: this.onCollapse,
                 motionLeaveImmediately: true,
 
