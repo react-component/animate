@@ -122,6 +122,7 @@ class Demo extends React.Component {
               <CSSMotion
                 visible={false}
                 motionName={hasMotionClassName ? 'transition' : null}
+                removeOnLeave={removeOnLeave}
                 onLeaveActive={this.onCollapse}
                 motionLeaveImmediately
 
