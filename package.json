@@ -25,7 +25,7 @@
   "main": "./lib/Animate",
   "module": "./es/Animate",
   "config": {
-    "port": 8200
+    "port": 8201
   },
   "scripts": {
     "build": "rc-tools run build",

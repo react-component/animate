@@ -12,6 +12,7 @@ class Demo extends React.Component {
     show: true,
     motionLeaveImmediately: false,
     removeOnLeave: true,
+    hasMotionClassName: true,
   };
 
   onTrigger = () => {
@@ -23,6 +24,12 @@ class Demo extends React.Component {
   onRemoveOnLeave = () => {
     this.setState({
       removeOnLeave: !this.state.removeOnLeave,
+    });
+  };
+
+  onTriggerClassName = () => {
+    this.setState({
+      hasMotionClassName: !this.state.hasMotionClassName,
     });
   };
 
@@ -48,7 +55,7 @@ class Demo extends React.Component {
   });
 
   render() {
-    const { show, motionLeaveImmediately, removeOnLeave } = this.state;
+    const { show, motionLeaveImmediately, removeOnLeave, hasMotionClassName } = this.state;
 
     return (
       <div>
@@ -64,12 +71,18 @@ class Demo extends React.Component {
           removeOnLeave
         </label>
 
+        <label>
+          <input type="checkbox" onChange={this.onTriggerClassName} checked={hasMotionClassName} />
+          {' '}
+          hasMotionClassName
+        </label>
+
         <div className="grid">
           <div>
             <h2>With Transition Class</h2>
             <CSSMotion
               visible={show}
-              motionName="transition"
+              motionName={hasMotionClassName ? 'transition' : null}
               removeOnLeave={removeOnLeave}
               onAppearStart={this.onCollapse}
               onEnterStart={this.onCollapse}
@@ -88,7 +101,7 @@ class Demo extends React.Component {
             <h2>With Animation Class</h2>
             <CSSMotion
               visible={show}
-              motionName="animation"
+              motionName={hasMotionClassName ? 'animation' : null}
               onLeaveActive={this.styleGreen}
             >
               {({ style, className }) => (
@@ -108,7 +121,7 @@ class Demo extends React.Component {
               motionLeaveImmediately &&
               <CSSMotion
                 visible={false}
-                motionName="transition"
+                motionName={hasMotionClassName ? 'transition' : null}
                 onLeaveActive={this.onCollapse}
                 motionLeaveImmediately
 
