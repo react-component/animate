@@ -124,16 +124,17 @@ var Demo = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           'label',
           null,
-          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onRemoveOnLeave, checked: removeOnLeave }),
+          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onTriggerClassName, checked: hasMotionClassName }),
           ' ',
-          'removeOnLeave'
+          'hasMotionClassName'
         ),
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           'label',
           null,
-          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onTriggerClassName, checked: hasMotionClassName }),
+          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onRemoveOnLeave, checked: removeOnLeave }),
           ' ',
-          'hasMotionClassName'
+          'removeOnLeave',
+          removeOnLeave ? '' : ' (use leavedClassName)'
         ),
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           'div',
@@ -152,6 +153,7 @@ var Demo = function (_React$Component) {
                 visible: show,
                 motionName: hasMotionClassName ? 'transition' : null,
                 removeOnLeave: removeOnLeave,
+                leavedClassName: 'hidden',
                 onAppearStart: this.onCollapse,
                 onEnterStart: this.onCollapse,
                 onLeaveActive: this.onCollapse,
@@ -179,6 +181,8 @@ var Demo = function (_React$Component) {
               {
                 visible: show,
                 motionName: hasMotionClassName ? 'animation' : null,
+                removeOnLeave: removeOnLeave,
+                leavedClassName: 'hidden',
                 onLeaveActive: this.styleGreen
               },
               function (_ref3) {
@@ -205,6 +209,8 @@ var Demo = function (_React$Component) {
               {
                 visible: false,
                 motionName: hasMotionClassName ? 'transition' : null,
+                removeOnLeave: removeOnLeave,
+                leavedClassName: 'hidden',
                 onLeaveActive: this.onCollapse,
                 motionLeaveImmediately: true,
 

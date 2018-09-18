@@ -1755,13 +1755,20 @@ function genCSSMotion(transitionSupport) {
             children = _props.children,
             motionName = _props.motionName,
             visible = _props.visible,
-            removeOnLeave = _props.removeOnLeave;
+            removeOnLeave = _props.removeOnLeave,
+            leavedClassName = _props.leavedClassName;
 
 
         if (!children) return null;
 
         if (status === STATUS_NONE || !isSupportTransition(this.props)) {
-          return visible || !removeOnLeave ? children({}) : null;
+          if (visible) {
+            return children({});
+          } else if (!removeOnLeave) {
+            return children({ className: leavedClassName });
+          }
+
+          return null;
         }
 
         return children({
@@ -1823,6 +1830,7 @@ function genCSSMotion(transitionSupport) {
     motionLeave: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
     motionLeaveImmediately: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool, // Trigger leave motion immediately
     removeOnLeave: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
+    leavedClassName: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.string,
     onAppearStart: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
     onAppearActive: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
     onAppearEnd: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
