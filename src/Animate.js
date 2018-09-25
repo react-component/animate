@@ -28,8 +28,6 @@ function getChildrenFromProps(props) {
 function noop() {
 }
 
-export { CSSMotion };
-
 export default class Animate extends React.Component {
   static isAnimate = true; // eslint-disable-line
   
