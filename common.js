@@ -1755,20 +1755,13 @@ function genCSSMotion(transitionSupport) {
             children = _props.children,
             motionName = _props.motionName,
             visible = _props.visible,
-            removeOnLeave = _props.removeOnLeave,
-            leavedClassName = _props.leavedClassName;
+            removeOnLeave = _props.removeOnLeave;
 
 
         if (!children) return null;
 
         if (status === STATUS_NONE || !isSupportTransition(this.props)) {
-          if (visible) {
-            return children({});
-          } else if (!removeOnLeave) {
-            return children({ className: leavedClassName });
-          }
-
-          return null;
+          return visible || !removeOnLeave ? children({}) : null;
         }
 
         return children({
@@ -1830,7 +1823,6 @@ function genCSSMotion(transitionSupport) {
     motionLeave: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
     motionLeaveImmediately: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool, // Trigger leave motion immediately
     removeOnLeave: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
-    leavedClassName: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.string,
     onAppearStart: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
     onAppearActive: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
     onAppearEnd: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
@@ -23896,7 +23888,6 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__AnimateChild__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__CSSMotion__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__util_animate__ = __webpack_require__(61);
-/* unused harmony reexport CSSMotion */
 
 
 
@@ -23925,8 +23916,6 @@ function getChildrenFromProps(props) {
 }
 
 function noop() {}
-
-
 
 var Animate = function (_React$Component) {
   __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(Animate, _React$Component);

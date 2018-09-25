@@ -51,9 +51,6 @@
   animation-name: leave;
   animation-play-state: running;
 }
-.hidden {
-  display: none;
-}
 @keyframes enter {
   from {
     transform: scale(0);
