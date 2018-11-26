@@ -7,15 +7,15 @@ webpackJsonp([9],{
 
 /***/ }),
 
-/***/ 64:
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(65);
+module.exports = __webpack_require__(64);
 
 
 /***/ }),
 
-/***/ 65:
+/***/ 64:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33,7 +33,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_animate__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__CSSMotion_less__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__CSSMotion_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__CSSMotion_less__);
@@ -124,16 +124,17 @@ var Demo = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           'label',
           null,
-          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onRemoveOnLeave, checked: removeOnLeave }),
+          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onTriggerClassName, checked: hasMotionClassName }),
           ' ',
-          'removeOnLeave'
+          'hasMotionClassName'
         ),
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           'label',
           null,
-          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onTriggerClassName, checked: hasMotionClassName }),
+          __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onRemoveOnLeave, checked: removeOnLeave }),
           ' ',
-          'hasMotionClassName'
+          'removeOnLeave',
+          removeOnLeave ? '' : ' (use leavedClassName)'
         ),
         __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
           'div',
@@ -152,6 +153,7 @@ var Demo = function (_React$Component) {
                 visible: show,
                 motionName: hasMotionClassName ? 'transition' : null,
                 removeOnLeave: removeOnLeave,
+                leavedClassName: 'hidden',
                 onAppearStart: this.onCollapse,
                 onEnterStart: this.onCollapse,
                 onLeaveActive: this.onCollapse,
@@ -179,6 +181,8 @@ var Demo = function (_React$Component) {
               {
                 visible: show,
                 motionName: hasMotionClassName ? 'animation' : null,
+                removeOnLeave: removeOnLeave,
+                leavedClassName: 'hidden',
                 onLeaveActive: this.styleGreen
               },
               function (_ref3) {
@@ -205,6 +209,8 @@ var Demo = function (_React$Component) {
               {
                 visible: false,
                 motionName: hasMotionClassName ? 'transition' : null,
+                removeOnLeave: removeOnLeave,
+                leavedClassName: 'hidden',
                 onLeaveActive: this.onCollapse,
                 motionLeaveImmediately: true,
 
@@ -233,5 +239,5 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ })
 
-},[64]);
+},[63]);
 //# sourceMappingURL=CSSMotion.js.map
