@@ -1,6 +1,10 @@
 # History
 ----
 
+## 2.6.0 / 2018-11-26
+
+- add CSSMotion component
+
 ## 2.3.0 / 2016-07-05
 
 - support null/undefined child: https://github.com/react-component/animate/pull/11
