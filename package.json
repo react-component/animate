@@ -46,7 +46,7 @@
     "jquery": "^3.3.1",
     "pre-commit": "1.x",
     "rc-test": "6.x",
-    "rc-tools": "8.x",
+    "rc-tools": "9.x",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "velocity-animate": "~1.2.2"
