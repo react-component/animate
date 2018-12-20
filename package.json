@@ -49,7 +49,7 @@
     "rc-tools": "8.x",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "velocity-animate": "~1.2.2"
+    "velocity-animate": "~1.5.2"
   },
   "pre-commit": [
     "lint"
