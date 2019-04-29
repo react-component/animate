@@ -74,7 +74,6 @@ class Demo extends React.Component {
 
           {/* Motion List */}
         <CSSMotionList
-          component="div"
           keys={keyList}
           motionName="transition"
           onAppearStart={this.onCollapse}

@@ -13,6 +13,10 @@ class CSSMotionList extends React.Component {
     keys: PropTypes.array,
   };
 
+  static defaultProps = {
+    component: 'div',
+  };
+
   state = {
     keyEntities: [],
   };
@@ -22,9 +26,29 @@ class CSSMotionList extends React.Component {
     const mixedKeyEntities = diffKeys(prevKeys, keys);
 
     return {
-      keyEntities: mixedKeyEntities,
+      keyEntities: mixedKeyEntities.filter((entity) => {
+        const prevEntity = keyEntities.find(({ key }) => key === entity.key);
+
+        // Remove if already mark as removed
+        if (prevEntity && prevEntity.removed && entity.remove) {
+          return false;
+        }
+        return true;
+      }),
     };
   }
+
+  removeKey = (removeKey) => {
+    this.setState(({ keyEntities }) => ({
+      keyEntities: keyEntities.map(entity => {
+        if (entity.key !== removeKey) return entity;
+        return {
+          ...entity,
+          removed: true,
+        }
+      }),
+    }));
+  };
 
   render() {
     const { keyEntities } = this.state;
@@ -41,7 +65,18 @@ class CSSMotionList extends React.Component {
         {keyEntities.map(({ key, add, keep }) => {
           const visible = !!(add || keep);
           return (
-            <CSSMotion {...motionProps} key={key} visible={visible} eventKey={key}>
+            <CSSMotion
+              {...motionProps}
+              key={key}
+              visible={visible}
+              eventKey={key}
+              onLeaveEnd={(...args) => {
+                if (motionProps.onLeaveEnd) {
+                  motionProps.onLeaveEnd(...args);
+                }
+                this.removeKey(key);
+              }}
+            >
               {children}
             </CSSMotion>
           );
