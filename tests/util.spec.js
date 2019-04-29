@@ -73,5 +73,17 @@ describe('util', () => {
         { key: 9, status: STATUS_REMOVE },
       ]);
     });
+
+    it('should diff keep the key content', () => {
+      const prevKeys = [1, { key: 2, test: true }];
+      const currentKeys = [{ key: 1, test: true }];
+
+      expect(
+        diffKeys(prevKeys, currentKeys)
+      ).to.eql([
+        { key: 1, status: STATUS_KEEP, test: true },
+        { key: 2, status: STATUS_REMOVE, test: true },
+      ]);
+    });
   });
 });
