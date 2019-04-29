@@ -23,12 +23,20 @@ class Demo extends React.Component {
 
   onFlushMotion = () => {
     const { count, checkedMap } = this.state;
-    const keyList = [];
+    let keyList = [];
     for (let i = 0; i < count; i += 1) {
       if (checkedMap[i] !== false) {
         keyList.push(i);
       }
     }
+
+    keyList = keyList.map(key => {
+      if (key === 3) {
+        return { key, background: 'orange' };
+      }
+      return key;
+    });
+
     this.setState({ keyList });
   };
 
@@ -40,6 +48,7 @@ class Demo extends React.Component {
 
     return (
       <div>
+        key 3 is a different component with others.
         {/* Input field */}
         <div>
           <label>
@@ -82,11 +91,14 @@ class Demo extends React.Component {
           onEnterEnd={this.skipColorTransition}
           onLeaveEnd={this.skipColorTransition}
         >
-          {({ key, className, style }) => {
+          {({ key, background, className, style }) => {
             return (
               <div
                 className={classNames('demo-block', className)}
-                style={style}
+                style={{
+                  ...style,
+                  background,
+                }}
               >
                 <span>{key}</span>
               </div>

@@ -1,6 +1,6 @@
 /* eslint react/no-render-return-value:0, react/prefer-stateless-function:0, react/no-multi-comp:0 */
 import expect from 'expect.js';
-import { diffKeys } from '../src/util/diff';
+import { STATUS_ADD, STATUS_KEEP, STATUS_REMOVE, diffKeys } from '../src/util/diff';
 
 import './CSSMotion.spec.css';
 
@@ -13,12 +13,12 @@ describe('util', () => {
       expect(
         diffKeys(prevKeys, currentKeys)
       ).to.eql([
-        { key: 1, keep: true },
-        { key: 2, add: true },
-        { key: 3, keep: true },
-        { key: 4, add: true },
-        { key: 5, add: true },
-        { key: 6, keep: true },
+        { key: 1, status: STATUS_KEEP },
+        { key: 2, status: STATUS_ADD },
+        { key: 3, status: STATUS_KEEP },
+        { key: 4, status: STATUS_ADD },
+        { key: 5, status: STATUS_ADD },
+        { key: 6, status: STATUS_KEEP },
       ]);
     });
 
@@ -29,12 +29,12 @@ describe('util', () => {
       expect(
         diffKeys(prevKeys, currentKeys)
       ).to.eql([
-        { key: 1, add: true },
-        { key: 2, add: true },
-        { key: 3, keep: true },
-        { key: 4, add: true },
-        { key: 5, add: true },
-        { key: 6, add: true },
+        { key: 1, status: STATUS_ADD },
+        { key: 2, status: STATUS_ADD },
+        { key: 3, status: STATUS_KEEP },
+        { key: 4, status: STATUS_ADD },
+        { key: 5, status: STATUS_ADD },
+        { key: 6, status: STATUS_ADD },
       ]);
     });
 
@@ -45,12 +45,12 @@ describe('util', () => {
       expect(
         diffKeys(prevKeys, currentKeys)
       ).to.eql([
-        { key: 1, remove: true },
-        { key: 2, keep: true },
-        { key: 3, remove: true },
-        { key: 4, keep: true },
-        { key: 5, keep: true },
-        { key: 6, remove: true },
+        { key: 1, status: STATUS_REMOVE },
+        { key: 2, status: STATUS_KEEP },
+        { key: 3, status: STATUS_REMOVE },
+        { key: 4, status: STATUS_KEEP },
+        { key: 5, status: STATUS_KEEP },
+        { key: 6, status: STATUS_REMOVE },
       ]);
     });
 
@@ -62,15 +62,27 @@ describe('util', () => {
       expect(
         diffKeys(prevKeys, currentKeys)
       ).to.eql([
-        { key: 1, remove: true },
-        { key: 2, add: true },
-        { key: 3, keep: true },
-        { key: 5, remove: true },
-        { key: 7, remove: true },
-        { key: 4, add: true },
-        { key: 6, add: true },
-        { key: 8, keep: true },
-        { key: 9, remove: true },
+        { key: 1, status: STATUS_REMOVE },
+        { key: 2, status: STATUS_ADD },
+        { key: 3, status: STATUS_KEEP },
+        { key: 5, status: STATUS_REMOVE },
+        { key: 7, status: STATUS_REMOVE },
+        { key: 4, status: STATUS_ADD },
+        { key: 6, status: STATUS_ADD },
+        { key: 8, status: STATUS_KEEP },
+        { key: 9, status: STATUS_REMOVE },
+      ]);
+    });
+
+    it('should diff keep the key content', () => {
+      const prevKeys = [1, { key: 2, test: true }];
+      const currentKeys = [{ key: 1, test: true }];
+
+      expect(
+        diffKeys(prevKeys, currentKeys)
+      ).to.eql([
+        { key: 1, status: STATUS_KEEP, test: true },
+        { key: 2, status: STATUS_REMOVE, test: true },
       ]);
     });
   });
