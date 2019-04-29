@@ -1,0 +1,24 @@
+@import './CSSMotion.less';
+
+.demo-block {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  border-right: 5px solid #FFF;
+  position: relative;
+  box-sizing: border-box;
+
+  > span {
+    color: #FFF;
+    font-size: 30px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+.transition {
+  transition: all .5s;
+}
