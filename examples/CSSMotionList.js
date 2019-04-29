@@ -48,6 +48,7 @@ class Demo extends React.Component {
 
     return (
       <div>
+        key 3 is a different component with others.
         {/* Input field */}
         <div>
           <label>
