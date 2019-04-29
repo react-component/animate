@@ -26,7 +26,7 @@ export function genCSSMotion(transitionSupport) {
 
   class CSSMotion extends React.Component {
     static propTypes = {
-      eventKey: PropTypes.any, // Internal usage. Only pass by CSSMotionList
+      eventProps: PropTypes.object, // Internal usage. Only pass by CSSMotionList
       visible: PropTypes.bool,
       children: PropTypes.func,
       motionName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -225,22 +225,22 @@ export function genCSSMotion(transitionSupport) {
 
     render() {
       const { status, statusActive, statusStyle } = this.state;
-      const { children, motionName, visible, removeOnLeave, leavedClassName, eventKey } = this.props;
+      const { children, motionName, visible, removeOnLeave, leavedClassName, eventProps } = this.props;
 
       if (!children) return null;
 
       if (status === STATUS_NONE || !isSupportTransition(this.props)) {
         if (visible) {
-          return children({ key: eventKey });
+          return children({ ...eventProps });
         } else if (!removeOnLeave) {
-          return children({ key: eventKey, className: leavedClassName });
+          return children({ ...eventProps, className: leavedClassName });
         }
 
         return null;
       }
 
       return children({
-        key: eventKey,
+        ...eventProps,
         className: classNames({
           [getTransitionName(motionName, status)]: status !== STATUS_NONE,
           [getTransitionName(motionName, `${status}-active`)]: status !== STATUS_NONE && statusActive,

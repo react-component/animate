@@ -1,6 +1,7 @@
 export const STATUS_ADD = 'add';
 export const STATUS_KEEP = 'keep';
 export const STATUS_REMOVE = 'remove';
+export const STATUS_REMOVED = 'removed';
 
 export function wrapKeyToObject(key) {
   if (key && typeof key === 'object' && 'key' in key) {
@@ -18,22 +19,25 @@ export function diffKeys(prevKeys = [], currentKeys = []) {
   let currentIndex = 0;
   const currentLen = currentKeys.length;
 
+  const prevKeyObjects = parseKeys(prevKeys);
+  const currentKeyObjects = parseKeys(currentKeys);
+
   // Check prev keys to insert or keep
-  prevKeys.forEach((key) => {
+  prevKeyObjects.forEach((keyObj) => {
     let hit = false;
 
     for (let i = currentIndex; i < currentLen; i += 1) {
-      const currentKey = currentKeys[i];
-      if (currentKey === key) {
+      const currentKeyObj = currentKeyObjects[i];
+      if (currentKeyObj.key === keyObj.key) {
         // New added keys should add before current key
         if (currentIndex < i) {
           list = list.concat(
-            currentKeys.slice(currentIndex, i).map(addKey => ({ key: addKey, status: STATUS_ADD }))
+            currentKeyObjects.slice(currentIndex, i).map(obj => ({ ...obj, status: STATUS_ADD }))
           );
           currentIndex = i;
         }
         list.push({
-          key,
+          ...currentKeyObj,
           status: STATUS_KEEP,
         });
         currentIndex += 1;
@@ -46,7 +50,7 @@ export function diffKeys(prevKeys = [], currentKeys = []) {
     // If not hit, it means key is removed
     if (!hit) {
       list.push({
-        key,
+        ...keyObj,
         status: STATUS_REMOVE,
       });
     }
@@ -55,7 +59,7 @@ export function diffKeys(prevKeys = [], currentKeys = []) {
   // Add rest to the list
   if (currentIndex < currentLen) {
     list = list.concat(
-      currentKeys.slice(currentIndex).map(addKey => ({ key: addKey, status: STATUS_ADD }))
+      currentKeyObjects.slice(currentIndex).map(obj => ({ ...obj, status: STATUS_ADD }))
     );
   }
 

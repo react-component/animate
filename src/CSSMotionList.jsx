@@ -3,7 +3,7 @@ import { polyfill } from 'react-lifecycles-compat';
 import PropTypes from 'prop-types';
 import CSSMotion from './CSSMotion';
 import { supportTransition } from './util/motion';
-import { STATUS_ADD, STATUS_KEEP, diffKeys, parseKeys } from './util/diff';
+import { STATUS_ADD, STATUS_KEEP, STATUS_REMOVE, STATUS_REMOVED, diffKeys, parseKeys } from './util/diff';
 
 const MOTION_PROP_NAMES = Object.keys(CSSMotion.propTypes);
 
@@ -33,8 +33,7 @@ export function genCSSMotionList(transitionSupport) {
         };
       }
 
-      const prevKeys = keyEntities.map(({ key }) => key);
-      const mixedKeyEntities = diffKeys(prevKeys, keys);
+      const mixedKeyEntities = diffKeys(keyEntities, parsedKeyObjects);
 
       const keyEntitiesLen = keyEntities.length;
       return {
@@ -50,7 +49,7 @@ export function genCSSMotionList(transitionSupport) {
           }
 
           // Remove if already mark as removed
-          if (prevEntity && prevEntity.removed && entity.remove) {
+          if (prevEntity && prevEntity.status === STATUS_REMOVED && entity.status === STATUS_REMOVE) {
             return false;
           }
           return true;
@@ -64,7 +63,7 @@ export function genCSSMotionList(transitionSupport) {
           if (entity.key !== removeKey) return entity;
           return {
             ...entity,
-            removed: true,
+            status: STATUS_REMOVED,
           };
         }),
       }));
@@ -82,19 +81,19 @@ export function genCSSMotionList(transitionSupport) {
 
       return (
         <Component {...restProps}>
-          {keyEntities.map(({ key, status }) => {
+          {keyEntities.map(({ status, ...eventProps }) => {
             const visible = status === STATUS_ADD || status === STATUS_KEEP;
             return (
               <CSSMotion
                 {...motionProps}
-                key={key}
+                key={eventProps.key}
                 visible={visible}
-                eventKey={key}
+                eventProps={eventProps}
                 onLeaveEnd={(...args) => {
                   if (motionProps.onLeaveEnd) {
                     motionProps.onLeaveEnd(...args);
                   }
-                  this.removeKey(key);
+                  this.removeKey(eventProps.key);
                 }}
               >
                 {children}
