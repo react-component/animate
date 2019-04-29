@@ -38,7 +38,8 @@
     "test": "rc-test run test",
     "chrome-test": "rc-test run chrome-test",
     "coverage": "rc-test run coverage",
-    "prepublish": "rc-tools run guard"
+    "prepublish": "rc-tools run guard",
+    "now-build": "npm run build"
   },
   "devDependencies": {
     "core-js": "^2.5.1",
