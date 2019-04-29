@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>transitionAppear.js - example - rc-animate@2.7.0</title>
+  <title>CSSMotionList.js - example - rc-animate@2.7.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
   }
   </script>
-  <link rel="stylesheet" href="transitionAppear.css" />
+  <link rel="stylesheet" href="CSSMotionList.css" />
 </head>
 
 <body>
@@ -269,76 +269,108 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     </div>
     <div class="example" id="__react-content"></div>
 
-    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint no-console:0, react/no-multi-comp:0 */</span>
+    <div class="highlight"><pre><code language="undefined">/* eslint no-console:0, react/no-multi-comp:0 */
 
-<span class="hljs-keyword">import</span> Animate <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-animate'</span>;
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">'prop-types'</span>;
-<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { CSSMotionList } from 'rc-animate';
+import classNames from 'classnames';
+import './CSSMotionList.less';
 
-<span class="hljs-keyword">import</span> <span class="hljs-string">'./assets/slow.less'</span>;
-
-<span class="hljs-keyword">const</span> Box = props =&gt; {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'render'</span>, props.visible);
-  <span class="hljs-keyword">const</span> style = {
-    display: props.visible ? <span class="hljs-string">'block'</span> : <span class="hljs-string">'none'</span>,
-    marginTop: <span class="hljs-string">'20px'</span>,
-    width: <span class="hljs-string">'200px'</span>,
-    height: <span class="hljs-string">'200px'</span>,
-    backgroundColor: <span class="hljs-string">'red'</span>,
-  };
-  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>/&gt;</span>)</span>;
-};
-
-Box.propTypes = {
-  visible: PropTypes.bool,
-}
-
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+class Demo extends React.Component {
   state = {
-    visible: <span class="hljs-literal">true</span>,
+    count: 1,
+    checkedMap: {},
+    keyList: [],
+  };
+
+  componentDidMount() {
+    this.onFlushMotion();
   }
 
-  onAppear = (key) =&gt; {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'appear'</span>, key);
-  }
+  onCountChange = ({ target: { value } }) =&gt; {
+    this.setState({ count: Number(value) });
+  };
 
-  onEnter = (key) =&gt; {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'enter'</span>, key);
-  }
+  onFlushMotion = () =&gt; {
+    const { count, checkedMap } = this.state;
+    const keyList = [];
+    for (let i = 0; i &lt; count; i += 1) {
+      if (checkedMap[i] !== false) {
+        keyList.push(i);
+      }
+    }
+    this.setState({ keyList });
+  };
 
-  onLeave = (key) =&gt; {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'leave'</span>, key);
-  }
-
-  toggleAnimate = () =&gt; {
-    <span class="hljs-keyword">this</span>.setState({
-      visible: !<span class="hljs-keyword">this</span>.state.visible,
-    });
-  }
+  // Motion
+  onCollapse = () =&gt; ({ width: 0, margin: '0 -5px 0 0' });
 
   render() {
-    <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.toggleAnimate}</span>&gt;</span>toggle<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Animate</span>
-          <span class="hljs-attribute">component</span>=<span class="hljs-value">""</span>
-          <span class="hljs-attribute">showProp</span>=<span class="hljs-value">"visible"</span>
-          <span class="hljs-attribute">onAppear</span>=<span class="hljs-value">{this.onAppear}</span>
-          <span class="hljs-attribute">onEnter</span>=<span class="hljs-value">{this.onEnter}</span>
-          <span class="hljs-attribute">onLeave</span>=<span class="hljs-value">{this.onLeave}</span>
-          <span class="hljs-attribute">transitionAppear</span>
-          <span class="hljs-attribute">transitionName</span>=<span class="hljs-value">"fade"</span>
-        &gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">Box</span> <span class="hljs-attribute">visible</span>=<span class="hljs-value">{this.state.visible}</span>/&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">Animate</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    )</span>;
+    const { count, checkedMap, keyList } = this.state;
+
+    return (
+      &lt;div&gt;
+        {/* Input field */}
+        &lt;div&gt;
+          &lt;label&gt;
+            node count
+            &lt;input type="number" value={count} onChange={this.onCountChange} /&gt;
+          &lt;/label&gt;
+          &lt;button onClick={this.onFlushMotion}&gt;Flush Motion&lt;/button&gt;
+        &lt;/div&gt;
+        {/* Motion State */}
+        &lt;div&gt;
+          {new Array(count).fill().map((_, key) =&gt; {
+            const checked = checkedMap[key] !== false;
+            return (
+              &lt;label key={key}&gt;
+                &lt;input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() =&gt; {
+                    this.setState({
+                      checkedMap: {
+                        ...checkedMap,
+                        [key]: !checked,
+                      },
+                    });
+                  }}
+                /&gt;
+                {key}
+              &lt;/label&gt;
+            );
+          })}
+        &lt;/div&gt;
+
+          {/* Motion List */}
+        &lt;CSSMotionList
+          keys={keyList}
+          motionName="transition"
+          onAppearStart={this.onCollapse}
+          onEnterStart={this.onCollapse}
+          onLeaveActive={this.onCollapse}
+          onEnterEnd={this.skipColorTransition}
+          onLeaveEnd={this.skipColorTransition}
+        &gt;
+          {({ key, className, style }) =&gt; {
+            return (
+              &lt;div
+                className={classNames('demo-block', className)}
+                style={style}
+              &gt;
+                &lt;span&gt;{key}&lt;/span&gt;
+              &lt;/div&gt;
+            );
+          }}
+        &lt;/CSSMotionList&gt;
+      &lt;/div&gt;
+    );
   }
 }
 
-ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Demo</span> /&gt;</span>, document.getElementById('__react-content'));
-</span></code></pre></div>
+ReactDOM.render(&lt;Demo /&gt;, document.getElementById('__react-content'));
+</code></pre></div>
   </div>
   <a href="https://github.com/react-component/animate">
     <img style="position: absolute; top: 0; right: 0; border: 0;"
@@ -348,7 +380,7 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-t
   </a>
   <script>FastClick.attach(document.body);</script>
   <script src="../common.js?nowrap"></script>
-  <script src="transitionAppear.js?nowrap"></script>
+  <script src="CSSMotionList.js?nowrap"></script>
 </body>
 
 </html>
