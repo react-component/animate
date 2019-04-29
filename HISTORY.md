@@ -1,6 +1,10 @@
 # History
 ----
 
+## 2.8.0 / 2019-04-29
+
+- `keys` on CSSMotionList can be an object
+
 ## 2.7.0 / 2019-04-29
 
 - add CSSMotionList component
