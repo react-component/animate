@@ -529,48 +529,6 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(22);
-var IE8_DOM_DEFINE = __webpack_require__(51);
-var toPrimitive = __webpack_require__(30);
-var dP = Object.defineProperty;
-
-exports.f = __webpack_require__(13) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(23)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -597,6 +555,48 @@ exports.default = _assign2.default || function (target) {
 };
 
 /***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(22);
+var IE8_DOM_DEFINE = __webpack_require__(51);
+var toPrimitive = __webpack_require__(30);
+var dP = Object.defineProperty;
+
+exports.f = __webpack_require__(14) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(23)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+
+/***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -604,7 +604,7 @@ var global = __webpack_require__(10);
 var core = __webpack_require__(11);
 var ctx = __webpack_require__(50);
 var hide = __webpack_require__(17);
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -668,9 +668,9 @@ module.exports = $export;
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(12);
+var dP = __webpack_require__(13);
 var createDesc = __webpack_require__(25);
-module.exports = __webpack_require__(13) ? function (object, key, value) {
+module.exports = __webpack_require__(14) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -1084,8 +1084,8 @@ module.exports = (
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(12).f;
-var has = __webpack_require__(14);
+var def = __webpack_require__(13).f;
+var has = __webpack_require__(15);
 var TAG = __webpack_require__(20)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -1108,7 +1108,7 @@ var global = __webpack_require__(10);
 var core = __webpack_require__(11);
 var LIBRARY = __webpack_require__(26);
 var wksExt = __webpack_require__(40);
-var defineProperty = __webpack_require__(12).f;
+var defineProperty = __webpack_require__(13).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -1375,7 +1375,7 @@ module.exports = function (fn, that, length) {
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(13) && !__webpack_require__(23)(function () {
+module.exports = !__webpack_require__(14) && !__webpack_require__(23)(function () {
   return Object.defineProperty(__webpack_require__(52)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -1480,7 +1480,7 @@ module.exports = __webpack_require__(17);
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var toIObject = __webpack_require__(19);
 var arrayIndexOf = __webpack_require__(80)(false);
 var IE_PROTO = __webpack_require__(36)('IE_PROTO');
@@ -1554,11 +1554,11 @@ var pIE = __webpack_require__(29);
 var createDesc = __webpack_require__(25);
 var toIObject = __webpack_require__(19);
 var toPrimitive = __webpack_require__(30);
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var IE8_DOM_DEFINE = __webpack_require__(51);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(13) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(14) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -1645,7 +1645,7 @@ var util = {
 /* unused harmony export genCSSMotion */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
@@ -1864,26 +1864,25 @@ function genCSSMotion(transitionSupport) {
             visible = _props.visible,
             removeOnLeave = _props.removeOnLeave,
             leavedClassName = _props.leavedClassName,
-            eventKey = _props.eventKey;
+            eventProps = _props.eventProps;
 
 
         if (!children) return null;
 
         if (status === STATUS_NONE || !isSupportTransition(this.props)) {
           if (visible) {
-            return children({ key: eventKey });
+            return children(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, eventProps));
           } else if (!removeOnLeave) {
-            return children({ key: eventKey, className: leavedClassName });
+            return children(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, eventProps, { className: leavedClassName }));
           }
 
           return null;
         }
 
-        return children({
-          key: eventKey,
+        return children(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, eventProps, {
           className: __WEBPACK_IMPORTED_MODULE_10_classnames___default()((_classNames = {}, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_classNames, Object(__WEBPACK_IMPORTED_MODULE_12__util_motion__["b" /* getTransitionName */])(motionName, status), status !== STATUS_NONE), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_classNames, Object(__WEBPACK_IMPORTED_MODULE_12__util_motion__["b" /* getTransitionName */])(motionName, status + '-active'), status !== STATUS_NONE && statusActive), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_classNames, motionName, typeof motionName === 'string'), _classNames)),
           style: statusStyle
-        });
+        }));
       }
     }], [{
       key: 'getDerivedStateFromProps',
@@ -1931,7 +1930,7 @@ function genCSSMotion(transitionSupport) {
   }(__WEBPACK_IMPORTED_MODULE_6_react___default.a.Component);
 
   CSSMotion.propTypes = {
-    eventKey: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.any, // Internal usage. Only pass by CSSMotionList
+    eventProps: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.object, // Internal usage. Only pass by CSSMotionList
     visible: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool,
     children: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.func,
     motionName: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.object]),
@@ -2268,7 +2267,7 @@ module.exports = function defineProperty(it, key, desc) {
 
 var $export = __webpack_require__(16);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(13), 'Object', { defineProperty: __webpack_require__(12).f });
+$export($export.S + $export.F * !__webpack_require__(14), 'Object', { defineProperty: __webpack_require__(13).f });
 
 
 /***/ }),
@@ -2367,11 +2366,11 @@ module.exports = function (Constructor, NAME, next) {
 /* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(12);
+var dP = __webpack_require__(13);
 var anObject = __webpack_require__(22);
 var getKeys = __webpack_require__(27);
 
-module.exports = __webpack_require__(13) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(14) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -2449,7 +2448,7 @@ module.exports = document && document.documentElement;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(14);
+var has = __webpack_require__(15);
 var toObject = __webpack_require__(58);
 var IE_PROTO = __webpack_require__(36)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -2570,8 +2569,8 @@ module.exports = __webpack_require__(11).Symbol;
 
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(10);
-var has = __webpack_require__(14);
-var DESCRIPTORS = __webpack_require__(13);
+var has = __webpack_require__(15);
+var DESCRIPTORS = __webpack_require__(14);
 var $export = __webpack_require__(16);
 var redefine = __webpack_require__(54);
 var META = __webpack_require__(92).KEY;
@@ -2592,7 +2591,7 @@ var createDesc = __webpack_require__(25);
 var _create = __webpack_require__(35);
 var gOPNExt = __webpack_require__(95);
 var $GOPD = __webpack_require__(60);
-var $DP = __webpack_require__(12);
+var $DP = __webpack_require__(13);
 var $keys = __webpack_require__(27);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -2809,8 +2808,8 @@ setToStringTag(global.JSON, 'JSON', true);
 
 var META = __webpack_require__(28)('meta');
 var isObject = __webpack_require__(18);
-var has = __webpack_require__(14);
-var setDesc = __webpack_require__(12).f;
+var has = __webpack_require__(15);
+var setDesc = __webpack_require__(13).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -27726,7 +27725,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__);
@@ -29989,7 +29988,7 @@ module.exports.polyfill = function(object) {
 /* unused harmony export genCSSMotionList */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
@@ -30046,7 +30045,7 @@ function genCSSMotionList(transitionSupport) {
             keyEntities: keyEntities.map(function (entity) {
               if (entity.key !== removeKey) return entity;
               return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, entity, {
-                removed: true
+                status: __WEBPACK_IMPORTED_MODULE_11__util_diff__["d" /* STATUS_REMOVED */]
               });
             })
           };
@@ -30076,22 +30075,21 @@ function genCSSMotionList(transitionSupport) {
           Component,
           restProps,
           keyEntities.map(function (_ref3) {
-            var key = _ref3.key,
-                add = _ref3.add,
-                keep = _ref3.keep;
+            var status = _ref3.status,
+                eventProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default()(_ref3, ['status']);
 
-            var visible = !!(add || keep);
+            var visible = status === __WEBPACK_IMPORTED_MODULE_11__util_diff__["a" /* STATUS_ADD */] || status === __WEBPACK_IMPORTED_MODULE_11__util_diff__["b" /* STATUS_KEEP */];
             return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
               __WEBPACK_IMPORTED_MODULE_9__CSSMotion__["a" /* default */],
               __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, motionProps, {
-                key: key,
+                key: eventProps.key,
                 visible: visible,
-                eventKey: key,
+                eventProps: eventProps,
                 onLeaveEnd: function onLeaveEnd() {
                   if (motionProps.onLeaveEnd) {
                     motionProps.onLeaveEnd.apply(motionProps, arguments);
                   }
-                  _this2.removeKey(key);
+                  _this2.removeKey(eventProps.key);
                 }
               }),
               children
@@ -30105,20 +30103,18 @@ function genCSSMotionList(transitionSupport) {
         var keys = _ref4.keys;
         var keyEntities = _ref5.keyEntities;
 
+        var parsedKeyObjects = Object(__WEBPACK_IMPORTED_MODULE_11__util_diff__["f" /* parseKeys */])(keys);
+
         // Always as keep when motion not support
         if (!transitionSupport) {
           return {
-            keyEntities: keys.map(function (key) {
-              return { key: key, keep: true };
+            keyEntities: parsedKeyObjects.map(function (obj) {
+              return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, obj, { status: __WEBPACK_IMPORTED_MODULE_11__util_diff__["b" /* STATUS_KEEP */] });
             })
           };
         }
 
-        var prevKeys = keyEntities.map(function (_ref6) {
-          var key = _ref6.key;
-          return key;
-        });
-        var mixedKeyEntities = Object(__WEBPACK_IMPORTED_MODULE_11__util_diff__["a" /* diffKeys */])(prevKeys, keys);
+        var mixedKeyEntities = Object(__WEBPACK_IMPORTED_MODULE_11__util_diff__["e" /* diffKeys */])(keyEntities, parsedKeyObjects);
 
         var keyEntitiesLen = keyEntities.length;
         return {
@@ -30134,7 +30130,7 @@ function genCSSMotionList(transitionSupport) {
             }
 
             // Remove if already mark as removed
-            if (prevEntity && prevEntity.removed && entity.remove) {
+            if (prevEntity && prevEntity.status === __WEBPACK_IMPORTED_MODULE_11__util_diff__["d" /* STATUS_REMOVED */] && entity.status === __WEBPACK_IMPORTED_MODULE_11__util_diff__["c" /* STATUS_REMOVE */]) {
               return false;
             }
             return true;
@@ -30167,7 +30163,34 @@ function genCSSMotionList(transitionSupport) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = diffKeys;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return STATUS_ADD; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return STATUS_KEEP; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return STATUS_REMOVE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return STATUS_REMOVED; });
+/* unused harmony export wrapKeyToObject */
+/* harmony export (immutable) */ __webpack_exports__["f"] = parseKeys;
+/* harmony export (immutable) */ __webpack_exports__["e"] = diffKeys;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+
+var STATUS_ADD = 'add';
+var STATUS_KEEP = 'keep';
+var STATUS_REMOVE = 'remove';
+var STATUS_REMOVED = 'removed';
+
+function wrapKeyToObject(key) {
+  if (key && typeof key === 'object' && 'key' in key) {
+    return key;
+  }
+  return { key: key };
+}
+
+function parseKeys() {
+  var keys = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+  return keys.map(wrapKeyToObject);
+}
+
 function diffKeys() {
   var prevKeys = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var currentKeys = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
@@ -30176,24 +30199,26 @@ function diffKeys() {
   var currentIndex = 0;
   var currentLen = currentKeys.length;
 
+  var prevKeyObjects = parseKeys(prevKeys);
+  var currentKeyObjects = parseKeys(currentKeys);
+
   // Check prev keys to insert or keep
-  prevKeys.forEach(function (key) {
+  prevKeyObjects.forEach(function (keyObj) {
     var hit = false;
 
     for (var i = currentIndex; i < currentLen; i += 1) {
-      var currentKey = currentKeys[i];
-      if (currentKey === key) {
+      var currentKeyObj = currentKeyObjects[i];
+      if (currentKeyObj.key === keyObj.key) {
         // New added keys should add before current key
         if (currentIndex < i) {
-          list = list.concat(currentKeys.slice(currentIndex, i).map(function (addKey) {
-            return { key: addKey, add: true };
+          list = list.concat(currentKeyObjects.slice(currentIndex, i).map(function (obj) {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, obj, { status: STATUS_ADD });
           }));
           currentIndex = i;
         }
-        list.push({
-          key: key,
-          keep: true
-        });
+        list.push(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, currentKeyObj, {
+          status: STATUS_KEEP
+        }));
         currentIndex += 1;
 
         hit = true;
@@ -30203,24 +30228,21 @@ function diffKeys() {
 
     // If not hit, it means key is removed
     if (!hit) {
-      list.push({
-        key: key,
-        remove: true
-      });
+      list.push(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, keyObj, {
+        status: STATUS_REMOVE
+      }));
     }
   });
 
   // Add rest to the list
   if (currentIndex < currentLen) {
-    list = list.concat(currentKeys.slice(currentIndex).map(function (addKey) {
-      return { key: addKey, add: true };
+    list = list.concat(currentKeyObjects.slice(currentIndex).map(function (obj) {
+      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, obj, { status: STATUS_ADD });
     }));
   }
 
   return list;
 }
-
-/* unused harmony default export */ var _unused_webpack_default_export = (diffKeys);
 
 /***/ })
 /******/ ]);

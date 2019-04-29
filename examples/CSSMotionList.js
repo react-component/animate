@@ -15,7 +15,7 @@ module.exports = __webpack_require__(135);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
@@ -81,6 +81,14 @@ var Demo = function (_React$Component) {
           keyList.push(i);
         }
       }
+
+      keyList = keyList.map(function (key) {
+        if (key === 3) {
+          return { key: key, background: 'orange' };
+        }
+        return key;
+      });
+
       _this.setState({ keyList: keyList });
     }, _this.onCollapse = function () {
       return { width: 0, margin: '0 -5px 0 0' };
@@ -109,6 +117,7 @@ var Demo = function (_React$Component) {
       return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
         'div',
         null,
+        'key 3 is a different component with others.',
         __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
           'div',
           null,
@@ -158,6 +167,7 @@ var Demo = function (_React$Component) {
           },
           function (_ref3) {
             var key = _ref3.key,
+                background = _ref3.background,
                 className = _ref3.className,
                 style = _ref3.style;
 
@@ -165,7 +175,9 @@ var Demo = function (_React$Component) {
               'div',
               {
                 className: __WEBPACK_IMPORTED_MODULE_9_classnames___default()('demo-block', className),
-                style: style
+                style: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, style, {
+                  background: background
+                })
               },
               __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
                 'span',

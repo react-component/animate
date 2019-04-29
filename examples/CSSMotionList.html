@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>CSSMotionList.js - example - rc-animate@2.7.0</title>
+  <title>CSSMotionList.js - example - rc-animate@2.8.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@2.7.0</h1>
+      <h1>rc-animate@2.8.0</h1>
 
       <p>css-transition ui component for react</p>
     </div>
@@ -294,12 +294,20 @@ class Demo extends React.Component {
 
   onFlushMotion = () =&gt; {
     const { count, checkedMap } = this.state;
-    const keyList = [];
+    let keyList = [];
     for (let i = 0; i &lt; count; i += 1) {
       if (checkedMap[i] !== false) {
         keyList.push(i);
       }
     }
+
+    keyList = keyList.map(key =&gt; {
+      if (key === 3) {
+        return { key, background: 'orange' };
+      }
+      return key;
+    });
+
     this.setState({ keyList });
   };
 
@@ -311,6 +319,7 @@ class Demo extends React.Component {
 
     return (
       &lt;div&gt;
+        key 3 is a different component with others.
         {/* Input field */}
         &lt;div&gt;
           &lt;label&gt;
@@ -353,11 +362,14 @@ class Demo extends React.Component {
           onEnterEnd={this.skipColorTransition}
           onLeaveEnd={this.skipColorTransition}
         &gt;
-          {({ key, className, style }) =&gt; {
+          {({ key, background, className, style }) =&gt; {
             return (
               &lt;div
                 className={classNames('demo-block', className)}
-                style={style}
+                style={{
+                  ...style,
+                  background,
+                }}
               &gt;
                 &lt;span&gt;{key}&lt;/span&gt;
               &lt;/div&gt;
