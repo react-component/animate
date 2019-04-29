@@ -1,6 +1,10 @@
 # History
 ----
 
+## 2.7.0 / 2019-04-29
+
+- add CSSMotionList component
+
 ## 2.6.0 / 2018-11-26
 
 - add CSSMotion component
