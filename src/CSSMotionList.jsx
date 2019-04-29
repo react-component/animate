@@ -3,7 +3,7 @@ import { polyfill } from 'react-lifecycles-compat';
 import PropTypes from 'prop-types';
 import CSSMotion from './CSSMotion';
 import { supportTransition } from './util/motion';
-import { diffKeys } from './util/diff';
+import { STATUS_ADD, STATUS_KEEP, diffKeys, parseKeys } from './util/diff';
 
 const MOTION_PROP_NAMES = Object.keys(CSSMotion.propTypes);
 
@@ -24,10 +24,12 @@ export function genCSSMotionList(transitionSupport) {
     };
 
     static getDerivedStateFromProps({ keys }, { keyEntities }) {
+      const parsedKeyObjects = parseKeys(keys);
+
       // Always as keep when motion not support
       if (!transitionSupport) {
         return {
-          keyEntities: keys.map((key) => ({ key, keep: true })),
+          keyEntities: parsedKeyObjects.map((obj) => ({ ...obj, status: STATUS_KEEP })),
         };
       }
 
@@ -80,8 +82,8 @@ export function genCSSMotionList(transitionSupport) {
 
       return (
         <Component {...restProps}>
-          {keyEntities.map(({ key, add, keep }) => {
-            const visible = !!(add || keep);
+          {keyEntities.map(({ key, status }) => {
+            const visible = status === STATUS_ADD || status === STATUS_KEEP;
             return (
               <CSSMotion
                 {...motionProps}
