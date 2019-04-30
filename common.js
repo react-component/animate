@@ -30022,6 +30022,8 @@ module.exports.polyfill = function(object) {
 var MOTION_PROP_NAMES = Object.keys(__WEBPACK_IMPORTED_MODULE_9__CSSMotion__["a" /* default */].propTypes);
 
 function genCSSMotionList(transitionSupport) {
+  var CSSMotion = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : __WEBPACK_IMPORTED_MODULE_9__CSSMotion__["a" /* default */];
+
   var CSSMotionList = function (_React$Component) {
     __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(CSSMotionList, _React$Component);
 
@@ -30081,7 +30083,7 @@ function genCSSMotionList(transitionSupport) {
 
             var visible = status === __WEBPACK_IMPORTED_MODULE_11__util_diff__["a" /* STATUS_ADD */] || status === __WEBPACK_IMPORTED_MODULE_11__util_diff__["b" /* STATUS_KEEP */];
             return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_9__CSSMotion__["a" /* default */],
+              CSSMotion,
               __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, motionProps, {
                 key: eventProps.key,
                 visible: visible,
@@ -30143,7 +30145,7 @@ function genCSSMotionList(transitionSupport) {
     return CSSMotionList;
   }(__WEBPACK_IMPORTED_MODULE_6_react___default.a.Component);
 
-  CSSMotionList.propTypes = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_9__CSSMotion__["a" /* default */].propTypes, {
+  CSSMotionList.propTypes = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, CSSMotion.propTypes, {
     component: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.string,
     keys: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.array
   });
