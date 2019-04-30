@@ -78,6 +78,7 @@ export function genCSSMotionList(transitionSupport) {
         motionProps[prop] = restProps[prop];
         delete restProps[prop];
       });
+      delete restProps.keys;
 
       return (
         <Component {...restProps}>
