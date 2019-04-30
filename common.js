@@ -30070,6 +30070,7 @@ function genCSSMotionList(transitionSupport) {
           motionProps[prop] = restProps[prop];
           delete restProps[prop];
         });
+        delete restProps.keys;
 
         return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
           Component,
