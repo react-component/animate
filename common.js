@@ -30244,6 +30244,35 @@ function diffKeys() {
     }));
   }
 
+  /**
+   * Merge same key when it remove and add again:
+   *    [1 - add, 2 - keep, 1 - remove] -> [1 - keep, 2 - keep]
+   */
+  var keys = {};
+  list.forEach(function (_ref) {
+    var key = _ref.key;
+
+    keys[key] = (keys[key] || 0) + 1;
+  });
+  var duplicatedKeys = Object.keys(keys).filter(function (key) {
+    return keys[key] > 1;
+  });
+  duplicatedKeys.forEach(function (matchKey) {
+    // Remove `STATUS_REMOVE` node.
+    list = list.filter(function (_ref2) {
+      var key = _ref2.key,
+          status = _ref2.status;
+      return key !== matchKey || status !== STATUS_REMOVE;
+    });
+
+    // Update `STATUS_ADD` to `STATUS_KEEP`
+    list.forEach(function (node) {
+      if (node.key === matchKey) {
+        node.status = STATUS_KEEP;
+      }
+    });
+  });
+
   return list;
 }
 
