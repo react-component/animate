@@ -10,9 +10,7 @@ describe('util', () => {
       const prevKeys = [1, 3, 6];
       const currentKeys = [1, 2, 3, 4, 5, 6];
 
-      expect(
-        diffKeys(prevKeys, currentKeys)
-      ).to.eql([
+      expect(diffKeys(prevKeys, currentKeys)).to.eql([
         { key: 1, status: STATUS_KEEP },
         { key: 2, status: STATUS_ADD },
         { key: 3, status: STATUS_KEEP },
@@ -26,9 +24,7 @@ describe('util', () => {
       const prevKeys = [3];
       const currentKeys = [1, 2, 3, 4, 5, 6];
 
-      expect(
-        diffKeys(prevKeys, currentKeys)
-      ).to.eql([
+      expect(diffKeys(prevKeys, currentKeys)).to.eql([
         { key: 1, status: STATUS_ADD },
         { key: 2, status: STATUS_ADD },
         { key: 3, status: STATUS_KEEP },
@@ -42,9 +38,7 @@ describe('util', () => {
       const prevKeys = [1, 2, 3, 4, 5, 6];
       const currentKeys = [2, 4, 5];
 
-      expect(
-        diffKeys(prevKeys, currentKeys)
-      ).to.eql([
+      expect(diffKeys(prevKeys, currentKeys)).to.eql([
         { key: 1, status: STATUS_REMOVE },
         { key: 2, status: STATUS_KEEP },
         { key: 3, status: STATUS_REMOVE },
@@ -59,9 +53,7 @@ describe('util', () => {
       const prevKeys = [1, 3, 5, 7, 8, 9];
       const currentKeys = [2, 3, 4, 6, 8];
 
-      expect(
-        diffKeys(prevKeys, currentKeys)
-      ).to.eql([
+      expect(diffKeys(prevKeys, currentKeys)).to.eql([
         { key: 1, status: STATUS_REMOVE },
         { key: 2, status: STATUS_ADD },
         { key: 3, status: STATUS_KEEP },
@@ -78,11 +70,23 @@ describe('util', () => {
       const prevKeys = [1, { key: 2, test: true }];
       const currentKeys = [{ key: 1, test: true }];
 
-      expect(
-        diffKeys(prevKeys, currentKeys)
-      ).to.eql([
+      expect(diffKeys(prevKeys, currentKeys)).to.eql([
         { key: 1, status: STATUS_KEEP, test: true },
         { key: 2, status: STATUS_REMOVE, test: true },
+      ]);
+    });
+
+    it('should work with replace key', () => {
+      const prevKeys = ['0-0-0', '0-0-1', '0-1-0', '0-1-1', '0-1-2', '__input'];
+      const currentKeys = ['0-1-0', '0-1-1', '0-1-2', '0-0-1', '__input'];
+
+      expect(diffKeys(prevKeys, currentKeys)).to.eql([
+        { key: '0-0-0', status: 'remove' },
+        { key: '0-1-0', status: 'keep' },
+        { key: '0-1-1', status: 'keep' },
+        { key: '0-1-2', status: 'keep' },
+        { key: '0-0-1', status: 'keep' },
+        { key: '__input', status: 'keep' },
       ]);
     });
   });
