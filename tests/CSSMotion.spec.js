@@ -255,7 +255,7 @@ describe('motion', () => {
     });
   });
 
-  it('no transition', (done) => {
+  it.only('no transition', (done) => {
     const NoCSSTransition = genCSSMotion(false);
 
     ReactDOM.render(

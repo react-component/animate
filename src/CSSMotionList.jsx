@@ -1,11 +1,11 @@
 import React from 'react';
 import { polyfill } from 'react-lifecycles-compat';
 import PropTypes from 'prop-types';
-import OriginCSSMotion from './CSSMotion';
+import OriginCSSMotion, { MotionPropTypes } from './CSSMotion';
 import { supportTransition } from './util/motion';
 import { STATUS_ADD, STATUS_KEEP, STATUS_REMOVE, STATUS_REMOVED, diffKeys, parseKeys } from './util/diff';
 
-const MOTION_PROP_NAMES = Object.keys(OriginCSSMotion.propTypes);
+const MOTION_PROP_NAMES = Object.keys(MotionPropTypes);
 
 export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion) {
   class CSSMotionList extends React.Component {
