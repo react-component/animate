@@ -1,6 +1,6 @@
 webpackJsonp([10],{
 
-/***/ 133:
+/***/ 134:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -33,9 +33,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_animate__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__CSSMotion_less__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__CSSMotion_less__ = __webpack_require__(134);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__CSSMotion_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__CSSMotion_less__);
 
 
@@ -49,6 +49,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+window.motionRef = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createRef();
 
 var Demo = function (_React$Component) {
   __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(Demo, _React$Component);
@@ -159,12 +161,14 @@ var Demo = function (_React$Component) {
                 onLeaveActive: this.onCollapse,
 
                 onEnterEnd: this.skipColorTransition,
-                onLeaveEnd: this.skipColorTransition
+                onLeaveEnd: this.skipColorTransition,
+
+                ref: window.motionRef
               },
-              function (_ref2) {
+              function (_ref2, ref) {
                 var style = _ref2.style,
                     className = _ref2.className;
-                return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('div', { className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()('demo-block', className), style: style });
+                return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('div', { ref: ref, className: __WEBPACK_IMPORTED_MODULE_7_classnames___default()('demo-block', className), style: style });
               }
             )
           ),

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>CSSMotion.js - example - rc-animate@2.8.3</title>
+  <title>CSSMotion.js - example - rc-animate@2.9.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@2.8.3</h1>
+      <h1>rc-animate@2.9.0</h1>
 
       <p>css-transition ui component for react</p>
     </div>
@@ -278,7 +278,10 @@ import { CSSMotion } from 'rc-animate';
 import classNames from 'classnames';
 import './CSSMotion.less';
 
+window.motionRef = React.createRef();
+
 class Demo extends React.Component {
+
   state = {
     show: true,
     motionLeaveImmediately: false,
@@ -364,9 +367,11 @@ class Demo extends React.Component {
 
               onEnterEnd={this.skipColorTransition}
               onLeaveEnd={this.skipColorTransition}
+
+              ref={window.motionRef}
             &gt;
-              {({ style, className }) =&gt; (
-                &lt;div className={classNames('demo-block', className)} style={style} /&gt;
+              {({ style, className }, ref) =&gt; (
+                &lt;div ref={ref} className={classNames('demo-block', className)} style={style} /&gt;
               )}
             &lt;/CSSMotion&gt;
           &lt;/div&gt;
