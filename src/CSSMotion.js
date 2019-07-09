@@ -192,7 +192,7 @@ export function genCSSMotion(config) {
 
       if (typeof internalRef === 'function') {
         internalRef(node);
-      } else if ('current' in internalRef) {
+      } else if (internalRef && 'current' in internalRef) {
         internalRef.current = node;
       }
     };

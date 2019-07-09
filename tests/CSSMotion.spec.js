@@ -6,7 +6,7 @@ import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
 import $ from 'jquery';
 import raf from 'raf';
-import { genCSSMotion } from '../src/CSSMotion';
+import RefCSSMotion, { genCSSMotion } from '../src/CSSMotion';
 
 import './CSSMotion.spec.css';
 
@@ -294,7 +294,25 @@ describe('motion', () => {
     );
   });
 
-  it('forwardRef', () => {
-    
+  it('forwardRef', (done) => {
+    let domNode;
+    const setRef = (node) => {
+      domNode = node;
+    };
+
+    ReactDOM.render(
+      <RefCSSMotion motionName="transition" ref={setRef}>
+        {({ style, className }, ref) => (
+          <div ref={ref} style={style} className={classNames('motion-box', className)} />
+        )}
+      </RefCSSMotion>,
+      div,
+      () => {
+        // eslint-disable-next-line no-undef
+        expect(domNode instanceof HTMLElement).to.be.ok();
+
+        done();
+      },
+    );
   });
 });
