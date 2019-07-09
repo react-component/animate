@@ -43,7 +43,7 @@ export const MotionPropTypes = {
  * Default we use browser transition event support check.
  */
 export function genCSSMotion(config) {
-  let transitionSupport;
+  let transitionSupport = config;
   let forwardRef = !!React.forwardRef;
 
   if (typeof config === 'object') {
