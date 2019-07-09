@@ -1714,7 +1714,7 @@ var MotionPropTypes = {
  * Default we use browser transition event support check.
  */
 function genCSSMotion(config) {
-  var transitionSupport = void 0;
+  var transitionSupport = config;
   var forwardRef = !!__WEBPACK_IMPORTED_MODULE_6_react___default.a.forwardRef;
 
   if (typeof config === 'object') {
