@@ -1,6 +1,10 @@
 # History
 ----
 
+## 2.9.0 / 2019-07-09
+
+- CSSMotion support forward ref to render props
+
 ## 2.8.0 / 2019-04-29
 
 - `keys` on CSSMotionList can be an object
