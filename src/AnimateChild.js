@@ -13,6 +13,8 @@ const transitionMap = {
 export default class AnimateChild extends React.Component {
   static propTypes = {
     children: PropTypes.any,
+    animation: PropTypes.any,
+    transitionName: PropTypes.any,
   }
 
   componentWillUnmount() {

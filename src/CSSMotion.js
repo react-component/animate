@@ -42,7 +42,15 @@ export const MotionPropTypes = {
  * `transitionSupport` is used for none transition test case.
  * Default we use browser transition event support check.
  */
-export function genCSSMotion(transitionSupport) {
+export function genCSSMotion(config) {
+  let transitionSupport;
+  let forwardRef = !!React.forwardRef;
+
+  if (typeof config === 'object') {
+    transitionSupport = config.transitionSupport;
+    forwardRef = 'forwardRef' in config ? config.forwardRef : forwardRef;
+  }
+
   function isSupportTransition(props) {
     return !!(props.motionName && transitionSupport);
   }
@@ -278,7 +286,7 @@ export function genCSSMotion(transitionSupport) {
 
   polyfill(CSSMotion);
 
-  if (!React.forwardRef) {
+  if (!forwardRef) {
     return CSSMotion;
   }
 

@@ -31,6 +31,8 @@ export default class Animate extends React.Component {
   static isAnimate = true; // eslint-disable-line
   
   static propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.object,
     component: PropTypes.any,
     componentProps: PropTypes.object,
     animation: PropTypes.object,

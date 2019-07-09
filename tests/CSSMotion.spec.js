@@ -6,11 +6,13 @@ import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
 import $ from 'jquery';
 import raf from 'raf';
-import CSSMotion, { genCSSMotion } from '../src/CSSMotion';
+import { genCSSMotion } from '../src/CSSMotion';
 
 import './CSSMotion.spec.css';
 
 describe('motion', () => {
+  const CSSMotion = genCSSMotion({ transitionSupport: true, forwardRef: false });
+
   let div;
   beforeEach(() => {
     div = document.createElement('div');
@@ -82,7 +84,7 @@ describe('motion', () => {
         }
       }
 
-      it(name, (done) => {
+      it(name, done => {
         ReactDOM.render(<Demo />, div, function init() {
           const nextVisible = visible[1];
           const instance = this;
@@ -90,7 +92,10 @@ describe('motion', () => {
           const doStartTest = () => {
             const $ele = $(div).find('.motion-box');
 
-            const basicClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
+            const basicClassName = TestUtils.findRenderedDOMComponentWithClass(
+              instance,
+              'motion-box',
+            ).className;
             expect(basicClassName).to.contain('transition');
             expect(basicClassName).to.contain(`transition-${name}`);
             expect(basicClassName).to.not.contain(`transition-${name}-active`);
@@ -101,7 +106,10 @@ describe('motion', () => {
               expect(Number($ele.css('opacity'))).to.be(oriOpacity);
 
               setTimeout(() => {
-                const activeClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
+                const activeClassName = TestUtils.findRenderedDOMComponentWithClass(
+                  instance,
+                  'motion-box',
+                ).className;
                 expect(activeClassName).to.contain('transition');
                 expect(activeClassName).to.contain(`transition-${name}`);
                 expect(activeClassName).to.contain(`transition-${name}-active`);
@@ -109,10 +117,13 @@ describe('motion', () => {
                 setTimeout(() => {
                   if (nextVisible === false) {
                     expect(
-                      TestUtils.scryRenderedDOMComponentsWithClass(instance, 'motion-box').length
+                      TestUtils.scryRenderedDOMComponentsWithClass(instance, 'motion-box').length,
                     ).to.be(0);
                   } else {
-                    const endClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
+                    const endClassName = TestUtils.findRenderedDOMComponentWithClass(
+                      instance,
+                      'motion-box',
+                    ).className;
                     expect(endClassName).to.not.contain('transition');
                     expect(endClassName).to.not.contain(`transition-${name}`);
                     expect(endClassName).to.not.contain(`transition-${name}-active`);
@@ -184,19 +195,25 @@ describe('motion', () => {
         }
       }
 
-      it(name, (done) => {
+      it(name, done => {
         ReactDOM.render(<Demo />, div, function init() {
           const nextVisible = visible[1];
           const instance = this;
 
           const doStartTest = () => {
-            const basicClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
+            const basicClassName = TestUtils.findRenderedDOMComponentWithClass(
+              instance,
+              'motion-box',
+            ).className;
             expect(basicClassName).to.contain('animation');
             expect(basicClassName).to.contain(`animation-${name}`);
             expect(basicClassName).to.not.contain(`animation-${name}-active`);
 
             setTimeout(() => {
-              const activeClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
+              const activeClassName = TestUtils.findRenderedDOMComponentWithClass(
+                instance,
+                'motion-box',
+              ).className;
               expect(activeClassName).to.contain('animation');
               expect(activeClassName).to.contain(`animation-${name}`);
               expect(activeClassName).to.contain(`animation-${name}-active`);
@@ -222,13 +239,9 @@ describe('motion', () => {
   });
 
   describe('immediately', () => {
-    it('motionLeaveImmediately', (done) => {
+    it('motionLeaveImmediately', done => {
       ReactDOM.render(
-        <CSSMotion
-          motionName="transition"
-          motionLeaveImmediately
-          visible={false}
-        >
+        <CSSMotion motionName="transition" motionLeaveImmediately visible={false}>
           {({ style, className }) => (
             <div style={style} className={classNames('motion-box', className)} />
           )}
@@ -237,13 +250,17 @@ describe('motion', () => {
         function init() {
           const instance = this;
 
-          const basicClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
+          const basicClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box')
+            .className;
           expect(basicClassName).to.contain('transition');
           expect(basicClassName).to.contain('transition-leave');
           expect(basicClassName).to.not.contain('transition-leave-active');
 
           setTimeout(() => {
-            const activeClassName = TestUtils.findRenderedDOMComponentWithClass(instance, 'motion-box').className;
+            const activeClassName = TestUtils.findRenderedDOMComponentWithClass(
+              instance,
+              'motion-box',
+            ).className;
             expect(activeClassName).to.contain('transition');
             expect(activeClassName).to.contain('transition-leave');
             expect(activeClassName).to.contain('transition-leave-active');
@@ -255,24 +272,29 @@ describe('motion', () => {
     });
   });
 
-  it.only('no transition', (done) => {
-    const NoCSSTransition = genCSSMotion(false);
+  it('no transition', done => {
+    const NoCSSTransition = genCSSMotion({ transitionSupport: false, forwardRef: false });
 
     ReactDOM.render(
-      <NoCSSTransition
-        motionName="transition"
-      >
+      <NoCSSTransition motionName="transition">
         {({ style, className }) => (
           <div style={style} className={classNames('motion-box', className)} />
         )}
-      </NoCSSTransition>
-      , div, function init() {
-        const basicClassName = TestUtils.findRenderedDOMComponentWithClass(this, 'motion-box').className;
+      </NoCSSTransition>,
+      div,
+      function init() {
+        const basicClassName = TestUtils.findRenderedDOMComponentWithClass(this, 'motion-box')
+          .className;
         expect(basicClassName).to.not.contain('transition');
         expect(basicClassName).to.not.contain('transition-appear');
         expect(basicClassName).to.not.contain('transition-appear-active');
 
         done();
-      });
+      },
+    );
+  });
+
+  it('forwardRef', () => {
+    
   });
 });
