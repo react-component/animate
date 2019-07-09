@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
 import { genCSSMotionList } from '../src/CSSMotionList';
-import CSSMotion from '../src/CSSMotion';
+import { genCSSMotion } from '../src/CSSMotion';
 
 import './CSSMotion.spec.css';
 
@@ -78,7 +78,8 @@ describe('motion list', () => {
     }
 
     it('with motion support', (done) => {
-      const CSSMotionList = genCSSMotionList(true);
+      const CSSMotion = genCSSMotion({ transitionSupport: true, forwardRef: false });
+      const CSSMotionList = genCSSMotionList(true, CSSMotion);
       testMotion(CSSMotionList, done, (instance) => {
         const motionList = TestUtils.scryRenderedComponentsWithType(instance, CSSMotion);
         motionList.slice(0, 2).forEach((cssMotion) => {

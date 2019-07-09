@@ -12,6 +12,7 @@ class Todo extends React.Component {
   static propTypes = {
     end: PropTypes.func,
     onClick: PropTypes.func,
+    children: PropTypes.node,
   }
 
   static defaultProps = {

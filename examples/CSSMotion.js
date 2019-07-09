@@ -7,7 +7,10 @@ import { CSSMotion } from 'rc-animate';
 import classNames from 'classnames';
 import './CSSMotion.less';
 
+window.motionRef = React.createRef();
+
 class Demo extends React.Component {
+
   state = {
     show: true,
     motionLeaveImmediately: false,
@@ -93,9 +96,11 @@ class Demo extends React.Component {
 
               onEnterEnd={this.skipColorTransition}
               onLeaveEnd={this.skipColorTransition}
+
+              ref={window.motionRef}
             >
-              {({ style, className }) => (
-                <div className={classNames('demo-block', className)} style={style} />
+              {({ style, className }, ref) => (
+                <div ref={ref} className={classNames('demo-block', className)} style={style} />
               )}
             </CSSMotion>
           </div>
