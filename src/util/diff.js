@@ -4,10 +4,16 @@ export const STATUS_REMOVE = 'remove';
 export const STATUS_REMOVED = 'removed';
 
 export function wrapKeyToObject(key) {
+  let keyObj;
   if (key && typeof key === 'object' && 'key' in key) {
-    return key;
+    keyObj = key;
+  } else {
+    keyObj = { key };
   }
-  return { key };
+  return {
+    ...keyObj,
+    key: String(keyObj.key),
+  };
 }
 
 export function parseKeys(keys = []) {
@@ -23,7 +29,7 @@ export function diffKeys(prevKeys = [], currentKeys = []) {
   const currentKeyObjects = parseKeys(currentKeys);
 
   // Check prev keys to insert or keep
-  prevKeyObjects.forEach((keyObj) => {
+  prevKeyObjects.forEach(keyObj => {
     let hit = false;
 
     for (let i = currentIndex; i < currentLen; i += 1) {
@@ -32,7 +38,7 @@ export function diffKeys(prevKeys = [], currentKeys = []) {
         // New added keys should add before current key
         if (currentIndex < i) {
           list = list.concat(
-            currentKeyObjects.slice(currentIndex, i).map(obj => ({ ...obj, status: STATUS_ADD }))
+            currentKeyObjects.slice(currentIndex, i).map(obj => ({ ...obj, status: STATUS_ADD })),
           );
           currentIndex = i;
         }
@@ -59,7 +65,7 @@ export function diffKeys(prevKeys = [], currentKeys = []) {
   // Add rest to the list
   if (currentIndex < currentLen) {
     list = list.concat(
-      currentKeyObjects.slice(currentIndex).map(obj => ({ ...obj, status: STATUS_ADD }))
+      currentKeyObjects.slice(currentIndex).map(obj => ({ ...obj, status: STATUS_ADD })),
     );
   }
 
@@ -72,12 +78,12 @@ export function diffKeys(prevKeys = [], currentKeys = []) {
     keys[key] = (keys[key] || 0) + 1;
   });
   const duplicatedKeys = Object.keys(keys).filter(key => keys[key] > 1);
-  duplicatedKeys.forEach((matchKey) => {
+  duplicatedKeys.forEach(matchKey => {
     // Remove `STATUS_REMOVE` node.
-    list = list.filter(({ key, status }) => (key !== matchKey || status !== STATUS_REMOVE));
+    list = list.filter(({ key, status }) => key !== matchKey || status !== STATUS_REMOVE);
 
     // Update `STATUS_ADD` to `STATUS_KEEP`
-    list.forEach((node) => {
+    list.forEach(node => {
       if (node.key === matchKey) {
         node.status = STATUS_KEEP;
       }

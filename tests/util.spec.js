@@ -89,5 +89,16 @@ describe('util', () => {
         { key: '__input', status: 'keep' },
       ]);
     });
+
+    it('number type should work correctly', () => {
+      const prevKeys = [710458, 7010456, 7010508];
+      const currentKeys = [7010508, 7010456];
+
+      expect(diffKeys(prevKeys, currentKeys)).to.eql([
+        { key: '710458', status: 'remove' },
+        { key: '7010508', status: 'keep' },
+        { key: '7010456', status: 'keep' },
+      ]);
+    });
   });
 });
