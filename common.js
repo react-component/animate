@@ -30259,10 +30259,15 @@ var STATUS_REMOVE = 'remove';
 var STATUS_REMOVED = 'removed';
 
 function wrapKeyToObject(key) {
+  var keyObj = void 0;
   if (key && typeof key === 'object' && 'key' in key) {
-    return key;
+    keyObj = key;
+  } else {
+    keyObj = { key: key };
   }
-  return { key: key };
+  return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, keyObj, {
+    key: String(keyObj.key)
+  });
 }
 
 function parseKeys() {
