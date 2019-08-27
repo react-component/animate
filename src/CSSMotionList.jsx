@@ -3,7 +3,14 @@ import { polyfill } from 'react-lifecycles-compat';
 import PropTypes from 'prop-types';
 import OriginCSSMotion, { MotionPropTypes } from './CSSMotion';
 import { supportTransition } from './util/motion';
-import { STATUS_ADD, STATUS_KEEP, STATUS_REMOVE, STATUS_REMOVED, diffKeys, parseKeys } from './util/diff';
+import {
+  STATUS_ADD,
+  STATUS_KEEP,
+  STATUS_REMOVE,
+  STATUS_REMOVED,
+  diffKeys,
+  parseKeys,
+} from './util/diff';
 
 const MOTION_PROP_NAMES = Object.keys(MotionPropTypes);
 
@@ -11,7 +18,7 @@ export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion)
   class CSSMotionList extends React.Component {
     static propTypes = {
       ...CSSMotion.propTypes,
-      component: PropTypes.string,
+      component: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
       keys: PropTypes.array,
     };
 
@@ -29,7 +36,7 @@ export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion)
       // Always as keep when motion not support
       if (!transitionSupport) {
         return {
-          keyEntities: parsedKeyObjects.map((obj) => ({ ...obj, status: STATUS_KEEP })),
+          keyEntities: parsedKeyObjects.map(obj => ({ ...obj, status: STATUS_KEEP })),
         };
       }
 
@@ -37,7 +44,7 @@ export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion)
 
       const keyEntitiesLen = keyEntities.length;
       return {
-        keyEntities: mixedKeyEntities.filter((entity) => {
+        keyEntities: mixedKeyEntities.filter(entity => {
           // IE 9 not support Array.prototype.find
           let prevEntity = null;
           for (let i = 0; i < keyEntitiesLen; i += 1) {
@@ -49,7 +56,11 @@ export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion)
           }
 
           // Remove if already mark as removed
-          if (prevEntity && prevEntity.status === STATUS_REMOVED && entity.status === STATUS_REMOVE) {
+          if (
+            prevEntity &&
+            prevEntity.status === STATUS_REMOVED &&
+            entity.status === STATUS_REMOVE
+          ) {
             return false;
           }
           return true;
@@ -57,9 +68,9 @@ export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion)
       };
     }
 
-    removeKey = (removeKey) => {
+    removeKey = removeKey => {
       this.setState(({ keyEntities }) => ({
-        keyEntities: keyEntities.map((entity) => {
+        keyEntities: keyEntities.map(entity => {
           if (entity.key !== removeKey) return entity;
           return {
             ...entity,
@@ -71,10 +82,12 @@ export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion)
 
     render() {
       const { keyEntities } = this.state;
-      const { component: Component, children, ...restProps } = this.props;
+      const { component, children, ...restProps } = this.props;
+
+      const Component = component || React.Fragment;
 
       const motionProps = {};
-      MOTION_PROP_NAMES.forEach((prop) => {
+      MOTION_PROP_NAMES.forEach(prop => {
         motionProps[prop] = restProps[prop];
         delete restProps[prop];
       });
