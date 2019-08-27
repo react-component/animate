@@ -30140,9 +30140,11 @@ function genCSSMotionList(transitionSupport) {
         var keyEntities = this.state.keyEntities;
 
         var _props = this.props,
-            Component = _props.component,
+            component = _props.component,
             children = _props.children,
             restProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default()(_props, ['component', 'children']);
+
+        var Component = component || __WEBPACK_IMPORTED_MODULE_6_react___default.a.Fragment;
 
         var motionProps = {};
         MOTION_PROP_NAMES.forEach(function (prop) {
@@ -30223,7 +30225,7 @@ function genCSSMotionList(transitionSupport) {
   }(__WEBPACK_IMPORTED_MODULE_6_react___default.a.Component);
 
   CSSMotionList.propTypes = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default()({}, CSSMotion.propTypes, {
-    component: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.string,
+    component: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.bool]),
     keys: __WEBPACK_IMPORTED_MODULE_8_prop_types___default.a.array
   });
   CSSMotionList.defaultProps = {
