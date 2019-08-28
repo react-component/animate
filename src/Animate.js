@@ -94,6 +94,7 @@ export default class Animate extends React.Component {
     });
   }
 
+  /*eslint camelcase: ["error", {allow: ["UNSAFE_componentWillReceiveProps"]}]*/
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.nextProps = nextProps;
     const nextChildren = toArrayChildren(getChildrenFromProps(nextProps));
