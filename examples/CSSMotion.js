@@ -10,7 +10,6 @@ import './CSSMotion.less';
 window.motionRef = React.createRef();
 
 class Demo extends React.Component {
-
   state = {
     show: true,
     motionLeaveImmediately: false,
@@ -58,27 +57,36 @@ class Demo extends React.Component {
   });
 
   render() {
-    const { show, motionLeaveImmediately, removeOnLeave, hasMotionClassName } = this.state;
+    const {
+      show,
+      motionLeaveImmediately,
+      removeOnLeave,
+      hasMotionClassName,
+    } = this.state;
 
     return (
       <div>
         <label>
           <input type="checkbox" onChange={this.onTrigger} checked={show} />
-          {' '}
           Show Component
         </label>
 
         <label>
-          <input type="checkbox" onChange={this.onTriggerClassName} checked={hasMotionClassName} />
-          {' '}
+          <input
+            type="checkbox"
+            onChange={this.onTriggerClassName}
+            checked={hasMotionClassName}
+          />
           hasMotionClassName
         </label>
 
         <label>
-          <input type="checkbox" onChange={this.onRemoveOnLeave} checked={removeOnLeave} />
-          {' '}
+          <input
+            type="checkbox"
+            onChange={this.onRemoveOnLeave}
+            checked={removeOnLeave}
+          />
           removeOnLeave
-
           {removeOnLeave ? '' : ' (use leavedClassName)'}
         </label>
 
@@ -93,14 +101,16 @@ class Demo extends React.Component {
               onAppearStart={this.onCollapse}
               onEnterStart={this.onCollapse}
               onLeaveActive={this.onCollapse}
-
               onEnterEnd={this.skipColorTransition}
               onLeaveEnd={this.skipColorTransition}
-
               ref={window.motionRef}
             >
               {({ style, className }, ref) => (
-                <div ref={ref} className={classNames('demo-block', className)} style={style} />
+                <div
+                  ref={ref}
+                  className={classNames('demo-block', className)}
+                  style={style}
+                />
               )}
             </CSSMotion>
           </div>
@@ -115,7 +125,10 @@ class Demo extends React.Component {
               onLeaveActive={this.styleGreen}
             >
               {({ style, className }) => (
-                <div className={classNames('demo-block', className)} style={style} />
+                <div
+                  className={classNames('demo-block', className)}
+                  style={style}
+                />
               )}
             </CSSMotion>
           </div>
@@ -127,8 +140,7 @@ class Demo extends React.Component {
           </button>
 
           <div>
-            {
-              motionLeaveImmediately &&
+            {motionLeaveImmediately && (
               <CSSMotion
                 visible={false}
                 motionName={hasMotionClassName ? 'transition' : null}
@@ -136,14 +148,16 @@ class Demo extends React.Component {
                 leavedClassName="hidden"
                 onLeaveActive={this.onCollapse}
                 motionLeaveImmediately
-
                 onLeaveEnd={this.skipColorTransition}
               >
                 {({ style, className }) => (
-                  <div className={classNames('demo-block', className)} style={style} />
+                  <div
+                    className={classNames('demo-block', className)}
+                    style={style}
+                  />
                 )}
               </CSSMotion>
-            }
+            )}
           </div>
         </div>
       </div>
