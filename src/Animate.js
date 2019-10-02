@@ -11,6 +11,11 @@ import AnimateChild from './AnimateChild';
 import animUtil from './util/animate';
 
 const defaultKey = `rc_animate_${Date.now()}`;
+const childrenRefs = {};
+const currentlyAnimatingKeys = {};
+let globalNextProps = {};
+let keysToEnter = [];
+let keysToLeave = [];
 
 function getChildrenFromProps(props) {
   const children = props.children;
@@ -25,6 +30,14 @@ function getChildrenFromProps(props) {
 }
 
 function noop() {}
+
+function stop(key) {
+  delete currentlyAnimatingKeys[key];
+  const component = childrenRefs[key];
+  if (component) {
+    component.stop();
+  }
+}
 
 export default class Animate extends React.Component {
   static isAnimate = true; // eslint-disable-line
@@ -61,51 +74,21 @@ export default class Animate extends React.Component {
     onAppear: noop,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.currentlyAnimatingKeys = {};
-    this.keysToEnter = [];
-    this.keysToLeave = [];
-
-    this.state = {
-      children: toArrayChildren(getChildrenFromProps(props)),
-    };
-
-    this.childrenRefs = {};
-  }
-
-  componentDidMount() {
-    const showProp = this.props.showProp;
-    let children = this.state.children;
-    if (showProp) {
-      children = children.filter(child => {
-        return !!child.props[showProp];
-      });
-    }
-    children.forEach(child => {
-      if (child) {
-        this.performAppear(child.key);
-      }
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.nextProps = nextProps;
+  static getDerivedStateFromProps(nextProps, nextState) {
+    globalNextProps = nextProps;
     const nextChildren = toArrayChildren(getChildrenFromProps(nextProps));
-    const props = this.props;
+    const props = nextProps;
     // exclusive needs immediate response
     if (props.exclusive) {
-      Object.keys(this.currentlyAnimatingKeys).forEach(key => {
-        this.stop(key);
+      Object.keys(currentlyAnimatingKeys).forEach(key => {
+        stop(key);
       });
     }
     const showProp = props.showProp;
-    const currentlyAnimatingKeys = this.currentlyAnimatingKeys;
     // last props children if exclusive
     const currentChildren = props.exclusive
       ? toArrayChildren(getChildrenFromProps(props))
-      : this.state.children;
+      : nextState.children;
     // in case destroy in showProp mode
     let newChildren = [];
     if (showProp) {
@@ -140,11 +123,6 @@ export default class Animate extends React.Component {
       newChildren = mergeChildren(currentChildren, nextChildren);
     }
 
-    // need render to avoid update
-    this.setState({
-      children: newChildren,
-    });
-
     nextChildren.forEach(child => {
       const key = child && child.key;
       if (child && currentlyAnimatingKeys[key]) {
@@ -160,13 +138,13 @@ export default class Animate extends React.Component {
             showProp,
           );
           if (!showInNow && showInNext) {
-            this.keysToEnter.push(key);
+            keysToEnter.push(key);
           }
         } else if (showInNext) {
-          this.keysToEnter.push(key);
+          keysToEnter.push(key);
         }
       } else if (!hasPrev) {
-        this.keysToEnter.push(key);
+        keysToEnter.push(key);
       }
     });
 
@@ -185,40 +163,65 @@ export default class Animate extends React.Component {
             showProp,
           );
           if (!showInNext && showInNow) {
-            this.keysToLeave.push(key);
+            keysToLeave.push(key);
           }
         } else if (showInNow) {
-          this.keysToLeave.push(key);
+          keysToLeave.push(key);
         }
       } else if (!hasNext) {
-        this.keysToLeave.push(key);
+        keysToLeave.push(key);
+      }
+    });
+
+    return { children: newChildren };
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      children: toArrayChildren(getChildrenFromProps(props)),
+    };
+  }
+
+  componentDidMount() {
+    const showProp = this.props.showProp;
+    let children = this.state.children;
+    if (showProp) {
+      children = children.filter(child => {
+        return !!child.props[showProp];
+      });
+    }
+    children.forEach(child => {
+      if (child) {
+        this.performAppear(child.key);
       }
     });
   }
 
   componentDidUpdate() {
-    const keysToEnter = this.keysToEnter;
-    this.keysToEnter = [];
-    keysToEnter.forEach(this.performEnter);
-    const keysToLeave = this.keysToLeave;
-    this.keysToLeave = [];
-    keysToLeave.forEach(this.performLeave);
+    const originKeysToEnter = keysToEnter;
+    keysToEnter = [];
+    originKeysToEnter.forEach(this.performEnter);
+    const originKeysToLeave = keysToLeave;
+    keysToLeave = [];
+    originKeysToLeave.forEach(this.performLeave);
   }
 
   performEnter = key => {
     // may already remove by exclusive
-    if (this.childrenRefs[key]) {
-      this.currentlyAnimatingKeys[key] = true;
-      this.childrenRefs[key].componentWillEnter(
+    if (childrenRefs[key]) {
+      currentlyAnimatingKeys[key] = true;
+      childrenRefs[key].componentWillEnter(
         this.handleDoneAdding.bind(this, key, 'enter'),
       );
     }
   };
 
   performAppear = key => {
-    if (this.childrenRefs[key]) {
-      this.currentlyAnimatingKeys[key] = true;
-      this.childrenRefs[key].componentWillAppear(
+    if (childrenRefs[key]) {
+      currentlyAnimatingKeys[key] = true;
+      childrenRefs[key].componentWillAppear(
         this.handleDoneAdding.bind(this, key, 'appear'),
       );
     }
@@ -226,9 +229,9 @@ export default class Animate extends React.Component {
 
   handleDoneAdding = (key, type) => {
     const props = this.props;
-    delete this.currentlyAnimatingKeys[key];
+    delete currentlyAnimatingKeys[key];
     // if update on exclusive mode, skip check
-    if (props.exclusive && props !== this.nextProps) {
+    if (props.exclusive && props !== globalNextProps) {
       return;
     }
     const currentChildren = toArrayChildren(getChildrenFromProps(props));
@@ -248,9 +251,9 @@ export default class Animate extends React.Component {
 
   performLeave = key => {
     // may already remove by exclusive
-    if (this.childrenRefs[key]) {
-      this.currentlyAnimatingKeys[key] = true;
-      this.childrenRefs[key].componentWillLeave(
+    if (childrenRefs[key]) {
+      currentlyAnimatingKeys[key] = true;
+      childrenRefs[key].componentWillLeave(
         this.handleDoneLeaving.bind(this, key),
       );
     }
@@ -258,9 +261,9 @@ export default class Animate extends React.Component {
 
   handleDoneLeaving = key => {
     const props = this.props;
-    delete this.currentlyAnimatingKeys[key];
+    delete currentlyAnimatingKeys[key];
     // if update on exclusive mode, skip check
-    if (props.exclusive && props !== this.nextProps) {
+    if (props.exclusive && props !== globalNextProps) {
       return;
     }
     const currentChildren = toArrayChildren(getChildrenFromProps(props));
@@ -297,17 +300,9 @@ export default class Animate extends React.Component {
     return findChildInChildrenByKey(currentChildren, key);
   }
 
-  stop(key) {
-    delete this.currentlyAnimatingKeys[key];
-    const component = this.childrenRefs[key];
-    if (component) {
-      component.stop();
-    }
-  }
-
   render() {
     const props = this.props;
-    this.nextProps = props;
+    globalNextProps = props;
     const stateChildren = this.state.children;
     let children = null;
     if (stateChildren) {
@@ -322,7 +317,7 @@ export default class Animate extends React.Component {
           <AnimateChild
             key={child.key}
             ref={node => {
-              this.childrenRefs[child.key] = node;
+              childrenRefs[child.key] = node;
             }}
             animation={props.animation}
             transitionName={props.transitionName}
