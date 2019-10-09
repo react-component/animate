@@ -1935,7 +1935,8 @@ function genCSSMotion(config) {
     }], [{
       key: 'getDerivedStateFromProps',
       value: function getDerivedStateFromProps(props, _ref) {
-        var prevProps = _ref.prevProps;
+        var prevProps = _ref.prevProps,
+            prevStatus = _ref.status;
 
         if (!isSupportTransition(props)) return {};
 
@@ -1948,6 +1949,13 @@ function genCSSMotion(config) {
         var newState = {
           prevProps: props
         };
+
+        // Clean up status if prop set to false
+        if (prevStatus === STATUS_APPEAR && !motionAppear || prevStatus === STATUS_ENTER && !motionEnter || prevStatus === STATUS_LEAVE && !motionLeave) {
+          newState.status = STATUS_NONE;
+          newState.statusActive = false;
+          newState.newStatus = false;
+        }
 
         // Appear
         if (!prevProps && visible && motionAppear) {
