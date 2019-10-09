@@ -7,7 +7,8 @@ import classNames from 'classnames';
 import raf from 'raf';
 import {
   getTransitionName,
-  animationEndName, transitionEndName,
+  animationEndName,
+  transitionEndName,
   supportTransition,
 } from './util/motion';
 
@@ -58,10 +59,8 @@ export function genCSSMotion(config) {
   class CSSMotion extends React.Component {
     static propTypes = {
       ...MotionPropTypes,
-      
-      internalRef: PropTypes.oneOfType([
-        PropTypes.object, PropTypes.func
-      ]),
+
+      internalRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     };
 
     static defaultProps = {
@@ -86,16 +85,24 @@ export function genCSSMotion(config) {
       this.raf = null;
     }
 
-    static getDerivedStateFromProps(props, { prevProps }) {
+    static getDerivedStateFromProps(props, { prevProps, status: prevStatus }) {
       if (!isSupportTransition(props)) return {};
 
-      const {
-        visible, motionAppear, motionEnter, motionLeave,
-        motionLeaveImmediately,
-      } = props;
+      const { visible, motionAppear, motionEnter, motionLeave, motionLeaveImmediately } = props;
       const newState = {
         prevProps: props,
       };
+
+      // Clean up status if prop set to false
+      if (
+        (prevStatus === STATUS_APPEAR && !motionAppear) ||
+        (prevStatus === STATUS_ENTER && !motionEnter) ||
+        (prevStatus === STATUS_LEAVE && !motionLeave)
+      ) {
+        newState.status = STATUS_NONE;
+        newState.statusActive = false;
+        newState.newStatus = false;
+      }
 
       // Appear
       if (!prevProps && visible && motionAppear) {
@@ -122,7 +129,7 @@ export function genCSSMotion(config) {
       }
 
       return newState;
-    };
+    }
 
     componentDidMount() {
       this.onDomUpdate();
@@ -141,9 +148,15 @@ export function genCSSMotion(config) {
     onDomUpdate = () => {
       const { status, newStatus } = this.state;
       const {
-        onAppearStart, onEnterStart, onLeaveStart,
-        onAppearActive, onEnterActive, onLeaveActive,
-        motionAppear, motionEnter, motionLeave,
+        onAppearStart,
+        onEnterStart,
+        onLeaveStart,
+        onAppearActive,
+        onEnterActive,
+        onLeaveActive,
+        motionAppear,
+        motionEnter,
+        motionLeave,
       } = this.props;
 
       if (!isSupportTransition(this.props)) {
@@ -174,7 +187,7 @@ export function genCSSMotion(config) {
       }
     };
 
-    onMotionEnd = (event) => {
+    onMotionEnd = event => {
       const { status, statusActive } = this.state;
       const { onAppearEnd, onEnterEnd, onLeaveEnd } = this.props;
       if (status === STATUS_APPEAR && statusActive) {
@@ -186,7 +199,7 @@ export function genCSSMotion(config) {
       }
     };
 
-    setNodeRef = (node) => {
+    setNodeRef = node => {
       const { internalRef } = this.props;
       this.node = node;
 
@@ -201,13 +214,13 @@ export function genCSSMotion(config) {
       return findDOMNode(this.node || this);
     };
 
-    addEventListener = ($ele) => {
+    addEventListener = $ele => {
       if (!$ele) return;
 
       $ele.addEventListener(transitionEndName, this.onMotionEnd);
       $ele.addEventListener(animationEndName, this.onMotionEnd);
     };
-    removeEventListener = ($ele) => {
+    removeEventListener = $ele => {
       if (!$ele) return;
 
       $ele.removeEventListener(transitionEndName, this.onMotionEnd);
@@ -226,11 +239,14 @@ export function genCSSMotion(config) {
         };
       }
 
-      this.setState({
-        statusStyle: typeof statusStyle === 'object' ? statusStyle : null,
-        newStatus: false,
-        ...additionalState,
-      }, nextStep); // Trigger before next frame & after `componentDidMount`
+      this.setState(
+        {
+          statusStyle: typeof statusStyle === 'object' ? statusStyle : null,
+          newStatus: false,
+          ...additionalState,
+        },
+        nextStep,
+      ); // Trigger before next frame & after `componentDidMount`
     };
 
     updateActiveStatus = (styleFunc, currentStatus) => {
@@ -244,7 +260,7 @@ export function genCSSMotion(config) {
       });
     };
 
-    nextFrame = (func) => {
+    nextFrame = func => {
       this.cancelNextFrame();
       this.raf = raf(func);
     };
@@ -258,7 +274,14 @@ export function genCSSMotion(config) {
 
     render() {
       const { status, statusActive, statusStyle } = this.state;
-      const { children, motionName, visible, removeOnLeave, leavedClassName, eventProps } = this.props;
+      const {
+        children,
+        motionName,
+        visible,
+        removeOnLeave,
+        leavedClassName,
+        eventProps,
+      } = this.props;
 
       if (!children) return null;
 
@@ -272,15 +295,19 @@ export function genCSSMotion(config) {
         return null;
       }
 
-      return children({
-        ...eventProps,
-        className: classNames({
-          [getTransitionName(motionName, status)]: status !== STATUS_NONE,
-          [getTransitionName(motionName, `${status}-active`)]: status !== STATUS_NONE && statusActive,
-          [motionName]: typeof motionName === 'string',
-        }),
-        style: statusStyle,
-      }, this.setNodeRef);
+      return children(
+        {
+          ...eventProps,
+          className: classNames({
+            [getTransitionName(motionName, status)]: status !== STATUS_NONE,
+            [getTransitionName(motionName, `${status}-active`)]:
+              status !== STATUS_NONE && statusActive,
+            [motionName]: typeof motionName === 'string',
+          }),
+          style: statusStyle,
+        },
+        this.setNodeRef,
+      );
     }
   }
 
