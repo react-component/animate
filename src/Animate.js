@@ -94,7 +94,7 @@ export default class Animate extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.nextProps = nextProps;
     const nextChildren = toArrayChildren(getChildrenFromProps(nextProps));
     const props = this.props;
