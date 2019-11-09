@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import unsafeLifecyclesPolyfill from 'rc-util/lib/unsafeLifecyclesPolyfill';
 import {
   toArrayChildren,
   mergeChildren,
@@ -9,7 +10,6 @@ import {
 } from './ChildrenUtils';
 import AnimateChild from './AnimateChild';
 import animUtil from './util/animate';
-import unsafeLifecyclesPolyfill from './util/unsafeLifecyclesPolyfill';
 
 const defaultKey = `rc_animate_${Date.now()}`;
 
