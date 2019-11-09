@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import unsafeLifecyclesPolyfill from 'rc-util/lib/unsafeLifecyclesPolyfill';
 import {
   toArrayChildren,
   mergeChildren,
@@ -27,9 +28,9 @@ function getChildrenFromProps(props) {
 function noop() {
 }
 
-export default class Animate extends React.Component {
+class Animate extends React.Component {
   static isAnimate = true; // eslint-disable-line
-  
+
   static propTypes = {
     className: PropTypes.string,
     style: PropTypes.object,
@@ -333,3 +334,5 @@ export default class Animate extends React.Component {
     return children[0] || null;
   }
 }
+
+export default unsafeLifecyclesPolyfill(Animate);
