@@ -1,6 +1,10 @@
 # History
 ----
 
+## 2.10.2 / 2019-11-09
+
+- There should not be any lifecycle warning now!
+
 ## 2.10.0 / 2019-08-27
 
 - CSSMotionList support `component` to be `false` to render nothing
