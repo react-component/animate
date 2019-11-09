@@ -9,6 +9,7 @@ import {
 } from './ChildrenUtils';
 import AnimateChild from './AnimateChild';
 import animUtil from './util/animate';
+import unsafeLifecyclesPolyfill from './util/unsafeLifecyclesPolyfill';
 
 const defaultKey = `rc_animate_${Date.now()}`;
 
@@ -27,9 +28,9 @@ function getChildrenFromProps(props) {
 function noop() {
 }
 
-export default class Animate extends React.Component {
+class Animate extends React.Component {
   static isAnimate = true; // eslint-disable-line
-  
+
   static propTypes = {
     className: PropTypes.string,
     style: PropTypes.object,
@@ -333,3 +334,5 @@ export default class Animate extends React.Component {
     return children[0] || null;
   }
 }
+
+export default unsafeLifecyclesPolyfill(Animate);
