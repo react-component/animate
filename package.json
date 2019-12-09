@@ -41,6 +41,10 @@
     "prepublish": "rc-tools run guard",
     "now-build": "npm run build"
   },
+  "peerDependencies": {
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
+  },
   "devDependencies": {
     "core-js": "^2.5.1",
     "expect.js": "0.3.x",
