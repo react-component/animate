@@ -72,7 +72,7 @@ class TodoList extends React.Component {
     });
     return (
       <div>
-        <Animate transitionName="example">
+        <Animate transitionName="example" component={React.Fragment}>
           {items}
         </Animate>
       </div>
