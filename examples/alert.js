@@ -105,6 +105,7 @@ function alert(str, time, type, callback) {
   if (!alertGroup) {
     const div = document.createElement('div');
     document.body.appendChild(div);
+    // eslint-disable-next-line react/no-render-return-value
     alertGroup = ReactDOM.render(<AlertGroup/>, div);
   }
   alertGroup.addAlert({
