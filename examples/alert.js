@@ -182,6 +182,7 @@ function alert(str, time, type, callback) {
   if (!alertGroup) {
     var div = document.createElement('div');
     document.body.appendChild(div);
+    // eslint-disable-next-line react/no-render-return-value
     alertGroup = __WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(AlertGroup, null), div);
   }
   alertGroup.addAlert({
