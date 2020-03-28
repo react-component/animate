@@ -1,21 +1,21 @@
-/* eslint no-console:0, react/no-multi-comp:0 */
+/* eslint-disable react/no-access-state-in-setstate,
+  no-console, react/no-multi-comp */
 
-import Animate from 'rc-animate';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Animate from '../src';
 
 import './assets/index.less';
 
 class Demo extends React.Component {
   state = {
     enter: true,
-  }
+  };
 
   toggleAnimate = () => {
     this.setState({
       enter: !this.state.enter,
     });
-  }
+  };
 
   render() {
     const style = {
@@ -27,16 +27,15 @@ class Demo extends React.Component {
     };
     return (
       <div>
-        <button onClick={this.toggleAnimate}>toggle</button>
-        <Animate
-          component=""
-          transitionName="fade"
-        >
-          {this.state.enter ? <div key="1" style={style}/> : null}
+        <button type="button" onClick={this.toggleAnimate}>
+          toggle
+        </button>
+        <Animate component="" transitionName="fade">
+          {this.state.enter ? <div key="1" style={style} /> : null}
         </Animate>
       </div>
     );
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+export default Demo;

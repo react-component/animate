@@ -1,24 +1,18 @@
-/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
+/* eslint-disable react/no-access-state-in-setstate,
+  no-console, react/no-multi-comp, react/jsx-no-bind
+*/
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Animate from 'rc-animate';
+import Animate from '../src';
 
 import './assets/index.less';
 
 class Todo extends React.Component {
-  static propTypes = {
-    children: PropTypes.any,
-    end: PropTypes.func,
-    onClick: PropTypes.func,
-    visible: PropTypes.bool,
-  }
-
   static defaultProps = {
     visible: true,
     end() {},
-  }
+  };
 
   componentWillUnmount() {
     console.log('componentWillUnmount');
@@ -27,7 +21,7 @@ class Todo extends React.Component {
   }
 
   render() {
-    const props = this.props;
+    const { props } = this;
     const style = {
       display: props.visible ? 'block' : 'none',
       width: 100,
@@ -35,12 +29,11 @@ class Todo extends React.Component {
       padding: 10,
       margin: 10,
     };
-    return (<div
-      onClick={this.props.onClick}
-      style={style}
-    >
-      {props.children}
-    </div>);
+    return (
+      <div onClick={this.props.onClick} style={style}>
+        {props.children}
+      </div>
+    );
   }
 }
 
@@ -50,8 +43,9 @@ class TodoList extends React.Component {
       { content: 'hello', visible: true },
       { content: 'world', visible: true },
       { content: 'click', visible: true },
-      { content: 'me', visible: true }],
-  }
+      { content: 'me', visible: true },
+    ],
+  };
 
   handleHide = (i, item) => {
     const newItems = this.state.items.concat([]);
@@ -60,26 +54,17 @@ class TodoList extends React.Component {
     });
     newItems[i] = { ...item, visible: false };
     this.setState({ items: newItems });
-  }
+  };
 
   render() {
-    const items = this.state.items.map((item, i) => {
-      return (
-        <Todo
-          key={item.content}
-          visible={item.visible}
-          onClick={this.handleHide.bind(this, i, item)}
-        >
-          {item.content}
-        </Todo>
-      );
-    });
+    const items = this.state.items.map((item, i) => (
+      <Todo key={item.content} visible={item.visible} onClick={this.handleHide.bind(this, i, item)}>
+        {item.content}
+      </Todo>
+    ));
     return (
       <div>
-        <Animate
-          showProp="visible"
-          transitionName="fade"
-        >
+        <Animate showProp="visible" transitionName="fade">
           {items}
         </Animate>
       </div>
@@ -87,10 +72,4 @@ class TodoList extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <div>
-    <h2>Hide Todo</h2>
-    <TodoList />
-  </div>,
-  document.getElementById('__react-content')
-);
+export default TodoList;

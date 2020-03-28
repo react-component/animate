@@ -1,16 +1,14 @@
-/* eslint no-console:0, react/no-multi-comp:0 */
+/* eslint-disable react/no-access-state-in-setstate, no-console, react/no-multi-comp */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import { CSSMotion } from 'rc-animate';
 import classNames from 'classnames';
+import { CSSMotion } from '../src';
+
 import './CSSMotion.less';
 
 window.motionRef = React.createRef();
 
 class Demo extends React.Component {
-
   state = {
     show: true,
     motionLeaveImmediately: false,
@@ -63,22 +61,17 @@ class Demo extends React.Component {
     return (
       <div>
         <label>
-          <input type="checkbox" onChange={this.onTrigger} checked={show} />
-          {' '}
-          Show Component
+          <input type="checkbox" onChange={this.onTrigger} checked={show} /> Show Component
         </label>
 
         <label>
-          <input type="checkbox" onChange={this.onTriggerClassName} checked={hasMotionClassName} />
-          {' '}
+          <input type="checkbox" onChange={this.onTriggerClassName} checked={hasMotionClassName} />{' '}
           hasMotionClassName
         </label>
 
         <label>
-          <input type="checkbox" onChange={this.onRemoveOnLeave} checked={removeOnLeave} />
-          {' '}
+          <input type="checkbox" onChange={this.onRemoveOnLeave} checked={removeOnLeave} />{' '}
           removeOnLeave
-
           {removeOnLeave ? '' : ' (use leavedClassName)'}
         </label>
 
@@ -93,10 +86,8 @@ class Demo extends React.Component {
               onAppearStart={this.onCollapse}
               onEnterStart={this.onCollapse}
               onLeaveActive={this.onCollapse}
-
               onEnterEnd={this.skipColorTransition}
               onLeaveEnd={this.skipColorTransition}
-
               ref={window.motionRef}
             >
               {({ style, className }, ref) => (
@@ -122,13 +113,12 @@ class Demo extends React.Component {
         </div>
 
         <div>
-          <button onClick={this.onMotionLeaveImmediately}>
+          <button type="button" onClick={this.onMotionLeaveImmediately}>
             motionLeaveImmediately
           </button>
 
           <div>
-            {
-              motionLeaveImmediately &&
+            {motionLeaveImmediately && (
               <CSSMotion
                 visible={false}
                 motionName={hasMotionClassName ? 'transition' : null}
@@ -136,14 +126,13 @@ class Demo extends React.Component {
                 leavedClassName="hidden"
                 onLeaveActive={this.onCollapse}
                 motionLeaveImmediately
-
                 onLeaveEnd={this.skipColorTransition}
               >
                 {({ style, className }) => (
                   <div className={classNames('demo-block', className)} style={style} />
                 )}
               </CSSMotion>
-            }
+            )}
           </div>
         </div>
       </div>
@@ -151,7 +140,7 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+export default Demo;
 
 // Remove for IE9 test
 // const aaa = document.getElementsByClassName('navbar')[0];

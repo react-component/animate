@@ -1,10 +1,9 @@
-/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
+/* eslint-disable react/no-access-state-in-setstate,
+  no-console, react/no-multi-comp, react/jsx-no-bind */
 
-import Animate from 'rc-animate';
 import React from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import velocity from 'velocity-animate';
+import Animate from '../src';
 
 import './assets/index.less';
 
@@ -15,25 +14,21 @@ const Box = props => {
     height: '200px',
     backgroundColor: 'red',
   };
-  return (<div style={style} />);
+  return <div style={style} />;
 };
-
-Box.propTypes = {
-  visible: PropTypes.bool,
-}
 
 class Demo extends React.Component {
   state = {
     destroyed: false,
     visible: true,
     exclusive: false,
-  }
+  };
 
   toggleAnimate = () => {
     this.setState({
       visible: !this.state.visible,
     });
-  }
+  };
 
   animateEnter = (node, done) => {
     let ok = false;
@@ -58,7 +53,7 @@ class Demo extends React.Component {
         complete();
       },
     };
-  }
+  };
 
   animateLeave = (node, done) => {
     let ok = false;
@@ -83,19 +78,19 @@ class Demo extends React.Component {
         complete();
       },
     };
-  }
+  };
 
-  toggle = (field) => {
+  toggle = field => {
     this.setState({
       [field]: !this.state[field],
     });
-  }
+  };
 
   destroy = () => {
     this.setState({
       destroyed: true,
     });
-  }
+  };
 
   render() {
     const anim = {
@@ -105,33 +100,35 @@ class Demo extends React.Component {
 
     return (
       <div>
-        <label><input
-          type="checkbox"
-          onChange={this.toggle.bind(this, 'visible')}
-          checked={this.state.visible}
-        />
-          show</label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={this.toggle.bind(this, 'visible')}
+            checked={this.state.visible}
+          />
+          show
+        </label>
         &nbsp;
-        <label><input
-          type="checkbox"
-          onChange={this.toggle.bind(this, 'exclusive')}
-          checked={this.state.exclusive}
-        />
-          exclusive</label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={this.toggle.bind(this, 'exclusive')}
+            checked={this.state.exclusive}
+          />
+          exclusive
+        </label>
         &nbsp;
-        <button onClick={this.destroy}>destroy</button>
-        <br/><br/>
-        <Animate
-          component=""
-          exclusive={this.state.exclusive}
-          showProp="visible"
-          animation={anim}
-        >
-          {this.state.destroyed ? null : <Box visible={this.state.visible}/>}
+        <button type="button" onClick={this.destroy}>
+          destroy
+        </button>
+        <br />
+        <br />
+        <Animate component="" exclusive={this.state.exclusive} showProp="visible" animation={anim}>
+          {this.state.destroyed ? null : <Box visible={this.state.visible} />}
         </Animate>
       </div>
     );
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+export default Demo;

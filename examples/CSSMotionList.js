@@ -1,8 +1,7 @@
 /* eslint no-console:0, react/no-multi-comp:0 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { CSSMotionList } from 'rc-animate';
+import { CSSMotionList } from '../src';
 import classNames from 'classnames';
 import './CSSMotionList.less';
 
@@ -55,7 +54,9 @@ class Demo extends React.Component {
             node count
             <input type="number" value={count} onChange={this.onCountChange} />
           </label>
-          <button onClick={this.onFlushMotion}>Flush Motion</button>
+          <button type="button" onClick={this.onFlushMotion}>
+            Flush Motion
+          </button>
         </div>
         {/* Motion State */}
         <div>
@@ -80,8 +81,7 @@ class Demo extends React.Component {
             );
           })}
         </div>
-
-          {/* Motion List */}
+        {/* Motion List */}
         <CSSMotionList
           keys={keyList}
           motionName="transition"
@@ -110,4 +110,4 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+export default Demo;
