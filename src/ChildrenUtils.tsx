@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 
 export function toArrayChildren(children) {
   const ret = [];
-  React.Children.forEach(children, (child) => {
+  React.Children.forEach(children, child => {
     ret.push(child);
   });
   return ret;
@@ -11,7 +11,7 @@ export function toArrayChildren(children) {
 export function findChildInChildrenByKey(children, key) {
   let ret = null;
   if (children) {
-    children.forEach((child) => {
+    children.forEach(child => {
       if (ret) {
         return;
       }
@@ -26,7 +26,7 @@ export function findChildInChildrenByKey(children, key) {
 export function findShownChildInChildrenByKey(children, key, showProp) {
   let ret = null;
   if (children) {
-    children.forEach((child) => {
+    children.forEach(child => {
       if (child && child.key === key && child.props[showProp]) {
         if (ret) {
           throw new Error('two child with same key for <rc-animate> children');
@@ -38,10 +38,11 @@ export function findShownChildInChildrenByKey(children, key, showProp) {
   return ret;
 }
 
+// Not used?
 export function findHiddenChildInChildrenByKey(children, key, showProp) {
-  let found = 0;
+  let found: any = 0;
   if (children) {
-    children.forEach((child) => {
+    children.forEach(child => {
       if (found) {
         return;
       }
@@ -77,7 +78,7 @@ export function mergeChildren(prev, next) {
   // the combined list
   const nextChildrenPending = {};
   let pendingChildren = [];
-  prev.forEach((child) => {
+  prev.forEach(child => {
     if (child && findChildInChildrenByKey(next, child.key)) {
       if (pendingChildren.length) {
         nextChildrenPending[child.key] = pendingChildren;
@@ -88,7 +89,7 @@ export function mergeChildren(prev, next) {
     }
   });
 
-  next.forEach((child) => {
+  next.forEach(child => {
     if (child && Object.prototype.hasOwnProperty.call(nextChildrenPending, child.key)) {
       ret = ret.concat(nextChildrenPending[child.key]);
     }
