@@ -1,37 +1,30 @@
-/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
+/* eslint react/no-access-state-in-setstate:0,
+ no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Animate from 'rc-animate';
+import Animate from '../src';
 
 import './assets/index.less';
 
 let seed = 0;
 
 class Alert extends React.Component {
-  static propTypes = {
-    time: PropTypes.number,
-    type: PropTypes.string,
-    str: PropTypes.string,
-    onEnd: PropTypes.func,
-  }
-
   static defaultProps = {
     onEnd() {},
     time: 2000,
     type: 'success',
-  }
+  };
 
   componentDidMount() {
-    const props = this.props;
+    const { props } = this;
     setTimeout(() => {
       props.onEnd();
     }, props.time);
   }
 
   render() {
-    const props = this.props;
+    const { props } = this;
     const style = {
       background: 'yellow',
       width: 600,
@@ -43,17 +36,16 @@ class Alert extends React.Component {
   }
 }
 
-
 class AlertGroup extends React.Component {
   state = {
     alerts: [],
-  }
+  };
 
-  onEnd = (key) => {
-    const alerts = this.state.alerts;
+  onEnd = key => {
+    const { alerts } = this.state;
     const ret = [];
     let target;
-    alerts.forEach((a) => {
+    alerts.forEach(a => {
       if (a.key === key) {
         target = a;
       } else {
@@ -61,31 +53,34 @@ class AlertGroup extends React.Component {
       }
     });
     if (target) {
-      this.setState({
-        alerts: ret,
-      }, () => {
-        if (target.callback) {
-          target.callback();
-        }
-      });
+      this.setState(
+        {
+          alerts: ret,
+        },
+        () => {
+          if (target.callback) {
+            target.callback();
+          }
+        },
+      );
     }
-  }
+  };
 
-  addAlert = (a) => {
+  addAlert = a => {
     this.setState({
       alerts: this.state.alerts.concat(a),
     });
-  }
+  };
 
   render() {
-    const alerts = this.state.alerts;
+    const { alerts } = this.state;
     const self = this;
-    const children = alerts.map((a) => {
+    const children = alerts.map(a => {
       if (!a.key) {
-        seed++;
+        seed += 1;
         a.key = String(seed);
       }
-      return <Alert {...a} onEnd={self.onEnd.bind(self, a.key)}/>;
+      return <Alert {...a} onEnd={self.onEnd.bind(self, a.key)} />;
     });
     const style = {
       position: 'fixed',
@@ -93,9 +88,13 @@ class AlertGroup extends React.Component {
       top: 50,
       zIndex: 9999,
     };
-    return (<div style={style}>
-      <Animate transitionName="fade" component="div">{children}</Animate>
-    </div>);
+    return (
+      <div style={style}>
+        <Animate transitionName="fade" component="div">
+          {children}
+        </Animate>
+      </div>
+    );
   }
 }
 
@@ -106,7 +105,7 @@ function alert(str, time, type, callback) {
     const div = document.createElement('div');
     document.body.appendChild(div);
     // eslint-disable-next-line react/no-render-return-value
-    alertGroup = ReactDOM.render(<AlertGroup/>, div);
+    alertGroup = ReactDOM.render(<AlertGroup />, div);
   }
   alertGroup.addAlert({
     str,
@@ -125,15 +124,16 @@ function alertFn(i) {
 }
 
 function onClick() {
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 4; i += 1) {
     setTimeout(alertFn(i), 1000 * i);
   }
 }
 
-ReactDOM.render(
+export default () => (
   <div>
     <h2>notification</h2>
-    <button onClick={onClick}>show notification</button>
-  </div>,
-  document.getElementById('__react-content')
+    <button type="button" onClick={onClick}>
+      show notification
+    </button>
+  </div>
 );
