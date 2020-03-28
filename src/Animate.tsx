@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import unsafeLifecyclesPolyfill from 'rc-util/lib/unsafeLifecyclesPolyfill';
+
 import {
   toArrayChildren,
   mergeChildren,
@@ -13,8 +13,8 @@ import animUtil from './util/animate';
 
 const defaultKey = `rc_animate_${Date.now()}`;
 
-function getChildrenFromProps(props) {
-  const children = props.children;
+function getChildrenFromProps(props: AnimateProps) {
+  const { children } = props;
   if (React.isValidElement(children)) {
     if (!children.key) {
       return React.cloneElement(children, {
@@ -25,33 +25,33 @@ function getChildrenFromProps(props) {
   return children;
 }
 
-function noop() {
+function noop() {}
+
+export interface AnimateProps {
+  className: string;
+  style: React.CSSProperties;
+  component: any;
+  componentProps: object;
+  animation: object;
+  transitionName: string | object;
+  transitionEnter: boolean;
+  transitionAppear: boolean;
+  exclusive: boolean;
+  transitionLeave: boolean;
+  onEnd: (key: string, exists: boolean) => void;
+  onEnter: (key: string) => void;
+  onLeave: (key: string) => void;
+  onAppear: (key: string) => void;
+  showProp: string;
+  children: React.ReactNode;
 }
 
-class Animate extends React.Component {
-  static isAnimate = true; // eslint-disable-line
+interface AnimateState {
+  children: React.ReactElement[];
+}
 
-  static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-    component: PropTypes.any,
-    componentProps: PropTypes.object,
-    animation: PropTypes.object,
-    transitionName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]),
-    transitionEnter: PropTypes.bool,
-    transitionAppear: PropTypes.bool,
-    exclusive: PropTypes.bool,
-    transitionLeave: PropTypes.bool,
-    onEnd: PropTypes.func,
-    onEnter: PropTypes.func,
-    onLeave: PropTypes.func,
-    onAppear: PropTypes.func,
-    showProp: PropTypes.string,
-    children: PropTypes.node,
-  }
+class Animate extends React.Component<AnimateProps, AnimateState> {
+  static isAnimate = true; // eslint-disable-line
 
   static defaultProps = {
     animation: {},
@@ -64,7 +64,17 @@ class Animate extends React.Component {
     onEnter: noop,
     onLeave: noop,
     onAppear: noop,
-  }
+  };
+
+  currentlyAnimatingKeys: Record<string, boolean>;
+
+  keysToEnter: string[];
+
+  keysToLeave: string[];
+
+  childrenRefs: Record<string, any>;
+
+  nextProps: AnimateProps;
 
   constructor(props) {
     super(props);
@@ -81,40 +91,38 @@ class Animate extends React.Component {
   }
 
   componentDidMount() {
-    const showProp = this.props.showProp;
-    let children = this.state.children;
+    const { showProp } = this.props;
+    let { children } = this.state;
     if (showProp) {
-      children = children.filter((child) => {
-        return !!child.props[showProp];
-      });
+      children = children.filter(child => !!child.props[showProp]);
     }
-    children.forEach((child) => {
+    children.forEach(child => {
       if (child) {
         this.performAppear(child.key);
       }
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: AnimateProps) {
     this.nextProps = nextProps;
     const nextChildren = toArrayChildren(getChildrenFromProps(nextProps));
-    const props = this.props;
+    const { props } = this;
     // exclusive needs immediate response
     if (props.exclusive) {
-      Object.keys(this.currentlyAnimatingKeys).forEach((key) => {
+      Object.keys(this.currentlyAnimatingKeys).forEach(key => {
         this.stop(key);
       });
     }
-    const showProp = props.showProp;
-    const currentlyAnimatingKeys = this.currentlyAnimatingKeys;
+    const { showProp } = props;
+    const { currentlyAnimatingKeys } = this;
     // last props children if exclusive
-    const currentChildren = props.exclusive ?
-      toArrayChildren(getChildrenFromProps(props)) :
-      this.state.children;
+    const currentChildren = props.exclusive
+      ? toArrayChildren(getChildrenFromProps(props))
+      : this.state.children;
     // in case destroy in showProp mode
     let newChildren = [];
     if (showProp) {
-      currentChildren.forEach((currentChild) => {
+      currentChildren.forEach(currentChild => {
         const nextChild = currentChild && findChildInChildrenByKey(nextChildren, currentChild.key);
         let newChild;
         if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
@@ -128,16 +136,13 @@ class Animate extends React.Component {
           newChildren.push(newChild);
         }
       });
-      nextChildren.forEach((nextChild) => {
+      nextChildren.forEach(nextChild => {
         if (!nextChild || !findChildInChildrenByKey(currentChildren, nextChild.key)) {
           newChildren.push(nextChild);
         }
       });
     } else {
-      newChildren = mergeChildren(
-        currentChildren,
-        nextChildren
-      );
+      newChildren = mergeChildren(currentChildren, nextChildren);
     }
 
     // need render to avoid update
@@ -145,7 +150,7 @@ class Animate extends React.Component {
       children: newChildren,
     });
 
-    nextChildren.forEach((child) => {
+    nextChildren.forEach(child => {
       const key = child && child.key;
       if (child && currentlyAnimatingKeys[key]) {
         return;
@@ -166,7 +171,7 @@ class Animate extends React.Component {
       }
     });
 
-    currentChildren.forEach((child) => {
+    currentChildren.forEach(child => {
       const key = child && child.key;
       if (child && currentlyAnimatingKeys[key]) {
         return;
@@ -189,35 +194,31 @@ class Animate extends React.Component {
   }
 
   componentDidUpdate() {
-    const keysToEnter = this.keysToEnter;
+    const { keysToEnter } = this;
     this.keysToEnter = [];
     keysToEnter.forEach(this.performEnter);
-    const keysToLeave = this.keysToLeave;
+    const { keysToLeave } = this;
     this.keysToLeave = [];
     keysToLeave.forEach(this.performLeave);
   }
 
-  performEnter = (key) => {
+  performEnter = key => {
     // may already remove by exclusive
     if (this.childrenRefs[key]) {
       this.currentlyAnimatingKeys[key] = true;
-      this.childrenRefs[key].componentWillEnter(
-        this.handleDoneAdding.bind(this, key, 'enter')
-      );
+      this.childrenRefs[key].componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
     }
-  }
+  };
 
-  performAppear = (key) => {
+  performAppear = key => {
     if (this.childrenRefs[key]) {
       this.currentlyAnimatingKeys[key] = true;
-      this.childrenRefs[key].componentWillAppear(
-        this.handleDoneAdding.bind(this, key, 'appear')
-      );
+      this.childrenRefs[key].componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
     }
-  }
+  };
 
   handleDoneAdding = (key, type) => {
-    const props = this.props;
+    const { props } = this;
     delete this.currentlyAnimatingKeys[key];
     // if update on exclusive mode, skip check
     if (props.exclusive && props !== this.nextProps) {
@@ -236,18 +237,18 @@ class Animate extends React.Component {
       props.onEnter(key);
       props.onEnd(key, true);
     }
-  }
+  };
 
-  performLeave = (key) => {
+  performLeave = key => {
     // may already remove by exclusive
     if (this.childrenRefs[key]) {
       this.currentlyAnimatingKeys[key] = true;
       this.childrenRefs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
     }
-  }
+  };
 
-  handleDoneLeaving = (key) => {
-    const props = this.props;
+  handleDoneLeaving = key => {
+    const { props } = this;
     delete this.currentlyAnimatingKeys[key];
     // if update on exclusive mode, skip check
     if (props.exclusive && props !== this.nextProps) {
@@ -264,19 +265,21 @@ class Animate extends React.Component {
           props.onEnd(key, false);
         }
       };
-      if (!isSameChildren(this.state.children,
-        currentChildren, props.showProp)) {
-        this.setState({
-          children: currentChildren,
-        }, end);
+      if (!isSameChildren(this.state.children, currentChildren, props.showProp)) {
+        this.setState(
+          {
+            children: currentChildren,
+          },
+          end,
+        );
       } else {
         end();
       }
     }
-  }
+  };
 
   isValidChildByKey(currentChildren, key) {
-    const showProp = this.props.showProp;
+    const { showProp } = this.props;
     if (showProp) {
       return findShownChildInChildrenByKey(currentChildren, key, showProp);
     }
@@ -292,12 +295,12 @@ class Animate extends React.Component {
   }
 
   render() {
-    const props = this.props;
+    const { props } = this;
     this.nextProps = props;
     const stateChildren = this.state.children;
     let children = null;
     if (stateChildren) {
-      children = stateChildren.map((child) => {
+      children = stateChildren.map(child => {
         if (child === null || child === undefined) {
           return child;
         }
@@ -307,7 +310,9 @@ class Animate extends React.Component {
         return (
           <AnimateChild
             key={child.key}
-            ref={node => { this.childrenRefs[child.key] = node }}
+            ref={node => {
+              this.childrenRefs[child.key] = node;
+            }}
             animation={props.animation}
             transitionName={props.transitionName}
             transitionEnter={props.transitionEnter}
@@ -321,7 +326,7 @@ class Animate extends React.Component {
     }
     const Component = props.component;
     if (Component) {
-      let passedProps = props;
+      let passedProps: object = props;
       if (typeof Component === 'string') {
         passedProps = {
           className: props.className,
