@@ -51,6 +51,7 @@
     "jquery": "^3.3.1",
     "np": "^5.0.3",
     "rc-test": "6.x",
+    "rc-tools": "8.x",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "typescript": "^3.8.0",
