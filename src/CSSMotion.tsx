@@ -16,33 +16,55 @@ const STATUS_APPEAR = 'appear';
 const STATUS_ENTER = 'enter';
 const STATUS_LEAVE = 'leave';
 
+export const MOTION_PROP_NAMES = [
+  'eventProps',
+  'visible',
+  'children',
+  'motionName',
+  'motionAppear',
+  'motionEnter',
+  'motionLeave',
+  'motionLeaveImmediately',
+  'removeOnLeave',
+  'leavedClassName',
+  'onAppearStart',
+  'onAppearActive',
+  'onAppearEnd',
+  'onEnterStart',
+  'onEnterActive',
+  'onEnterEnd',
+  'onLeaveStart',
+  'onLeaveActive',
+  'onLeaveEnd',
+];
+
 export interface MotionProps {
-  eventProps: object; // Internal usage. Only pass by CSSMotionList
-  visible: boolean;
-  children: (
+  eventProps?: object; // Internal usage. Only pass by CSSMotionList
+  visible?: boolean;
+  children?: (
     prop: { className?: string; style?: React.CSSProperties },
     ref: React.RefCallback<any>,
   ) => React.ReactElement;
-  motionName: string | object;
-  motionAppear: boolean;
-  motionEnter: boolean;
-  motionLeave: boolean;
-  motionLeaveImmediately: boolean; // Trigger leave motion immediately
-  removeOnLeave: boolean;
-  leavedClassName: string;
-  onAppearStart: Function;
-  onAppearActive: Function;
-  onAppearEnd: Function;
-  onEnterStart: Function;
-  onEnterActive: Function;
-  onEnterEnd: Function;
-  onLeaveStart: Function;
-  onLeaveActive: Function;
-  onLeaveEnd: Function;
+  motionName?: string | object;
+  motionAppear?: boolean;
+  motionEnter?: boolean;
+  motionLeave?: boolean;
+  motionLeaveImmediately?: boolean; // Trigger leave motion immediately
+  removeOnLeave?: boolean;
+  leavedClassName?: string;
+  onAppearStart?: Function;
+  onAppearActive?: Function;
+  onAppearEnd?: Function;
+  onEnterStart?: Function;
+  onEnterActive?: Function;
+  onEnterEnd?: Function;
+  onLeaveStart?: Function;
+  onLeaveActive?: Function;
+  onLeaveEnd?: Function;
 }
 
 interface InternalMotionProps extends MotionProps {
-  internalRef: React.Ref<any>;
+  internalRef?: React.Ref<any>;
 }
 
 interface MotionState {

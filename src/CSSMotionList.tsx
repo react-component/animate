@@ -1,7 +1,6 @@
 import React from 'react';
 import { polyfill } from 'react-lifecycles-compat';
-import PropTypes from 'prop-types';
-import OriginCSSMotion, { MotionPropTypes } from './CSSMotion';
+import OriginCSSMotion, { MotionProps, MOTION_PROP_NAMES } from './CSSMotion';
 import { supportTransition } from './util/motion';
 import {
   STATUS_ADD,
@@ -12,16 +11,20 @@ import {
   parseKeys,
 } from './util/diff';
 
-const MOTION_PROP_NAMES = Object.keys(MotionPropTypes);
+export interface CSSMotionListProps extends MotionProps {
+  component: string | boolean;
+  keys: React.Key[];
+}
+
+interface CSSMotionListState {
+  keyEntities: {
+    key: React.Key;
+    status: typeof STATUS_ADD | typeof STATUS_KEEP | typeof STATUS_REMOVE | typeof STATUS_REMOVED;
+  }[];
+}
 
 export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion) {
-  class CSSMotionList extends React.Component {
-    static propTypes = {
-      ...CSSMotion.propTypes,
-      component: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-      keys: PropTypes.array,
-    };
-
+  class CSSMotionList extends React.Component<CSSMotionListProps, CSSMotionListState> {
     static defaultProps = {
       component: 'div',
     };
@@ -84,9 +87,9 @@ export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion)
       const { keyEntities } = this.state;
       const { component, children, ...restProps } = this.props;
 
-      const Component = component || React.Fragment;
+      const Component = (component || React.Fragment) as any;
 
-      const motionProps = {};
+      const motionProps = {} as MotionProps;
       MOTION_PROP_NAMES.forEach(prop => {
         motionProps[prop] = restProps[prop];
         delete restProps[prop];
