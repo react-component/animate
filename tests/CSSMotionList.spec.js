@@ -34,7 +34,7 @@ describe('motion list', () => {
 
       class Demo extends React.Component {
         state = {
-          keys: [ 'a', 'b' ],
+          keys: ['a', 'b'],
         };
 
         render() {
@@ -56,19 +56,19 @@ describe('motion list', () => {
 
         function checkKeys(targetKeys) {
           const nodeList = TestUtils.scryRenderedDOMComponentsWithClass(instance, 'motion-box');
-          const keys = nodeList.map((node) => node.innerHTML);
-          expect(keys).to.eql(targetKeys);
+          const keys = nodeList.map(node => node.innerHTML);
+          expect(keys).toEqual(targetKeys);
         }
 
-        checkKeys([ 'a', 'b' ]);
-        instance.setState({ keys: [ 'c', 'd' ] });
+        checkKeys(['a', 'b']);
+        instance.setState({ keys: ['c', 'd'] });
 
         if (injectLeave) {
           injectLeave(instance);
         }
 
         setTimeout(() => {
-          checkKeys([ 'c', 'd' ]);
+          checkKeys(['c', 'd']);
           if (injectLeave) {
             expect(leaveCalled).to.be(2);
           }
@@ -77,18 +77,18 @@ describe('motion list', () => {
       });
     }
 
-    it('with motion support', (done) => {
+    it('with motion support', done => {
       const CSSMotion = genCSSMotion({ transitionSupport: true, forwardRef: false });
       const CSSMotionList = genCSSMotionList(true, CSSMotion);
-      testMotion(CSSMotionList, done, (instance) => {
+      testMotion(CSSMotionList, done, instance => {
         const motionList = TestUtils.scryRenderedComponentsWithType(instance, CSSMotion);
-        motionList.slice(0, 2).forEach((cssMotion) => {
+        motionList.slice(0, 2).forEach(cssMotion => {
           cssMotion.props.onLeaveEnd();
         });
       });
     });
 
-    it('without motion support', (done) => {
+    it('without motion support', done => {
       const CSSMotionList = genCSSMotionList(false);
       testMotion(CSSMotionList, done);
     });
