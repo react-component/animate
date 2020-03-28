@@ -1,6 +1,5 @@
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import cssAnimate, { isCssAnimationSupported } from 'css-animation';
 import animUtil from './util/animate';
 
@@ -10,12 +9,14 @@ const transitionMap = {
   leave: 'transitionLeave',
 };
 
-export default class AnimateChild extends React.Component {
-  static propTypes = {
-    children: PropTypes.any,
-    animation: PropTypes.any,
-    transitionName: PropTypes.any,
-  }
+export interface AnimateChildProps {
+  children: React.ReactNode;
+  animation: any;
+  transitionName: any;
+}
+
+export default class AnimateChild extends React.Component<AnimateChildProps> {
+  stopper: { stop: Function };
 
   componentWillUnmount() {
     this.stop();
@@ -50,32 +51,39 @@ export default class AnimateChild extends React.Component {
 
   transition(animationType, finishCallback) {
     const node = ReactDOM.findDOMNode(this);
-    const props = this.props;
-    const transitionName = props.transitionName;
+    const { props } = this;
+    const { transitionName } = props;
     const nameIsObj = typeof transitionName === 'object';
     this.stop();
     const end = () => {
       this.stopper = null;
       finishCallback();
     };
-    if ((isCssAnimationSupported || !props.animation[animationType]) &&
-      transitionName && props[transitionMap[animationType]]) {
+    if (
+      (isCssAnimationSupported || !props.animation[animationType]) &&
+      transitionName &&
+      props[transitionMap[animationType]]
+    ) {
       const name = nameIsObj ? transitionName[animationType] : `${transitionName}-${animationType}`;
       let activeName = `${name}-active`;
       if (nameIsObj && transitionName[`${animationType}Active`]) {
         activeName = transitionName[`${animationType}Active`];
       }
-      this.stopper = cssAnimate(node, {
-        name,
-        active: activeName,
-      }, end);
+      this.stopper = cssAnimate(
+        node,
+        {
+          name,
+          active: activeName,
+        },
+        end,
+      );
     } else {
       this.stopper = props.animation[animationType](node, end);
     }
   }
 
   stop() {
-    const stopper = this.stopper;
+    const { stopper } = this;
     if (stopper) {
       this.stopper = null;
       stopper.stop();
