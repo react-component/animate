@@ -1,6 +1,5 @@
 /* eslint-disable react/default-props-match-prop-types, react/no-multi-comp */
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { polyfill } from 'react-lifecycles-compat';
 import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
 import classNames from 'classnames';
@@ -17,27 +16,42 @@ const STATUS_APPEAR = 'appear';
 const STATUS_ENTER = 'enter';
 const STATUS_LEAVE = 'leave';
 
-export const MotionPropTypes = {
-  eventProps: PropTypes.object, // Internal usage. Only pass by CSSMotionList
-  visible: PropTypes.bool,
-  children: PropTypes.func,
-  motionName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  motionAppear: PropTypes.bool,
-  motionEnter: PropTypes.bool,
-  motionLeave: PropTypes.bool,
-  motionLeaveImmediately: PropTypes.bool, // Trigger leave motion immediately
-  removeOnLeave: PropTypes.bool,
-  leavedClassName: PropTypes.string,
-  onAppearStart: PropTypes.func,
-  onAppearActive: PropTypes.func,
-  onAppearEnd: PropTypes.func,
-  onEnterStart: PropTypes.func,
-  onEnterActive: PropTypes.func,
-  onEnterEnd: PropTypes.func,
-  onLeaveStart: PropTypes.func,
-  onLeaveActive: PropTypes.func,
-  onLeaveEnd: PropTypes.func,
-};
+export interface MotionProps {
+  eventProps: object; // Internal usage. Only pass by CSSMotionList
+  visible: boolean;
+  children: (
+    prop: { className?: string; style?: React.CSSProperties },
+    ref: React.RefCallback<any>,
+  ) => React.ReactElement;
+  motionName: string | object;
+  motionAppear: boolean;
+  motionEnter: boolean;
+  motionLeave: boolean;
+  motionLeaveImmediately: boolean; // Trigger leave motion immediately
+  removeOnLeave: boolean;
+  leavedClassName: string;
+  onAppearStart: Function;
+  onAppearActive: Function;
+  onAppearEnd: Function;
+  onEnterStart: Function;
+  onEnterActive: Function;
+  onEnterEnd: Function;
+  onLeaveStart: Function;
+  onLeaveActive: Function;
+  onLeaveEnd: Function;
+}
+
+interface InternalMotionProps extends MotionProps {
+  internalRef: React.Ref<any>;
+}
+
+interface MotionState {
+  status: typeof STATUS_NONE | typeof STATUS_APPEAR | typeof STATUS_ENTER | typeof STATUS_LEAVE;
+  statusActive: boolean;
+  newStatus: boolean;
+  statusStyle: React.CSSProperties;
+  prevProps?: InternalMotionProps;
+}
 
 /**
  * `transitionSupport` is used for none transition test case.
@@ -48,7 +62,7 @@ export function genCSSMotion(config) {
   let forwardRef = !!React.forwardRef;
 
   if (typeof config === 'object') {
-    transitionSupport = config.transitionSupport;
+    ({ transitionSupport } = config);
     forwardRef = 'forwardRef' in config ? config.forwardRef : forwardRef;
   }
 
@@ -56,12 +70,14 @@ export function genCSSMotion(config) {
     return !!(props.motionName && transitionSupport);
   }
 
-  class CSSMotion extends React.Component {
-    static propTypes = {
-      ...MotionPropTypes,
+  class CSSMotion extends React.Component<InternalMotionProps, MotionState> {
+    $cacheEle: HTMLElement;
 
-      internalRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    };
+    node: HTMLElement;
+
+    raf: number;
+
+    destroyed: boolean;
 
     static defaultProps = {
       visible: true,
@@ -71,8 +87,8 @@ export function genCSSMotion(config) {
       removeOnLeave: true,
     };
 
-    constructor() {
-      super();
+    constructor(props: InternalMotionProps) {
+      super(props);
 
       this.state = {
         status: STATUS_NONE,
@@ -89,7 +105,7 @@ export function genCSSMotion(config) {
       if (!isSupportTransition(props)) return {};
 
       const { visible, motionAppear, motionEnter, motionLeave, motionLeaveImmediately } = props;
-      const newState = {
+      const newState: Partial<MotionState> = {
         prevProps: props,
       };
 
@@ -140,7 +156,7 @@ export function genCSSMotion(config) {
     }
 
     componentWillUnmount() {
-      this._destroyed = true;
+      this.destroyed = true;
       this.removeEventListener(this.$cacheEle);
       this.cancelNextFrame();
     }
@@ -199,6 +215,7 @@ export function genCSSMotion(config) {
       }
     };
 
+    // TODO: use rc-util
     setNodeRef = node => {
       const { internalRef } = this.props;
       this.node = node;
@@ -206,13 +223,11 @@ export function genCSSMotion(config) {
       if (typeof internalRef === 'function') {
         internalRef(node);
       } else if (internalRef && 'current' in internalRef) {
-        internalRef.current = node;
+        (internalRef as React.MutableRefObject<any>).current = node;
       }
     };
 
-    getElement = () => {
-      return findDOMNode(this.node || this);
-    };
+    getElement = () => findDOMNode(this.node || this) as HTMLElement;
 
     addEventListener = $ele => {
       if (!$ele) return;
@@ -220,6 +235,7 @@ export function genCSSMotion(config) {
       $ele.addEventListener(transitionEndName, this.onMotionEnd);
       $ele.addEventListener(animationEndName, this.onMotionEnd);
     };
+
     removeEventListener = $ele => {
       if (!$ele) return;
 
@@ -227,10 +243,15 @@ export function genCSSMotion(config) {
       $ele.removeEventListener(animationEndName, this.onMotionEnd);
     };
 
-    updateStatus = (styleFunc, additionalState, event, callback) => {
+    updateStatus = (
+      styleFunc,
+      additionalState,
+      event?: React.SyntheticEvent,
+      callback?: Function,
+    ) => {
       const statusStyle = styleFunc ? styleFunc(this.getElement(), event) : null;
 
-      if (statusStyle === false || this._destroyed) return;
+      if (statusStyle === false || this.destroyed) return;
 
       let nextStep;
       if (callback) {
@@ -288,7 +309,8 @@ export function genCSSMotion(config) {
       if (status === STATUS_NONE || !isSupportTransition(this.props)) {
         if (visible) {
           return children({ ...eventProps }, this.setNodeRef);
-        } else if (!removeOnLeave) {
+        }
+        if (!removeOnLeave) {
           return children({ ...eventProps, className: leavedClassName }, this.setNodeRef);
         }
 
@@ -298,11 +320,9 @@ export function genCSSMotion(config) {
       return children(
         {
           ...eventProps,
-          className: classNames({
-            [getTransitionName(motionName, status)]: status !== STATUS_NONE,
-            [getTransitionName(motionName, `${status}-active`)]:
-              status !== STATUS_NONE && statusActive,
-            [motionName]: typeof motionName === 'string',
+          className: classNames(getTransitionName(motionName, status), {
+            [getTransitionName(motionName, `${status}-active`)]: statusActive,
+            [motionName as string]: typeof motionName === 'string',
           }),
           style: statusStyle,
         },
@@ -317,7 +337,7 @@ export function genCSSMotion(config) {
     return CSSMotion;
   }
 
-  return React.forwardRef((props, ref) => <CSSMotion internalRef={ref} {...props} />);
+  return React.forwardRef((props: MotionProps, ref) => <CSSMotion internalRef={ref} {...props} />);
 }
 
 export default genCSSMotion(supportTransition);
