@@ -1,25 +1,18 @@
-/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
+/* eslint-disable react/no-access-state-in-setstate,
+  no-console, react/no-multi-comp, react/jsx-no-bind */
 
-import Animate from 'rc-animate';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import Animate from '../src';
 
 import './assets/slow.less';
 
-const Div = (props) => {
+const Div = props => {
   const { style, show, ...restProps } = props;
   const newStyle = { ...style, display: show ? '' : 'none' };
-  return <div {...restProps} style={newStyle}/>;
-};
-
-Div.propTypes = {
-  style: PropTypes.object,
-  show: PropTypes.bool,
+  return <div {...restProps} style={newStyle} />;
 };
 
 class Demo extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -42,31 +35,36 @@ class Demo extends Component {
     };
     return (
       <div>
-        <label><input
-          type="checkbox"
-          onChange={this.toggle.bind(this, 'enter')}
-          checked={this.state.enter}
-        />
-          show</label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={this.toggle.bind(this, 'enter')}
+            checked={this.state.enter}
+          />
+          show
+        </label>
         &nbsp;
-        <label><input
-          type="checkbox"
-          onChange={this.toggle.bind(this, 'exclusive')}
-          checked={this.state.exclusive}
-        />
-          exclusive</label>
-        <br/><br/>
+        <label>
+          <input
+            type="checkbox"
+            onChange={this.toggle.bind(this, 'exclusive')}
+            checked={this.state.exclusive}
+          />
+          exclusive
+        </label>
+        <br />
+        <br />
         <Animate
           component=""
           exclusive={this.state.exclusive}
           showProp="show"
           transitionName="fade"
         >
-          <Div show={this.state.enter} style={style}/>
+          <Div show={this.state.enter} style={style} />
         </Animate>
       </div>
     );
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById('__react-content'));
+export default Demo;

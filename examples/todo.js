@@ -1,22 +1,15 @@
-/* eslint no-console:0, react/no-multi-comp:0, no-alert:0, no-undef:0, react/jsx-no-bind:0 */
+/* eslint-disable react/no-access-state-in-setstate,
+ no-console, react/no-multi-comp, no-alert, no-undef, react/jsx-no-bind */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import Animate from 'rc-animate';
+import Animate from '../src';
 
 import './assets/index.less';
 
 class Todo extends React.Component {
-  static propTypes = {
-    children: PropTypes.any,
-    end: PropTypes.func,
-    onClick: PropTypes.func,
-  }
-
   static defaultProps = {
     end() {},
-  }
+  };
 
   componentWillUnmount() {
     console.log('componentWillUnmount');
@@ -25,7 +18,7 @@ class Todo extends React.Component {
   }
 
   render() {
-    const props = this.props;
+    const { props } = this;
     const style = {
       width: 100,
       border: '1px solid red',
@@ -43,42 +36,34 @@ class Todo extends React.Component {
 class TodoList extends React.Component {
   state = {
     items: ['hello', 'world', 'click', 'me'],
-  }
+  };
 
   handleAdd = () => {
     const items = this.state.items.concat([prompt('Enter some text')]);
     this.setState({ items });
-  }
+  };
 
-  handleRemove = (i) => {
+  handleRemove = i => {
     const items = this.state.items.concat();
     items.splice(i, 1);
     this.setState({ items });
-  }
+  };
 
   render() {
-    const items = this.state.items.map((item, i) => {
-      return (
-        <Todo key={item} onClick={this.handleRemove.bind(this, i)}>
-          {item}
-        </Todo>
-      );
-    });
+    const items = this.state.items.map((item, i) => (
+      <Todo key={item} onClick={this.handleRemove.bind(this, i)}>
+        {item}
+      </Todo>
+    ));
     return (
       <div>
-        <button onClick={this.handleAdd}>Add Item</button>
-        <Animate transitionName="fade">
-          {items}
-        </Animate>
+        <button type="button" onClick={this.handleAdd}>
+          Add Item
+        </button>
+        <Animate transitionName="fade">{items}</Animate>
       </div>
     );
   }
 }
 
-ReactDOM.render(
-  <div>
-    <h2>Todo</h2>
-    <TodoList />
-  </div>,
-  document.getElementById('__react-content')
-);
+export default TodoList;
