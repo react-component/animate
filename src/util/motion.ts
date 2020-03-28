@@ -1,17 +1,19 @@
-const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+const canUseDOM = !!(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+);
 
 // ================= Transition =================
 // Event wrapper. Copy from react source code
 function makePrefixMap(styleProp, eventName) {
-  const prefixes = {};
-
-  prefixes[styleProp.toLowerCase()] = eventName.toLowerCase();
-  prefixes[`Webkit${styleProp}`] = `webkit${eventName}`;
-  prefixes[`Moz${styleProp}`] = `moz${eventName}`;
-  prefixes[`ms${styleProp}`] = `MS${eventName}`;
-  prefixes[`O${styleProp}`] = `o${eventName.toLowerCase()}`;
-
-  return prefixes;
+  return {
+    [styleProp.toLowerCase()]: eventName.toLowerCase(),
+    [`Webkit${styleProp}`]: `webkit${eventName}`,
+    [`Moz${styleProp}`]: `moz${eventName}`,
+    [`ms${styleProp}`]: `MS${eventName}`,
+    [`O${styleProp}`]: `o${eventName.toLowerCase()}`,
+  };
 }
 
 export function getVendorPrefixes(domSupport, win) {
@@ -38,7 +40,7 @@ const vendorPrefixes = getVendorPrefixes(canUseDOM, typeof window !== 'undefined
 let style = {};
 
 if (canUseDOM) {
-  style = document.createElement('div').style;
+  ({ style } = document.createElement('div'));
 }
 
 const prefixedEventNames = {};
@@ -73,7 +75,7 @@ export function getTransitionName(transitionName, transitionType) {
   if (!transitionName) return null;
 
   if (typeof transitionName === 'object') {
-    const type = transitionType.replace(/-\w/g, (match) => match[1].toUpperCase());
+    const type = transitionType.replace(/-\w/g, match => match[1].toUpperCase());
     return transitionName[type];
   }
 
