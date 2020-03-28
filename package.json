@@ -30,7 +30,7 @@
     "compile": "father build",
     "prepublishOnly": "npm run compile && np --no-cleanup --yolo --no-publish",
     "lint": "eslint src/ --ext .tsx,.ts",
-    "test": "father test",
+    "test": "rc-test run test",
     "now-build": "npm run build"
   },
   "peerDependencies": {
@@ -50,6 +50,7 @@
     "father": "^2.13.6",
     "jquery": "^3.3.1",
     "np": "^5.0.3",
+    "rc-test": "6.x",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "typescript": "^3.8.0",
