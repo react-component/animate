@@ -23,7 +23,10 @@ interface CSSMotionListState {
   }[];
 }
 
-export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion) {
+export function genCSSMotionList(
+  transitionSupport,
+  CSSMotion = OriginCSSMotion,
+): React.ComponentType<CSSMotionListProps> {
   class CSSMotionList extends React.Component<CSSMotionListProps, CSSMotionListState> {
     static defaultProps = {
       component: 'div',

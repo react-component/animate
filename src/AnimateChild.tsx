@@ -13,6 +13,9 @@ export interface AnimateChildProps {
   children: React.ReactNode;
   animation: any;
   transitionName: any;
+  transitionEnter: boolean;
+  transitionAppear: boolean;
+  transitionLeave: boolean;
 }
 
 export default class AnimateChild extends React.Component<AnimateChildProps> {

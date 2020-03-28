@@ -61,9 +61,6 @@ export interface MotionProps {
   onLeaveStart?: Function;
   onLeaveActive?: Function;
   onLeaveEnd?: Function;
-}
-
-interface InternalMotionProps extends MotionProps {
   internalRef?: React.Ref<any>;
 }
 
@@ -72,14 +69,14 @@ interface MotionState {
   statusActive: boolean;
   newStatus: boolean;
   statusStyle: React.CSSProperties;
-  prevProps?: InternalMotionProps;
+  prevProps?: MotionProps;
 }
 
 /**
  * `transitionSupport` is used for none transition test case.
  * Default we use browser transition event support check.
  */
-export function genCSSMotion(config) {
+export function genCSSMotion(config): React.ComponentType<MotionProps> {
   let transitionSupport = config;
   let forwardRef = !!React.forwardRef;
 
@@ -92,7 +89,7 @@ export function genCSSMotion(config) {
     return !!(props.motionName && transitionSupport);
   }
 
-  class CSSMotion extends React.Component<InternalMotionProps, MotionState> {
+  class CSSMotion extends React.Component<MotionProps, MotionState> {
     $cacheEle: HTMLElement;
 
     node: HTMLElement;
@@ -109,7 +106,7 @@ export function genCSSMotion(config) {
       removeOnLeave: true,
     };
 
-    constructor(props: InternalMotionProps) {
+    constructor(props: MotionProps) {
       super(props);
 
       this.state = {
