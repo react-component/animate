@@ -26,6 +26,7 @@ export const MotionPropTypes = {
   motionEnter: PropTypes.bool,
   motionLeave: PropTypes.bool,
   motionLeaveImmediately: PropTypes.bool, // Trigger leave motion immediately
+  motionDeadline: PropTypes.number,
   removeOnLeave: PropTypes.bool,
   leavedClassName: PropTypes.string,
   onAppearStart: PropTypes.func,
@@ -88,7 +89,13 @@ export function genCSSMotion(config) {
     static getDerivedStateFromProps(props, { prevProps, status: prevStatus }) {
       if (!isSupportTransition(props)) return {};
 
-      const { visible, motionAppear, motionEnter, motionLeave, motionLeaveImmediately } = props;
+      const {
+        visible,
+        motionAppear,
+        motionEnter,
+        motionLeave,
+        motionLeaveImmediately,
+      } = props;
       const newState = {
         prevProps: props,
       };
@@ -228,7 +235,9 @@ export function genCSSMotion(config) {
     };
 
     updateStatus = (styleFunc, additionalState, event, callback) => {
-      const statusStyle = styleFunc ? styleFunc(this.getElement(), event) : null;
+      const statusStyle = styleFunc
+        ? styleFunc(this.getElement(), event)
+        : null;
 
       if (statusStyle === false || this._destroyed) return;
 
@@ -256,7 +265,17 @@ export function genCSSMotion(config) {
         const { status } = this.state;
         if (status !== currentStatus) return;
 
+        const { motionDeadline } = this.props;
+
         this.updateStatus(styleFunc, { statusActive: true });
+
+        if (motionDeadline > 0) {
+          setTimeout(() => {
+            this.onMotionEnd({
+              deadline: true,
+            });
+          }, motionDeadline);
+        }
       });
     };
 
@@ -289,7 +308,10 @@ export function genCSSMotion(config) {
         if (visible) {
           return children({ ...eventProps }, this.setNodeRef);
         } else if (!removeOnLeave) {
-          return children({ ...eventProps, className: leavedClassName }, this.setNodeRef);
+          return children(
+            { ...eventProps, className: leavedClassName },
+            this.setNodeRef,
+          );
         }
 
         return null;
@@ -317,7 +339,9 @@ export function genCSSMotion(config) {
     return CSSMotion;
   }
 
-  return React.forwardRef((props, ref) => <CSSMotion internalRef={ref} {...props} />);
+  return React.forwardRef((props, ref) => (
+    <CSSMotion internalRef={ref} {...props} />
+  ));
 }
 
 export default genCSSMotion(supportTransition);
