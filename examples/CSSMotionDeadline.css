@@ -1,0 +1,78 @@
+.grid {
+  display: table;
+}
+.grid > div {
+  display: table-cell;
+  min-width: 350px;
+}
+.demo-block {
+  display: block;
+  height: 300px;
+  width: 300px;
+  background: red;
+  overflow: hidden;
+}
+.transition {
+  transition: background .3s, height 1.3s, opacity 1.3s;
+}
+.transition.transition-appear,
+.transition.transition-enter {
+  opacity: 0;
+}
+.transition.transition-appear.transition-appear-active,
+.transition.transition-enter.transition-enter-active {
+  opacity: 1;
+}
+.transition.transition-leave-active {
+  opacity: 0;
+  background: green;
+}
+.animation {
+  animation-duration: 1.3s;
+  animation-fill-mode: both;
+}
+.animation.animation-appear,
+.animation.animation-enter {
+  animation-name: enter;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+.animation.animation-appear.animation-appear-active,
+.animation.animation-enter.animation-enter-active {
+  animation-name: enter;
+  animation-play-state: running;
+}
+.animation.animation-leave {
+  animation-name: leave;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+.animation.animation-leave.animation-leave-active {
+  animation-name: leave;
+  animation-play-state: running;
+}
+.hidden {
+  display: none;
+}
+@keyframes enter {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes leave {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+/*# sourceMappingURL=CSSMotionDeadline.css.map*/
