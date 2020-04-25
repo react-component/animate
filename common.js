@@ -1784,7 +1784,15 @@ function genCSSMotion(config) {
       };
 
       _this.getElement = function () {
-        return Object(__WEBPACK_IMPORTED_MODULE_9_rc_util_es_Dom_findDOMNode__["a" /* default */])(_this.node || _this);
+        try {
+          return Object(__WEBPACK_IMPORTED_MODULE_9_rc_util_es_Dom_findDOMNode__["a" /* default */])(_this.node || _this);
+        } catch (e) {
+          /**
+           * Fallback to cache element.
+           * This is only happen when `motionDeadline` trigger but element removed.
+           */
+          return _this.$cacheEle;
+        }
       };
 
       _this.addEventListener = function ($ele) {
