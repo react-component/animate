@@ -218,7 +218,15 @@ export function genCSSMotion(config) {
     };
 
     getElement = () => {
-      return findDOMNode(this.node || this);
+      try {
+        return findDOMNode(this.node || this);
+      } catch (e) {
+        /**
+         * Fallback to cache element.
+         * This is only happen when `motionDeadline` trigger but element removed.
+         */
+        return this.$cacheEle;
+      }
     };
 
     addEventListener = $ele => {
