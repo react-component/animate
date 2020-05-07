@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
-import CssAnimation from 'css-animation';
+import CssAnimation from '@ant-design/css-animation';
 import Animate from '../';
 import './index.spec.css';
 
