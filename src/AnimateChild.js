@@ -1,7 +1,7 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import cssAnimate, { isCssAnimationSupported } from 'css-animation';
+import cssAnimate, { isCssAnimationSupported } from '@ant-design/css-animation';
 import animUtil from './util/animate';
 
 const transitionMap = {
@@ -11,12 +11,6 @@ const transitionMap = {
 };
 
 export default class AnimateChild extends React.Component {
-  static propTypes = {
-    children: PropTypes.any,
-    animation: PropTypes.any,
-    transitionName: PropTypes.any,
-  }
-
   componentWillUnmount() {
     this.stop();
   }

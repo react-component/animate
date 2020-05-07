@@ -1,7 +1,7 @@
 /* eslint no-console:0, react/no-multi-comp:0, react/no-string-refs:0 */
 
 import React from 'react';
-import CssAnimation from 'css-animation';
+import CssAnimation from '@ant-design/css-animation';
 import Animate from '../index';
 import single from './single-common.spec';
 

@@ -1,7 +1,6 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
-import { polyfill } from 'react-lifecycles-compat';
-import PropTypes from 'prop-types';
-import OriginCSSMotion, { MotionPropTypes } from './CSSMotion';
+import OriginCSSMotion from './CSSMotion';
 import { supportTransition } from './util/motion';
 import {
   STATUS_ADD,
@@ -12,16 +11,31 @@ import {
   parseKeys,
 } from './util/diff';
 
-const MOTION_PROP_NAMES = Object.keys(MotionPropTypes);
+const MOTION_PROP_NAMES = [
+  'eventProps',
+  'visible',
+  'children',
+  'motionName',
+  'motionAppear',
+  'motionEnter',
+  'motionLeave',
+  'motionLeaveImmediately',
+  'motionDeadline',
+  'removeOnLeave',
+  'leavedClassName',
+  'onAppearStart',
+  'onAppearActive',
+  'onAppearEnd',
+  'onEnterStart',
+  'onEnterActive',
+  'onEnterEnd',
+  'onLeaveStart',
+  'onLeaveActive',
+  'onLeaveEnd',
+];
 
 export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion) {
   class CSSMotionList extends React.Component {
-    static propTypes = {
-      ...CSSMotion.propTypes,
-      component: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-      keys: PropTypes.array,
-    };
-
     static defaultProps = {
       component: 'div',
     };
@@ -118,8 +132,6 @@ export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion)
       );
     }
   }
-
-  polyfill(CSSMotionList);
 
   return CSSMotionList;
 }

@@ -1,7 +1,6 @@
-/* eslint no-console:0, react/no-multi-comp:0, no-alert:0, no-undef:0, react/jsx-no-bind:0 */
+/* eslint no-console:0, react/no-multi-comp:0, no-alert:0, no-undef:0, react/jsx-no-bind:0, react/prop-types: 0 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Animate from 'rc-animate';
 import velocity from 'velocity-animate';
@@ -9,12 +8,6 @@ import velocity from 'velocity-animate';
 import './assets/index.less';
 
 class Todo extends React.Component {
-  static propTypes = {
-    children: PropTypes.any,
-    end: PropTypes.func,
-    onClick: PropTypes.func,
-  }
-
   static defaultProps = {
     end() {},
   }

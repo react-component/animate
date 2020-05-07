@@ -1,8 +1,7 @@
-/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
+/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0, react/prop-types: 0 */
 
 import Animate from 'rc-animate';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
 import './assets/slow.less';
@@ -13,13 +12,7 @@ const Div = (props) => {
   return <div {...restProps} style={newStyle}/>;
 };
 
-Div.propTypes = {
-  style: PropTypes.object,
-  show: PropTypes.bool,
-};
-
 class Demo extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
