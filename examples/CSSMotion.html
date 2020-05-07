@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>CSSMotion.js - example - rc-animate@2.11.1</title>
+  <title>CSSMotion.js - example - rc-animate@3.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,16 +263,15 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-animate@2.11.1</h1>
+      <h1>rc-animate@3.0.0</h1>
 
       <p>css-transition ui component for react</p>
     </div>
     <div class="example" id="__react-content"></div>
 
-    <div class="highlight"><pre><code language="undefined">/* eslint no-console:0, react/no-multi-comp:0 */
+    <div class="highlight"><pre><code language="undefined">/* eslint no-console:0, react/no-multi-comp:0, react/prop-types: 0 */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { CSSMotion } from 'rc-animate';
 import classNames from 'classnames';
@@ -426,7 +425,8 @@ ReactDOM.render(&lt;Demo /&gt;, document.getElementById('__react-content'));
 
 // Remove for IE9 test
 // const aaa = document.getElementsByClassName('navbar')[0];
-// aaa.parentNode.removeChild(aaa);</code></pre></div>
+// aaa.parentNode.removeChild(aaa);
+</code></pre></div>
   </div>
   <a href="https://github.com/react-component/animate">
     <img style="position: absolute; top: 0; right: 0; border: 0;"

@@ -1,45 +1,43 @@
 webpackJsonp([8],{
 
-/***/ 141:
+/***/ 2:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(142);
+module.exports = __webpack_require__(45);
 
 
 /***/ }),
 
-/***/ 142:
+/***/ 45:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_animate__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__assets_index_less__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__assets_index_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_animate__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_index_less__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_index_less__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
-
-
+/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0, react/prop-types: 0 */
 
 
 
@@ -49,15 +47,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var seed = 0;
 
 var Alert = function (_React$Component) {
-  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Alert, _React$Component);
+  _inherits(Alert, _React$Component);
 
   function Alert() {
-    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Alert);
+    _classCallCheck(this, Alert);
 
-    return __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Alert.__proto__ || Object.getPrototypeOf(Alert)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Alert.__proto__ || Object.getPrototypeOf(Alert)).apply(this, arguments));
   }
 
-  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Alert, [{
+  _createClass(Alert, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       var props = this.props;
@@ -76,7 +74,7 @@ var Alert = function (_React$Component) {
         marginLeft: 'auto',
         marginRight: 'auto'
       };
-      return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { style: style },
         props.str
@@ -85,14 +83,8 @@ var Alert = function (_React$Component) {
   }]);
 
   return Alert;
-}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-Alert.propTypes = {
-  time: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.number,
-  type: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  str: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  onEnd: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
-};
 Alert.defaultProps = {
   onEnd: function onEnd() {},
 
@@ -101,20 +93,20 @@ Alert.defaultProps = {
 };
 
 var AlertGroup = function (_React$Component2) {
-  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(AlertGroup, _React$Component2);
+  _inherits(AlertGroup, _React$Component2);
 
   function AlertGroup() {
     var _ref;
 
     var _temp, _this2, _ret;
 
-    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, AlertGroup);
+    _classCallCheck(this, AlertGroup);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this2 = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_ref = AlertGroup.__proto__ || Object.getPrototypeOf(AlertGroup)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
+    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = AlertGroup.__proto__ || Object.getPrototypeOf(AlertGroup)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
       alerts: []
     }, _this2.onEnd = function (key) {
       var alerts = _this2.state.alerts;
@@ -140,10 +132,10 @@ var AlertGroup = function (_React$Component2) {
       _this2.setState({
         alerts: _this2.state.alerts.concat(a)
       });
-    }, _temp), __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(_this2, _ret);
+    }, _temp), _possibleConstructorReturn(_this2, _ret);
   }
 
-  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(AlertGroup, [{
+  _createClass(AlertGroup, [{
     key: 'render',
     value: function render() {
       var alerts = this.state.alerts;
@@ -153,7 +145,7 @@ var AlertGroup = function (_React$Component2) {
           seed++;
           a.key = String(seed);
         }
-        return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(Alert, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, a, { onEnd: self.onEnd.bind(self, a.key) }));
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Alert, _extends({}, a, { onEnd: self.onEnd.bind(self, a.key) }));
       });
       var style = {
         position: 'fixed',
@@ -161,11 +153,11 @@ var AlertGroup = function (_React$Component2) {
         top: 50,
         zIndex: 9999
       };
-      return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { style: style },
-        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_8_rc_animate__["c" /* default */],
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_2_rc_animate__["c" /* default */],
           { transitionName: 'fade', component: 'div' },
           children
         )
@@ -174,7 +166,7 @@ var AlertGroup = function (_React$Component2) {
   }]);
 
   return AlertGroup;
-}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 var alertGroup = void 0;
 
@@ -183,7 +175,7 @@ function alert(str, time, type, callback) {
     var div = document.createElement('div');
     document.body.appendChild(div);
     // eslint-disable-next-line react/no-render-return-value
-    alertGroup = __WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(AlertGroup, null), div);
+    alertGroup = __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AlertGroup, null), div);
   }
   alertGroup.addAlert({
     str: str,
@@ -207,29 +199,22 @@ function onClick() {
   }
 }
 
-__WEBPACK_IMPORTED_MODULE_7_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
   'div',
   null,
-  __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'h2',
     null,
     'notification'
   ),
-  __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'button',
     { onClick: onClick },
     'show notification'
   )
 ), document.getElementById('__react-content'));
 
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
 /***/ })
 
-},[141]);
+},[44]);
 //# sourceMappingURL=alert.js.map
