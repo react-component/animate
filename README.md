@@ -11,24 +11,24 @@ Animate React Component easily.
 [![npm download][download-image]][download-url]
 [![bundle size][bundlephobia-image]][bundlephobia-url]
 
-[npm-image]: http://img.shields.io/npm/v/rc-animation.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/rc-animation
-[travis-image]: https://img.shields.io/travis/react-component/animation.svg?style=flat-square
-[travis-url]: https://travis-ci.org/react-component/animation
-[coveralls-image]: https://img.shields.io/coveralls/react-component/animation.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/animation?branch=master
-[david-url]: https://david-dm.org/react-component/animation
-[david-image]: https://david-dm.org/react-component/animation/status.svg?style=flat-square
-[david-dev-url]: https://david-dm.org/react-component/animation?type=dev
-[david-dev-image]: https://david-dm.org/react-component/animation/dev-status.svg?style=flat-square
-[download-image]: https://img.shields.io/npm/dm/rc-animation.svg?style=flat-square
-[download-url]: https://npmjs.org/package/rc-animation
-[bundlephobia-url]: https://bundlephobia.com/result?p=rc-animation
-[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/rc-animation
+[npm-image]: http://img.shields.io/npm/v/rc-animate.svg?style=flat-square
+[npm-url]: http://npmjs.org/package/rc-animate
+[travis-image]: https://img.shields.io/travis/react-component/animate.svg?style=flat-square
+[travis-url]: https://travis-ci.org/react-component/animate
+[coveralls-image]: https://img.shields.io/coveralls/react-component/animate.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/react-component/animate?branch=master
+[david-url]: https://david-dm.org/react-component/animate
+[david-image]: https://david-dm.org/react-component/animate/status.svg?style=flat-square
+[david-dev-url]: https://david-dm.org/react-component/animate?type=dev
+[david-dev-image]: https://david-dm.org/react-component/animate/dev-status.svg?style=flat-square
+[download-image]: https://img.shields.io/npm/dm/rc-animate.svg?style=flat-square
+[download-url]: https://npmjs.org/package/rc-animate
+[bundlephobia-url]: https://bundlephobia.com/result?p=rc-animate
+[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/rc-animate
 
 ## Install
 
-[![rc-animation](https://nodei.co/npm/rc-animation.png)](https://npmjs.org/package/rc-animation)
+[![rc-animate](https://nodei.co/npm/rc-animate.png)](https://npmjs.org/package/rc-animate)
 
 ## Usage
 
