@@ -1,7 +1,6 @@
-/* eslint no-console:0, react/no-multi-comp:0 */
+/* eslint no-console:0, react/no-multi-comp:0, react/prop-types: 0 */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { CSSMotion } from 'rc-animate';
 import classNames from 'classnames';

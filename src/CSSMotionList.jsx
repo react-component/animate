@@ -1,6 +1,5 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
-import { polyfill } from 'react-lifecycles-compat';
-import PropTypes from 'prop-types';
 import OriginCSSMotion, { MotionPropTypes } from './CSSMotion';
 import { supportTransition } from './util/motion';
 import {
@@ -16,12 +15,6 @@ const MOTION_PROP_NAMES = Object.keys(MotionPropTypes);
 
 export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion) {
   class CSSMotionList extends React.Component {
-    static propTypes = {
-      ...CSSMotion.propTypes,
-      component: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-      keys: PropTypes.array,
-    };
-
     static defaultProps = {
       component: 'div',
     };
@@ -118,8 +111,6 @@ export function genCSSMotionList(transitionSupport, CSSMotion = OriginCSSMotion)
       );
     }
   }
-
-  polyfill(CSSMotionList);
 
   return CSSMotionList;
 }

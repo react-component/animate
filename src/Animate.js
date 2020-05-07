@@ -1,5 +1,5 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
-import PropTypes from 'prop-types';
 import unsafeLifecyclesPolyfill from 'rc-util/lib/unsafeLifecyclesPolyfill';
 import {
   toArrayChildren,
@@ -30,28 +30,6 @@ function noop() {
 
 class Animate extends React.Component {
   static isAnimate = true; // eslint-disable-line
-
-  static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-    component: PropTypes.any,
-    componentProps: PropTypes.object,
-    animation: PropTypes.object,
-    transitionName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]),
-    transitionEnter: PropTypes.bool,
-    transitionAppear: PropTypes.bool,
-    exclusive: PropTypes.bool,
-    transitionLeave: PropTypes.bool,
-    onEnd: PropTypes.func,
-    onEnter: PropTypes.func,
-    onLeave: PropTypes.func,
-    onAppear: PropTypes.func,
-    showProp: PropTypes.string,
-    children: PropTypes.node,
-  }
 
   static defaultProps = {
     animation: {},

@@ -1,7 +1,5 @@
-/* eslint-disable react/default-props-match-prop-types, react/no-multi-comp */
+/* eslint-disable react/default-props-match-prop-types, react/no-multi-comp, react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { polyfill } from 'react-lifecycles-compat';
 import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
 import classNames from 'classnames';
 import raf from 'raf';
@@ -16,29 +14,6 @@ const STATUS_NONE = 'none';
 const STATUS_APPEAR = 'appear';
 const STATUS_ENTER = 'enter';
 const STATUS_LEAVE = 'leave';
-
-export const MotionPropTypes = {
-  eventProps: PropTypes.object, // Internal usage. Only pass by CSSMotionList
-  visible: PropTypes.bool,
-  children: PropTypes.func,
-  motionName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  motionAppear: PropTypes.bool,
-  motionEnter: PropTypes.bool,
-  motionLeave: PropTypes.bool,
-  motionLeaveImmediately: PropTypes.bool, // Trigger leave motion immediately
-  motionDeadline: PropTypes.number,
-  removeOnLeave: PropTypes.bool,
-  leavedClassName: PropTypes.string,
-  onAppearStart: PropTypes.func,
-  onAppearActive: PropTypes.func,
-  onAppearEnd: PropTypes.func,
-  onEnterStart: PropTypes.func,
-  onEnterActive: PropTypes.func,
-  onEnterEnd: PropTypes.func,
-  onLeaveStart: PropTypes.func,
-  onLeaveActive: PropTypes.func,
-  onLeaveEnd: PropTypes.func,
-};
 
 /**
  * `transitionSupport` is used for none transition test case.
@@ -58,12 +33,6 @@ export function genCSSMotion(config) {
   }
 
   class CSSMotion extends React.Component {
-    static propTypes = {
-      ...MotionPropTypes,
-
-      internalRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    };
-
     static defaultProps = {
       visible: true,
       motionEnter: true,
@@ -340,8 +309,6 @@ export function genCSSMotion(config) {
       );
     }
   }
-
-  polyfill(CSSMotion);
 
   if (!forwardRef) {
     return CSSMotion;

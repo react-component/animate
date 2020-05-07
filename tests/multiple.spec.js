@@ -1,7 +1,6 @@
-/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
+/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0, react/prop-types:0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
 import CssAnimation from '@ant-design/css-animation';
@@ -9,12 +8,6 @@ import Animate from '../';
 import './index.spec.css';
 
 class Todo extends React.Component {
-  static propTypes = {
-    end: PropTypes.func,
-    onClick: PropTypes.func,
-    children: PropTypes.node,
-  }
-
   static defaultProps = {
     end() {},
   }

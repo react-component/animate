@@ -1,8 +1,7 @@
-/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0 */
+/* eslint no-console:0, react/no-multi-comp:0, react/jsx-no-bind:0, react/prop-types: 0 */
 
 import Animate from 'rc-animate';
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import velocity from 'velocity-animate';
 
@@ -17,10 +16,6 @@ const Box = props => {
   };
   return (<div style={style} />);
 };
-
-Box.propTypes = {
-  visible: PropTypes.bool,
-}
 
 class Demo extends React.Component {
   state = {
