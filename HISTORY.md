@@ -1,6 +1,10 @@
 # History
 ----
 
+## 3.0.0 / 2020-05-07
+
+- Remove css-animation/babel-runtime/prop-types/react-lifecycles-compat from deps.
+
 ## 2.10.2 / 2019-11-09
 
 - There should not be any lifecycle warning now!
