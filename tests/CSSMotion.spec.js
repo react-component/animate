@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import TestUtils from 'react-dom/test-utils';
 import expect from 'expect.js';
 import $ from 'jquery';
-import raf from 'raf';
+import raf from 'rc-util/lib/raf';
 import RefCSSMotion, { genCSSMotion } from '../src/CSSMotion';
 
 import './CSSMotion.spec.css';
