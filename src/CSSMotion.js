@@ -119,6 +119,7 @@ export function genCSSMotion(config) {
       this._destroyed = true;
       this.removeEventListener(this.$cacheEle);
       this.cancelNextFrame();
+      clearTimeout(this.timer);
     }
 
     onDomUpdate = () => {
@@ -247,7 +248,7 @@ export function genCSSMotion(config) {
         this.updateStatus(styleFunc, { statusActive: true });
 
         if (motionDeadline > 0) {
-          setTimeout(() => {
+          this.timer = setTimeout(() => {
             this.onMotionEnd({
               deadline: true,
             });
