@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>CSSMotionDeadline.js - example - rc-animate@3.1.1</title>
+  <title>CSSMotionStack.js - example - rc-animate@3.1.1</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
   }
   </script>
-  <link rel="stylesheet" href="CSSMotionDeadline.css" />
+  <link rel="stylesheet" href="CSSMotionStack.css" />
 </head>
 
 <body>
@@ -275,11 +275,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { CSSMotion } from 'rc-animate';
 import classNames from 'classnames';
-import './CSSMotion.less';
+import './CSSMotionStack.less';
+
+window.motionRef = React.createRef();
 
 class Demo extends React.Component {
   state = {
     show: true,
+    hasMotionClassName: true,
   };
 
   onTrigger = () =&gt; {
@@ -288,16 +291,29 @@ class Demo extends React.Component {
     });
   };
 
-  onStart = (ele, event) =&gt; {
-    console.log('start!', ele, event);
+  onTriggerClassName = () =&gt; {
+    this.setState({
+      hasMotionClassName: !this.state.hasMotionClassName,
+    });
   };
 
-  onEnd = (ele, event) =&gt; {
-    console.log('end!', ele, event);
+  onCollapse = () =&gt; ({ height: 0 });
+
+  skipColorTransition = (_, event) =&gt; {
+    // CSSMotion support multiple transition.
+    // You can return false to prevent motion end when fast transition finished.
+    if (event.propertyName === 'background-color') {
+      return false;
+    }
+    return true;
   };
+
+  styleGreen = () =&gt; ({
+    background: 'green',
+  });
 
   render() {
-    const { show } = this.state;
+    const { show, hasMotionClassName } = this.state;
 
     return (
       &lt;div&gt;
@@ -306,29 +322,65 @@ class Demo extends React.Component {
           Show Component
         &lt;/label&gt;
 
+        &lt;label&gt;
+          &lt;input
+            type="checkbox"
+            onChange={this.onTriggerClassName}
+            checked={hasMotionClassName}
+          /&gt;{' '}
+          hasMotionClassName
+        &lt;/label&gt;
+
         &lt;div className="grid"&gt;
           &lt;div&gt;
             &lt;h2&gt;With Transition Class&lt;/h2&gt;
-            &lt;CSSMotion
-              visible={show}
-              motionName="no-trigger"
-              motionDeadline={1000}
-              removeOnLeave
-              onAppearStart={this.onStart}
-              onEnterStart={this.onStart}
-              onLeaveStart={this.onStart}
-              onAppearEnd={this.onEnd}
-              onEnterEnd={this.onEnd}
-              onLeaveEnd={this.onEnd}
-            &gt;
-              {({ style, className }, ref) =&gt; (
-                &lt;div
-                  ref={ref}
-                  className={classNames('demo-block', className)}
-                  style={style}
-                /&gt;
-              )}
-            &lt;/CSSMotion&gt;
+            &lt;div&gt;
+              &lt;CSSMotion
+                visible={show}
+                motionName={hasMotionClassName ? 'transition' : null}
+                leavedClassName="hidden"
+                removeOnLeave={false}
+                onAppearStart={this.onCollapse}
+                onEnterStart={this.onCollapse}
+                onLeaveActive={this.onCollapse}
+                onEnterEnd={this.skipColorTransition}
+                onLeaveEnd={this.skipColorTransition}
+                ref={window.motionRef}
+              &gt;
+                {({ style, className }, ref) =&gt; {
+                  console.log('&gt;&gt;&gt;', className, style);
+                  return (
+                    &lt;div
+                      ref={ref}
+                      className={classNames('demo-block', className)}
+                      style={style}
+                    /&gt;
+                  );
+                }}
+              &lt;/CSSMotion&gt;
+            &lt;/div&gt;
+            {/* &lt;div&gt;
+              &lt;CSSMotion
+                visible={!show}
+                motionName={hasMotionClassName ? 'transition' : null}
+                removeOnLeave={removeOnLeave}
+                leavedClassName="hidden"
+                onAppearStart={this.onCollapse}
+                onEnterStart={this.onCollapse}
+                onLeaveActive={this.onCollapse}
+                onEnterEnd={this.skipColorTransition}
+                onLeaveEnd={this.skipColorTransition}
+                ref={window.motionRef}
+              &gt;
+                {({ style, className }, ref) =&gt; (
+                  &lt;div
+                    ref={ref}
+                    className={classNames('demo-block', className)}
+                    style={style}
+                  /&gt;
+                )}
+              &lt;/CSSMotion&gt;
+            &lt;/div&gt; */}
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -337,10 +389,6 @@ class Demo extends React.Component {
 }
 
 ReactDOM.render(&lt;Demo /&gt;, document.getElementById('__react-content'));
-
-// Remove for IE9 test
-// const aaa = document.getElementsByClassName('navbar')[0];
-// aaa.parentNode.removeChild(aaa);
 </code></pre></div>
   </div>
   <a href="https://github.com/react-component/animate">
@@ -351,7 +399,7 @@ ReactDOM.render(&lt;Demo /&gt;, document.getElementById('__react-content'));
   </a>
   <script>FastClick.attach(document.body);</script>
   <script src="../common.js?nowrap"></script>
-  <script src="CSSMotionDeadline.js?nowrap"></script>
+  <script src="CSSMotionStack.js?nowrap"></script>
 </body>
 
 </html>

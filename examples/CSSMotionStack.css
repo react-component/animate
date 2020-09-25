@@ -1,0 +1,35 @@
+.grid {
+  display: table;
+}
+.grid > div {
+  display: table-cell;
+  min-width: 350px;
+}
+.demo-block {
+  display: block;
+  height: 300px;
+  width: 300px;
+  background: red;
+  overflow: hidden;
+  box-shadow: 0 0 1px black;
+}
+.transition {
+  transition: background .3s, height 1.3s, opacity 1.3s;
+}
+.transition.transition-appear,
+.transition.transition-enter {
+  opacity: 0;
+}
+.transition.transition-appear.transition-appear-active,
+.transition.transition-enter.transition-enter-active {
+  opacity: 1;
+}
+.transition.transition-leave-active {
+  opacity: 0;
+  background: green;
+}
+.hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=CSSMotionStack.css.map*/

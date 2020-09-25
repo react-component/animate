@@ -1,14 +1,14 @@
-webpackJsonp([12],{
+webpackJsonp([9],{
 
-/***/ 15:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(16);
+module.exports = __webpack_require__(45);
 
 
 /***/ }),
 
-/***/ 16:
+/***/ 45:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20,8 +20,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_animate__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CSSMotion_less__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CSSMotion_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__CSSMotion_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CSSMotionStack_less__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CSSMotionStack_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__CSSMotionStack_less__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -56,16 +56,10 @@ var Demo = function (_React$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Demo.__proto__ || Object.getPrototypeOf(Demo)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       show: true,
-      motionLeaveImmediately: false,
-      removeOnLeave: true,
       hasMotionClassName: true
     }, _this.onTrigger = function () {
       _this.setState({
         show: !_this.state.show
-      });
-    }, _this.onRemoveOnLeave = function () {
-      _this.setState({
-        removeOnLeave: !_this.state.removeOnLeave
       });
     }, _this.onTriggerClassName = function () {
       _this.setState({
@@ -73,10 +67,6 @@ var Demo = function (_React$Component) {
       });
     }, _this.onCollapse = function () {
       return { height: 0 };
-    }, _this.onMotionLeaveImmediately = function () {
-      _this.setState({
-        motionLeaveImmediately: !_this.state.motionLeaveImmediately
-      });
     }, _this.skipColorTransition = function (_, event) {
       // CSSMotion support multiple transition.
       // You can return false to prevent motion end when fast transition finished.
@@ -96,8 +86,6 @@ var Demo = function (_React$Component) {
     value: function render() {
       var _state = this.state,
           show = _state.show,
-          motionLeaveImmediately = _state.motionLeaveImmediately,
-          removeOnLeave = _state.removeOnLeave,
           hasMotionClassName = _state.hasMotionClassName;
 
 
@@ -114,17 +102,13 @@ var Demo = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'label',
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onTriggerClassName, checked: hasMotionClassName }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+            type: 'checkbox',
+            onChange: this.onTriggerClassName,
+            checked: hasMotionClassName
+          }),
           ' ',
           'hasMotionClassName'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'label',
-          null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', onChange: this.onRemoveOnLeave, checked: removeOnLeave }),
-          ' ',
-          'removeOnLeave',
-          removeOnLeave ? '' : ' (use leavedClassName)'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
@@ -138,81 +122,34 @@ var Demo = function (_React$Component) {
               'With Transition Class'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_2_rc_animate__["a" /* CSSMotion */],
-              {
-                visible: show,
-                motionName: hasMotionClassName ? 'transition' : null,
-                removeOnLeave: removeOnLeave,
-                leavedClassName: 'hidden',
-                onAppearStart: this.onCollapse,
-                onEnterStart: this.onCollapse,
-                onLeaveActive: this.onCollapse,
-
-                onEnterEnd: this.skipColorTransition,
-                onLeaveEnd: this.skipColorTransition,
-
-                ref: window.motionRef
-              },
-              function (_ref2, ref) {
-                var style = _ref2.style,
-                    className = _ref2.className;
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: ref, className: __WEBPACK_IMPORTED_MODULE_3_classnames___default()('demo-block', className), style: style });
-              }
-            )
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'h2',
+              'div',
               null,
-              'With Animation Class'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_2_rc_animate__["a" /* CSSMotion */],
-              {
-                visible: show,
-                motionName: hasMotionClassName ? 'animation' : null,
-                removeOnLeave: removeOnLeave,
-                leavedClassName: 'hidden',
-                onLeaveActive: this.styleGreen
-              },
-              function (_ref3) {
-                var style = _ref3.style,
-                    className = _ref3.className;
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: __WEBPACK_IMPORTED_MODULE_3_classnames___default()('demo-block', className), style: style });
-              }
-            )
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { onClick: this.onMotionLeaveImmediately },
-            'motionLeaveImmediately'
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            null,
-            motionLeaveImmediately && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_2_rc_animate__["a" /* CSSMotion */],
-              {
-                visible: false,
-                motionName: hasMotionClassName ? 'transition' : null,
-                removeOnLeave: removeOnLeave,
-                leavedClassName: 'hidden',
-                onLeaveActive: this.onCollapse,
-                motionLeaveImmediately: true,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_2_rc_animate__["a" /* CSSMotion */],
+                {
+                  visible: show,
+                  motionName: hasMotionClassName ? 'transition' : null,
+                  leavedClassName: 'hidden',
+                  removeOnLeave: false,
+                  onAppearStart: this.onCollapse,
+                  onEnterStart: this.onCollapse,
+                  onLeaveActive: this.onCollapse,
+                  onEnterEnd: this.skipColorTransition,
+                  onLeaveEnd: this.skipColorTransition,
+                  ref: window.motionRef
+                },
+                function (_ref2, ref) {
+                  var style = _ref2.style,
+                      className = _ref2.className;
 
-                onLeaveEnd: this.skipColorTransition
-              },
-              function (_ref4) {
-                var style = _ref4.style,
-                    className = _ref4.className;
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: __WEBPACK_IMPORTED_MODULE_3_classnames___default()('demo-block', className), style: style });
-              }
+                  console.log('>>>', className, style);
+                  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', {
+                    ref: ref,
+                    className: __WEBPACK_IMPORTED_MODULE_3_classnames___default()('demo-block', className),
+                    style: style
+                  });
+                }
+              )
             )
           )
         )
@@ -225,18 +162,14 @@ var Demo = function (_React$Component) {
 
 __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
 
-// Remove for IE9 test
-// const aaa = document.getElementsByClassName('navbar')[0];
-// aaa.parentNode.removeChild(aaa);
-
 /***/ }),
 
-/***/ 7:
+/***/ 46:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[15]);
-//# sourceMappingURL=CSSMotion.js.map
+},[44]);
+//# sourceMappingURL=CSSMotionStack.js.map
