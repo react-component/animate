@@ -60,5 +60,9 @@
     "@ant-design/css-animation": "^1.7.2",
     "raf": "^3.4.0",
     "rc-util": "^4.15.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   }
 }
