@@ -2,7 +2,7 @@
 import React from 'react';
 import findDOMNode from 'rc-util/lib/Dom/findDOMNode';
 import classNames from 'classnames';
-import raf from 'raf';
+import raf from 'rc-util/lib/raf';
 import {
   getTransitionName,
   animationEndName,
