@@ -11,7 +11,7 @@
 
 ## 2.10.0 / 2019-08-27
 
-- CSSMotionList support `component` to be `false` to render nothing
+- CSSMotionList support `component` to be `false` to render nothing.
 
 ## 2.9.0 / 2019-07-09
 
