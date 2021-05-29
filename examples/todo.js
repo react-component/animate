@@ -60,7 +60,7 @@ class TodoList extends React.Component {
     return (
       <div>
         <button onClick={this.handleAdd}>Add Item</button>
-        <Animate transitionName="fade">
+        <Animate transitionName="fade" component={React.Fragment}>
           {items}
         </Animate>
       </div>

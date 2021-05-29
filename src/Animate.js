@@ -28,6 +28,10 @@ function getChildrenFromProps(props) {
 function noop() {
 }
 
+function isReactFragment(component) {
+  return React.Fragment && component === React.Fragment;
+}
+
 class Animate extends React.Component {
   static isAnimate = true; // eslint-disable-line
 
@@ -299,7 +303,7 @@ class Animate extends React.Component {
     }
     const Component = props.component;
     if (Component) {
-      let passedProps = props;
+      let passedProps = isReactFragment(Component) ? {} : props;
       if (typeof Component === 'string') {
         passedProps = {
           className: props.className,
